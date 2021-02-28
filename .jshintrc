@@ -3,7 +3,7 @@
   "bitwise": true,
   "curly": true,
   "eqeqeq": true,
-  "es3": true,
+  "esversion": 6,
   "forin": false,
   "freeze": true,
   "newcap": true,

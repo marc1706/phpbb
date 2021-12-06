@@ -20,14 +20,6 @@ use phpbb\template\exception\user_object_not_available;
 */
 class twig extends \phpbb\template\base
 {
-	/**
-	 * Path of the cache directory for the template
-	 * Cannot be changed during runtime.
-	 *
-	 * @var string
-	 */
-	private $cachepath = '';
-
 	/** @var \phpbb\path_helper */
 	protected $path_helper;
 
@@ -59,7 +51,6 @@ class twig extends \phpbb\template\base
 	* @param \phpbb\config\config			$config				Config object
 	* @param \phpbb\template\context		$context			Template context
 	* @param environment					$twig_environment	Twig environment
-	* @param string							$cache_path			Template's cache directory path
 	* @param null|\phpbb\user				$user				User object
 	* @param array|\ArrayAccess				$extensions			Template extensions
 	* @param null|\phpbb\extension\manager	$extension_manager	If null then template events will not be invoked
@@ -69,7 +60,6 @@ class twig extends \phpbb\template\base
 		\phpbb\config\config $config,
 		\phpbb\template\context $context,
 		environment $twig_environment,
-		$cache_path,
 		\phpbb\user $user = null,
 		$extensions = [],
 		\phpbb\extension\manager $extension_manager = null
@@ -82,7 +72,6 @@ class twig extends \phpbb\template\base
 		$this->user = $user;
 		$this->context = $context;
 		$this->extension_manager = $extension_manager;
-		$this->cachepath = $cache_path;
 		$this->twig = $twig_environment;
 		$this->loader = $twig_environment->getLoader();
 
@@ -96,21 +85,6 @@ class twig extends \phpbb\template\base
 		{
 			$this->loader->setPaths($this->phpbb_root_path . $this->path_helper->get_adm_relative_path() . 'style/', 'admin');
 		}
-	}
-
-	/**
-	* Clear the cache
-	*
-	* @return \phpbb\template\template
-	*/
-	public function clear_cache()
-	{
-		if (is_dir($this->cachepath))
-		{
-			$this->twig->clearCacheFiles();
-		}
-
-		return $this;
 	}
 
 	/**

@@ -76,7 +76,6 @@ services:
             - '@config'
             - '@template_context'
             - '@template.twig.environment'
-            - '%core.template.cache_path%'
             - '@user'
             - '@template.twig.extensions.collection'
             - '@ext.manager'

@@ -865,4 +865,48 @@ class user extends \phpbb\session
 
 		return $forum_ids;
 	}
+
+	/**
+	 * Update session infos, i.e. session page and time
+	 *
+	 * @return void
+	 */
+	public function update_session_infos(): void
+	{
+		global $config, $db, $request;
+
+		// No need to update if it's a new session, info is already inserted by session_create()
+		if (isset($this->data['session_created']) && $this->data['session_created'])
+		{
+			return;
+		}
+
+		// Do not update the session page for ajax requests, so the view online still works as intended
+		$page_changed = $this->update_session_page && (!isset($this->data['session_page']) || $this->data['session_page'] != $this->page['page']) && !$request->is_ajax();
+
+		// Only update session DB a minute or so after last update or if page changes
+		if ($this->time_now - ($this->data['session_time'] ?? 0) > 60 || $page_changed)
+		{
+			$sql_ary = array('session_time' => $this->time_now);
+
+			if ($page_changed)
+			{
+				$sql_ary['session_page'] = substr($this->page['page'], 0, 199);
+				$sql_ary['session_forum_id'] = $this->page['forum'];
+			}
+
+			$db->sql_return_on_error(true);
+
+			$this->update_session($sql_ary);
+
+			$db->sql_return_on_error(false);
+
+			$this->data = array_merge($this->data, $sql_ary);
+
+			if ($this->data['user_id'] != ANONYMOUS && isset($config['new_member_post_limit']) && $this->data['user_new'] && $config['new_member_post_limit'] <= $this->data['user_posts'])
+			{
+				$this->leave_newly_registered();
+			}
+		}
+	}
 }

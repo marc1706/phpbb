@@ -590,7 +590,7 @@ class user extends \phpbb\session
 	* Format user date
 	*
 	* @param int $gmepoch unix timestamp
-	* @param string $format date format in date() notation. | used to indicate relative dates, for example |d m Y|, h:i is translated to Today, h:i.
+	* @param string|false $format date format in date() notation. | used to indicate relative dates, for example |d m Y|, h:i is translated to Today, h:i.
 	* @param bool $forcedate force non-relative date format.
 	*
 	* @return mixed translated date
@@ -614,7 +614,7 @@ class user extends \phpbb\session
 		* set $format_date_override to new return value
 		*
 		* @event core.user_format_date_override
-		* @var DateTimeZone	utc Is DateTimeZone in UTC
+		* @var \DateTimeZone	utc Is DateTimeZone in UTC
 		* @var array function_arguments is array comprising a function's argument list
 		* @var string format_date_override Shall we return custom format (string) or not (false)
 		* @since 3.2.1-RC1
@@ -670,7 +670,7 @@ class user extends \phpbb\session
 	*
 	* @since 3.1
 	* @param string $time String in a format accepted by strtotime().
-	* @param DateTimeZone|null $timezone Time zone of the time.
+	* @param \DateTimeZone|null $timezone Time zone of the time.
 	* @return \phpbb\datetime Date time object linked to the current users locale
 	*/
 	public function create_datetime($time = 'now', \DateTimeZone $timezone = null)
@@ -684,8 +684,8 @@ class user extends \phpbb\session
 	*
 	* @param	string			$format		Format of the entered date/time
 	* @param	string			$time		Date/time with the timezone applied
-	* @param	DateTimeZone|null	$timezone	Timezone of the date/time, falls back to timezone of current user
-	* @return	int			Returns the unix timestamp
+	* @param	\DateTimeZone|null	$timezone	Timezone of the date/time, falls back to timezone of current user
+	* @return	string|false			Returns the unix timestamp
 	*/
 	public function get_timestamp_from_format($format, $time, \DateTimeZone $timezone = null)
 	{
@@ -760,7 +760,7 @@ class user extends \phpbb\session
 	* Get option bit field from user options.
 	*
 	* @param int $key option key, as defined in $keyoptions property.
-	* @param int $data bit field value to use, or false to use $this->data['user_options']
+	* @param int|false $data bit field value to use, or false to use $this->data['user_options']
 	* @return bool true if the option is set in the bit field, false otherwise
 	*/
 	function optionget($key, $data = false)
@@ -774,7 +774,7 @@ class user extends \phpbb\session
 	*
 	* @param int $key Option key, as defined in $keyoptions property.
 	* @param bool $value True to set the option, false to clear the option.
-	* @param int $data Current bit field value, or false to use $this->data['user_options']
+	* @param int|false $data Current bit field value, or false to use $this->data['user_options']
 	* @return int|bool If $data is false, the bit field is modified and
 	*                  written back to $this->data['user_options'], and
 	*                  return value is true if the bit field changed and

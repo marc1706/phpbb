@@ -162,8 +162,8 @@ class user_loader
 	* 			colour (for obtaining the user colour)
 	* 			full (for obtaining a html string representing a coloured link to the users profile)
 	* 			no_profile (the same as full but forcing no profile link)
-	* @param string $guest_username Optional parameter to specify the guest username. It will be used in favor of the GUEST language variable then.
-	* @param string $custom_profile_url Optional parameter to specify a profile url. The user id get appended to this url as &amp;u={user_id}
+	* @param string|false $guest_username Optional parameter to specify the guest username. It will be used in favor of the GUEST language variable then.
+	* @param string|false $custom_profile_url Optional parameter to specify a profile url. The user id get appended to this url as &amp;u={user_id}
 	* @param bool $query Should we query the database if this user has not yet been loaded?
 	* 						Typically this should be left as false and you should make sure
 	* 						you load users ahead of time with load_users()
@@ -219,7 +219,7 @@ class user_loader
 	{
 		if (!($user = $this->get_user($user_id, $query)))
 		{
-			return '';
+			return [];
 		}
 
 		if (!function_exists('phpbb_get_user_rank'))

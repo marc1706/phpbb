@@ -234,16 +234,16 @@ class renderer implements \phpbb\textformatter\renderer_interface
 	/**
 	* {@inheritdoc}
 	*/
-	public function render($xml)
+	public function render($text)
 	{
 		if (isset($this->mention_helper))
 		{
-			$xml = $this->mention_helper->inject_metadata($xml);
+			$text = $this->mention_helper->inject_metadata($text);
 		}
 
 		if (isset($this->quote_helper))
 		{
-			$xml = $this->quote_helper->inject_metadata($xml);
+			$text = $this->quote_helper->inject_metadata($text);
 		}
 
 		$renderer = $this;
@@ -259,7 +259,7 @@ class renderer implements \phpbb\textformatter\renderer_interface
 		$vars = array('renderer', 'xml');
 		extract($this->dispatcher->trigger_event('core.text_formatter_s9e_render_before', compact($vars)));
 
-		$html = $this->renderer->render($xml);
+		$html = $this->renderer->render($text);
 		if (isset($this->censor) && $this->viewcensors)
 		{
 			$html = $this->censor->censorHtml($html, true);

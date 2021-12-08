@@ -663,8 +663,8 @@ function generate_text_for_display($text, $uid, $bitfield, $flags, $censor_text 
 *
 * @param string $text The text to be replaced with the parsed one
 * @param string $uid The BBCode uid for this parse
-* @param string $bitfield The BBCode bitfield for this parse
-* @param int $flags The allow_bbcode, allow_urls and allow_smilies compiled into a single integer.
+* @param string|null $bitfield The BBCode bitfield for this parse
+* @param int|null $flags The allow_bbcode, allow_urls and allow_smilies compiled into a single integer.
 * @param bool $allow_bbcode If BBCode is allowed (i.e. if BBCode is parsed)
 * @param bool $allow_urls If urls is allowed
 * @param bool $allow_smilies If smilies are allowed

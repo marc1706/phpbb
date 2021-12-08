@@ -30,7 +30,7 @@ class username extends AbstractExtension
 	/**
 	 * Returns a list of global functions to add to the existing list.
 	 *
-	 * @return array An array of global functions
+	 * @return \Twig\TwigFunction[] An array of global functions
 	 */
 	public function getFunctions()
 	{

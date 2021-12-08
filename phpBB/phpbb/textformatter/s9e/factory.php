@@ -444,7 +444,7 @@ class factory implements \phpbb\textformatter\cache_interface
 		}
 		catch (\Exception $e)
 		{
-			$this->log->add('critical', null, null, 'LOG_BBCODE_CONFIGURATION_ERROR', false, [$usage, $e->getMessage()]);
+			$this->log->add('critical', 0, '', 'LOG_BBCODE_CONFIGURATION_ERROR', false, [$usage, $e->getMessage()]);
 		}
 	}
 

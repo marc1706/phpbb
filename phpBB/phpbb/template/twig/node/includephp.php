@@ -16,7 +16,7 @@ namespace phpbb\template\twig\node;
 
 class includephp extends \Twig\Node\Node
 {
-	/** @var \Twig\Environment */
+	/** @var \phpbb\template\twig\environment */
 	protected $environment;
 
 	public function __construct(\Twig\Node\Expression\AbstractExpression $expr, \phpbb\template\twig\environment $environment, $lineno, $ignoreMissing = false, $tag = null)

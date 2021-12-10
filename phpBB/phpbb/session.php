@@ -1121,6 +1121,9 @@ class session
 	* @param string|false	$user_email		The user email
 	* @param bool			$return			If $return is false this routine does not return on finding a banned user,
 	*	it outputs a relevant message and stops execution.
+	*
+	* @return array|bool|void Returns ban information row if banned, otherwise banned state if return is true or
+	*	void if return is false
 	*/
 	function check_ban($user_id = false, $user_ips = false, $user_email = false, $return = false)
 	{
@@ -1254,17 +1257,13 @@ class session
 
 		if ($banned && !$return)
 		{
-			global $phpbb_root_path, $phpEx;
-
-			// If the session is empty we need to create a valid one...
-			if (empty($this->session_id))
-			{
-				// This seems to be no longer needed? - #14971
-//				$this->session_create(ANONYMOUS);
-			}
+			global $phpbb_root_path, $phpEx, $language;
 
 			// Initiate environment ... since it won't be set at this stage
-			$this->setup();
+			if (method_exists($this, 'setup'))
+			{
+				$this->setup();
+			}
 
 			// Logout the user, banned users are unable to use the normal 'logout' link
 			if ($this->data['user_id'] != ANONYMOUS)
@@ -1275,7 +1274,10 @@ class session
 			// We show a login box here to allow founders accessing the board if banned by IP
 			if (defined('IN_LOGIN') && $this->data['user_id'] == ANONYMOUS)
 			{
-				$this->setup('ucp');
+				if (method_exists($this, 'setup'))
+				{
+					$this->setup('ucp');
+				}
 				$this->data['is_registered'] = $this->data['is_bot'] = false;
 
 				// Set as a precaution to allow login_box() handling this case correctly as well as this function not being executed again.
@@ -1295,13 +1297,13 @@ class session
 			}
 
 			// Determine which message to output
-			$till_date = ($ban_row['ban_end']) ? $this->format_date($ban_row['ban_end']) : '';
+			$till_date = ($ban_row['ban_end'] && method_exists($this, 'format_date')) ? $this->format_date($ban_row['ban_end']) : '';
 			$message = ($ban_row['ban_end']) ? 'BOARD_BAN_TIME' : 'BOARD_BAN_PERM';
 
 			$contact_link = phpbb_get_board_contact_link($config, $phpbb_root_path, $phpEx);
-			$message = sprintf($this->lang[$message], $till_date, '<a href="' . $contact_link . '">', '</a>');
-			$message .= ($ban_row['ban_give_reason']) ? '<br /><br />' . sprintf($this->lang['BOARD_BAN_REASON'], $ban_row['ban_give_reason']) : '';
-			$message .= '<br /><br /><em>' . $this->lang['BAN_TRIGGERED_BY_' . strtoupper($ban_triggered_by)] . '</em>';
+			$message = $language->lang($message, $till_date, '<a href="' . $contact_link . '">', '</a>');
+			$message .= ($ban_row['ban_give_reason']) ? '<br><br>' . $language->lang('BOARD_BAN_REASON', $ban_row['ban_give_reason']) : '';
+			$message .= '<br><br><em>' . $language->lang('BAN_TRIGGERED_BY_' . strtoupper($ban_triggered_by)) . '</em>';
 
 			// A very special case... we are within the cron script which is not supposed to print out the ban message... show blank page
 			if (defined('IN_CRON'))
@@ -1355,7 +1357,7 @@ class session
 	* @param string 		$mode	register/post - spamcop for example is omitted for posting
 	* @param string|false	$ip		the IPv4 address to check
 	*
-	* @return false if ip is not blacklisted, else an array([checked server], [lookup])
+	* @return array|false if ip is not blacklisted, else an array([checked server], [lookup])
 	*/
 	function check_dnsbl($mode, $ip = false)
 	{

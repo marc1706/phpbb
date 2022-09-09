@@ -6,6 +6,7 @@ on:
             - 3.3.x
             - master
             - 'prep-release-*'
+            - 'ticket/17033'
         tags:
             - 'release-*'
     pull_request:
@@ -217,6 +218,7 @@ jobs:
               env:
                   DB: ${{steps.database-type.outputs.db}}
               if: ${{ matrix.SLOWTESTS != 1 && matrix.NOTESTS != 1 }}
+              continue-on-error: ${{ matrix.php == '8.2' }}
               run: |
                   phpBB/vendor/bin/phpunit --configuration .github/phpunit-$DB-github.xml --verbose --stop-on-error
 
@@ -340,6 +342,7 @@ jobs:
             - name: Run unit tests
               env:
                   DB: ${{steps.database-type.outputs.db}}
+              continue-on-error: ${{ matrix.php == '8.2' }}
               run: |
                   phpBB/vendor/bin/phpunit --configuration .github/phpunit-$DB-github.xml --verbose --stop-on-error
 
@@ -443,6 +446,7 @@ jobs:
             - name: Run unit tests
               env:
                   DB: ${{steps.database-type.outputs.db}}
+              continue-on-error: ${{ matrix.php == '8.2' }}
               run: |
                   phpBB/vendor/bin/phpunit --configuration .github/phpunit-$DB-github.xml --verbose --stop-on-error
 
@@ -572,9 +576,11 @@ jobs:
                   Set-MpPreference -DisableRealtimeMonitoring $true
             - name: Run unit tests
               if: ${{ matrix.type == 'unit' }}
+              continue-on-error: ${{ matrix.php == '8.2' }}
               run: |
                   phpBB/vendor/bin/phpunit --configuration .github/phpunit-psql-windows-github.xml --verbose --stop-on-error --exclude-group functional
             - name: Run unit tests
               if: ${{ matrix.type == 'functional' }}
+              continue-on-error: ${{ matrix.php == '8.2' }}
               run: |
                   phpBB/vendor/bin/phpunit --configuration .github/phpunit-psql-windows-github.xml --verbose --stop-on-error --group functional

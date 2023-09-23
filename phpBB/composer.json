@@ -58,7 +58,12 @@
 		"symfony/twig-bridge": "^6.3",
 		"symfony/yaml": "^6.3",
 		"twig/twig": "^3.0",
-		"league/oauth2-client": "^2.7"
+		"league/oauth2-client": "^2.7",
+		"league/oauth2-facebook": "^2.2",
+		"league/oauth2-github": "^3.1",
+		"league/oauth2-google": "^4.0",
+		"league/oauth2-instagram": "^3.1",
+		"league/oauth2-linkedin": "^5.1"
 	},
 	"require-dev": {
 		"laravel/homestead": "~14.4",

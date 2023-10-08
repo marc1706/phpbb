@@ -1,0 +1,8 @@
+<br>
+<div class="content">
+	{% for provider in oauth2 %}
+		<a href="{{ provider.REDIRECT_URL }}" class="button1 button button-form-bold">
+			{% if provider.ICON %}{{ Icon('iconify', provider.ICON, '', true, 'c-button-icon') }} {% endif %}<span>{{ lang(provider.SERVICE_NAME) }}</span>
+		</a>
+	{% endfor %}
+</div>

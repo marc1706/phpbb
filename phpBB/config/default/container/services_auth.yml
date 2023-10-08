@@ -66,6 +66,25 @@ services:
         tags:
             - { name: auth.provider }
 
+    auth.provider.oauth2:
+        class: phpbb\auth\provider\oauth2\provider
+        arguments:
+            - '@auth.provider.db'
+            - '@request'
+            - '@auth.provider.oauth2.token_storage'
+            - '@auth.provider.oauth2.wrapper_collection'
+            - '%core.php_ext%'
+        tags:
+            - { name: auth.provider }
+
+    auth.provider.oauth2.token_storage:
+        class: phpbb\auth\provider\oauth2\token_storage
+        arguments:
+            - '@dbal.conn'
+            - '@user'
+            - '%tables.auth_provider_oauth_token_storage%'
+            - '%tables.auth_provider_oauth_states%'
+
 # ----- OAuth services providers -----
     auth.provider.oauth.service_collection:
         class: phpbb\di\service_collection
@@ -105,3 +124,18 @@ services:
             - '@request'
         tags:
             - { name: auth.provider.oauth.service }
+
+# ----- OAuth2 services providers -----
+    auth.provider.oauth2.wrapper_collection:
+        class: phpbb\di\service_collection
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: service_collection, tag: auth.provider.oauth2.wrapper }
+
+    auth.provider.oauth2.wrapper.google:
+        class: phpbb\auth\provider\oauth2\wrapper\google
+        arguments:
+            - '@config'
+        tags:
+            - { name: auth.provider.oauth2.wrapper }

@@ -19,7 +19,7 @@ class token_storage
 	{
 	}
 
-	public function store_state(string $service_name, string $state, string $pkce_code = ''): void
+	public function store_state(string $service_name, string $state): void
 	{
 		$this->cached_state = $state;
 
@@ -28,7 +28,6 @@ class token_storage
 			'provider'		=> $service_name,
 			'oauth_state'	=> $state,
 			'session_id'	=> $this->user->data['session_id'],
-			'pkce_code'		=> $pkce_code,
 		];
 
 		$sql = 'INSERT INTO ' . $this->oauth_state_table . ' ' . $this->db->sql_build_array('INSERT', $data);

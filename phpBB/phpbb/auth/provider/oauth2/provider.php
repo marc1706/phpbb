@@ -73,9 +73,9 @@ class provider extends base
 				return $name;
 			}
 
-			if ('auth.provider.oauth2.service.' . utf8_strtolower($service_name) === $name)
+			if ('auth.provider.oauth2.wrapper.' . utf8_strtolower($service_name) === $name)
 			{
-				return 'auth.provider.oauth2.service.' . utf8_strtolower($service_name);
+				return 'auth.provider.oauth2.wrapper.' . utf8_strtolower($service_name);
 			}
 		}
 
@@ -90,7 +90,7 @@ class provider extends base
 	 */
 	protected function get_provider_name(string $service_name): string
 	{
-		return str_replace('auth.provider.oauth2.service.', '', $service_name);
+		return str_replace('auth.provider.oauth2.wrapper.', '', $service_name);
 	}
 
 	/**
@@ -124,7 +124,7 @@ class provider extends base
 		// (e.g. state).
 		$authorizationUrl = $provider->getAuthorizationUrl();
 
-		$this->token_storage->store_state($service_name, $provider->getState(), $provider->getPkceCode() ?? '');
+		$this->token_storage->store_state($service_name, $provider->getState());
 
 		redirect($authorizationUrl, false, true);
 
@@ -135,15 +135,6 @@ class provider extends base
 	{
 		try
 		{
-			$pkce_code = $this->token_storage->get_pkce_code($service_name);
-
-			// Optional, only required when PKCE is enabled.
-			// Restore the PKCE code stored in the session.
-			if ($pkce_code)
-			{
-				$provider->setPkceCode($pkce_code);
-			}
-
 			// Try to get an access token using the authorization code grant.
 			$access_token = $provider->getAccessToken('authorization_code', [
 				'code' => $this->request->variable('code', ''),

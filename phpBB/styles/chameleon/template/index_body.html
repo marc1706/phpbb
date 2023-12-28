@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="{T_THEME_PATH}/stylesheet.css" rel="stylesheet">
+	<link href="{{ T_THEME_PATH ~ '/stylesheet.css' }}" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -15,7 +15,7 @@
 				</a>
 				<div class="flex flex-col items-start mx-3">
 					<h1 class="text-2xl">{{ SITENAME }}</h1>
-					<p class="text-lg">{{ SITE_DESCRIPTION }}</p>
+					<p class="text-lg font-light">{{ SITE_DESCRIPTION }}</p>
 				</div>
 			</div>
 			<div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">

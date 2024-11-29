@@ -13,6 +13,8 @@
 
 namespace phpbb\template\twig;
 
+use Twig\Error\LoaderError;
+
 /**
 * Twig Template loader
 */
@@ -101,16 +103,6 @@ class loader extends \Twig\Loader\FilesystemLoader
 	}
 
 	/**
-	 * Adds a realpath call to fix a BC break in Twig 1.26 (https://github.com/twigphp/Twig/issues/2145)
-	 *
-	 * {@inheritdoc}
-	 */
-	public function addPath($path, $namespace = self::MAIN_NAMESPACE)
-	{
-		return parent::addPath($this->filesystem->realpath($path), $namespace);
-	}
-
-	/**
 	 * Find the template
 	 *
 	 * Override for \Twig\Loader\FilesystemLoader::findTemplate
@@ -139,7 +131,7 @@ class loader extends \Twig\Loader\FilesystemLoader
 			// Try validating the name (which may throw an exception)
 			$this->validateName($name);
 		}
-		catch (\Twig\Error\LoaderError $e)
+		catch (LoaderError $e)
 		{
 			if (strpos($e->getRawMessage(), 'Looks like you try to load a template outside configured directories') === 0)
 			{
@@ -172,5 +164,88 @@ class loader extends \Twig\Loader\FilesystemLoader
 
 		// No exception from validateName, safe to load.
 		return $file;
+	}
+
+	/**
+	 * Find template asset path
+	 *
+	 * @param string $name Name of asset
+	 * @param bool $throw Whether to throw exception in case of issues
+	 *
+	 * @return bool|string Asset path or false if there was an issue finding the path
+	 * @throws LoaderError
+	 */
+	public function findAsset(string $name, bool $throw = true)
+	{
+		// normalize name
+		$name = preg_replace('#/{2,}#', '/', strtr($name, '\\', '/'));
+
+		try
+		{
+			list($namespace, $shortname) = $this->parseName($name);
+
+			$this->validateName($shortname);
+		}
+		catch (LoaderError $e)
+		{
+			if (!$throw)
+			{
+				return false;
+			}
+
+			throw $e;
+		}
+
+		if (!isset($this->paths[$namespace]))
+		{
+			$this->errorCache[$name] = sprintf('There are no registered paths for namespace "%s".', $namespace);
+
+			if (!$throw)
+			{
+				return false;
+			}
+
+			throw new LoaderError($this->errorCache[$name]);
+		}
+
+		foreach ($this->paths[$namespace] as $path)
+		{
+			if (is_file($path . '/' . $shortname))
+			{
+				return $path . '/' . $shortname;
+			}
+		}
+
+		$this->errorCache[$name] = sprintf('Unable to find template "%s" (looked into: %s).', $name, implode(', ', $this->paths[$namespace]));
+
+		if (!$throw)
+		{
+			return false;
+		}
+
+		throw new LoaderError($this->errorCache[$name]);
+	}
+
+	/**
+	 * Parse name, copy from twig
+	 *
+	 * @throws LoaderError
+	 */
+	private function parseName($name): array
+	{
+		if (isset($name[0]) && '@' == $name[0])
+		{
+			if (false === $pos = strpos($name, '/'))
+			{
+				throw new LoaderError(sprintf('Malformed namespaced template name "%s" (expecting "@namespace/template_name").', $name));
+			}
+
+			$namespace = substr($name, 1, $pos - 1);
+			$shortname = substr($name, $pos + 1);
+
+			return [$namespace, $shortname];
+		}
+
+		return [self::MAIN_NAMESPACE, $name];
 	}
 }

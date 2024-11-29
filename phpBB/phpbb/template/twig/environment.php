@@ -327,4 +327,51 @@ class environment extends \Twig\Environment
 			return parent::getLoader()->getCacheKey($name);
 		}
 	}
+
+	/**
+	 * Find asset path
+	 *
+	 * @param string $name Name of asset
+	 * @return string Asset path
+	 * @throws \Twig\Error\LoaderError
+	 */
+	public function findAsset(string $name)
+	{
+		// Fall back to normal findTemplate if loader does not have this method
+		$loader = $this->getLoader();
+		if (!$loader instanceof loader)
+		{
+			return $this->findTemplate($name);
+		}
+
+		if (strpos($name, '@') === false)
+		{
+			foreach ($this->getNamespaceLookUpOrder() as $namespace)
+			{
+				try
+				{
+					if ($namespace === '__main__')
+					{
+						$asset_path = $loader->findAsset($name);
+					}
+					else
+					{
+						$asset_path = $loader->findAsset('@' . $namespace . '/' . $name);
+					}
+
+					return $this->filesystem->clean_path($asset_path);
+				}
+				catch (\Twig\Error\LoaderError $e)
+				{
+				}
+			}
+
+			// We were unable to load any templates
+			throw $e;
+		}
+		else
+		{
+			return parent::getLoader()->findAsset($name);
+		}
+	}
 }

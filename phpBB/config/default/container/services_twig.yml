@@ -26,6 +26,7 @@ services:
         class: phpbb\template\twig\loader
         arguments:
             - '@filesystem'
+            - '%core.root_path%'
 
     template.twig.extensions.collection:
         class: phpbb\di\service_collection

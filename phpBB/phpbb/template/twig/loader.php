@@ -29,13 +29,13 @@ class loader extends \Twig\Loader\FilesystemLoader
 	 * Constructor
 	 *
 	 * @param \phpbb\filesystem\filesystem_interface $filesystem
-	 * @param string|array	$paths
+	 * @param string $phpbb_root_path
 	 */
-	public function __construct(\phpbb\filesystem\filesystem_interface $filesystem, $paths = array())
+	public function __construct(\phpbb\filesystem\filesystem_interface $filesystem, string $phpbb_root_path = '')
 	{
 		$this->filesystem = $filesystem;
 
-		parent::__construct($paths, __DIR__);
+		parent::__construct([], $phpbb_root_path);
 	}
 
 	/**

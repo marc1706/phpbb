@@ -33,6 +33,11 @@ class auth
 		$this->acl = $this->cache = $this->acl_options = array();
 		$this->acl_forum_ids = false;
 
+		if (!count($userdata))
+		{
+			return;
+		}
+
 		if (($this->acl_options = $cache->get('_acl_options')) === false)
 		{
 			$sql = 'SELECT auth_option_id, auth_option, is_global, is_local

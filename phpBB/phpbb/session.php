@@ -245,8 +245,8 @@ class session
 	*/
 	function session_begin($update_session_page = true)
 	{
-		global $phpEx, $SID, $_SID, $_EXTRA_URL, $db, $config, $phpbb_root_path;
-		global $request, $phpbb_container, $user, $phpbb_log, $phpbb_dispatcher;
+		global $SID, $_SID, $_EXTRA_URL, $db, $config, $phpbb_root_path;
+		global $request, $phpbb_container, $user, $phpbb_log, $phpbb_dispatcher, $symfony_request;
 
 		// Give us some basic information
 		$this->time_now				= time();
@@ -355,6 +355,18 @@ class session
 			{
 				$config->set('limit_load', '0');
 				$config->set('limit_search_load', '0');
+			}
+		}
+
+		// Handle stateless pages
+		if ($symfony_request->getPathInfo() !== '/')
+		{
+			/** @var \phpbb\routing\router $router */
+			$router = $phpbb_container->get('router');
+			$route_attributes = $router->match($symfony_request->getPathInfo());
+			if (key_exists('_stateless', $route_attributes))
+			{
+				return true;
 			}
 		}
 

@@ -131,6 +131,11 @@ class user extends \phpbb\session
 
 		$this->language->set_default_language($config['default_lang']);
 
+		if (empty($this->data))
+		{
+			return;
+		}
+
 		if ($this->data['user_id'] != ANONYMOUS)
 		{
 			$user_lang_name = (file_exists($this->lang_path . $this->data['user_lang'] . "/common.$phpEx")) ? $this->data['user_lang'] : basename($config['default_lang']);

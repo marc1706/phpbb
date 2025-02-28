@@ -14,6 +14,8 @@
 namespace phpbb;
 
 use phpbb\filesystem\helper as filesystem_helper;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 /**
 * Session class
@@ -363,10 +365,21 @@ class session
 		{
 			/** @var \phpbb\routing\router $router */
 			$router = $phpbb_container->get('router');
-			$route_attributes = $router->match($symfony_request->getPathInfo());
-			if (key_exists('_stateless', $route_attributes))
+			try
 			{
-				return true;
+				$route_attributes = $router->match($symfony_request->getPathInfo());
+				if (key_exists('_stateless', $route_attributes))
+				{
+					return true;
+				}
+			}
+			catch (ResourceNotFoundException)
+			{
+				// Route not found, continue as usual
+			}
+			catch (MethodNotAllowedException)
+			{
+				// Route found but method not allowed, continue as usual
 			}
 		}
 

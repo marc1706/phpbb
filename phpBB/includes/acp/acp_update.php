@@ -25,10 +25,10 @@ class acp_update
 
 	function main($id, $mode)
 	{
-		global $config, $user, $template, $request;
+		global $config, $language, $template, $request;
 		global $phpbb_root_path, $phpEx, $phpbb_container;
 
-		$user->add_lang('install');
+		$language->add_lang('install');
 
 		$this->tpl_name = 'acp_update';
 		$this->page_title = 'ACP_VERSION_CHECK';
@@ -86,9 +86,9 @@ class acp_update
 
 			'CURRENT_VERSION'			=> $config['version'],
 
-			'UPDATE_INSTRUCTIONS'		=> $user->lang('UPDATE_INSTRUCTIONS', $update_link),
+			'UPDATE_INSTRUCTIONS'		=> $language->lang('UPDATE_INSTRUCTIONS', $update_link),
 			'S_VERSION_UPGRADEABLE'		=> !empty($upgrades_available),
-			'UPGRADE_INSTRUCTIONS'		=> !empty($upgrades_available) ? $user->lang('UPGRADE_INSTRUCTIONS', $upgrades_available['current'], $upgrades_available['announcement']) : false,
+			'UPGRADE_INSTRUCTIONS'		=> !empty($upgrades_available) ? $language->lang('UPGRADE_INSTRUCTIONS', $upgrades_available['current'], $upgrades_available['announcement']) : false,
 		];
 
 		$template->assign_vars($template_ary);
@@ -101,7 +101,7 @@ class acp_update
 			$template->assign_vars(array(
 				'S_UPDATE_INCOMPLETE'		=> true,
 				'FILES_VERSION'				=> PHPBB_VERSION,
-				'INCOMPLETE_INSTRUCTIONS'	=> $user->lang('UPDATE_INCOMPLETE_EXPLAIN', $database_update_link),
+				'INCOMPLETE_INSTRUCTIONS'	=> $language->lang('UPDATE_INCOMPLETE_EXPLAIN', $database_update_link),
 			));
 		}
 	}

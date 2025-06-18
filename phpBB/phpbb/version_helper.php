@@ -65,6 +65,7 @@ class version_helper
 		'stable' => array(
 			'current'		=> 'version',
 			'download'		=> 'url',
+			'checksum'		=> 'ed25519',
 			'announcement'	=> 'url',
 			'eol'			=> 'url',
 			'security'		=> 'bool',
@@ -72,6 +73,7 @@ class version_helper
 		'unstable' => array(
 			'current'		=> 'version',
 			'download'		=> 'url',
+			'checksum'		=> 'ed25519',
 			'announcement'	=> 'url',
 			'eol'			=> 'url',
 			'security'		=> 'bool',
@@ -485,6 +487,13 @@ class version_helper
 							if (!empty($value) && !preg_match(get_preg_expression('semantic_version'), $value))
 							{
 								throw new version_check_exception('VERSIONCHECK_INVALID_VERSION');
+							}
+						break;
+
+						case 'ed25519':
+							if (!empty($value) && !preg_match('#^[a-zA-Z0-9+/]+[=]{0,3}$', $value))
+							{
+								throw new version_check_exception('VERSIONCHECK_INVALID_CHECKSUM');
 							}
 						break;
 

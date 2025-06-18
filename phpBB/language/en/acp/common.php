@@ -461,6 +461,7 @@ $lang = array_merge($lang, array(
 	'VERSIONCHECK_FORCE_UPDATE'		=> 'Re-Check version',
 	'VERSION_CHECK'					=> 'Version check',
 	'VERSION_CHECK_EXPLAIN'			=> 'Checks to see if your phpBB installation is up to date.',
+	'VERSIONCHECK_INVALID_CHECKSUM'	=> 'Latest version information contains an invalid checksum.',
 	'VERSIONCHECK_INVALID_ENTRY'	=> 'Latest version information contains an unsupported entry.',
 	'VERSIONCHECK_INVALID_URL'		=> 'Latest version information contains invalid URL.',
 	'VERSIONCHECK_INVALID_VERSION'	=> 'Latest version information contains an invalid version.',

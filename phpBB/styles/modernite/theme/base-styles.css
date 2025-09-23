@@ -224,6 +224,44 @@ img {
     margin-right: 0.5rem;
 }
 
+/* Utility classes to replace inline styles */
+.width-auto { width: auto; }
+.width-5 { width: 5%; }
+.width-10 { width: 10%; }
+.width-15 { width: 15%; }
+.width-20 { width: 20%; }
+.width-25 { width: 25%; }
+.width-50 { width: 50%; }
+.width-75 { width: 75%; }
+.width-100 { width: 100%; }
+
+.display-none { display: none; }
+.display-block { display: block; }
+.display-inline { display: inline; }
+.display-inline-block { display: inline-block; }
+
+.overflow-visible { overflow: visible; }
+.overflow-hidden { overflow: hidden; }
+
+.margin-top-3 { margin-top: 3px; }
+.margin-top-5 { margin-top: 5px; }
+.margin-top-10 { margin-top: 10px; }
+
+.border-top-none { border-top: none; }
+.border-bottom-none { border-bottom: none; }
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.white-space-nowrap { white-space: nowrap; }
+
+.float-left { float: left; }
+.float-right { float: right; }
+
+/* BBCode utility classes */
+.bbcode-underline { text-decoration: underline; }
+
 /* Responsive utilities */
 @media (max-width: 768px) {
     .wrap {

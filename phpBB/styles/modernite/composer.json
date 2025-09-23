@@ -1,7 +1,7 @@
 {
     "name": "phpbb/modernite",
     "type": "phpbb-style",
-    "description": "Modernite - A modern and beautiful phpBB style based on prosilver with Bootstrap-inspired design",
+    "description": "Modernite - A modern and beautiful standalone phpBB style with Bootstrap-inspired design",
     "homepage": "https://www.phpbb.com/",
     "version": "1.0.0",
     "keywords": [
@@ -26,7 +26,6 @@
     },
     "extra": {
         "display-name": "Modernite",
-        "phpbb-version": "4.0.0-a1-dev",
-        "parent-style": "prosilver"
+        "phpbb-version": "4.0.0-a1-dev"
     }
 }

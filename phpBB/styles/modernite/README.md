@@ -1,6 +1,8 @@
-# Modernite - Modern phpBB Style
+# Modernite - Standalone Modern phpBB Style
 
-A beautiful, modern phpBB style with Bootstrap-inspired design principles, featuring responsive layouts, modern colors, and excellent user experience across all devices.
+A beautiful, modern standalone phpBB style with Bootstrap-inspired design principles, featuring responsive layouts, modern colors, and excellent user experience across all devices.
+
+**Note**: This is a complete standalone style that does not require any parent style inheritance. It can be directly installed on any phpBB forum.
 
 ## Features
 
@@ -136,6 +138,33 @@ Modernite is built with maintainability in mind:
 - **Design Inspiration**: Modern web design principles and Bootstrap
 - **Typography**: Inter font family by Rasmus Andersson
 - **Color Palette**: Tailwind CSS inspired colors
+
+## Installation
+
+### Standalone Installation
+This style is completely standalone and can be installed directly on any phpBB installation:
+
+1. **Via phpBB ACP** (Recommended):
+   - Navigate to `Customise` → `Style Management` → `Install Styles`
+   - Upload or select the Modernite style directory
+   - Click "Install" to make it available
+   - Set as default or allow users to choose
+
+2. **Manual Installation**:
+   - Extract the style to `phpBB/styles/modernite/`
+   - Ensure all files are in place with proper permissions
+   - Install via ACP as described above
+
+### Requirements
+- phpBB 4.0.0-a1-dev or newer
+- PHP 7.4.0 or newer
+- No parent style dependencies
+
+### Configuration
+Once installed, administrators can:
+- Set Modernite as the default style for all users
+- Allow users to choose Modernite from their UCP style preferences
+- Customize colors and components via CSS custom properties
 
 ## License
 

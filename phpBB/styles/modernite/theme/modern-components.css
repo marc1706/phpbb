@@ -300,6 +300,347 @@ h6 { font-size: 1rem; }
   margin-bottom: 16px;
 }
 
+/* Modern buttons */
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--primary);
+  color: var(--white);
+  border: 2px solid var(--primary);
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+  color: var(--white);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.button-secondary {
+  background: var(--white);
+  color: var(--gray-700);
+  border-color: var(--gray-300);
+}
+
+.button-secondary:hover {
+  background: var(--gray-50);
+  color: var(--gray-800);
+  border-color: var(--gray-400);
+}
+
+.button-small {
+  padding: 4px 8px;
+  font-size: 0.875rem;
+}
+
+.button-large {
+  padding: 12px 24px;
+  font-size: 1.125rem;
+}
+
+/* Icon buttons */
+.button .modern-icon {
+  margin-right: 8px;
+  margin-left: 0;
+}
+
+.button-icon-only {
+  padding: 8px;
+}
+
+.button-icon-only .modern-icon {
+  margin: 0;
+}
+
+/* Main content container */
+.wrap {
+  background: var(--gray-50);
+  min-height: 100vh;
+}
+
+#main {
+  background: var(--gray-50);                                                          
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Content wrapper */
+.content {
+  background: transparent;
+  padding: 0;
+}
+
+/* Action bar styling */
+.action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+  padding: 12px 16px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.action-bar .button {
+  margin-left: 8px;
+}
+
+.mark-read {
+  margin-left: auto;
+}
+
+/* Modern navigation styling */
+.headerbar {
+  background: var(--gradient-primary);
+  color: var(--white);
+  border-radius: 0;
+  margin-bottom: 0;
+  box-shadow: var(--shadow-md);
+}
+
+.headerbar .inner {
+  padding: 20px;
+  text-align: center;
+}
+
+.headerbar h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0;
+}
+
+.headerbar p {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 8px 0 0 0;
+  font-size: 1.1rem;
+}
+
+.navbar {
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+
+.navbar .inner {
+  padding: 0 20px;
+}
+
+.nav-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 56px;
+}
+
+.nav-main li {
+  display: flex;
+  align-items: center;
+}
+
+.nav-main a {
+  display: flex;
+  align-items: center;
+  padding: 16px 12px;
+  color: var(--gray-700);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-main a:hover {
+  color: var(--primary);
+}
+
+.dropdown-trigger {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  min-width: 200px;
+  z-index: 1000;
+  display: none;
+}
+
+.dropdown-container:hover .dropdown {
+  display: block;
+}
+
+.dropdown-contents {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.dropdown-contents li a {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  color: var(--gray-700);
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-contents li a:hover {
+  background: var(--gray-100);
+  color: var(--primary);
+}
+
+.separator {
+  border-top: 1px solid var(--gray-200);
+  margin: 4px 0;
+}
+
+.badge {
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.badge-pm {
+  background: var(--accent);
+}
+
+/* Modern forum wrapper styles */
+.forabg, .forumbg {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.modern-forum-wrapper {
+  margin-bottom: 24px;
+}
+
+.forabg .inner, .forumbg .inner {
+  padding: 0;
+}
+
+/* Modern forum header styling */
+.topiclist li.header {
+  background: var(--gradient-primary);
+  color: var(--white);
+  font-weight: 600;
+  border: none;
+}
+
+.topiclist li.header dl {
+  padding: 16px 20px;
+}
+
+.topiclist li.header dt, 
+.topiclist li.header dd {
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* Forum list item styling */
+.topiclist.forums li {
+  border-bottom: 1px solid var(--gray-200);
+  transition: background-color 0.2s ease;
+}
+
+.topiclist.forums li:last-child {
+  border-bottom: none;
+}
+
+.topiclist.forums li:hover {
+  background: var(--gray-50);
+}
+
+.topiclist.forums dl {
+  padding: 16px 20px;
+}
+
+.topiclist.forums dt {
+  width: auto;
+  float: none;
+  padding: 0;
+}
+
+.topiclist.forums dd {
+  border-left: none;
+  margin-left: 0;
+  padding: 0;
+  text-align: center;
+  color: var(--gray-600);
+}
+
+.topiclist.forums .list-inner {
+  padding: 0;
+}
+
+.forumtitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  text-decoration: none;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.forumtitle:hover {
+  color: var(--primary);
+}
+
+.forum-desc {
+  color: var(--gray-600);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+/* Forum statistics */
+.topics, .posts {
+  font-weight: 600;
+  color: var(--gray-700);
+}
+
+.lastpost {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+}
+
+.lastpost a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.lastpost a:hover {
+  text-decoration: underline;
+}
+
 /* Modern statistics cards */
 .stats-card {
   background: var(--white);

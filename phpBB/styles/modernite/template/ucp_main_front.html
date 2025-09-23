@@ -1,33 +1,35 @@
 <!-- INCLUDE ucp_header.html -->
 
-<h2>{L_TITLE}</h2>
+<div class="modern-container">
+	<div class="modern-page-header">
+		<h1 class="modern-page-title">{L_TITLE}</h1>
+	</div>
 
-<div class="panel">
-	<div class="inner">
+	<div class="modern-card">
+		<div class="modern-card-body">
+			<p class="modern-text-content">{L_UCP_WELCOME}</p>
 
-	<p>{L_UCP_WELCOME}</p>
+			<!-- IF .topicrow -->
+			<div class="mt-4">
+				<h3 class="modern-text-primary">{L_IMPORTANT_NEWS}</h3>
 
-<!-- IF .topicrow -->
-	<h3>{L_IMPORTANT_NEWS}</h3>
-
-	<ul class="topiclist cplist two-long-columns">
-	<!-- BEGIN topicrow -->
-		<li class="row<!-- IF topicrow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
-			<dl class="row-item">
-				<dt>
-					<a class="row-item-link{% if topicrow.S_UNREAD_TOPIC %} unread{% else %} read{% endif %}" href="{topicrow.U_NEWEST_POST}" title="{topicrow.TOPIC_FOLDER_IMG_ALT}">
-						{{ Icon('svg', {
-							'globe' : topicrow.S_POST_GLOBAL,
-							'bullhorn' : topicrow.S_POST_ANNOUNCE,
-							'thumbtack' : topicrow.S_POST_STICKY,
-							'lock' : topicrow.S_TOPIC_LOCKED,
-							'arrow-right-bold' : topicrow.S_TOPIC_MOVED,
-							'fire' : topicrow.S_TOPIC_HOT,
-							'file-document-outline' : true,
-						}, '', true, 'c-forum-row-icon') }}
-					</a>
-					{% if lang(topicrow.TOPIC_AUTHOR) == S_USERNAME %}
-						<span class="row-item-link-mine"></span>
+				<div class="modern-topic-list">
+				<!-- BEGIN topicrow -->
+					<div class="modern-topic-item">
+						<div class="modern-topic-content">
+							<a class="modern-topic-link{% if topicrow.S_UNREAD_TOPIC %} unread{% else %} read{% endif %}" href="{topicrow.U_NEWEST_POST}" title="{topicrow.TOPIC_FOLDER_IMG_ALT}">
+								{{ Icon('svg', {
+									'globe' : topicrow.S_POST_GLOBAL,
+									'bullhorn' : topicrow.S_POST_ANNOUNCE,
+									'thumbtack' : topicrow.S_POST_STICKY,
+									'lock' : topicrow.S_TOPIC_LOCKED,
+									'arrow-right-bold' : topicrow.S_TOPIC_MOVED,
+									'fire' : topicrow.S_TOPIC_HOT,
+									'file-document-outline' : true,
+								}, '', true, 'modern-topic-icon') }}
+							</a>
+							{% if lang(topicrow.TOPIC_AUTHOR) == S_USERNAME %}
+								<span class="modern-topic-mine"></span>
 					{% endif%}
 					{% if topicrow.TOPIC_ICON_IMG and topicrow.S_TOPIC_ICONS %}
 						<img class="row-item-sub" src="{T_ICONS_PATH}{topicrow.TOPIC_ICON_IMG}" alt="">

@@ -4,17 +4,22 @@
 	<!-- INCLUDE overall_header.html -->
 <!-- ENDIF -->
 
-<div class="panel" id="message">
-	<div class="inner">
-	<h2 class="message-title">{MESSAGE_TITLE}</h2>
-	<p>{MESSAGE_TEXT}</p>
-	<!-- IF SCRIPT_NAME == "search" and not S_BOARD_DISABLED and not S_NO_SEARCH and L_RETURN_TO_SEARCH_ADV -->
-		<p>
-			<a href="{U_SEARCH}" class="arrow-{S_CONTENT_FLOW_BEGIN}" accesskey="r">
-				{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_BEGIN, lang('GO_TO_SEARCH_ADV'), true, 'fas c-return-arrow-icon') }}
-			</a>
-		</p>
-	<!-- ENDIF -->
+<div class="modern-container">
+	<div class="modern-card" id="message">
+		<div class="modern-card-header">
+			<h2 class="modern-card-title">{MESSAGE_TITLE}</h2>
+		</div>
+		<div class="modern-card-body">
+			<p class="modern-text-content">{MESSAGE_TEXT}</p>
+			<!-- IF SCRIPT_NAME == "search" and not S_BOARD_DISABLED and not S_NO_SEARCH and L_RETURN_TO_SEARCH_ADV -->
+				<div class="modern-form-actions">
+					<a href="{U_SEARCH}" class="modern-btn modern-btn-primary" accesskey="r">
+						{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_BEGIN, lang('GO_TO_SEARCH_ADV'), true, 'fas c-return-arrow-icon') }}
+						{L_RETURN_TO_SEARCH_ADV}
+					</a>
+				</div>
+			<!-- ENDIF -->
+		</div>
 	</div>
 </div>
 

@@ -154,10 +154,10 @@
 							<!-- EVENT overall_header_navigation_prepend -->
 							<li class="separator"></li>
 							<!-- IF not S_IS_BOT -->
-								<!-- IF S_DISPLAY_MEMBERLIST --><li><a href="{U_MEMBERLIST}" role="menuitem"><span class="modern-icon">👥</span><span>{L_MEMBERLIST}</span></a></li><!-- ENDIF -->
-								<!-- IF not S_USER_LOGGED_IN and S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) --><li><a href="{U_REGISTER}" role="menuitem"><span class="modern-icon">📝</span><span>{L_REGISTER}</span></a></li><!-- ENDIF -->
-								<li><a href="{U_FAQ}" rel="help" title="{L_FAQ_EXPLAIN}" role="menuitem"><span class="modern-icon">❓</span><span>{L_FAQ}</span></a></li>
-								<!-- IF not S_USER_LOGGED_IN --><li><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>{L_LOGIN_LOGOUT}</span></a></li><!-- ENDIF -->
+								<!-- IF S_DISPLAY_MEMBERLIST --><li><a href="{U_MEMBERLIST}" role="menuitem"><span class="modern-icon modern-icon-user"></span><span>{L_MEMBERLIST}</span></a></li><!-- ENDIF -->
+								<!-- IF not S_USER_LOGGED_IN and S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) --><li><a href="{U_REGISTER}" role="menuitem"><span class="modern-icon modern-icon-user"></span><span>{L_REGISTER}</span></a></li><!-- ENDIF -->
+								<li><a href="{U_FAQ}" rel="help" title="{L_FAQ_EXPLAIN}" role="menuitem"><span class="modern-icon modern-icon-help"></span><span>{L_FAQ}</span></a></li>
+								<!-- IF not S_USER_LOGGED_IN --><li><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><span class="modern-icon modern-icon-user"></span><span>{L_LOGIN_LOGOUT}</span></a></li><!-- ENDIF -->
 								<!-- EVENT overall_header_navigation_append -->
 							<!-- ENDIF -->
 						</ul>
@@ -165,7 +165,7 @@
 				</li>
 
 				<!-- EVENT overall_header_navigation_items_prepend -->
-				<!-- IF S_DISPLAY_SEARCH --><li class="responsive-search"><a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}" role="menuitem"><i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">{L_SEARCH}</span></a></li><!-- ENDIF -->
+				<!-- IF S_DISPLAY_SEARCH --><li class="responsive-search"><a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}" role="menuitem"><span class="modern-icon modern-icon-search"></span><span class="sr-only">{L_SEARCH}</span></a></li><!-- ENDIF -->
 				<!-- IF not S_IS_BOT -->
 					<!-- IF S_USER_LOGGED_IN -->
 						<li class="dropdown-container">
@@ -174,7 +174,7 @@
 								<!-- IF AVATAR_IMG -->
 									{AVATAR_IMG}
 								<!-- ELSE -->
-									<i class="icon fa-user fa-fw" aria-hidden="true"></i>
+									<span class="modern-icon modern-icon-user"></span>
 								<!-- ENDIF -->
 								<i class="icon fa-caret-down fa-fw" aria-hidden="true"></i>
 							</a>

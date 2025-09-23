@@ -29,13 +29,13 @@
 	</div>
 	<div id="phpbb_alert" class="phpbb_alert" data-l-err="{L_ERROR}" data-l-timeout-processing-req="{L_TIMEOUT_PROCESSING_REQ}">
 		<a href="#" class="alert_close">
-			{{ Icon('font', 'circle-xmark', '', true) }}
+			<span class="modern-icon modern-icon-close"></span>
 		</a>
 		<h3 class="alert_title">&nbsp;</h3><p class="alert_text"></p>
 	</div>
 	<div id="phpbb_confirm" class="phpbb_confirm phpbb_alert">
 		<a href="#" class="alert_close">
-			{{ Icon('font', 'circle-xmark', '', true) }}
+			<span class="modern-icon modern-icon-close"></span>
 		</a>
 		<div class="alert_text"></div>
 	</div>
@@ -48,15 +48,8 @@
 <!-- INCLUDEJS ajax.js -->
 {% if S_ALLOW_CDN %}
 <script>
-	(function($){
-		const $fa_cdn = $('head').find('link[rel="stylesheet"]').first(),
-			$span = $('<span class="fa" style="display:none"></span>').appendTo('body');
-		if ($span.css('fontFamily') !== '"Font Awesome 6 Free"') {
-			// Modern icon system - no FontAwesome dependency needed
-			$fa_cdn.remove();
-		}
-		$span.remove();
-	})(jQuery);
+	// Modern Modernite style - no external dependencies needed
+	// FontAwesome is replaced with CSS-based icons for consistent cross-browser display
 </script>
 {% endif %}
 

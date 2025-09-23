@@ -79,11 +79,11 @@
 					<!-- IF topicrow.S_MOVED_TOPIC and S_CAN_DELETE -->&nbsp;<a href="{topicrow.U_DELETE_TOPIC}" class="topictitle">[ {L_DELETE_SHADOW_TOPIC} ]</a><!-- ENDIF -->
 					<br />
 					<!-- EVENT topiclist_row_topic_title_after -->
-					<div class="responsive-show" style="display: none;">
+					<div class="responsive-show">
 						{% if topicrow.ATTACH_ICON_IMG %}{{ Icon('font', 'paperclip', '', true) }} {% endif %}
 						{L_LAST_POST} {L_POST_BY_AUTHOR} {% EVENT mcp_forum_last_post_author_username_prepend %}{topicrow.LAST_POST_AUTHOR_FULL}{% EVENT mcp_forum_last_post_author_username_append %} &laquo; {topicrow.LAST_POST_TIME}<br />
 					</div>
-					<span class="responsive-show left-box" style="display: none;">{L_REPLIES}{L_COLON} <strong>{topicrow.REPLIES}</strong></span>
+					<span class="responsive-show left-box">{L_REPLIES}{L_COLON} <strong>{topicrow.REPLIES}</strong></span>
 
 					<!-- IF .topicrow.pagination -->
 					<div class="pagination">

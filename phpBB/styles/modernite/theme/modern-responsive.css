@@ -296,6 +296,27 @@
     line-height: 1.2;
   }
   
+  /* Mobile consistency for online and permissions cards */
+  .modern-online-card,
+  .modern-permissions-card {
+    margin-left: -12px;
+    margin-right: -12px;
+    border-radius: 0;
+  }
+  
+  .modern-online-card .card-body,
+  .modern-permissions-card .card-body {
+    padding: 12px;
+  }
+  
+  /* Mobile button consistency */
+  .mark-topics-btn {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+    display: inline-block;
+  }
+  
   /* Form elements */
   input[type="text"], input[type="password"], input[type="email"], 
   select, textarea {

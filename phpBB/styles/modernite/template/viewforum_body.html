@@ -80,7 +80,7 @@
 			</div>
 
 			<div class="pagination-info">
-				<!-- IF not S_IS_BOT and U_MARK_TOPICS and .topicrow --><a href="{U_MARK_TOPICS}" class="mark" accesskey="m" data-ajax="mark_topics_read">{L_MARK_TOPICS_READ}</a> &bull; <!-- ENDIF -->
+				<!-- IF not S_IS_BOT and U_MARK_TOPICS and .topicrow --><a href="{U_MARK_TOPICS}" class="button button-secondary mark-topics-btn" accesskey="m" data-ajax="mark_topics_read">{L_MARK_TOPICS_READ}</a> &bull; <!-- ENDIF -->
 				{TOTAL_TOPICS}
 				<!-- IF .pagination -->
 					<!-- INCLUDE pagination.html -->
@@ -352,33 +352,29 @@
 	<!-- Online list and forum info -->
 	{% EVENT viewforum_body_online_list_before %}
 
-	<div class="row">
+	<!-- IF S_DISPLAY_ONLINE_LIST and U_VIEWONLINE or (S_IS_POSTABLE and rules|length) -->
 		<!-- IF S_DISPLAY_ONLINE_LIST and U_VIEWONLINE -->
-			<div class="col-md-6">
-				<div class="card modern-online-card">
-					<div class="card-header">
-						<h3><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a></h3>
-					</div>
-					<div class="card-body">
-						<p>{LOGGED_IN_USER_LIST}</p>
-					</div>
+			<div class="card modern-online-card">
+				<div class="card-header">
+					<h3><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a></h3>
+				</div>
+				<div class="card-body">
+					<p>{LOGGED_IN_USER_LIST}</p>
 				</div>
 			</div>
 		<!-- ENDIF -->
 
 		<!-- IF S_IS_POSTABLE and rules|length -->
-			<div class="col-md-6">
-				<div class="card modern-permissions-card">
-					<div class="card-header">
-						<h3>{L_FORUM_PERMISSIONS}</h3>
-					</div>
-					<div class="card-body">
-						<p><!-- BEGIN rules -->{rules.RULE}<br /><!-- END rules --></p>
-					</div>
+			<div class="card modern-permissions-card">
+				<div class="card-header">
+					<h3>{L_FORUM_PERMISSIONS}</h3>
+				</div>
+				<div class="card-body">
+					<p><!-- BEGIN rules -->{rules.RULE}<br /><!-- END rules --></p>
 				</div>
 			</div>
 		<!-- ENDIF -->
-	</div>
+	<!-- ENDIF -->
 
 	<!-- INCLUDE jumpbox.html -->
 </div>

@@ -415,7 +415,6 @@
 	textarea,
 	dd textarea,
 	.message-box textarea {
-		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
 		width: 100%;
 	}
@@ -871,3 +870,4 @@
 
 /* stylelint-enable selector-max-compound-selectors */
 /* stylelint-enable selector-no-qualifying-type */
+/*# sourceMappingURL=responsive.css.map */

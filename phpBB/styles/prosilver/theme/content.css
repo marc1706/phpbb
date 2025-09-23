@@ -75,7 +75,6 @@ ul.topiclist.two-columns dt .list-inner {
 
 ul.topiclist dd {
 	border-left: 1px solid transparent;
-	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	padding: 4px 0;
 }
@@ -160,7 +159,6 @@ li.header dt .list-inner {
 }
 
 li.header dd {
-	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	padding-left: 1px;
 }
@@ -322,7 +320,6 @@ dd.option {
 }
 
 .postbody img.postimage {
-	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	max-width: 100%;
 }
@@ -588,7 +585,6 @@ blockquote .codebox {
 	border: 1px dashed transparent;
 	float: left;
 	clear: left;
-	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	width: auto;
 	max-width: 100%;
@@ -667,7 +663,6 @@ dl.file dd {
 
 dl.thumbnail img {
 	border: 1px solid transparent;
-	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	padding: 3px;
 }
@@ -954,3 +949,4 @@ table.fixed-width-table {
 .group-description ul {
 	list-style-position: inside;
 }
+/*# sourceMappingURL=content.css.map */

@@ -8,10 +8,10 @@
 */
 
 /* Standalone Modernite CSS - no external dependencies */
-@import url("base-styles.css");
 
 /* Modern styles */
 @import url("bootstrap-grid.css");
-@import url("modern-components.css");
 @import url("modern-colors.css");
+@import url("modern-components.css");
 @import url("modern-responsive.css");
+@import url("print.css") print;

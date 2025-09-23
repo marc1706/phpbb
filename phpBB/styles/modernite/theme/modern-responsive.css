@@ -264,18 +264,36 @@
     font-size: 1rem;
   }
   
-  /* Statistics cards stack */
-  .stats-grid {
-    display: block;
+  /* Compact statistics cards for mobile */
+  .modern-stats-grid {
+    margin-bottom: 12px;
+  }
+  
+  .modern-stats-grid .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .modern-stats-grid .col-md-3 {
+    flex: 0 0 calc(50% - 3px);
+    max-width: calc(50% - 3px);
   }
   
   .stats-card {
-    margin-bottom: 12px;
-    padding: 16px;
+    margin-bottom: 0;
+    padding: 10px 6px;
+    text-align: center;
   }
   
   .stats-card .stat-number {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+  }
+  
+  .stats-card .stat-label {
+    font-size: 0.7rem;
+    line-height: 1.2;
   }
   
   /* Form elements */
@@ -349,6 +367,24 @@
   .pagination li a {
     padding: 6px 10px;
     font-size: 0.8rem;
+  }
+  
+  /* Extra compact stats for very small screens */
+  .modern-stats-grid .col-md-3 {
+    flex: 0 0 calc(50% - 2px);
+    max-width: calc(50% - 2px);
+  }
+  
+  .stats-card {
+    padding: 8px 4px;
+  }
+  
+  .stats-card .stat-number {
+    font-size: 1rem;
+  }
+  
+  .stats-card .stat-label {
+    font-size: 0.65rem;
   }
 }
 

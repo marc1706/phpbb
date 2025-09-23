@@ -67,8 +67,10 @@
 
 			<div id="site-description" class="site-description">
 				<a id="logo" class="logo" href="<!-- IF U_SITE_HOME -->{U_SITE_HOME}<!-- ELSE -->{U_INDEX}<!-- ENDIF -->" title="<!-- IF U_SITE_HOME -->{L_SITE_HOME}<!-- ELSE -->{L_INDEX}<!-- ENDIF -->">
+					<!-- phpBB logo for modernite theme -->
+					<img src="{T_ASSETS_PATH}/imgs/phpbb_logo.svg" alt="phpBB" class="phpbb-logo" />
 					<!-- IF SITE_LOGO_IMG -->
-						<img src="{T_ASSETS_PATH}/images/{SITE_LOGO_IMG}" alt="{SITENAME}" />
+						<img src="{T_ASSETS_PATH}/images/{SITE_LOGO_IMG}" alt="{SITENAME}" class="site-logo" />
 					<!-- ELSE -->
 						<span class="site-name">{SITENAME}</span>
 					<!-- ENDIF -->

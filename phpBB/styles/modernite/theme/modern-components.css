@@ -360,6 +360,49 @@ h6 { font-size: 1rem; }
   margin: 8px 0 0 0;
   font-size: 1.1rem;
 }
+
+/* phpBB Logo in header */
+#logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.phpbb-logo {
+  height: 40px;
+  width: auto;
+  filter: brightness(0) invert(1); /* Make logo white for dark header */
+  transition: var(--transition-normal);
+}
+
+.phpbb-logo:hover {
+  transform: scale(1.05);
+}
+
+.site-logo {
+  height: 32px;
+  width: auto;
+}
+
+.site-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--white);
+  margin: 0;
+}
+
+/* Site description styling */
+.site-description {
+  text-align: center;
+}
+
+.site-desc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: var(--space-1) 0 0 0;
+}
 .navbar {
   background: var(--white);
   border-bottom: 1px solid var(--gray-200);

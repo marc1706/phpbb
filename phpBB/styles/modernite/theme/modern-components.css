@@ -764,3 +764,63 @@ blockquote cite::before {
   display: inline-block;
   margin-left: 16px;
 }
+
+/* Modern Footer Styles */
+.modern-footer {
+  background: var(--gradient-primary);
+  color: var(--white);
+  margin-top: 40px;
+  padding: 30px 0;
+  border-radius: 12px 12px 0 0;
+}
+
+.modern-copyright {
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.modern-copyright .footer-row {
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.modern-copyright .footer-row:last-child {
+  margin-bottom: 0;
+}
+
+.modern-copyright .footer-copyright {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+}
+
+.modern-copyright .footer-link {
+  color: var(--white);
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.modern-copyright .footer-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+
+.modern-copyright .footer-link-text {
+  font-weight: 500;
+}
+
+.modern-copyright .footer-info {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  font-family: monospace;
+}
+
+.modern-copyright .text-strong {
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: 6px;
+}

@@ -863,3 +863,319 @@ blockquote cite::before {
   padding: 6px 12px;
   border-radius: 6px;
 }
+
+/* Modern Form Components for Templates */
+.modern-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.modern-form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.875rem;
+}
+
+.modern-form-control {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-color);
+  background-color: var(--card-bg);
+  background-image: none;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: var(--transition);
+}
+
+.modern-form-control:focus {
+  border-color: var(--primary);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.15);
+}
+
+.modern-form-control:disabled {
+  background-color: var(--bg-light);
+  opacity: 1;
+}
+
+.modern-form-help {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.modern-form-check-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modern-form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modern-form-check-input {
+  margin: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+.modern-form-check-label {
+  margin: 0;
+  font-weight: normal;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.modern-form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.modern-form-links {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.modern-link {
+  color: var(--primary);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.modern-link:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* Modern Page Components */
+.modern-page-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.modern-page-title {
+  color: var(--heading-color);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.modern-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-color), transparent);
+  margin: 2rem 0;
+}
+
+.modern-text-muted {
+  color: var(--text-muted);
+}
+
+/* Login/Register Card Specific Styles */
+.login-card {
+  max-width: 450px;
+  margin: 2rem auto;
+}
+
+.register-card {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+/* Alert Components */
+.modern-alert {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+.modern-alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.modern-alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.modern-alert-info {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.modern-alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeaa7;
+}
+
+/* Member List Modern Styling */
+.modern-member-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.modern-member-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.modern-member-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.modern-member-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+  border: 3px solid var(--border-color);
+}
+
+.modern-member-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin-bottom: 0.5rem;
+}
+
+.modern-member-rank {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.modern-member-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.modern-member-stat {
+  text-align: center;
+}
+
+.modern-member-stat-number {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: block;
+}
+
+.modern-member-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* Search Results Styling */
+.modern-search-results {
+  margin-top: 2rem;
+}
+
+.modern-search-result {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.modern-search-result-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.modern-search-result-title a {
+  color: var(--heading-color);
+  text-decoration: none;
+}
+
+.modern-search-result-title a:hover {
+  color: var(--primary);
+}
+
+.modern-search-result-meta {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.modern-search-result-snippet {
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Posting Form Modern Styling */
+.modern-posting-form {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.modern-posting-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.modern-posting-section {
+  margin-bottom: 2rem;
+}
+
+.modern-posting-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+/* Responsive adjustments for forms */
+@media (max-width: 576px) {
+  .modern-form-check-group {
+    gap: 0.75rem;
+  }
+  
+  .row .col-sm-6 {
+    margin-bottom: 1rem;
+  }
+  
+  .modern-btn-lg {
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+  }
+}

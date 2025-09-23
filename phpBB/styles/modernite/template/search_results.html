@@ -1,53 +1,72 @@
 <!-- INCLUDE overall_header.html -->
 
-<!-- EVENT search_results_header_before -->
+<div class="modern-container">
+	<div class="row">
+		<div class="col-lg-10 mx-auto">
+			<!-- EVENT search_results_header_before -->
 
-<h2 class="searchresults-title"><!-- IF SEARCH_TITLE -->{SEARCH_TITLE}<!-- ELSE -->{SEARCH_MATCHES}<!-- ENDIF --><!-- IF SEARCH_WORDS -->{L_COLON} <a href="{U_SEARCH_WORDS}">{SEARCH_WORDS}</a><!-- ENDIF --></h2>
-<!-- IF SEARCHED_QUERY --> <p>{L_SEARCHED_QUERY}{L_COLON} <strong>{SEARCHED_QUERY}</strong></p><!-- ENDIF -->
-<!-- IF IGNORED_WORDS --> <p>{L_IGNORED_TERMS}{L_COLON} <strong>{IGNORED_WORDS}</strong></p><!-- ENDIF -->
-<!-- IF PHRASE_SEARCH_DISABLED --> <p><strong>{L_PHRASE_SEARCH_DISABLED}</strong></p><!-- ENDIF -->
+			<div class="modern-page-header">
+				<h2 class="modern-page-title"><!-- IF SEARCH_TITLE -->{SEARCH_TITLE}<!-- ELSE -->{SEARCH_MATCHES}<!-- ENDIF --><!-- IF SEARCH_WORDS -->{L_COLON} <a href="{U_SEARCH_WORDS}" class="modern-link">{SEARCH_WORDS}</a><!-- ENDIF --></h2>
+				<!-- IF SEARCHED_QUERY -->
+					<div class="modern-text-muted">{L_SEARCHED_QUERY}{L_COLON} <strong>{SEARCHED_QUERY}</strong></div>
+				<!-- ENDIF -->
+				<!-- IF IGNORED_WORDS -->
+					<div class="modern-alert modern-alert-warning">{L_IGNORED_TERMS}{L_COLON} <strong>{IGNORED_WORDS}</strong></div>
+				<!-- ENDIF -->
+				<!-- IF PHRASE_SEARCH_DISABLED -->
+					<div class="modern-alert modern-alert-info"><strong>{L_PHRASE_SEARCH_DISABLED}</strong></div>
+				<!-- ENDIF -->
+			</div>
 
-<!-- IF SEARCH_TOPIC -->
-	<p class="return-link">
-		<a class="arrow-{S_CONTENT_FLOW_BEGIN}" href="{U_SEARCH_TOPIC}">
-			{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_BEGIN, lang('RETURN_TO_TOPIC'), false, 'fas c-return-arrow-icon') }}
-		</a>
-	</p>
-<!-- ELSE -->
-	<p class="advanced-search-link">
-		<a class="arrow-{S_CONTENT_FLOW_BEGIN}" href="{U_SEARCH}" title="{L_SEARCH_ADV}">
-			{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_BEGIN, lang('GO_TO_SEARCH_ADV'), false, 'fas c-return-arrow-icon') }}
-		</a>
-	</p>
-<!-- ENDIF -->
+			<div class="mb-4">
+				<!-- IF SEARCH_TOPIC -->
+					<a class="modern-btn modern-btn-outline-secondary" href="{U_SEARCH_TOPIC}">
+						{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_BEGIN, lang('RETURN_TO_TOPIC'), false, 'fas c-return-arrow-icon') }}
+						{L_RETURN_TO_TOPIC}
+					</a>
+				<!-- ELSE -->
+					<a class="modern-btn modern-btn-outline-secondary" href="{U_SEARCH}" title="{L_SEARCH_ADV}">
+						{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_BEGIN, lang('GO_TO_SEARCH_ADV'), false, 'fas c-return-arrow-icon') }}
+						{L_SEARCH_ADV}
+					</a>
+				<!-- ENDIF -->
+			</div>
 
-<!-- EVENT search_results_header_after -->
+			<!-- EVENT search_results_header_after -->
 
-<!-- IF .pagination or SEARCH_MATCHES or TOTAL_MATCHES or PAGE_NUMBER -->
-	<div class="action-bar bar-top">
+			<!-- IF .pagination or SEARCH_MATCHES or TOTAL_MATCHES or PAGE_NUMBER -->
+				<div class="modern-card modern-action-bar">
+					<div class="modern-card-body">
+						<div class="row align-items-center">
+							<!-- IF TOTAL_MATCHES > 0 -->
+								<div class="col-md-8">
+									<form method="post" action="{S_SEARCH_ACTION}" class="modern-search">
+										<div class="modern-form-group mb-0">
+											<div class="input-group">
+												<input class="modern-form-control" type="search" name="add_keywords" id="add_keywords" value="" placeholder="{L_SEARCH_IN_RESULTS}" />
+												<div class="input-group-append">
+													<button class="modern-btn modern-btn-primary" type="submit" title="{L_SEARCH}">
+														{{ Icon('font', 'search', lang('SEARCH'), true, 'fas c-button-icon') }}
+													</button>
+													<a href="{U_SEARCH}" class="modern-btn modern-btn-outline-secondary" title="{L_SEARCH_ADV}">
+														{{ Icon('font', 'gear', lang('SEARCH_ADV'), true, 'fas c-button-icon') }}
+													</a>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							<!-- ENDIF -->
 
-	<!-- IF TOTAL_MATCHES > 0 -->
-		<div class="search-box" role="search">
-			<form method="post" action="{S_SEARCH_ACTION}">
-			<fieldset>
-				<input class="inputbox search tiny" type="search" name="add_keywords" id="add_keywords" value="" placeholder="{L_SEARCH_IN_RESULTS}" />
-				<button class="button button-search" type="submit" title="{L_SEARCH}">
-					{{ Icon('font', 'search', lang('SEARCH'), true, 'fas c-button-icon') }}
-				</button>
-				<a href="{U_SEARCH}" class="button button-search-end" title="{L_SEARCH_ADV}">
-					{{ Icon('font', 'gear', lang('SEARCH_ADV'), true, 'fas c-button-icon') }}
-				</a>
-			</fieldset>
-			</form>
-		</div>
-	<!-- ENDIF -->
+							<div class="col-md-4 text-right">
+								<!-- IF U_MARK_ALL_READ --><a href="{U_MARK_ALL_READ}" class="modern-btn modern-btn-sm modern-btn-outline-secondary" accesskey="m">{L_MARK_ALL_READ}</a><!-- ENDIF -->
+								<div class="modern-text-muted">{SEARCH_MATCHES}</div>
+							</div>
+						</div>
 
-		<!-- EVENT search_results_searchbox_after -->
+						<!-- EVENT search_results_searchbox_after -->
 
-		<div class="pagination">
-			<!-- IF U_MARK_ALL_READ --><a href="{U_MARK_ALL_READ}" class="mark-read" accesskey="m">{L_MARK_ALL_READ}</a> &bull;<!-- ENDIF -->
-			{SEARCH_MATCHES}
-			<!-- IF .pagination -->
+						<!-- IF .pagination -->
 				<!-- INCLUDE pagination.html -->
 			<!-- ELSE -->
 				 &bull; {PAGE_NUMBER}

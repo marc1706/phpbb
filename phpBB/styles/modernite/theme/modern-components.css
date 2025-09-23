@@ -1,6 +1,5 @@
 /* Modern Components for Modernite
    ================================ */
-
 /* Modern Icon System - CSS-based for cross-browser consistency */
 .modern-icon {
     display: inline-block;
@@ -11,7 +10,6 @@
     vertical-align: middle;
     margin-right: 0.5rem;
 }
-
 /* CSS-based icons using pseudo-elements for consistency */
 .modern-icon::before {
     content: '';
@@ -22,98 +20,78 @@
     background-repeat: no-repeat;
     background-position: center;
 }
-
 /* Home icon */
 .modern-icon-home::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/%3E%3C/svg%3E");
 }
-
 /* Forum/Message icon */
 .modern-icon-forum::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z'/%3E%3C/svg%3E");
 }
-
 /* User/Members icon */
 .modern-icon-user::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E");
 }
-
 /* Search icon */
 .modern-icon-search::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E");
 }
-
 /* Help icon */
 .modern-icon-help::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z'/%3E%3C/svg%3E");
 }
-
 /* Arrow icons for pagination */
 .modern-icon-arrow-left::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z'/%3E%3C/svg%3E");
 }
-
 .modern-icon-arrow-right::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z'/%3E%3C/svg%3E");
 }
-
 .modern-icon-arrow-down::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z'/%3E%3C/svg%3E");
 }
-
 /* Quote icon */
 .modern-icon-quote::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z'/%3E%3C/svg%3E");
 }
-
 /* Close icon */
 .modern-icon-close::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E");
 }
-
 /* Icon positioning in buttons */
 .button .modern-icon {
     margin-right: 0.375rem;
     margin-left: 0;
 }
-
 .button-icon-only .modern-icon {
     margin: 0;
 }
-
 /* Navigation menu icons */
 .quick-links .modern-icon {
     margin-right: 0.5rem;
     opacity: 0.8;
 }
-
 /* Search and dropdown icons */
 .dropdown-trigger .modern-icon {
     margin: 0;
 }
-
 /* Icon sizes */
 .modern-icon-sm {
     font-size: 0.875em;
 }
-
 .modern-icon-lg {
     font-size: 1.25em;
 }
-
 /* Icon colors */
 .modern-icon-primary {
     color: var(--primary);
 }
-
 .modern-icon-secondary {
     color: var(--secondary);
 }
-
 .modern-icon-muted {
     opacity: 0.6;
 }
-
 /* Typography enhancements */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
@@ -121,89 +99,74 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.5em;
   color: var(--gray-800);
 }
-
 h1 { font-size: 2.25rem; }
 h2 { font-size: 1.875rem; }
 h3 { font-size: 1.5rem; }
 h4 { font-size: 1.25rem; }
 h5 { font-size: 1.125rem; }
 h6 { font-size: 1rem; }
-
 /* Enhanced forum list styling */
 .forumlist {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .forumlist li {
   border-radius: var(--radius-md);
   margin-bottom: var(--space-2);
   transition: var(--transition-normal);
 }
-
 .forumlist li:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
-
 /* Modern topic list */
 .topiclist {
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow);
 }
-
 .topiclist li {
   border-bottom: 1px solid var(--gray-200);
-  transition: background-color 0.2s ease;
+  transition: var(--transition-normal);
 }
-
 .topiclist li:last-child {
   border-bottom: none;
 }
-
 .topiclist li:hover {
   background: var(--gray-50);
 }
-
 /* Enhanced post styling */
 .postbody {
   padding: 20px;
   background: var(--white);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
-
 .postprofile {
   background: var(--gray-50);
   border-radius: 8px;
   padding: 16px;
   margin-left: 16px;
 }
-
 .postprofile .avatar {
   border-radius: 50%;
   box-shadow: var(--shadow-md);
   margin-bottom: 12px;
 }
-
 /* Modern search box */
 .search-box {
   position: relative;
 }
-
 .search-box input {
   padding-left: 40px;
   border-radius: 25px;
   border: 2px solid var(--gray-300);
   transition: var(--transition-normal);
 }
-
 .search-box input:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
-
 .search-box::before {
   content: "🔍";
   position: absolute;
@@ -213,56 +176,48 @@ h6 { font-size: 1rem; }
   color: var(--gray-400);
   z-index: 1;
 }
-
 /* Enhanced dropdown menus */
 .dropdown {
   position: relative;
   display: inline-block;
 }
-
 .dropdown-menu {
   background: var(--white);
   border: 1px solid var(--gray-200);
   border-radius: 8px;
   box-shadow: var(--shadow-lg);
-  padding: 8px 0;
+  padding: var(--space-2) 0;
   min-width: 200px;
 }
-
 .dropdown-menu a {
   display: block;
-  padding: 8px 16px;
+  padding: var(--space-2) 16px;
   color: var(--gray-700);
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
-
 .dropdown-menu a:hover {
   background: var(--gray-100);
   color: var(--primary);
 }
-
 /* Modern notification styling */
 .notification {
   background: var(--white);
   border: 1px solid var(--gray-200);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   padding: 12px 16px;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-2);
   box-shadow: var(--shadow-sm);
-  transition: all 0.2s ease;
+  transition: var(--transition-normal);
 }
-
 .notification:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
-
 .notification.unread {
   border-left: 4px solid var(--primary);
   background: rgba(99, 102, 241, 0.05);
 }
-
 /* Enhanced user profile cards */
 .user-card {
   background: var(--white);
@@ -273,12 +228,10 @@ h6 { font-size: 1rem; }
   box-shadow: var(--shadow-md);
   transition: var(--transition-normal);
 }
-
 .user-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
 }
-
 .user-card .avatar {
   width: 80px;
   height: 80px;
@@ -286,25 +239,22 @@ h6 { font-size: 1rem; }
   margin: 0 auto 16px;
   box-shadow: var(--shadow-lg);
 }
-
 .user-card .username {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--gray-800);
 }
-
 .user-card .user-title {
   color: var(--gray-600);
   font-size: 0.9rem;
   margin-bottom: 16px;
 }
-
 /* Modern buttons */
 .button {
   display: inline-flex;
   align-items: center;
-  padding: 8px 16px;
+  padding: var(--space-2) 16px;
   background: var(--primary);
   color: var(--white);
   border: 2px solid var(--primary);
@@ -314,7 +264,6 @@ h6 { font-size: 1rem; }
   transition: var(--transition-normal);
   cursor: pointer;
 }
-
 .button:hover {
   background: var(--primary-dark);
   border-color: var(--primary-dark);
@@ -322,66 +271,54 @@ h6 { font-size: 1rem; }
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
-
 .button-secondary {
   background: var(--white);
   color: var(--gray-700);
   border-color: var(--gray-300);
 }
-
 .button-secondary:hover {
   background: var(--gray-50);
   color: var(--gray-800);
   border-color: var(--gray-400);
 }
-
 .button-small {
   padding: 4px 8px;
   font-size: 0.875rem;
 }
-
 .button-large {
   padding: 12px 24px;
   font-size: 1.125rem;
 }
-
 /* Icon buttons */
 .button .modern-icon {
   margin-right: 8px;
   margin-left: 0;
 }
-
 .button-icon-only {
-  padding: 8px;
+  padding: var(--space-2);
 }
-
 .button-icon-only .modern-icon {
   margin: 0;
 }
-
 /* Main content container */
 .wrap {
   background: var(--gray-50);
   min-height: 100vh;
 }
-
 #main {
   background: var(--gray-50);                                                          
   padding: 0;
 }
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
-
 /* Content wrapper */
 .content {
   background: transparent;
   padding: 0;
 }
-
 /* Action bar styling */
 .action-bar {
   display: flex;
@@ -394,15 +331,12 @@ h6 { font-size: 1rem; }
   border-radius: 8px;
   box-shadow: var(--shadow);
 }
-
 .action-bar .button {
   margin-left: 8px;
 }
-
 .mark-read {
   margin-left: auto;
 }
-
 /* Modern navigation styling */
 .headerbar {
   background: var(--gradient-primary);
@@ -411,36 +345,30 @@ h6 { font-size: 1rem; }
   margin-bottom: 0;
   box-shadow: var(--shadow-md);
 }
-
 .headerbar .inner {
   padding: 20px;
   text-align: center;
 }
-
 .headerbar h1 {
   font-size: 2rem;
   font-weight: 700;
   color: var(--white);
   margin: 0;
 }
-
 .headerbar p {
   color: rgba(255, 255, 255, 0.9);
   margin: 8px 0 0 0;
   font-size: 1.1rem;
 }
-
 .navbar {
   background: var(--white);
   border-bottom: 1px solid var(--gray-200);
   box-shadow: var(--shadow);
   margin-bottom: 24px;
 }
-
 .navbar .inner {
   padding: 0 20px;
 }
-
 .nav-main {
   display: flex;
   align-items: center;
@@ -450,29 +378,24 @@ h6 { font-size: 1rem; }
   padding: 0;
   min-height: 56px;
 }
-
 .nav-main li {
   display: flex;
   align-items: center;
 }
-
 .nav-main a {
   display: flex;
   align-items: center;
   padding: 16px 12px;
   color: var(--gray-700);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: var(--transition-normal);
 }
-
 .nav-main a:hover {
   color: var(--primary);
 }
-
 .dropdown-trigger {
   position: relative;
 }
-
 .dropdown {
   position: absolute;
   top: 100%;
@@ -485,50 +408,42 @@ h6 { font-size: 1rem; }
   z-index: 1000;
   display: none;
 }
-
 .dropdown-container:hover .dropdown {
   display: block;
 }
-
 .dropdown-contents {
   list-style: none;
   margin: 0;
-  padding: 8px 0;
+  padding: var(--space-2) 0;
 }
-
 .dropdown-contents li a {
   display: flex;
   align-items: center;
-  padding: 8px 16px;
+  padding: var(--space-2) 16px;
   color: var(--gray-700);
   text-decoration: none;
   transition: background-color 0.2s ease;
 }
-
 .dropdown-contents li a:hover {
   background: var(--gray-100);
   color: var(--primary);
 }
-
 .separator {
   border-top: 1px solid var(--gray-200);
   margin: 4px 0;
 }
-
 .badge {
   background: var(--primary);
   color: var(--white);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   padding: 2px 6px;
   font-size: 0.75rem;
   font-weight: 600;
   margin-left: 4px;
 }
-
 .badge-pm {
   background: var(--accent);
 }
-
 /* Modern forum wrapper styles */
 .forabg, .forumbg {
   background: var(--white);
@@ -538,15 +453,12 @@ h6 { font-size: 1rem; }
   box-shadow: var(--shadow);
   overflow: hidden;
 }
-
 .modern-forum-wrapper {
   margin-bottom: 24px;
 }
-
 .forabg .inner, .forumbg .inner {
   padding: 0;
 }
-
 /* Modern forum header styling */
 .topiclist li.header {
   background: var(--gradient-primary);
@@ -554,41 +466,33 @@ h6 { font-size: 1rem; }
   font-weight: 600;
   border: none;
 }
-
 .topiclist li.header dl {
   padding: 16px 20px;
 }
-
 .topiclist li.header dt, 
 .topiclist li.header dd {
   color: var(--white);
   font-weight: 600;
 }
-
 /* Forum list item styling */
 .topiclist.forums li {
   border-bottom: 1px solid var(--gray-200);
   transition: background-color 0.2s ease;
 }
-
 .topiclist.forums li:last-child {
   border-bottom: none;
 }
-
 .topiclist.forums li:hover {
   background: var(--gray-50);
 }
-
 .topiclist.forums dl {
   padding: 16px 20px;
 }
-
 .topiclist.forums dt {
   width: auto;
   float: none;
   padding: 0;
 }
-
 .topiclist.forums dd {
   border-left: none;
   margin-left: 0;
@@ -596,11 +500,9 @@ h6 { font-size: 1rem; }
   text-align: center;
   color: var(--gray-600);
 }
-
 .topiclist.forums .list-inner {
   padding: 0;
 }
-
 .forumtitle {
   font-size: 1.125rem;
   font-weight: 600;
@@ -609,38 +511,31 @@ h6 { font-size: 1rem; }
   margin-bottom: 4px;
   display: block;
 }
-
 .forumtitle:hover {
   color: var(--primary);
 }
-
 .forum-desc {
   color: var(--gray-600);
   font-size: 0.9rem;
   line-height: 1.4;
   margin-top: 4px;
 }
-
 /* Forum statistics */
 .topics, .posts {
   font-weight: 600;
   color: var(--gray-700);
 }
-
 .lastpost {
   color: var(--gray-600);
   font-size: 0.875rem;
 }
-
 .lastpost a {
   color: var(--primary);
   text-decoration: none;
 }
-
 .lastpost a:hover {
   text-decoration: underline;
 }
-
 /* Modern statistics cards */
 .stats-card {
   background: var(--white);
@@ -649,28 +544,24 @@ h6 { font-size: 1rem; }
   padding: 20px;
   text-align: center;
   box-shadow: var(--shadow);
-  transition: all 0.2s ease;
+  transition: var(--transition-normal);
 }
-
 .stats-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
-
 .stats-card .stat-number {
   font-size: 2rem;
   font-weight: 700;
   color: var(--primary);
   margin-bottom: 8px;
 }
-
 .stats-card .stat-label {
   color: var(--gray-600);
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-
 /* Enhanced table styling */
 table {
   width: 100%;
@@ -681,7 +572,6 @@ table {
   overflow: hidden;
   box-shadow: var(--shadow);
 }
-
 th {
   background: var(--gray-50);
   color: var(--gray-700);
@@ -690,21 +580,17 @@ th {
   text-align: left;
   border-bottom: 2px solid var(--gray-200);
 }
-
 td {
   padding: 12px 16px;
   border-bottom: 1px solid var(--gray-200);
   transition: background-color 0.2s ease;
 }
-
 tr:hover td {
   background: var(--gray-50);
 }
-
 tr:last-child td {
   border-bottom: none;
 }
-
 /* Modern progress bars */
 .progress {
   background: var(--gray-200);
@@ -712,40 +598,34 @@ tr:last-child td {
   height: 8px;
   overflow: hidden;
 }
-
 .progress-bar {
   background: var(--gradient-primary);
   height: 100%;
   border-radius: 10px;
   transition: width 0.3s ease;
 }
-
 /* Enhanced code blocks */
 code, pre {
   background: var(--gray-100);
   border: 1px solid var(--gray-200);
-  border-radius: 6px;
+  border-radius: var(--radius);
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 }
-
 code {
   padding: 2px 6px;
   font-size: 0.875em;
   color: var(--gray-800);
 }
-
 pre {
   padding: 16px;
   overflow-x: auto;
   line-height: 1.5;
 }
-
 pre code {
   background: none;
   border: none;
   padding: 0;
 }
-
 /* Modern quotes/blockquotes */
 blockquote {
   background: var(--gray-50);
@@ -756,7 +636,6 @@ blockquote {
   font-style: italic;
   color: var(--gray-700);
 }
-
 blockquote cite {
   display: block;
   margin-top: 8px;
@@ -764,17 +643,14 @@ blockquote cite {
   color: var(--gray-600);
   font-style: normal;
 }
-
 blockquote cite::before {
   content: "— ";
 }
-
 /* Loading states */
 .loading {
   position: relative;
   overflow: hidden;
 }
-
 .loading::after {
   content: "";
   position: absolute;
@@ -785,12 +661,10 @@ blockquote cite::before {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
   animation: loading 1.5s infinite;
 }
-
 @keyframes loading {
   0% { left: -100%; }
   100% { left: 100%; }
 }
-
 /* Floating action elements */
 .floating {
   position: fixed;
@@ -805,21 +679,18 @@ blockquote cite::before {
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-lg);
-  transition: all 0.2s ease;
+  transition: var(--transition-normal);
   z-index: 1000;
 }
-
 .floating:hover {
   transform: scale(1.1);
   box-shadow: var(--shadow-xl);
 }
-
 /* Modern tooltip */
 .tooltip {
   position: relative;
   cursor: help;
 }
-
 .tooltip::after {
   content: attr(data-tooltip);
   position: absolute;
@@ -828,8 +699,8 @@ blockquote cite::before {
   transform: translateX(-50%);
   background: var(--gray-800);
   color: var(--white);
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: var(--space-2) 12px;
+  border-radius: var(--radius);
   font-size: 0.875rem;
   white-space: nowrap;
   opacity: 0;
@@ -837,46 +708,37 @@ blockquote cite::before {
   transition: opacity 0.2s ease;
   z-index: 1000;
 }
-
 .tooltip:hover::after {
   opacity: 1;
 }
-
 /* Modern Topic View Styles */
 .forum-header-card {
   margin-bottom: 20px;
 }
-
 .forum-header-card .forum-title {
   margin: 0;
   font-size: 1.5rem;
   color: var(--primary);
 }
-
 .forum-header-card .forum-title a {
   color: inherit;
   text-decoration: none;
 }
-
 .forum-header-card .forum-title a:hover {
   color: var(--primary-hover);
 }
-
 .forum-description {
   color: var(--gray-600);
   margin-bottom: 12px;
 }
-
 .moderators {
   color: var(--gray-700);
   margin: 0;
 }
-
 .modern-rules-card {
   margin-bottom: 20px;
   border-left: 4px solid var(--warning);
 }
-
 .modern-action-bar {
   background: var(--white);
   border: 1px solid var(--gray-200);
@@ -885,16 +747,13 @@ blockquote cite::before {
   margin-bottom: 20px;
   box-shadow: var(--shadow-sm);
 }
-
 .modern-search {
   position: relative;
 }
-
 .modern-search input {
   width: 100%;
   padding-right: 80px;
 }
-
 .modern-search .button-search,
 .modern-search .button-search-end {
   position: absolute;
@@ -903,115 +762,93 @@ blockquote cite::before {
   border: none;
   background: transparent;
   color: var(--gray-600);
-  padding: 8px;
+  padding: var(--space-2);
 }
-
 .modern-search .button-search {
   right: 40px;
 }
-
 .modern-search .button-search-end {
   right: 8px;
 }
-
 .modern-search .button-search:hover,
 .modern-search .button-search-end:hover {
   color: var(--primary);
 }
-
 .pagination-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 12px;
 }
-
 .modern-login-card {
   margin: 20px 0;
 }
-
 .form-group {
   margin-bottom: 16px;
 }
-
 .form-group label {
   display: block;
   margin-bottom: 4px;
   font-weight: 500;
   color: var(--gray-700);
 }
-
 .form-control {
   width: 100%;
-  padding: 8px 12px;
+  padding: var(--space-2) 12px;
   border: 1px solid var(--gray-300);
-  border-radius: 6px;
+  border-radius: var(--radius);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-
 .form-control:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   outline: none;
 }
-
 .form-options {
   margin: 16px 0;
 }
-
 .checkbox-label {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
   color: var(--gray-700);
 }
-
 .checkbox-label input {
   margin-right: 8px;
 }
-
 .form-actions {
   margin-top: 16px;
 }
-
 .modern-topics-card {
   margin-bottom: 20px;
 }
-
 .announcement-card {
   border-left: 4px solid var(--warning);
 }
-
 .topics-list {
   padding: 0;
 }
-
 .modern-topic-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .topic-row {
   border-bottom: 1px solid var(--gray-200);
-  transition: all 0.2s ease;
+  transition: var(--transition-normal);
   padding: 16px;
 }
-
 .topic-row:last-child {
   border-bottom: none;
 }
-
 .topic-row:hover {
   background: var(--gray-50);
 }
-
 .topic-content {
   display: flex;
   align-items: flex-start;
   gap: 16px;
 }
-
 .topic-icon {
   flex-shrink: 0;
   width: 40px;
@@ -1021,22 +858,18 @@ blockquote cite::before {
   justify-content: center;
   border-radius: 8px;
   background: var(--gray-100);
-  transition: all 0.2s ease;
+  transition: var(--transition-normal);
 }
-
 .topic-icon a {
   color: var(--gray-600);
   text-decoration: none;
 }
-
 .topic-icon:hover {
   background: var(--primary-light);
 }
-
 .topic-icon:hover a {
   color: var(--primary-dark);
 }
-
 .topic-icon-global { color: var(--info); }
 .topic-icon-announce { color: var(--warning); }
 .topic-icon-sticky { color: var(--accent); }
@@ -1044,16 +877,13 @@ blockquote cite::before {
 .topic-icon-moved { color: var(--gray-500); }
 .topic-icon-hot { color: var(--danger); }
 .topic-icon-normal { color: var(--gray-600); }
-
 .topic-details {
   flex: 1;
   min-width: 0;
 }
-
 .topic-title-wrapper {
   margin-bottom: 8px;
 }
-
 .topictitle {
   font-size: 1.1rem;
   font-weight: 600;
@@ -1061,16 +891,13 @@ blockquote cite::before {
   text-decoration: none;
   line-height: 1.3;
 }
-
 .topictitle:hover {
   color: var(--primary);
 }
-
 .topictitle.unread {
   font-weight: 700;
   color: var(--primary);
 }
-
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -1081,35 +908,29 @@ blockquote cite::before {
   text-decoration: none;
   margin-left: 8px;
 }
-
 .topic-meta {
   color: var(--gray-600);
   font-size: 0.875rem;
   margin-bottom: 8px;
 }
-
 .topic-feature {
   display: inline-flex;
   align-items: center;
   margin-right: 12px;
   color: var(--gray-500);
 }
-
 .topic-feature i {
   margin-right: 4px;
 }
-
 .topic-author {
   color: var(--gray-600);
 }
-
 .topic-pagination {
   margin-top: 8px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
 .pagination-list {
   display: flex;
   list-style: none;
@@ -1117,107 +938,88 @@ blockquote cite::before {
   margin: 0;
   gap: 4px;
 }
-
 .pagination-list li {
   border-bottom: none;
 }
-
 .pagination-list .button-small {
   padding: 4px 8px;
   font-size: 0.75rem;
 }
-
 .mobile-topic-info {
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px solid var(--gray-200);
 }
-
 .mobile-stats {
   display: flex;
   gap: 16px;
   margin-bottom: 8px;
 }
-
 .stat-item {
   color: var(--gray-600);
   font-size: 0.875rem;
 }
-
 .mobile-last-post {
   color: var(--gray-600);
   font-size: 0.875rem;
 }
-
 .topic-stats {
   display: flex;
   gap: 20px;
   flex-shrink: 0;
 }
-
 .stat-cell {
   text-align: center;
   min-width: 80px;
 }
-
 .stat-cell .stat-number {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--primary);
   margin-bottom: 2px;
 }
-
 .stat-cell .stat-label {
   font-size: 0.75rem;
   color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-
 .lastpost-info {
   text-align: center;
 }
-
 .lastpost-author {
   color: var(--gray-600);
   font-size: 0.875rem;
   margin-bottom: 2px;
 }
-
 .lastpost-time {
   color: var(--gray-500);
   font-size: 0.75rem;
 }
-
 .lastpost-time a {
   color: var(--primary);
   text-decoration: none;
   margin-right: 4px;
 }
-
 .lastpost-time a:hover {
   color: var(--primary-hover);
 }
-
 .modern-online-card,
 .modern-permissions-card {
   margin-bottom: 20px;
 }
-
 .modern-online-card .card-body p,
 .modern-permissions-card .card-body p {
   margin: 0;
   color: var(--gray-700);
   line-height: 1.6;
 }
-
 /* Desktop: Make online and permissions cards more horizontal and efficient */
 @media (min-width: 768px) {
   .modern-online-card .card-body,
   .modern-permissions-card .card-body {
     padding: 16px 24px;
   }
-  
   .modern-online-card .card-body p,
   .modern-permissions-card .card-body p {
     margin: 0;
@@ -1226,38 +1028,31 @@ blockquote cite::before {
     align-items: center;
     gap: 8px;
   }
-  
   .modern-online-card .card-body p br {
     display: none;
   }
-  
   .modern-permissions-card .card-body p br {
     display: none;
   }
-  
   .modern-permissions-card .card-body p {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
   }
 }
-
 /* Mark topics button consistency */
 .mark-topics-btn {
   font-size: 0.85rem;
   padding: 4px 8px;
   margin-right: 8px;
 }
-
 .text-right {
   text-align: right;
 }
-
 .sort-options {
   display: inline-block;
   margin-left: 16px;
 }
-
 /* Modern Footer Styles */
 .modern-footer {
   background: var(--gradient-primary);
@@ -1266,63 +1061,52 @@ blockquote cite::before {
   padding: 30px 0;
   border-radius: 12px 12px 0 0;
 }
-
 .modern-copyright {
   text-align: center;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
-
 .modern-copyright .footer-row {
   margin-bottom: 16px;
   line-height: 1.6;
 }
-
 .modern-copyright .footer-row:last-child {
   margin-bottom: 0;
 }
-
 .modern-copyright .footer-copyright {
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
 }
-
 .modern-copyright .footer-link {
   color: var(--white);
   text-decoration: none;
   padding: 4px 8px;
   border-radius: 4px;
-  transition: all 0.2s ease;
+  transition: var(--transition-normal);
 }
-
 .modern-copyright .footer-link:hover {
   background: rgba(255, 255, 255, 0.1);
   color: var(--white);
 }
-
 .modern-copyright .footer-link-text {
   font-weight: 500;
 }
-
 .modern-copyright .footer-info {
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.8rem;
   font-family: monospace;
 }
-
 .modern-copyright .text-strong {
   font-weight: 600;
   background: rgba(255, 255, 255, 0.1);
   padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: var(--radius);
 }
-
 /* Modern Form Components for Templates */
 .modern-form-group {
   margin-bottom: 1.5rem;
 }
-
 .modern-form-label {
   display: block;
   margin-bottom: 0.5rem;
@@ -1330,7 +1114,6 @@ blockquote cite::before {
   color: var(--text-color);
   font-size: 0.875rem;
 }
-
 .modern-form-control {
   display: block;
   width: 100%;
@@ -1344,107 +1127,89 @@ blockquote cite::before {
   border-radius: 8px;
   transition: var(--transition);
 }
-
 .modern-form-control:focus {
   border-color: var(--primary);
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.15);
 }
-
 .modern-form-control:disabled {
   background-color: var(--bg-light);
   opacity: 1;
 }
-
 .modern-form-help {
   margin-top: 0.25rem;
   font-size: 0.75rem;
   color: var(--text-muted);
 }
-
 .modern-form-check-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .modern-form-check {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-
 .modern-form-check-input {
   margin: 0;
   width: 1rem;
   height: 1rem;
 }
-
 .modern-form-check-label {
   margin: 0;
   font-weight: normal;
   color: var(--text-color);
   cursor: pointer;
 }
-
 .modern-form-actions {
   display: flex;
   justify-content: center;
   gap: 1rem;
   margin-top: 2rem;
 }
-
 .modern-form-links {
   margin-top: 0.5rem;
   font-size: 0.875rem;
 }
-
 .modern-link {
   color: var(--primary);
   text-decoration: none;
   transition: var(--transition);
 }
-
 .modern-link:hover {
   color: var(--primary-dark);
   text-decoration: underline;
 }
-
 /* Modern Page Components */
 .modern-page-header {
   margin-bottom: 2rem;
   text-align: center;
 }
-
 .modern-page-title {
   color: var(--heading-color);
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
 }
-
 .modern-divider {
   border: none;
   height: 1px;
   background: linear-gradient(to right, transparent, var(--border-color), transparent);
   margin: 2rem 0;
 }
-
 .modern-text-muted {
   color: var(--text-muted);
 }
-
 /* Login/Register Card Specific Styles */
 .login-card {
   max-width: 450px;
   margin: 2rem auto;
 }
-
 .register-card {
   max-width: 450px;
   margin: 0 auto;
 }
-
 /* Alert Components */
 .modern-alert {
   padding: 0.75rem 1rem;
@@ -1453,31 +1218,26 @@ blockquote cite::before {
   border-radius: 8px;
   font-size: 0.875rem;
 }
-
 .modern-alert-danger {
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
-
 .modern-alert-success {
   color: #155724;
   background-color: #d4edda;
   border-color: #c3e6cb;
 }
-
 .modern-alert-info {
   color: #0c5460;
   background-color: #d1ecf1;
   border-color: #bee5eb;
 }
-
 .modern-alert-warning {
   color: #856404;
   background-color: #fff3cd;
   border-color: #ffeaa7;
 }
-
 /* Member List Modern Styling */
 .modern-member-grid {
   display: grid;
@@ -1485,7 +1245,6 @@ blockquote cite::before {
   gap: 1.5rem;
   margin-top: 2rem;
 }
-
 .modern-member-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -1495,12 +1254,10 @@ blockquote cite::before {
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
 }
-
 .modern-member-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
-
 .modern-member-avatar {
   width: 64px;
   height: 64px;
@@ -1509,20 +1266,17 @@ blockquote cite::before {
   overflow: hidden;
   border: 3px solid var(--border-color);
 }
-
 .modern-member-name {
   font-size: 1.125rem;
   font-weight: 600;
   color: var(--heading-color);
   margin-bottom: 0.5rem;
 }
-
 .modern-member-rank {
   color: var(--text-muted);
   font-size: 0.875rem;
   margin-bottom: 1rem;
 }
-
 .modern-member-stats {
   display: flex;
   justify-content: space-around;
@@ -1530,29 +1284,24 @@ blockquote cite::before {
   padding-top: 1rem;
   border-top: 1px solid var(--border-color);
 }
-
 .modern-member-stat {
   text-align: center;
 }
-
 .modern-member-stat-number {
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--primary);
   display: block;
 }
-
 .modern-member-stat-label {
   font-size: 0.75rem;
   color: var(--text-muted);
   text-transform: uppercase;
 }
-
 /* Search Results Styling */
 .modern-search-results {
   margin-top: 2rem;
 }
-
 .modern-search-result {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -1561,33 +1310,27 @@ blockquote cite::before {
   margin-bottom: 1rem;
   box-shadow: var(--shadow-sm);
 }
-
 .modern-search-result-title {
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
-
 .modern-search-result-title a {
   color: var(--heading-color);
   text-decoration: none;
 }
-
 .modern-search-result-title a:hover {
   color: var(--primary);
 }
-
 .modern-search-result-meta {
   color: var(--text-muted);
   font-size: 0.875rem;
   margin-bottom: 1rem;
 }
-
 .modern-search-result-snippet {
   color: var(--text-color);
   line-height: 1.6;
 }
-
 /* Posting Form Modern Styling */
 .modern-posting-form {
   background: var(--card-bg);
@@ -1596,7 +1339,6 @@ blockquote cite::before {
   padding: 2rem;
   box-shadow: var(--shadow-sm);
 }
-
 .modern-posting-title {
   font-size: 1.5rem;
   font-weight: 600;
@@ -1604,11 +1346,9 @@ blockquote cite::before {
   margin-bottom: 1.5rem;
   text-align: center;
 }
-
 .modern-posting-section {
   margin-bottom: 2rem;
 }
-
 .modern-posting-section-title {
   font-size: 1.125rem;
   font-weight: 600;
@@ -1617,30 +1357,24 @@ blockquote cite::before {
   padding-bottom: 0.5rem;
   border-bottom: 2px solid var(--border-color);
 }
-
 /* Responsive adjustments for forms */
 @media (max-width: 576px) {
   .modern-form-check-group {
     gap: 0.75rem;
   }
-  
   .row .col-sm-6 {
     margin-bottom: 1rem;
   }
-  
   .modern-btn-lg {
     padding: 0.75rem 1.25rem;
     font-size: 1rem;
   }
 }
-
 /* Template-Specific Modern Enhancements */
-
 /* Enhanced FAQ Styling */
 .modern-faq-section {
   margin-bottom: 2rem;
 }
-
 .modern-faq-section h3 {
   color: var(--primary);
   font-size: 1.25rem;
@@ -1649,26 +1383,22 @@ blockquote cite::before {
   border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
 }
-
 .modern-list-unstyled {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
 .modern-list-unstyled li {
   margin-bottom: 0.75rem;
   padding-left: 1rem;
   border-left: 3px solid var(--primary-light);
   transition: all 0.3s ease;
 }
-
 .modern-list-unstyled li:hover {
   border-left-color: var(--primary);
   background-color: var(--hover-bg);
   padding-left: 1.25rem;
 }
-
 /* Enhanced Table System */
 .modern-table-responsive {
   overflow-x: auto;
@@ -1676,7 +1406,6 @@ blockquote cite::before {
   border-radius: 8px;
   box-shadow: var(--shadow-sm);
 }
-
 .modern-table {
   width: 100%;
   margin: 0;
@@ -1687,7 +1416,6 @@ blockquote cite::before {
   border-radius: 8px;
   overflow: hidden;
 }
-
 .modern-table th {
   background: var(--gradient-light);
   color: var(--text-color);
@@ -1699,53 +1427,43 @@ blockquote cite::before {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-
 .modern-table td {
   padding: 1rem;
   border-bottom: 1px solid var(--border-color);
   transition: background-color 0.3s ease;
 }
-
 .modern-table tbody tr:hover td {
   background-color: var(--hover-bg);
 }
-
 .modern-table tbody tr:last-child td {
   border-bottom: none;
 }
-
 /* Enhanced User Information */
 .modern-username {
   font-weight: 600;
   color: var(--text-color);
 }
-
 .modern-username a {
   color: inherit;
   text-decoration: none;
 }
-
 .modern-username a:hover {
   color: var(--primary);
   text-decoration: none;
 }
-
 /* Enhanced Content Areas */
 .modern-text-content {
   color: var(--text-color);
   line-height: 1.7;
   font-size: 1rem;
 }
-
 .modern-text-content p {
   margin-bottom: 1rem;
 }
-
 .modern-text-content strong {
   font-weight: 600;
   color: var(--heading-color);
 }
-
 /* Enhanced Action Bar */
 .modern-action-bar {
   display: flex;
@@ -1760,49 +1478,41 @@ blockquote cite::before {
   flex-wrap: wrap;
   gap: 1rem;
 }
-
 .modern-pagination {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-
 /* Enhanced Buttons in Action Bar */
 .modern-action-bar .modern-btn {
   font-size: 0.875rem;
   padding: 0.5rem 1rem;
 }
-
 /* Topic System Enhancements */
 .modern-topic-content {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
 }
-
 .modern-topic-link {
   color: var(--text-color);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
 }
-
 .modern-topic-link:hover {
   color: var(--primary);
   text-decoration: none;
 }
-
 .modern-topic-icon {
   width: 24px;
   height: 24px;
   color: var(--text-muted);
   transition: color 0.3s ease;
 }
-
 .modern-topic-link:hover .modern-topic-icon {
   color: var(--primary);
 }
-
 .modern-topic-mine {
   background: var(--gradient-primary);
   color: white;
@@ -1812,14 +1522,12 @@ blockquote cite::before {
   font-weight: 600;
   margin-left: 0.5rem;
 }
-
 /* Rules and Forum Information */
 .modern-rules-link .modern-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
-
 /* Enhanced Links */
 .modern-link {
   color: var(--primary);
@@ -1827,12 +1535,10 @@ blockquote cite::before {
   transition: all 0.3s ease;
   position: relative;
 }
-
 .modern-link:hover {
   color: var(--primary-dark);
   text-decoration: none;
 }
-
 .modern-link::after {
   content: '';
   position: absolute;
@@ -1844,11 +1550,9 @@ blockquote cite::before {
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
-
 .modern-link:hover::after {
   transform: scaleX(1);
 }
-
 /* Enhanced Responsive Design */
 @media (max-width: 768px) {
   .modern-action-bar {
@@ -1856,76 +1560,63 @@ blockquote cite::before {
     align-items: stretch;
     text-align: center;
   }
-  
   .modern-pagination {
     justify-content: center;
   }
-  
   .modern-table th,
   .modern-table td {
     padding: 0.75rem 0.5rem;
     font-size: 0.875rem;
   }
-  
   .modern-topic-content {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
   }
 }
-
 @media (max-width: 576px) {
   .modern-table-responsive {
     font-size: 0.8rem;
   }
-  
   .modern-table th,
   .modern-table td {
     padding: 0.5rem 0.25rem;
   }
-  
   .modern-action-bar {
     padding: 1rem;
   }
-  
   .modern-btn {
     font-size: 0.8rem;
     padding: 0.5rem 0.75rem;
   }
 }
-
 /* Container and Layout Enhancements */
 .modern-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 }
-
 @media (min-width: 768px) {
   .modern-container {
     padding: 0 2rem;
   }
 }
-
 @media (min-width: 1200px) {
   .modern-container {
     padding: 0 1rem;
   }
 }
-
 /* Print-friendly styles */
 @media print {
   .modern-card {
     box-shadow: none;
     border: 1px solid #ddd;
   }
-  
   .modern-btn {
     background: white !important;
     color: black !important;
     border: 1px solid black !important;
   }
-  
   .modern-action-bar {
     display: none;
   }

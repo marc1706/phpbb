@@ -7,15 +7,8 @@
     --------------------------------------------------------------
 */
 
-/* Import prosilver base styles */
-@import url("../../prosilver/theme/normalize.css");
-@import url("../../prosilver/theme/base.css");
-@import url("../../prosilver/theme/utilities.css");
-@import url("../../prosilver/theme/links.css");
-@import url("../../prosilver/theme/content.css");
-@import url("../../prosilver/theme/forms.css");
-@import url("../../prosilver/theme/icons.css");
-@import url("../../prosilver/theme/cp.css");
+/* Standalone Modernite CSS - no external dependencies */
+@import url("base-styles.css");
 
 /* Modern styles */
 @import url("bootstrap-grid.css");

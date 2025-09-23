@@ -52,7 +52,7 @@
 		const $fa_cdn = $('head').find('link[rel="stylesheet"]').first(),
 			$span = $('<span class="fa" style="display:none"></span>').appendTo('body');
 		if ($span.css('fontFamily') !== '"Font Awesome 6 Free"') {
-			$fa_cdn.after('<link href="{{ T_ASSETS_PATH ~ '/css/font-awesome.min.css' }}" rel="stylesheet">');
+			// Modern icon system - no FontAwesome dependency needed
 			$fa_cdn.remove();
 		}
 		$span.remove();

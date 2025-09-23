@@ -1,0 +1,200 @@
+<!-- INCLUDE overall_header.html -->
+
+<div class="container">
+	<!-- EVENT index_body_block_stats_before -->
+	<!-- IF TOTAL_POSTS -->
+		<div class="stat-block modern-stats-grid">
+			<div class="row">
+				<!-- EVENT index_body_stat_blocks_before -->
+				<div class="col-md-3 col-sm-6">
+					<div class="stats-card">
+						<div class="stat-number">{TOTAL_POSTS}</div>
+						<div class="stat-label">{L_TOTAL_POSTS}</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="stats-card">
+						<div class="stat-number">{TOTAL_TOPICS}</div>
+						<div class="stat-label">{L_TOTAL_TOPICS}</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="stats-card">
+						<div class="stat-number">{TOTAL_USERS}</div>
+						<div class="stat-label">{L_TOTAL_USERS}</div>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6">
+					<div class="stats-card">
+						<div class="stat-number">{NEWEST_USER}</div>
+						<div class="stat-label">{L_NEWEST_USER}</div>
+					</div>
+				</div>
+				<!-- EVENT index_body_stat_blocks_after -->
+			</div>
+		</div>
+		<!-- EVENT index_body_block_stats_after -->
+	<!-- ENDIF -->
+
+	<!-- EVENT index_body_markforums_before -->
+	<!-- IF U_MARK_FORUMS -->
+		<div class="action-bar bar-top">
+			<a href="{U_MARK_FORUMS}" accesskey="m" data-ajax="mark_forums_read" class="button button-secondary mark-read rightside">{L_MARK_FORUMS_READ}</a>
+			<div class="clear"></div>
+		</div>
+	<!-- ENDIF -->
+	<!-- EVENT index_body_markforums_after -->
+
+	<!-- EVENT index_body_forumlist_body_before -->
+	<div class="forabg modern-forum-wrapper">
+		<div class="inner">
+			<ul class="topiclist">
+				<li class="header">
+					<dl class="row-item">
+						<dt><div class="list-inner">{L_FORUM}</div></dt>
+						<dd class="topics">{L_TOPICS}</dd>
+						<dd class="posts">{L_POSTS}</dd>
+						<dd class="lastpost"><span>{L_LAST_POST}</span></dd>
+					</dl>
+				</li>
+			</ul>
+			<ul class="topiclist forums">
+			<!-- BEGIN forumrow -->
+				<!-- EVENT index_body_forum_row_before -->
+				<!-- IF forumrow.S_IS_CAT -->
+					</ul>
+
+					<div class="forabg">
+						<div class="inner">
+						<ul class="topiclist">
+							<li class="header">
+								<dl class="row-item">
+									<dt><div class="list-inner">{forumrow.FORUM_NAME}</div></dt>
+									<dd class="topics">{L_TOPICS}</dd>
+									<dd class="posts">{L_POSTS}</dd>
+									<dd class="lastpost"><span>{L_LAST_POST}</span></dd>
+								</dl>
+							</li>
+						</ul>
+						<ul class="topiclist forums">
+				<!-- ELSE -->
+					<li class="row">
+						<!-- EVENT index_body_forum_row_prepend -->
+						<dl class="row-item <!-- IF forumrow.FORUM_IMG_STYLE -->{forumrow.FORUM_IMG_STYLE}<!-- ELSE -->forum_read<!-- ENDIF -->">
+							<dt title="{forumrow.FORUM_FOLDER_IMG_ALT}">
+								<!-- IF forumrow.FORUM_IMAGE -->
+									<div class="forum-image">{forumrow.FORUM_IMAGE}</div>
+								<!-- ENDIF -->
+								<div class="list-inner">
+									<!-- IF forumrow.S_UNREAD_FORUM --><a href="{forumrow.U_VIEWFORUM}" class="icon-link"></a><!-- ENDIF -->
+									<a href="{forumrow.U_VIEWFORUM}" class="forumtitle">{forumrow.FORUM_NAME}</a>
+									<!-- IF forumrow.FORUM_DESC --><div class="forum-desc">{forumrow.FORUM_DESC}</div><!-- ENDIF -->
+									<!-- IF forumrow.MODERATORS -->
+										<strong>{forumrow.L_MODERATOR_STR}{L_COLON}</strong> {forumrow.MODERATORS}
+									<!-- ENDIF -->
+									<!-- IF .forumrow.subforum and forumrow.S_LIST_SUBFORUMS -->
+										<!-- EVENT index_body_forum_subforums_before -->
+										<br /><strong>{forumrow.L_SUBFORUM_STR}{L_COLON}</strong>
+										<!-- BEGIN subforum -->
+											<a href="{forumrow.subforum.U_SUBFORUM}" class="subforum<!-- IF forumrow.subforum.S_UNREAD --> unread<!-- ENDIF -->" title="{forumrow.subforum.SUBFORUM_DESC}">
+												{forumrow.subforum.SUBFORUM_NAME}</a><!-- IF not forumrow.subforum.S_LAST_ROW -->{L_COMMA_SEPARATOR}<!-- ENDIF -->
+										<!-- END subforum -->
+										<br />
+										<!-- EVENT index_body_forum_subforums_after -->
+									<!-- ENDIF -->
+									<!-- EVENT index_body_forum_row_append -->
+								</div>
+							</dt>
+							<!-- IF forumrow.CLICKS -->
+								<dd class="redirect"><span>{L_REDIRECTS}{L_COLON} {forumrow.CLICKS}</span></dd>
+							<!-- ELSE -->
+								<dd class="topics">{forumrow.TOPICS} <dfn>{L_TOPICS}</dfn></dd>
+								<dd class="posts">{forumrow.POSTS} <dfn>{L_POSTS}</dfn></dd>
+								<dd class="lastpost">
+									<span>
+										<!-- IF forumrow.U_UNAPPROVED_TOPICS -->
+											<a href="{forumrow.U_UNAPPROVED_TOPICS}" title="{L_TOPICS_UNAPPROVED}">
+												<i class="icon fa-question fa-fw icon-blue" aria-hidden="true"></i>
+											</a>
+										<!-- ENDIF -->
+										<!-- IF forumrow.U_UNAPPROVED_POSTS -->
+											<a href="{forumrow.U_UNAPPROVED_POSTS}" title="{L_POSTS_UNAPPROVED_FORUM}">
+												<i class="icon fa-question fa-fw icon-blue" aria-hidden="true"></i>
+											</a>
+										<!-- ENDIF -->
+										<!-- IF forumrow.LAST_POST_TIME -->
+											<dfn>{L_LAST_POST}</dfn>
+											<!-- IF forumrow.S_DISPLAY_SUBJECT -->
+												<!-- EVENT index_body_forum_lastpost_before -->
+												<a href="{forumrow.U_LAST_POST}" title="{forumrow.LAST_POST_SUBJECT}" class="lastsubject">{forumrow.LAST_POST_SUBJECT_TRUNCATED}</a> <br />
+											<!-- ENDIF -->
+											{L_POST_BY_AUTHOR} {forumrow.LAST_POSTER_FULL}
+											<!-- IF not S_IS_BOT --><a href="{forumrow.U_LAST_POST}" title="{L_GOTO_LAST_POST}">
+												<i class="icon fa-external-link-square fa-fw icon-lightgray icon-md" aria-hidden="true"></i>
+											</a><!-- ENDIF -->
+											<br />{forumrow.LAST_POST_TIME}
+										<!-- ELSE -->
+											{L_NO_POSTS}<br />&nbsp;
+										<!-- ENDIF -->
+									</span>
+								</dd>
+							<!-- ENDIF -->
+						</dl>
+						<!-- EVENT index_body_forum_row_append -->
+					</li>
+				<!-- ENDIF -->
+				<!-- EVENT index_body_forum_row_after -->
+			<!-- END forumrow -->
+			</ul>
+
+			<div class="clear"></div>
+		</div>
+	</div>
+	<!-- EVENT index_body_forumlist_body_after -->
+
+	<!-- IF U_MARK_FORUMS -->
+		<div class="action-bar bar-bottom">
+			<div class="button-group">
+				<a href="{U_MARK_FORUMS}" accesskey="m" data-ajax="mark_forums_read" class="button button-secondary mark-read">{L_MARK_FORUMS_READ}</a>
+			</div>
+			<div class="clear"></div>
+		</div>
+	<!-- ENDIF -->
+
+	<!-- IF S_DISPLAY_ONLINE_LIST -->
+		<div class="card modern-online-card">
+			<div class="card-header">{L_WHO_IS_ONLINE}</div>
+			<div class="online-list">
+				<p>
+					{TOTAL_USERS_ONLINE} ({L_ONLINE_EXPLAIN})
+					<br />{RECORD_USERS}
+					<br />
+					<br />{LOGGED_IN_USER_LIST}
+					<!-- IF LEGEND --><br /><em>{L_LEGEND}{L_COLON} {LEGEND}</em><!-- ENDIF -->
+				</p>
+			</div>
+		</div>
+	<!-- ENDIF -->
+
+	<!-- IF S_DISPLAY_BIRTHDAY_LIST -->
+		<div class="card modern-birthday-card">
+			<div class="card-header">{L_BIRTHDAYS}</div>
+			<div class="birthday-list">
+				<p>
+					<!-- IF .birthdays -->
+						{L_CONGRATULATIONS}{L_COLON}
+						<!-- BEGIN birthdays -->
+							{birthdays.USERNAME}<!-- IF birthdays.AGE !== '' --> ({birthdays.AGE})<!-- ENDIF --><!-- IF not birthdays.S_LAST_ROW -->, <!-- ENDIF -->
+						<!-- END birthdays -->
+					<!-- ELSE -->
+						{L_NO_BIRTHDAYS}
+					<!-- ENDIF -->
+				</p>
+			</div>
+		</div>
+	<!-- ENDIF -->
+
+	<!-- EVENT index_body_block_stats_prepend -->
+</div>
+
+<!-- INCLUDE overall_footer.html -->

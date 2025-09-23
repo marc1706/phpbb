@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="{{ SITE_SHORTNAME }}">
+{META}
+<title><!-- IF UNREAD_NOTIFICATIONS_COUNT -->({UNREAD_NOTIFICATIONS_COUNT}) <!-- ENDIF --><!-- IF not S_VIEWTOPIC and not S_VIEWFORUM -->{SITENAME} - <!-- ENDIF --><!-- IF S_IN_MCP -->{L_MCP} - <!-- ELSEIF S_IN_UCP -->{L_UCP} - <!-- ENDIF -->{PAGE_TITLE}<!-- IF S_VIEWTOPIC or S_VIEWFORUM --> - {SITENAME}<!-- ENDIF --></title>
+
+<!-- Google Fonts for modern typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- IF S_ENABLE_FEEDS -->
+	<!-- IF S_ENABLE_FEEDS_OVERALL --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {SITENAME}" href="{{ path('phpbb_feed_index') }}"><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_NEWS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_NEWS}" href="{{ path('phpbb_feed_news') }}"><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_FORUMS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_ALL_FORUMS}" href="{{ path('phpbb_feed_forums') }}"><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_TOPICS --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_NEW}" href="{{ path('phpbb_feed_topics') }}"><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_TOPICS_ACTIVE --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FEED_TOPICS_ACTIVE}" href="{{ path('phpbb_feed_topics_active') }}"><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_FORUM and S_FORUM_ID --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_FORUM} - {FORUM_NAME}" href="{{ path('phpbb_feed_forum', { forum_id : S_FORUM_ID } ) }}"><!-- ENDIF -->
+	<!-- IF S_ENABLE_FEEDS_TOPIC and S_TOPIC_ID --><link rel="alternate" type="application/atom+xml" title="{L_FEED} - {L_TOPIC} - {TOPIC_TITLE}" href="{{ path('phpbb_feed_topic', { topic_id : S_TOPIC_ID } ) }}"><!-- ENDIF -->
+	<!-- EVENT overall_header_feeds -->
+<!-- ENDIF -->
+
+<!-- IF U_CANONICAL -->
+	<link rel="canonical" href="{U_CANONICAL}">
+<!-- ENDIF -->
+
+<!--
+	phpBB style name: Modernite
+	Based on style:   prosilver (this is the default phpBB style)
+	Original author:  phpBB Community
+	Modified by:      AI Assistant for modern design
+-->
+
+<link href="{T_FONTS_PATH}font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="{T_STYLESHEET_PATH}" rel="stylesheet">
+<link href="{T_THEME_PATH}/print.css" rel="stylesheet" media="print">
+<!-- IF S_CONTENT_DIRECTION eq 'rtl' -->
+	<link href="{T_THEME_PATH}/bidi.css" rel="stylesheet">
+<!-- ENDIF -->
+
+<!-- Add modern meta tags for PWA-like experience -->
+<meta name="theme-color" content="#6366f1">
+<meta name="msapplication-TileColor" content="#6366f1">
+
+<!-- EVENT overall_header_head_append -->
+
+{$STYLESHEETS}
+
+<!-- EVENT overall_header_stylesheets_after -->
+
+</head>
+<body id="phpbb" class="nojs notouch section-{SCRIPT_NAME} {S_CONTENT_DIRECTION} {BODY_CLASS}">
+
+<!-- EVENT overall_header_body_before -->
+
+<div id="wrap" class="wrap">
+	<a id="top" class="top-anchor" accesskey="t"></a>
+	<div id="page-header">
+		<div class="headerbar" role="banner">
+			<!-- EVENT overall_header_headerbar_before -->
+			<div class="inner">
+
+			<div id="site-description" class="site-description">
+				<a id="logo" class="logo" href="<!-- IF U_SITE_HOME -->{U_SITE_HOME}<!-- ELSE -->{U_INDEX}<!-- ENDIF -->" title="<!-- IF U_SITE_HOME -->{L_SITE_HOME}<!-- ELSE -->{L_INDEX}<!-- ENDIF -->">
+					<!-- IF SITE_LOGO_IMG -->
+						<img src="{T_ASSETS_PATH}/images/{SITE_LOGO_IMG}" alt="{SITENAME}" />
+					<!-- ELSE -->
+						<span class="site-name">{SITENAME}</span>
+					<!-- ENDIF -->
+				</a>
+				<!-- IF SITE_DESCRIPTION --><p class="site-desc">{SITE_DESCRIPTION}</p><!-- ENDIF -->
+			</div>
+
+			<!-- EVENT overall_header_searchbox_before -->
+			<!-- IF S_DISPLAY_SEARCH and not S_IN_SEARCH -->
+			<div id="search-box" class="search-box search-header" role="search">
+				<form action="{U_SEARCH}" method="get" id="search">
+				<fieldset>
+					<input name="keywords" id="keywords" type="search" maxlength="128" title="{L_SEARCH_KEYWORDS}" class="inputbox search" size="20" value="{SEARCH_WORDS}" placeholder="{L_SEARCH_MINI}" />
+					<button class="button button-search" type="submit" title="{L_SEARCH}">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">{L_SEARCH}</span>
+					</button>
+					<a href="{U_SEARCH}" class="button button-search-end" title="{L_SEARCH_ADV}">
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">{L_SEARCH_ADV}</span>
+					</a>
+					{S_SEARCH_HIDDEN_FIELDS}
+				</fieldset>
+				</form>
+			</div>
+			<!-- ENDIF -->
+			<!-- EVENT overall_header_searchbox_after -->
+
+			</div>
+			<!-- EVENT overall_header_headerbar_after -->
+		</div>
+		<!-- EVENT overall_header_navbar_before -->
+		<div class="navbar" role="navigation">
+			<div class="inner">
+
+			<ul id="nav-main" class="nav-main linklist" role="menubar">
+				<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
+					<a href="#" class="dropdown-trigger">
+						<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>{L_QUICK_LINKS}</span>
+					</a>
+					<div class="dropdown">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<ul class="dropdown-contents" role="menu">
+							<!-- EVENT overall_header_navigation_prepend -->
+							<li class="separator"></li>
+							<!-- IF not S_IS_BOT -->
+								<!-- IF S_DISPLAY_MEMBERLIST --><li><a href="{U_MEMBERLIST}" role="menuitem"><i class="icon fa-group fa-fw" aria-hidden="true"></i><span>{L_MEMBERLIST}</span></a></li><!-- ENDIF -->
+								<!-- IF not S_USER_LOGGED_IN and S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) --><li><a href="{U_REGISTER}" role="menuitem"><i class="icon fa-pencil-square-o fa-fw" aria-hidden="true"></i><span>{L_REGISTER}</span></a></li><!-- ENDIF -->
+								<li><a href="{U_FAQ}" rel="help" title="{L_FAQ_EXPLAIN}" role="menuitem"><i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>{L_FAQ}</span></a></li>
+								<!-- IF not S_USER_LOGGED_IN --><li><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>{L_LOGIN_LOGOUT}</span></a></li><!-- ENDIF -->
+								<!-- EVENT overall_header_navigation_append -->
+							<!-- ENDIF -->
+						</ul>
+					</div>
+				</li>
+
+				<!-- EVENT overall_header_navigation_items_prepend -->
+				<!-- IF S_DISPLAY_SEARCH --><li class="responsive-search"><a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}" role="menuitem"><i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">{L_SEARCH}</span></a></li><!-- ENDIF -->
+				<!-- IF not S_IS_BOT -->
+					<!-- IF S_USER_LOGGED_IN -->
+						<li class="dropdown-container">
+							<a href="{U_PROFILE}" class="dropdown-trigger" title="{L_PROFILE}" role="button" aria-haspopup="true" aria-expanded="false">
+								{CURRENT_USERNAME_SIMPLE} 
+								<!-- IF AVATAR_IMG -->
+									{AVATAR_IMG}
+								<!-- ELSE -->
+									<i class="icon fa-user fa-fw" aria-hidden="true"></i>
+								<!-- ENDIF -->
+								<i class="icon fa-caret-down fa-fw" aria-hidden="true"></i>
+							</a>
+							<div class="dropdown">
+								<div class="pointer"><div class="pointer-inner"></div></div>
+								<ul class="dropdown-contents" role="menu">
+									<!-- EVENT overall_header_user_dropdown_prepend -->
+									<!-- IF U_RESTORE_PERMISSIONS --><li><a href="{U_RESTORE_PERMISSIONS}"><i class="icon fa-refresh fa-fw" aria-hidden="true"></i><span>{L_RESTORE_PERMISSIONS}</span></a></li><!-- ENDIF -->
+									<li><a href="{U_PROFILE}" title="{L_PROFILE}" role="menuitem"><i class="icon fa-sliders fa-fw" aria-hidden="true"></i><span>{L_PROFILE}</span></a></li>
+									<li><a href="{U_USER_PROFILE}" title="{L_READ_PROFILE}" role="menuitem"><i class="icon fa-user fa-fw" aria-hidden="true"></i><span>{L_READ_PROFILE}</span></a></li>
+									<li class="separator"></li>
+									<li><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>{L_LOGIN_LOGOUT}</span></a></li>
+									<!-- EVENT overall_header_user_dropdown_append -->
+								</ul>
+							</div>
+						</li>
+						<!-- IF S_DISPLAY_PM -->
+							<li class="dropdown-container">
+								<a href="{U_PRIVATEMSGS}" id="message_link" class="dropdown-trigger" title="{PRIVATE_MESSAGE_INFO}" role="button" aria-haspopup="true" aria-expanded="false">
+									<i class="icon fa-inbox fa-fw" aria-hidden="true"></i><span class="sr-only">{PRIVATE_MESSAGE_INFO}</span>
+									<!-- IF PRIVATE_MESSAGE_COUNT --><strong class="badge badge-pm">{PRIVATE_MESSAGE_COUNT}</strong><!-- ENDIF -->
+								</a>
+								<!-- IF S_NEW_PM -->
+									<div class="dropdown pm-dropdown">
+										<div class="pointer"><div class="pointer-inner"></div></div>
+										<div class="dropdown-contents">
+											<!-- EVENT overall_header_pm_dropdown_before -->
+											<div class="dropdown-header">
+												{L_PRIVATE_MESSAGE_INFO_UNREAD}
+											</div>
+											<!-- BEGIN ucp_pm_dropdown -->
+											<div class="pm-item">
+												<div class="pm-info">
+													<!-- IF ucp_pm_dropdown.AVATAR -->
+														<a href="{ucp_pm_dropdown.U_AUTHOR}">
+															{ucp_pm_dropdown.AVATAR}
+														</a>
+													<!-- ENDIF -->
+													<div class="pm-details">
+														<div class="pm-author"><a href="{ucp_pm_dropdown.U_AUTHOR}">{ucp_pm_dropdown.MESSAGE_AUTHOR}</a></div>
+														<div class="pm-subject"><a href="{ucp_pm_dropdown.U_MESSAGE}">{ucp_pm_dropdown.MESSAGE_SUBJECT}</a></div>
+														<div class="pm-time">{ucp_pm_dropdown.MESSAGE_TIME}</div>
+													</div>
+												</div>
+											</div>
+											<!-- END ucp_pm_dropdown -->
+											<div class="dropdown-footer">
+												<a href="{U_PRIVATEMSGS}" class="button button-secondary button-small">{L_SEE_ALL}</a>
+											</div>
+											<!-- EVENT overall_header_pm_dropdown_after -->
+										</div>
+									</div>
+								<!-- ENDIF -->
+							</li>
+						<!-- ENDIF -->
+						<!-- IF S_NOTIFICATIONS_DISPLAY -->
+							<li class="dropdown-container dropdown-{S_CONTENT_FLOW_END}">
+								<a href="{U_VIEW_ALL_NOTIFICATIONS}" id="notification_list_button" class="dropdown-trigger" title="{L_NOTIFICATIONS}" role="button" aria-haspopup="true" aria-expanded="false">
+									<i class="icon fa-bell fa-fw" aria-hidden="true"></i><span class="sr-only">{L_NOTIFICATIONS}</span>
+									<!-- IF NOTIFICATIONS_COUNT --><strong class="badge">{NOTIFICATIONS_COUNT}</strong><!-- ENDIF -->
+								</a>
+								<!-- INCLUDE notification_dropdown.html -->
+							</li>
+						<!-- ENDIF -->
+					<!-- ELSE -->
+						<li class="rightside"  data-skip-responsive="true">
+							<a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>{L_LOGIN_LOGOUT}</span></a>
+							<!-- IF S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) -->
+								&nbsp;•&nbsp;<a href="{U_REGISTER}"><i class="icon fa-pencil-square-o fa-fw" aria-hidden="true"></i><span>{L_REGISTER}</span></a>
+							<!-- ENDIF -->
+						</li>
+					<!-- ENDIF -->
+					<!-- EVENT overall_header_navigation_items_append -->
+				<!-- ENDIF -->
+			</ul>
+
+			<!-- EVENT overall_header_breadcrumb_prepend -->
+			<!-- IF not S_IN_MCP and not S_IN_UCP -->
+				<!-- INCLUDE breadcrumbs.html -->
+			<!-- ENDIF -->
+			<!-- EVENT overall_header_breadcrumb_append -->
+
+			<div class="clear"></div>
+			</div>
+		</div>
+		<!-- EVENT overall_header_navbar_after -->
+	</div>
+
+	<!-- EVENT overall_header_page_body_before -->
+	<div id="page-body" class="page-body" role="main">
+		<!-- EVENT overall_header_content_before -->

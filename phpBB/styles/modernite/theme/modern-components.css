@@ -137,9 +137,9 @@ h6 { font-size: 1rem; }
 }
 
 .forumlist li {
-  border-radius: 8px;
-  margin-bottom: 8px;
-  transition: all 0.2s ease;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-2);
+  transition: var(--transition-normal);
 }
 
 .forumlist li:hover {
@@ -149,7 +149,7 @@ h6 { font-size: 1rem; }
 
 /* Modern topic list */
 .topiclist {
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow);
 }
@@ -196,7 +196,7 @@ h6 { font-size: 1rem; }
   padding-left: 40px;
   border-radius: 25px;
   border: 2px solid var(--gray-300);
-  transition: all 0.2s ease;
+  transition: var(--transition-normal);
 }
 
 .search-box input:focus {
@@ -267,11 +267,11 @@ h6 { font-size: 1rem; }
 .user-card {
   background: var(--white);
   border: 1px solid var(--gray-200);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   padding: 20px;
   text-align: center;
   box-shadow: var(--shadow-md);
-  transition: all 0.2s ease;
+  transition: var(--transition-normal);
 }
 
 .user-card:hover {
@@ -308,10 +308,10 @@ h6 { font-size: 1rem; }
   background: var(--primary);
   color: var(--white);
   border: 2px solid var(--primary);
-  border-radius: 6px;
+  border-radius: var(--radius);
   text-decoration: none;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: var(--transition-normal);
   cursor: pointer;
 }
 

@@ -1,50 +1,68 @@
 /* -------------------------------------------------------------- /*
-	$Print
+	$Print - Complete print styles for Modernite
 /* -------------------------------------------------------------- */
 
 /* stylelint-disable selector-max-compound-selectors */
 
-/* Lots still TODO here! */
+/* Print optimization - Modern approach */
+@page {
+  margin: 2cm 1.5cm;
+  size: A4;
+}
 
 /* General markup styles */
 * {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  color: #000 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+*:before,
+*:after {
+  background: transparent !important;
+  color: #000 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
 }
 
 body {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	color: #000000;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12pt;
+  line-height: 1.4;
+  color: #000000;
 }
 
-a:link {
-	text-decoration: none;
-	color: #000000;
-}
-
-a:visited {
-	text-decoration: none;
-	color: #000000;
-}
-
-a:active {
-	text-decoration: none;
-	color: #000000;
-}
-
-img,
+/* Hide interactive elements */
 .noprint,
 .navbar,
 .box1,
 .divider,
-.signature {
-	display: none;
+.signature,
+button,
+input[type="button"],
+input[type="submit"],
+.responsive-menu,
+.dropdown,
+nav,
+.navigation,
+.breadcrumb-home {
+  display: none !important;
 }
 
-/* Display smilies (Bug #47265) */
-.content img {
-	display: inline;
+/* Show content images but hide decorative ones */
+img {
+  display: none;
+}
+
+.content img,
+.postimage,
+.attach-image img {
+  display: inline;
+  max-width: 100%;
+  page-break-inside: avoid;
 }
 
 /* Container for the main body */

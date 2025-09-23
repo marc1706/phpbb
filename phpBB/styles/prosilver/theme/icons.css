@@ -32,11 +32,11 @@ svg {
 	font-style: normal;
 	font-variant: normal;
 	-webkit-font-smoothing: antialiased;
+	/* stylelint-disable order/properties-order */
+	-moz-osx-font-smoothing: grayscale;
 	line-height: 1;
 	vertical-align: baseline;
 	display: inline-block;
-	/* stylelint-disable order/properties-order */
-	-moz-osx-font-smoothing: grayscale;
 	/* stylelint-enable order/properties-order */
 	padding: 2px;
 	text-rendering: auto; /* optimizelegibility throws things off #1094 */
@@ -147,3 +147,8 @@ blockquote cite:before,
 .c-watch-icon.is-active {
 	display: inline !important;
 }
+
+
+
+
+/*# sourceMappingURL=icons.css.map */

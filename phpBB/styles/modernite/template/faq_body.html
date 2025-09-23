@@ -1,0 +1,58 @@
+<!-- INCLUDE overall_header.html -->
+
+<div class="modern-container">
+	<div class="modern-page-header">
+		<h1 class="modern-page-title">{L_FAQ_TITLE}</h1>
+	</div>
+
+	<div class="modern-card" id="faqlinks">
+		<div class="modern-card-body">
+			<div class="row">
+				<div class="col-md-6">
+				<!-- BEGIN faq_block -->
+					<!-- IF faq_block.SWITCH_COLUMN or (SWITCH_COLUMN_MANUALLY and faq_block.S_ROW_COUNT == 4) -->
+						</div>
+						<div class="col-md-6">
+					<!-- ENDIF -->
+
+					<div class="modern-faq-section">
+						<h3 class="modern-text-primary">{faq_block.BLOCK_TITLE}</h3>
+						<ul class="modern-list-unstyled">
+						<!-- BEGIN faq_row -->
+							<li><a href="#f{faq_block.S_ROW_COUNT}r{faq_block.faq_row.S_ROW_COUNT}" class="modern-link">{faq_block.faq_row.FAQ_QUESTION}</a></li>
+						<!-- END faq_row -->
+						</ul>
+					</div>
+			</dl>
+		<!-- END faq_block -->
+		</div>
+	</div>
+</div>
+
+<!-- BEGIN faq_block -->
+	<div class="panel <!-- IF faq_block.S_ROW_COUNT is odd -->bg1<!-- ELSE -->bg2<!-- ENDIF -->">
+		<div class="inner">
+
+		<div class="content">
+			<h2 class="faq-title">{faq_block.BLOCK_TITLE}</h2>
+			<!-- BEGIN faq_row -->
+				<dl class="faq">
+					<dt id="f{faq_block.S_ROW_COUNT}r{faq_block.faq_row.S_ROW_COUNT}"><strong>{faq_block.faq_row.FAQ_QUESTION}</strong></dt>
+					<dd>{faq_block.faq_row.FAQ_ANSWER}</dd>
+				</dl>
+				<!-- IF not faq_block.faq_row.S_LAST_ROW --><hr class="dashed" /><!-- ENDIF -->
+			<!-- END faq_row -->
+		</div>
+
+		</div>
+	</div>
+<!-- END faq_block -->
+
+<div class="to-top-button">
+	<a href="#faqlinks" title="{{ lang('BACK_TO_TOP') }}">
+		{{ Icon('font', 'chevron-up', '', false) }}
+	</a>
+</div>
+
+<!-- INCLUDE jumpbox.html -->
+<!-- INCLUDE overall_footer.html -->

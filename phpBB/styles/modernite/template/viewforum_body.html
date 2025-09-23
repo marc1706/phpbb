@@ -1,0 +1,386 @@
+<!-- INCLUDE overall_header.html -->
+
+<div class="container">
+	<!-- EVENT viewforum_forum_title_before -->
+	<div class="forum-header-card card">
+		<div class="card-header">
+			<h2 class="forum-title"><!-- EVENT viewforum_forum_name_prepend --><a href="{U_VIEW_FORUM}">{FORUM_NAME}</a><!-- EVENT viewforum_forum_name_append --></h2>
+		</div>
+		<!-- IF FORUM_DESC or MODERATORS or U_MCP -->
+		<div class="card-body">
+			<!-- IF FORUM_DESC --><div class="forum-description">{FORUM_DESC}</div><!-- ENDIF -->
+			<!-- IF MODERATORS --><p class="moderators"><strong><!-- IF S_SINGLE_MODERATOR -->{L_MODERATOR}<!-- ELSE -->{L_MODERATORS}<!-- ENDIF -->{L_COLON}</strong> {MODERATORS}</p><!-- ENDIF -->
+		</div>
+		<!-- ENDIF -->
+	</div>
+	<!-- EVENT viewforum_forum_title_after -->
+
+	<!-- IF S_FORUM_RULES -->
+		<div class="card modern-rules-card">
+			<div class="card-header">
+				<!-- IF U_FORUM_RULES -->
+					<a href="{U_FORUM_RULES}">{L_FORUM_RULES}</a>
+				<!-- ELSE -->
+					{L_FORUM_RULES}
+				<!-- ENDIF -->
+			</div>
+			<!-- IF not U_FORUM_RULES -->
+				<div class="card-body">
+					{FORUM_RULES}
+				</div>
+			<!-- ENDIF -->
+		</div>
+	<!-- ENDIF -->
+
+	<!-- IF S_HAS_SUBFORUM -->
+		<!-- IF not S_IS_BOT and U_MARK_FORUMS -->
+			<div class="action-bar compact">
+				<a href="{U_MARK_FORUMS}" class="button button-secondary mark-read" data-ajax="mark_forums_read">{L_MARK_SUBFORUMS_READ}</a>
+			</div>
+		<!-- ENDIF -->
+		<!-- INCLUDE forumlist_body.html -->
+	<!-- ENDIF -->
+
+	<!-- IF S_DISPLAY_POST_INFO or .pagination or TOTAL_POSTS or TOTAL_TOPICS -->
+		<div class="action-bar bar-top modern-action-bar">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<!-- IF not S_IS_BOT and S_DISPLAY_POST_INFO -->
+						<!-- EVENT viewforum_buttons_top_before -->
+						<div class="button-group">
+							<a href="{U_POST_NEW_TOPIC}" class="button<!-- IF S_IS_LOCKED --> button-secondary<!-- ENDIF -->" title="<!-- IF S_IS_LOCKED -->{L_FORUM_LOCKED}<!-- ELSE -->{L_POST_TOPIC}<!-- ENDIF -->">
+								<!-- IF S_IS_LOCKED -->
+									<i class="fas fa-lock"></i> <span>{L_BUTTON_FORUM_LOCKED}</span>
+								<!-- ELSE -->
+									<i class="fas fa-pencil"></i> <span>{L_BUTTON_NEW_TOPIC}</span>
+								<!-- ENDIF -->
+							</a>
+						</div>
+						<!-- EVENT viewforum_buttons_top_after -->
+					<!-- ENDIF -->
+				</div>
+				<div class="col-md-6">
+					<!-- IF S_DISPLAY_SEARCHBOX -->
+						<div class="search-box modern-search" role="search">
+							<form method="get" id="forum-search" action="{S_SEARCHBOX_ACTION}">
+							<fieldset>
+								<input class="inputbox search" type="search" name="keywords" id="search_keywords" size="20" placeholder="{L_SEARCH_FORUM}" />
+								<button class="button button-search" type="submit" title="{L_SEARCH}">
+									<i class="fas fa-search"></i>
+								</button>
+								<a href="{{ U_SEARCH_FORUM }}" class="button button-search-end" title="lang('SEARCH_ADV')">
+									<i class="fas fa-gear"></i>
+								</a>
+								{S_SEARCH_LOCAL_HIDDEN_FIELDS}
+							</fieldset>
+							</form>
+						</div>
+					<!-- ENDIF -->
+				</div>
+			</div>
+
+			<div class="pagination-info">
+				<!-- IF not S_IS_BOT and U_MARK_TOPICS and .topicrow --><a href="{U_MARK_TOPICS}" class="mark" accesskey="m" data-ajax="mark_topics_read">{L_MARK_TOPICS_READ}</a> &bull; <!-- ENDIF -->
+				{TOTAL_TOPICS}
+				<!-- IF .pagination -->
+					<!-- INCLUDE pagination.html -->
+				<!-- ELSE -->
+					&bull; {PAGE_NUMBER}
+				<!-- ENDIF -->
+			</div>
+		</div>
+	<!-- ENDIF -->
+
+	<!-- IF S_NO_READ_ACCESS -->
+		<div class="card alert alert-warning">
+			<div class="card-body">
+				<strong>{L_NO_READ_ACCESS}</strong>
+			</div>
+		</div>
+
+		<!-- IF not S_USER_LOGGED_IN and not S_IS_BOT -->
+			<form action="{S_LOGIN_ACTION}" method="post">
+				<div class="card modern-login-card">
+					<div class="card-header">
+						<h3><a href="{U_LOGIN_LOGOUT}">{L_LOGIN_LOGOUT}</a><!-- IF S_REGISTER_ENABLED -->&nbsp; &bull; &nbsp;<a href="{U_REGISTER}">{L_REGISTER}</a><!-- ENDIF --></h3>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="username">{L_USERNAME}{L_COLON}</label>
+									<input type="text" tabindex="1" name="username" id="username" class="form-control" value="{USERNAME}" autocomplete="username" />
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="password">{L_PASSWORD}{L_COLON}</label>
+									<input type="password" tabindex="2" id="password" name="password" class="form-control" autocomplete="current-password" />
+								</div>
+							</div>
+						</div>
+						<div class="form-options">
+							<!-- IF S_AUTOLOGIN_ENABLED --><label class="checkbox-label"><input type="checkbox" name="autologin" id="autologin" tabindex="3" checked /> {L_LOG_ME_IN}</label><!-- ENDIF -->
+							<label class="checkbox-label"><input type="checkbox" name="viewonline" id="viewonline" tabindex="4" /> {L_HIDE_ME}</label>
+						</div>
+						<div class="form-actions">
+							<input type="submit" name="login" tabindex="5" value="{L_LOGIN}" class="button" />
+						</div>
+						{S_LOGIN_REDIRECT}
+						{S_FORM_TOKEN_LOGIN}
+					</div>
+				</div>
+			</form>
+		<!-- ENDIF -->
+	<!-- ENDIF -->
+
+	<!-- EVENT viewforum_body_topic_row_before -->
+
+	<!-- BEGIN topicrow -->
+		<!-- IF not topicrow.S_TOPIC_TYPE_SWITCH and not topicrow.S_FIRST_ROW -->
+				</ul>
+			</div>
+		</div>
+		<!-- ENDIF -->
+
+		<!-- IF topicrow.S_FIRST_ROW or not topicrow.S_TOPIC_TYPE_SWITCH -->
+			<div class="card modern-topics-card<!-- IF topicrow.S_TOPIC_TYPE_SWITCH and (topicrow.S_POST_ANNOUNCE or topicrow.S_POST_GLOBAL) --> announcement-card<!-- ENDIF -->">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-md-6">
+						<strong><!-- IF S_DISPLAY_ACTIVE -->{L_ACTIVE_TOPICS}<!-- ELSEIF topicrow.S_TOPIC_TYPE_SWITCH and (topicrow.S_POST_ANNOUNCE or topicrow.S_POST_GLOBAL) -->{L_ANNOUNCEMENTS}<!-- ELSE -->{L_TOPICS}<!-- ENDIF --></strong>
+					</div>
+					<div class="col-md-2 desktop-only text-center">
+						<strong>{L_REPLIES}</strong>
+					</div>
+					<div class="col-md-2 desktop-only text-center">
+						<strong>{L_VIEWS}</strong>
+					</div>
+					<div class="col-md-2 desktop-only text-center">
+						<strong>{L_LAST_POST}</strong>
+					</div>
+				</div>
+			</div>
+			<div class="card-body topics-list">
+				<ul class="topiclist topics modern-topic-list">
+		<!-- ENDIF -->
+
+			<!-- EVENT viewforum_body_topicrow_row_before -->
+			<li class="topic-row row<!-- IF topicrow.S_ROW_COUNT is even --> bg1<!-- ELSE --> bg2<!-- ENDIF --><!-- IF topicrow.S_POST_GLOBAL --> global-announce<!-- ENDIF --><!-- IF topicrow.S_POST_ANNOUNCE --> announce<!-- ENDIF --><!-- IF topicrow.S_POST_STICKY --> sticky<!-- ENDIF --><!-- IF topicrow.S_TOPIC_REPORTED --> reported<!-- ENDIF -->">
+				<!-- EVENT viewforum_body_topic_row_prepend -->
+				<div class="topic-content">
+					<div class="topic-icon">
+						<a class="row-item-link{% if topicrow.S_UNREAD_TOPIC %} unread{% else %} read{% endif %}" href="{topicrow.U_NEWEST_POST}" title="{topicrow.TOPIC_FOLDER_IMG_ALT}">
+							<!-- Modern topic icons -->
+							<!-- IF topicrow.S_POST_GLOBAL --><i class="fas fa-globe topic-icon-global"></i><!-- ENDIF -->
+							<!-- IF topicrow.S_POST_ANNOUNCE and not topicrow.S_POST_GLOBAL --><i class="fas fa-bullhorn topic-icon-announce"></i><!-- ENDIF -->
+							<!-- IF topicrow.S_POST_STICKY and not topicrow.S_POST_ANNOUNCE and not topicrow.S_POST_GLOBAL --><i class="fas fa-thumbtack topic-icon-sticky"></i><!-- ENDIF -->
+							<!-- IF topicrow.S_TOPIC_LOCKED --><i class="fas fa-lock topic-icon-locked"></i><!-- ENDIF -->
+							<!-- IF topicrow.S_TOPIC_MOVED --><i class="fas fa-arrow-right topic-icon-moved"></i><!-- ENDIF -->
+							<!-- IF topicrow.S_TOPIC_HOT and not topicrow.S_TOPIC_LOCKED and not topicrow.S_TOPIC_MOVED --><i class="fas fa-fire topic-icon-hot"></i><!-- ENDIF -->
+							<!-- IF not topicrow.S_POST_GLOBAL and not topicrow.S_POST_ANNOUNCE and not topicrow.S_POST_STICKY and not topicrow.S_TOPIC_LOCKED and not topicrow.S_TOPIC_MOVED and not topicrow.S_TOPIC_HOT --><i class="far fa-file-alt topic-icon-normal"></i><!-- ENDIF -->
+						</a>
+					</div>
+					
+					<div class="topic-details">
+						<!-- EVENT topiclist_row_prepend -->
+						<div class="topic-title-wrapper">
+							{% if topicrow.S_UNREAD_TOPIC and not S_IS_BOT %}
+								<a href="{{ topicrow.U_NEWEST_POST }}" class="topictitle unread">{{ topicrow.TOPIC_TITLE }}</a>
+							{% elseif topicrow.U_VIEW_TOPIC %}
+								<a href="{{ topicrow.U_VIEW_TOPIC }}" class="topictitle">{{ topicrow.TOPIC_TITLE }}</a>
+							{% else %}
+								<span class="topictitle">{{ topicrow.TOPIC_TITLE }}</span>
+							{% endif %}
+							
+							<!-- Status indicators -->
+							<!-- IF topicrow.S_TOPIC_UNAPPROVED or topicrow.S_POSTS_UNAPPROVED -->
+								<a href="{topicrow.U_MCP_QUEUE}" title="<!-- IF topicrow.S_TOPIC_UNAPPROVED -->{L_TOPIC_UNAPPROVED}<!-- ELSE -->{L_POSTS_UNAPPROVED}<!-- ENDIF -->" class="status-badge badge warning">
+									<i class="fas fa-question-circle"></i>
+								</a>
+							<!-- ENDIF -->
+							<!-- IF topicrow.S_TOPIC_DELETED -->
+								<a href="{topicrow.U_MCP_QUEUE}" title="{L_TOPIC_DELETED}" class="status-badge badge danger">
+									<i class="fas fa-trash"></i>
+								</a>
+							<!-- ENDIF -->
+							<!-- IF topicrow.S_TOPIC_REPORTED -->
+								<a href="{topicrow.U_MCP_REPORT}" title="{L_TOPIC_REPORTED}" class="status-badge badge danger">
+									<i class="fas fa-exclamation-triangle"></i>
+								</a>
+							<!-- ENDIF -->
+						</div>
+						<!-- EVENT topiclist_row_topic_title_after -->
+
+						<div class="topic-meta">
+							<!-- IF topicrow.S_HAS_POLL --><span class="topic-feature"><i class="fas fa-chart-bar"></i> Poll</span><!-- ENDIF -->
+							<!-- IF topicrow.ATTACH_ICON_IMG --><span class="topic-feature"><i class="fas fa-paperclip"></i> Attachment</span><!-- ENDIF -->
+							<span class="topic-author">
+								{% EVENT topiclist_row_topic_by_author_before %}
+								{L_POST_BY_AUTHOR} <!-- EVENT viewforum_body_topic_author_username_prepend -->{topicrow.TOPIC_AUTHOR_FULL}<!-- EVENT viewforum_body_topic_author_username_append --> &raquo; <time datetime="{topicrow.FIRST_POST_TIME_RFC3339}">{topicrow.FIRST_POST_TIME}</time>
+								{% EVENT topiclist_row_topic_by_author_after %}
+								<!-- IF topicrow.S_POST_GLOBAL and FORUM_ID != topicrow.FORUM_ID --> &raquo; {L_IN} <a href="{topicrow.U_VIEW_FORUM}">{topicrow.FORUM_NAME}</a><!-- ENDIF -->
+							</span>
+						</div>
+
+						<!-- IF .topicrow.pagination -->
+						<div class="topic-pagination">
+							<i class="fas fa-clone"></i>
+							<ul class="pagination-list">
+								<!-- BEGIN pagination -->
+									<!-- IF topicrow.pagination.S_IS_PREV -->
+									<!-- ELSEIF topicrow.pagination.S_IS_CURRENT -->
+										<li class="active"><span>{{ topicrow.pagination.PAGE_NUMBER }}</span></li>
+									<!-- ELSEIF topicrow.pagination.S_IS_ELLIPSIS -->
+										<li class="ellipsis"><span>{{ lang('ELLIPSIS') }}</span></li>
+									<!-- ELSEIF topicrow.pagination.S_IS_NEXT -->
+									<!-- ELSE -->
+										<li><a class="button button-small" href="{{ topicrow.pagination.PAGE_URL }}">{{ topicrow.pagination.PAGE_NUMBER }}</a></li>
+									<!-- ENDIF -->
+								<!-- END pagination -->
+							</ul>
+						</div>
+						<!-- ENDIF -->
+
+						<!-- Mobile responsive info -->
+						<!-- IF not S_IS_BOT -->
+						<div class="mobile-topic-info mobile-only">
+							<div class="mobile-stats">
+								<!-- IF topicrow.REPLIES --><span class="stat-item">{L_REPLIES}: <strong>{topicrow.REPLIES}</strong></span><!-- ENDIF -->
+								<span class="stat-item">{L_VIEWS}: <strong>{topicrow.VIEWS}</strong></span>
+							</div>
+							<div class="mobile-last-post">
+								{L_LAST_POST} {L_POST_BY_AUTHOR} <!-- EVENT viewforum_body_last_post_author_username_prepend -->{topicrow.LAST_POST_AUTHOR_FULL}<!-- EVENT viewforum_body_last_post_author_username_append --> &laquo; 
+								<a href="{topicrow.U_LAST_POST}" title="{L_GOTO_LAST_POST}"><time datetime="{topicrow.LAST_POST_TIME_RFC3339}">{topicrow.LAST_POST_TIME}</time></a>
+								<!-- IF topicrow.S_POST_GLOBAL and FORUM_ID != topicrow.FORUM_ID --><br />{L_POSTED} {L_IN} <a href="{topicrow.U_VIEW_FORUM}">{topicrow.FORUM_NAME}</a><!-- ENDIF -->
+							</div>
+						</div>
+						<!-- ENDIF -->
+
+						<!-- EVENT topiclist_row_append -->
+					</div>
+					
+					<div class="topic-stats desktop-only">
+						<div class="stat-cell replies">
+							<div class="stat-number">{topicrow.REPLIES}</div>
+							<div class="stat-label">{L_REPLIES}</div>
+						</div>
+						<div class="stat-cell views">
+							<div class="stat-number">{topicrow.VIEWS}</div>
+							<div class="stat-label">{L_VIEWS}</div>
+						</div>
+						<div class="stat-cell lastpost">
+							<div class="lastpost-info">
+								<div class="lastpost-author">{L_POST_BY_AUTHOR} <!-- EVENT viewforum_body_last_post_author_username_prepend -->{topicrow.LAST_POST_AUTHOR_FULL}<!-- EVENT viewforum_body_last_post_author_username_append --></div>
+								<div class="lastpost-time">
+									<!-- IF not S_IS_BOT and topicrow.U_LAST_POST -->
+										<a href="{topicrow.U_LAST_POST}" title="{L_GOTO_LAST_POST}">
+											<i class="fas fa-arrow-up-right-from-square"></i>
+										</a>
+									<!-- ENDIF -->
+									<time datetime="{topicrow.LAST_POST_TIME_RFC3339}">{topicrow.LAST_POST_TIME}</time>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- EVENT viewforum_body_topic_row_append -->
+			</li>
+			<!-- EVENT viewforum_body_topic_row_after -->
+
+		<!-- IF topicrow.S_LAST_ROW -->
+				</ul>
+			</div>
+		</div>
+		<!-- ENDIF -->
+
+	<!-- BEGINELSE -->
+		<!-- IF S_IS_POSTABLE -->
+		<div class="card alert alert-info">
+			<div class="card-body">
+				<strong>{{ lang(S_SORT_DAYS ? 'NO_TOPICS_TIME_FRAME' : 'NO_TOPICS') }}</strong>
+			</div>
+		</div>
+		<!-- ELSE IF not S_HAS_SUBFORUM -->
+		<div class="card alert alert-info">
+			<div class="card-body">
+				<strong>{L_NO_FORUMS_IN_CATEGORY}</strong>
+			</div>
+		</div>
+		<!-- ENDIF -->
+	<!-- END topicrow -->
+
+	<!-- IF .topicrow and not S_DISPLAY_ACTIVE -->
+		<div class="action-bar bar-bottom modern-action-bar">
+			<div class="row align-items-center">
+				<div class="col-md-6">
+					<!-- IF not S_IS_BOT and S_DISPLAY_POST_INFO -->
+						<!-- EVENT viewforum_buttons_bottom_before -->
+						<div class="button-group">
+							<a href="{U_POST_NEW_TOPIC}" class="button<!-- IF S_IS_LOCKED --> button-secondary<!-- ENDIF -->" title="<!-- IF S_IS_LOCKED -->{L_FORUM_LOCKED}<!-- ELSE -->{L_POST_TOPIC}<!-- ENDIF -->">
+							<!-- IF S_IS_LOCKED -->
+								<i class="fas fa-lock"></i> <span>{L_BUTTON_FORUM_LOCKED}</span>
+							<!-- ELSE -->
+								<i class="fas fa-pencil"></i> <span>{L_BUTTON_NEW_TOPIC}</span>
+							<!-- ENDIF -->
+							</a>
+						</div>
+						<!-- EVENT viewforum_buttons_bottom_after -->
+					<!-- ENDIF -->
+
+					<!-- IF S_SELECT_SORT_DAYS and not S_IS_BOT -->
+						<form method="post" action="{S_FORUM_ACTION}" class="sort-options">
+						<!-- INCLUDE display_options.html -->
+						</form>
+					<!-- ENDIF -->
+				</div>
+				<div class="col-md-6">
+					<div class="pagination-info text-right">
+						<!-- IF not S_IS_BOT and U_MARK_TOPICS and .topicrow --><a href="{U_MARK_TOPICS}" data-ajax="mark_topics_read" class="button button-secondary">{L_MARK_TOPICS_READ}</a> &bull; <!-- ENDIF -->
+						{TOTAL_TOPICS}
+						<!-- IF .pagination -->
+							<!-- INCLUDE pagination.html -->
+						<!-- ELSE -->
+							 &bull; {PAGE_NUMBER}
+						<!-- ENDIF -->
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- ENDIF -->
+
+	<!-- Online list and forum info -->
+	{% EVENT viewforum_body_online_list_before %}
+
+	<div class="row">
+		<!-- IF S_DISPLAY_ONLINE_LIST and U_VIEWONLINE -->
+			<div class="col-md-6">
+				<div class="card modern-online-card">
+					<div class="card-header">
+						<h3><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a></h3>
+					</div>
+					<div class="card-body">
+						<p>{LOGGED_IN_USER_LIST}</p>
+					</div>
+				</div>
+			</div>
+		<!-- ENDIF -->
+
+		<!-- IF S_IS_POSTABLE and rules|length -->
+			<div class="col-md-6">
+				<div class="card modern-permissions-card">
+					<div class="card-header">
+						<h3>{L_FORUM_PERMISSIONS}</h3>
+					</div>
+					<div class="card-body">
+						<p><!-- BEGIN rules -->{rules.RULE}<br /><!-- END rules --></p>
+					</div>
+				</div>
+			</div>
+		<!-- ENDIF -->
+	</div>
+
+	<!-- INCLUDE jumpbox.html -->
+</div>
+
+<!-- INCLUDE overall_footer.html -->

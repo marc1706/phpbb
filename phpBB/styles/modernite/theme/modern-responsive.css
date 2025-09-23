@@ -451,3 +451,155 @@
     animation: none;
   }
 }
+
+/* Topic View Responsive Styles */
+@media (max-width: 1024px) {
+  .modern-action-bar .row {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .modern-search {
+    margin-top: 16px;
+  }
+  
+  .topic-stats {
+    gap: 16px;
+  }
+  
+  .stat-cell {
+    min-width: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modern-action-bar {
+    padding: 12px;
+  }
+  
+  .forum-header-card .forum-title {
+    font-size: 1.25rem;
+  }
+  
+  .topic-content {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .topic-icon {
+    align-self: flex-start;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .topic-stats {
+    display: none;
+  }
+  
+  .mobile-topic-info {
+    display: block;
+  }
+  
+  .pagination-info {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  .button-group .button {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  
+  .modern-search input {
+    font-size: 1rem;
+  }
+  
+  .topictitle {
+    font-size: 1rem;
+  }
+  
+  .topic-meta {
+    font-size: 0.8rem;
+  }
+  
+  .mobile-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .forum-header-card .forum-title {
+    font-size: 1.1rem;
+  }
+  
+  .topic-row {
+    padding: 12px;
+  }
+  
+  .topic-content {
+    gap: 8px;
+  }
+  
+  .topic-icon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .topictitle {
+    font-size: 0.95rem;
+    line-height: 1.2;
+  }
+  
+  .topic-meta {
+    font-size: 0.75rem;
+  }
+  
+  .mobile-last-post {
+    font-size: 0.8rem;
+  }
+  
+  .modern-action-bar {
+    padding: 8px;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+  }
+  
+  .modern-online-card,
+  .modern-permissions-card {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 320px) {
+  .topic-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .topictitle {
+    font-size: 0.9rem;
+  }
+  
+  .topic-feature {
+    font-size: 0.75rem;
+  }
+}
+
+/* Desktop specific styles */
+@media (min-width: 769px) {
+  .mobile-topic-info {
+    display: none;
+  }
+  
+  .topic-content {
+    align-items: center;
+  }
+  
+  .topic-stats {
+    display: flex;
+  }
+}

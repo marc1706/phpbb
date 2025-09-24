@@ -90,9 +90,17 @@
 	
 	/* Search box responsive */
 	.search-box {
-		float: none;
+		position: static;
+		transform: none;
 		margin-top: 15px;
 		text-align: center;
+		width: 100%;
+	}
+	
+	.search-box input {
+		width: 100%;
+		max-width: 300px;
+		margin-bottom: 10px;
 	}
 
 	/* Navigation */

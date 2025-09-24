@@ -87,6 +87,13 @@
 	.site-name {
 		font-size: 1.25rem;
 	}
+	
+	/* Search box responsive */
+	.search-box {
+		float: none;
+		margin-top: 15px;
+		text-align: center;
+	}
 
 	/* Navigation */
 	.navbar {

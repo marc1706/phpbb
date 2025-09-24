@@ -21,7 +21,6 @@
 	cursor: pointer;
 	touch-action: manipulation;
 	-webkit-user-select: none;
-	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 }
@@ -226,3 +225,8 @@ button::-moz-focus-inner {
 .notification-subscribe-toggle:disabled {
 	opacity: 0.7;
 }
+
+
+
+
+/*# sourceMappingURL=buttons.css.map */

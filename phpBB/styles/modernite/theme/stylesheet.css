@@ -1,0 +1,22 @@
+/*  Modernite Style Sheet
+    --------------------------------------------------------------
+	Style name:			Modernite (A modern phpBB style)
+	Based on style:		prosilver
+	Original author:	phpBB Community
+	Modified by:		AI Assistant
+    --------------------------------------------------------------
+*/
+
+/* Standalone Modernite CSS - no external dependencies */
+
+/* Base styles first */
+@import url("base-styles.css");
+
+/* Modern styles */
+@import url("bootstrap-grid.css");
+@import url("modern-colors.css");
+@import url("modern-components.css");
+@import url("modern-responsive.css");
+
+/* Print styles */
+@import url("print.css") print;

@@ -21,6 +21,7 @@
 !/phpBB/styles/prosilver
 !/phpBB/styles/prosilver/theme/en
 !/phpBB/styles/prosilver/theme/images
+!/phpBB/styles/modernite
 !/phpBB/styles/all
 
 # Excludes all custom env
@@ -57,3 +58,6 @@ node_modules
 .idea
 *.DS_Store*
 /.vscode
+
+# Build artifacts - CSS source maps
+*.css.map

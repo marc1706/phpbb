@@ -801,6 +801,125 @@ h6 { font-size: 1rem; }
 	color: var(--gray-600);
 }
 
+/* Modern stat blocks for index page */
+.stat-block {
+	background: var(--white);
+	border: 1px solid var(--gray-200);
+	border-radius: 8px;
+	box-shadow: var(--shadow);
+	margin-bottom: 20px;
+	padding: 20px;
+}
+
+.stat-block h3 {
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--primary);
+	margin-bottom: 15px;
+	border-bottom: 2px solid var(--gray-100);
+	padding-bottom: 8px;
+}
+
+.stat-block h3 a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.stat-block h3 a:hover {
+	color: var(--primary-hover);
+}
+
+.stat-block p {
+	line-height: 1.6;
+	margin-bottom: 0;
+}
+
+.stat-block.online-list {
+	border-left: 4px solid var(--success);
+}
+
+.stat-block.birthdays {
+	border-left: 4px solid var(--warning);
+}
+
+/* Login form styling */
+.headerspace {
+	background: var(--white);
+	border: 1px solid var(--gray-200);
+	border-radius: 8px;
+	box-shadow: var(--shadow);
+	margin: 20px 0;
+	padding: 20px;
+}
+
+.headerspace h3 {
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--gray-800);
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+.headerspace h3 a {
+	color: var(--primary);
+	text-decoration: none;
+}
+
+.headerspace h3 a:hover {
+	color: var(--primary-hover);
+	text-decoration: underline;
+}
+
+.quick-login {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+.quick-login label {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: 500;
+	color: var(--gray-700);
+}
+
+.quick-login label span {
+	display: inline-block;
+	width: 100px;
+	font-size: 0.9rem;
+}
+
+.quick-login .inputbox {
+	padding: 8px 12px;
+	border: 1px solid var(--gray-300);
+	border-radius: var(--radius);
+	font-size: 0.9rem;
+	margin-left: 10px;
+	transition: border-color var(--transition-fast);
+}
+
+.quick-login .inputbox:focus {
+	border-color: var(--primary);
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.quick-login .button {
+	background: var(--primary);
+	color: var(--white);
+	border: none;
+	border-radius: var(--radius);
+	padding: 8px 16px;
+	font-size: 0.9rem;
+	cursor: pointer;
+	margin-top: 10px;
+	transition: background-color var(--transition-fast);
+}
+
+.quick-login .button:hover {
+	background: var(--primary-hover);
+}
+
 /* Enhanced table styling */
 table {
 	background: var(--white);

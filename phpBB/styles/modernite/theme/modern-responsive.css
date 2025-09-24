@@ -92,15 +92,25 @@
 	.search-box {
 		position: static;
 		transform: none;
-		margin-top: 15px;
+		margin: 15px auto;
 		text-align: center;
 		width: 100%;
+		max-width: 320px;
 	}
 	
 	.search-box input {
 		width: 100%;
-		max-width: 300px;
-		margin-bottom: 10px;
+		max-width: 200px;
+		margin-bottom: 8px;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	.search-box button,
+	.search-box .button {
+		display: inline-block;
+		margin: 0 2px;
 	}
 
 	/* Navigation */

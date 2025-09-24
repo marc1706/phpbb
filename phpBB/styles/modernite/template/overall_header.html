@@ -65,18 +65,15 @@
 			<!-- EVENT overall_header_headerbar_before -->
 			<div class="inner">
 
-			<div id="site-description" class="site-description">
+			<hgroup id="site-description" class="site-description">
 				<a id="logo" class="logo" href="<!-- IF U_SITE_HOME -->{U_SITE_HOME}<!-- ELSE -->{U_INDEX}<!-- ENDIF -->" title="<!-- IF U_SITE_HOME -->{L_SITE_HOME}<!-- ELSE -->{L_INDEX}<!-- ENDIF -->">
-					<!-- phpBB logo for modernite theme -->
-					<img src="{T_ASSETS_PATH}/imgs/phpbb_logo.svg" alt="phpBB" class="phpbb-logo" />
-					<!-- IF SITE_LOGO_IMG -->
-						<img src="{T_ASSETS_PATH}/images/{SITE_LOGO_IMG}" alt="{SITENAME}" class="site-logo" />
-					<!-- ELSE -->
-						<span class="site-name">{SITENAME}</span>
-					<!-- ENDIF -->
+					{{ Icon('svg', 'logo', SITENAME, true, 'phpbb-logo') }}
 				</a>
-				<!-- IF SITE_DESCRIPTION --><p class="site-desc">{SITE_DESCRIPTION}</p><!-- ENDIF -->
-			</div>
+				<h1 class="site-name">
+					{SITENAME}
+					<!-- IF SITE_DESCRIPTION --><p class="site-desc">{SITE_DESCRIPTION}</p><!-- ENDIF -->
+				</h1>
+			</hgroup>
 
 			<!-- EVENT overall_header_searchbox_before -->
 			<!-- IF S_DISPLAY_SEARCH and not S_IN_SEARCH -->

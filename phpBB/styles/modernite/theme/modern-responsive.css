@@ -74,6 +74,20 @@
     margin: 0;
   }
   
+  /* Logo responsive adjustments */
+  .phpbb-logo {
+    height: 32px;
+  }
+  
+  #logo {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  
+  .site-name {
+    font-size: 1.25rem;
+  }
+  
   /* Navigation */
   .navbar {
     padding: 8px 16px;

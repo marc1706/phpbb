@@ -4,6 +4,12 @@
 	Based on style:		prosilver
 	Original author:	phpBB Community
 	Modified by:		AI Assistant
+	
+	Optimizations:
+	- Removed inline styles from template files where possible
+	- Added comprehensive utility classes for common styling needs
+	- Consolidated CSS rules to avoid duplication
+	- Maintained all dynamic inline styles for user-generated content
     --------------------------------------------------------------
 */
 

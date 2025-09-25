@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Test phpBB Board - Index</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../theme/stylesheet.css" rel="stylesheet">
+    
+    <style>
+        /* Test-specific styles to simulate phpBB environment */
+        .wrap {
+            border: 1px solid transparent;
+            border-radius: 8px;
+            margin: 0 auto;
+            max-width: 1152px;
+            min-width: 625px;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body id="phpbb" class="nojs notouch section-index ltr">
+
+<div id="wrap" class="wrap">
+    <a id="top" class="top-anchor" accesskey="t"></a>
+    
+    <!-- Header -->
+    <div id="page-header">
+        <div class="headerbar" role="banner">
+            <div class="inner">
+                <div id="site-description" class="site-description">
+                    <div class="logo">
+                        <a href="#" title="Board index">
+                            <svg class="phpbb-logo" width="48" height="48" viewBox="0 0 581 581">
+                                <g>
+                                    <path fill="#0F1419" d="M581,290.5c0,160.5-130,290.5-290.5,290.5S0,451,0,290.5S130,0,290.5,0S581,130,581,290.5z"/>
+                                    <path fill="#98C93C" d="M290.5,72.6c120.3,0,217.9,97.6,217.9,217.9s-97.6,217.9-217.9,217.9S72.6,410.8,72.6,290.5S170.2,72.6,290.5,72.6z"/>
+                                    <path fill="#FFFFFF" d="M217.9,290.5c0,40.1,32.5,72.6,72.6,72.6s72.6-32.5,72.6-72.6s-32.5-72.6-72.6-72.6S217.9,250.4,217.9,290.5z"/>
+                                </g>
+                            </svg>
+                        </a>
+                    </div>
+                    <hgroup>
+                        <h1><a href="#" title="Board index">Test phpBB Board</a></h1>
+                        <p class="site-description-text">A modern phpBB community</p>
+                    </hgroup>
+                </div>
+                
+                <div class="search-header">
+                    <form action="#" method="get" id="search">
+                        <div class="search-box">
+                            <input type="search" name="keywords" id="keywords" maxlength="128" 
+                                   placeholder="Search..." class="inputbox search" />
+                            <button class="button button-search" type="submit" title="Search">
+                                <i class="icon fa-search fa-fw" aria-hidden="true"></i>
+                                <span class="sr-only">Search</span>
+                            </button>
+                            <a href="#" class="button button-search-end" title="Advanced search">
+                                <i class="icon fa-cog fa-fw" aria-hidden="true"></i>
+                                <span class="sr-only">Advanced search</span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="navbar" role="navigation">
+            <div class="inner">
+                <ul id="nav-main" class="nav-main linklist" role="menubar">
+                    <li class="small-icon icon-home breadcrumbs">
+                        <span class="crumb">
+                            <a href="#" accesskey="h" data-navbar-reference="home">
+                                <i class="icon fa-home fa-fw" aria-hidden="true"></i>
+                                <span>Board index</span>
+                            </a>
+                        </span>
+                    </li>
+                </ul>
+                
+                <ul class="nav-main linklist rightside" role="menubar">
+                    <li class="rightside dropdown-container" id="quick-links">
+                        <a href="#" class="dropdown-trigger" role="button" aria-haspopup="true" 
+                           aria-controls="dropdown-menu-quick-links" title="Quick links">
+                            <i class="icon fa-bars fa-fw" aria-hidden="true"></i>
+                            <span>Quick links</span>
+                        </a>
+                        <div class="dropdown" id="dropdown-menu-quick-links">
+                            <div class="pointer"><div class="pointer-inner"></div></div>
+                            <ul class="dropdown-contents" role="menu">
+                                <li><a href="#" role="menuitem">Search</a></li>
+                                <li><a href="#" role="menuitem">Members</a></li>
+                                <li><a href="#" role="menuitem">FAQ</a></li>
+                                <li><a href="#" role="menuitem">Login</a></li>
+                                <li><a href="#" role="menuitem">Register</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page Body -->
+    <div id="page-body" class="page-body" role="main">
+        
+        <!-- Forum List -->
+        <div class="forabg">
+            <div class="inner">
+                <ul class="topiclist">
+                    <li class="header">
+                        <dl class="row-item">
+                            <dt><div class="list-inner">General Discussion</div></dt>
+                            <dd class="topics">Topics</dd>
+                            <dd class="posts">Posts</dd>
+                            <dd class="lastpost"><span>Last post</span></dd>
+                        </dl>
+                    </li>
+                </ul>
+                <ul class="topiclist forums">
+                    <li class="row">
+                        <dl class="row-item forum_read">
+                            <dt title="No unread posts">
+                                <div class="list-inner">
+                                    <a href="#" class="forumtitle">General Discussion</a>
+                                    <br />Welcome to our general discussion forum. Feel free to discuss any topics here.
+                                    <br /><strong>Moderator:</strong> Admin
+                                </div>
+                            </dt>
+                            <dd class="topics">25 <dfn>Topics</dfn></dd>
+                            <dd class="posts">123 <dfn>Posts</dfn></dd>
+                            <dd class="lastpost">
+                                <dfn>Last post</dfn> by <strong>User123</strong>
+                                <br />Today, 14:30
+                                <a href="#" title="Go to last post">
+                                    <i class="icon fa-external-link-square-alt fa-fw icon-lightgray" aria-hidden="true"></i>
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="row">
+                        <dl class="row-item forum_read">
+                            <dt title="No unread posts">
+                                <div class="list-inner">
+                                    <a href="#" class="forumtitle">Technical Support</a>
+                                    <br />Get help with technical issues and troubleshooting.
+                                    <br /><strong>Moderator:</strong> TechSupport
+                                </div>
+                            </dt>
+                            <dd class="topics">18 <dfn>Topics</dfn></dd>
+                            <dd class="posts">67 <dfn>Posts</dfn></dd>
+                            <dd class="lastpost">
+                                <dfn>Last post</dfn> by <strong>Helper</strong>
+                                <br />Yesterday, 09:15
+                                <a href="#" title="Go to last post">
+                                    <i class="icon fa-external-link-square-alt fa-fw icon-lightgray" aria-hidden="true"></i>
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="stat-block online">
+            <h3>Who is online</h3>
+            <p>In total there are <strong>5</strong> users online :: 2 registered, 0 hidden and 3 guests 
+               (based on users active over the past 5 minutes)</p>
+            <p>Most users ever online was <strong>25</strong> on Mon Jan 15, 2024 3:47 pm</p>
+            <p><strong>Registered users:</strong> User123, Helper</p>
+            <p><strong>Legend:</strong> Administrators, Global moderators</p>
+        </div>
+        
+        <div class="stat-block birthdays">
+            <h3>Birthdays</h3>
+            <p>Congratulations to: <strong>TestUser</strong> (24), <strong>Member456</strong> (31)</p>
+        </div>
+        
+        <!-- Login -->
+        <form action="#" method="post" id="login" class="quick-login">
+            <div class="panel">
+                <div class="inner">
+                    <div class="content">
+                        <h3 class="panel-title">Login</h3>
+                        <fieldset class="fields">
+                            <dl>
+                                <dt><label for="username">Username:</label></dt>
+                                <dd><input type="text" tabindex="1" name="username" id="username" 
+                                           size="25" value="" class="inputbox" /></dd>
+                            </dl>
+                            <dl>
+                                <dt><label for="password">Password:</label></dt>
+                                <dd><input type="password" tabindex="2" name="password" 
+                                           id="password" size="25" class="inputbox" /></dd>
+                            </dl>
+                            <dl>
+                                <dd><label for="autologin">
+                                    <input type="checkbox" name="autologin" id="autologin" tabindex="4" /> 
+                                    Log me on automatically each visit
+                                </label></dd>
+                            </dl>
+                            <dl>
+                                <dt>&nbsp;</dt>
+                                <dd>
+                                    <input type="submit" name="login" tabindex="6" value="Login" 
+                                           class="button1" />
+                                    <a href="#" class="button2">Register</a>
+                                </dd>
+                            </dl>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+    
+    <!-- Footer -->
+    <div id="page-footer" class="page-footer">
+        <div class="navbar" role="contentinfo">
+            <div class="inner">
+                <div class="copyright">
+                    Powered by <a href="https://www.phpbb.com/">phpBB</a> © 2000, 2002, 2005, 2007 phpBB Limited
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+</body>
+</html>

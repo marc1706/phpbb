@@ -36,6 +36,8 @@
 	Modified by:      AI Assistant for modern design
 -->
 
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <!-- Modern CSS-based icon system loaded via modern-components.css -->
 <link href="{T_STYLESHEET_LINK}" rel="stylesheet">
 <link href="{T_THEME_PATH}/print.css" rel="stylesheet" media="print">
@@ -65,18 +67,15 @@
 			<!-- EVENT overall_header_headerbar_before -->
 			<div class="inner">
 
-			<div id="site-description" class="site-description">
+			<hgroup id="site-description" class="site-description">
 				<a id="logo" class="logo" href="<!-- IF U_SITE_HOME -->{U_SITE_HOME}<!-- ELSE -->{U_INDEX}<!-- ENDIF -->" title="<!-- IF U_SITE_HOME -->{L_SITE_HOME}<!-- ELSE -->{L_INDEX}<!-- ENDIF -->">
-					<!-- phpBB logo for modernite theme -->
-					<img src="{T_ASSETS_PATH}/imgs/phpbb_logo.svg" alt="phpBB" class="phpbb-logo" />
-					<!-- IF SITE_LOGO_IMG -->
-						<img src="{T_ASSETS_PATH}/images/{SITE_LOGO_IMG}" alt="{SITENAME}" class="site-logo" />
-					<!-- ELSE -->
-						<span class="site-name">{SITENAME}</span>
-					<!-- ENDIF -->
+					{{ Icon('svg', 'logo', SITENAME, true, 'phpbb-logo') }}
 				</a>
-				<!-- IF SITE_DESCRIPTION --><p class="site-desc">{SITE_DESCRIPTION}</p><!-- ENDIF -->
-			</div>
+				<h1 class="site-name">
+					{SITENAME}
+					<!-- IF SITE_DESCRIPTION --><p class="site-desc">{SITE_DESCRIPTION}</p><!-- ENDIF -->
+				</h1>
+			</hgroup>
 
 			<!-- EVENT overall_header_searchbox_before -->
 			<!-- IF S_DISPLAY_SEARCH and not S_IN_SEARCH -->
@@ -85,10 +84,10 @@
 				<fieldset>
 					<input name="keywords" id="keywords" type="search" maxlength="128" title="{L_SEARCH_KEYWORDS}" class="inputbox search" size="20" value="{SEARCH_WORDS}" placeholder="{L_SEARCH_MINI}" />
 					<button class="button button-search" type="submit" title="{L_SEARCH}">
-						<i class="modern-icon icon-search" aria-hidden="true"></i><span class="sr-only">{L_SEARCH}</span>
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">{L_SEARCH}</span>
 					</button>
 					<a href="{U_SEARCH}" class="button button-search-end" title="{L_SEARCH_ADV}">
-						<i class="modern-icon icon-settings" aria-hidden="true"></i><span class="sr-only">{L_SEARCH_ADV}</span>
+						<i class="icon fa-cog fa-fw" aria-hidden="true"></i><span class="sr-only">{L_SEARCH_ADV}</span>
 					</a>
 					{S_SEARCH_HIDDEN_FIELDS}
 				</fieldset>
@@ -107,7 +106,7 @@
 			<ul id="nav-main" class="nav-main linklist" role="menubar">
 				<li id="quick-links" class="quick-links dropdown-container responsive-menu" data-skip-responsive="true">
 					<a href="#" class="dropdown-trigger">
-						<span class="modern-icon">☰</span><span>{L_QUICK_LINKS}</span>
+						<i class="icon fa-bars fa-fw" aria-hidden="true"></i><span>{L_QUICK_LINKS}</span>
 					</a>
 					<div class="dropdown">
 						<div class="pointer"><div class="pointer-inner"></div></div>
@@ -115,10 +114,10 @@
 							<!-- EVENT overall_header_navigation_prepend -->
 							<li class="separator"></li>
 							<!-- IF not S_IS_BOT -->
-								<!-- IF S_DISPLAY_MEMBERLIST --><li><a href="{U_MEMBERLIST}" role="menuitem"><span class="modern-icon modern-icon-user"></span><span>{L_MEMBERLIST}</span></a></li><!-- ENDIF -->
-								<!-- IF not S_USER_LOGGED_IN and S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) --><li><a href="{U_REGISTER}" role="menuitem"><span class="modern-icon modern-icon-user"></span><span>{L_REGISTER}</span></a></li><!-- ENDIF -->
-								<li><a href="{U_FAQ}" rel="help" title="{L_FAQ_EXPLAIN}" role="menuitem"><span class="modern-icon modern-icon-help"></span><span>{L_FAQ}</span></a></li>
-								<!-- IF not S_USER_LOGGED_IN --><li><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><span class="modern-icon modern-icon-user"></span><span>{L_LOGIN_LOGOUT}</span></a></li><!-- ENDIF -->
+								<!-- IF S_DISPLAY_MEMBERLIST --><li><a href="{U_MEMBERLIST}" role="menuitem"><i class="icon fa-users fa-fw" aria-hidden="true"></i><span>{L_MEMBERLIST}</span></a></li><!-- ENDIF -->
+								<!-- IF not S_USER_LOGGED_IN and S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) --><li><a href="{U_REGISTER}" role="menuitem"><i class="icon fa-user-plus fa-fw" aria-hidden="true"></i><span>{L_REGISTER}</span></a></li><!-- ENDIF -->
+								<li><a href="{U_FAQ}" rel="help" title="{L_FAQ_EXPLAIN}" role="menuitem"><i class="icon fa-question-circle fa-fw" aria-hidden="true"></i><span>{L_FAQ}</span></a></li>
+								<!-- IF not S_USER_LOGGED_IN --><li><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><i class="icon fa-sign-in-alt fa-fw" aria-hidden="true"></i><span>{L_LOGIN_LOGOUT}</span></a></li><!-- ENDIF -->
 								<!-- EVENT overall_header_navigation_append -->
 							<!-- ENDIF -->
 						</ul>
@@ -126,7 +125,7 @@
 				</li>
 
 				<!-- EVENT overall_header_navigation_items_prepend -->
-				<!-- IF S_DISPLAY_SEARCH --><li class="responsive-search"><a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}" role="menuitem"><span class="modern-icon modern-icon-search"></span><span class="sr-only">{L_SEARCH}</span></a></li><!-- ENDIF -->
+				<!-- IF S_DISPLAY_SEARCH --><li class="responsive-search"><a href="{U_SEARCH}" title="{L_SEARCH_ADV_EXPLAIN}" role="menuitem"><i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">{L_SEARCH}</span></a></li><!-- ENDIF -->
 				<!-- IF not S_IS_BOT -->
 					<!-- IF S_USER_LOGGED_IN -->
 						<li class="dropdown-container">
@@ -135,19 +134,19 @@
 								<!-- IF AVATAR_IMG -->
 									{AVATAR_IMG}
 								<!-- ELSE -->
-									<span class="modern-icon modern-icon-user"></span>
+									<i class="icon fa-user fa-fw" aria-hidden="true"></i>
 								<!-- ENDIF -->
-								<span class="modern-icon modern-icon-arrow-down"></span>
+								<i class="icon fa-caret-down fa-fw" aria-hidden="true"></i>
 							</a>
 							<div class="dropdown">
 								<div class="pointer"><div class="pointer-inner"></div></div>
 								<ul class="dropdown-contents" role="menu">
 									<!-- EVENT overall_header_user_dropdown_prepend -->
-									<!-- IF U_RESTORE_PERMISSIONS --><li><a href="{U_RESTORE_PERMISSIONS}"><i class="icon fa-refresh fa-fw" aria-hidden="true"></i><span>{L_RESTORE_PERMISSIONS}</span></a></li><!-- ENDIF -->
-									<li><a href="{U_PROFILE}" title="{L_PROFILE}" role="menuitem"><span class="modern-icon modern-icon-user"></span><span>{L_PROFILE}</span></a></li>
-									<li><a href="{U_USER_PROFILE}" title="{L_READ_PROFILE}" role="menuitem"><span class="modern-icon modern-icon-user"></span><span>{L_READ_PROFILE}</span></a></li>
+									<!-- IF U_RESTORE_PERMISSIONS --><li><a href="{U_RESTORE_PERMISSIONS}"><i class="icon fa-sync fa-fw" aria-hidden="true"></i><span>{L_RESTORE_PERMISSIONS}</span></a></li><!-- ENDIF -->
+									<li><a href="{U_PROFILE}" title="{L_PROFILE}" role="menuitem"><i class="icon fa-sliders-h fa-fw" aria-hidden="true"></i><span>{L_PROFILE}</span></a></li>
+									<li><a href="{U_USER_PROFILE}" title="{L_READ_PROFILE}" role="menuitem"><i class="icon fa-user fa-fw" aria-hidden="true"></i><span>{L_READ_PROFILE}</span></a></li>
 									<li class="separator"></li>
-									<li><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><span class="modern-icon modern-icon-user"></span><span>{L_LOGIN_LOGOUT}</span></a></li>
+									<li><a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><i class="icon fa-sign-out-alt fa-fw" aria-hidden="true"></i><span>{L_LOGIN_LOGOUT}</span></a></li>
 									<!-- EVENT overall_header_user_dropdown_append -->
 								</ul>
 							</div>
@@ -155,7 +154,7 @@
 						<!-- IF S_DISPLAY_PM -->
 							<li class="dropdown-container">
 								<a href="{U_PRIVATEMSGS}" id="message_link" class="dropdown-trigger" title="{PRIVATE_MESSAGE_INFO}" role="button" aria-haspopup="true" aria-expanded="false">
-									<span class="modern-icon modern-icon-forum"></span><span class="sr-only">{PRIVATE_MESSAGE_INFO}</span>
+									<i class="icon fa-inbox fa-fw" aria-hidden="true"></i><span class="sr-only">{PRIVATE_MESSAGE_INFO}</span>
 									<!-- IF PRIVATE_MESSAGE_COUNT --><strong class="badge badge-pm">{PRIVATE_MESSAGE_COUNT}</strong><!-- ENDIF -->
 								</a>
 								<!-- IF S_NEW_PM -->
@@ -194,17 +193,17 @@
 						<!-- IF S_NOTIFICATIONS_DISPLAY -->
 							<li class="dropdown-container dropdown-{S_CONTENT_FLOW_END}">
 								<a href="{U_VIEW_ALL_NOTIFICATIONS}" id="notification_list_button" class="dropdown-trigger" title="{L_NOTIFICATIONS}" role="button" aria-haspopup="true" aria-expanded="false">
-									<span class="modern-icon modern-icon-help"></span><span class="sr-only">{L_NOTIFICATIONS}</span>
+									<i class="icon fa-bell fa-fw" aria-hidden="true"></i><span class="sr-only">{L_NOTIFICATIONS}</span>
 									<!-- IF NOTIFICATIONS_COUNT --><strong class="badge">{NOTIFICATIONS_COUNT}</strong><!-- ENDIF -->
 								</a>
 								<!-- INCLUDE notification_dropdown.html -->
 							</li>
 						<!-- ENDIF -->
 					<!-- ELSE -->
-						<li class="rightside"  data-skip-responsive="true">
-							<a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><i class="icon fa-power-off fa-fw" aria-hidden="true"></i><span>{L_LOGIN_LOGOUT}</span></a>
+						<li class="rightside" data-skip-responsive="true">
+							<a href="{U_LOGIN_LOGOUT}" title="{L_LOGIN_LOGOUT}" accesskey="x" role="menuitem"><i class="icon fa-sign-in-alt fa-fw" aria-hidden="true"></i><span>{L_LOGIN_LOGOUT}</span></a>
 							<!-- IF S_REGISTER_ENABLED and not (S_SHOW_COPPA or S_REGISTRATION) -->
-								&nbsp;•&nbsp;<a href="{U_REGISTER}"><i class="icon fa-pencil-square-o fa-fw" aria-hidden="true"></i><span>{L_REGISTER}</span></a>
+								&nbsp;•&nbsp;<a href="{U_REGISTER}"><i class="icon fa-user-plus fa-fw" aria-hidden="true"></i><span>{L_REGISTER}</span></a>
 							<!-- ENDIF -->
 						</li>
 					<!-- ENDIF -->

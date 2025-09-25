@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Test phpBB Board - General Discussion</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../theme/stylesheet.css" rel="stylesheet">
+    
+    <style>
+        /* Test-specific styles to simulate phpBB environment */
+        .wrap {
+            border: 1px solid transparent;
+            border-radius: 8px;
+            margin: 0 auto;
+            max-width: 1152px;
+            min-width: 625px;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body id="phpbb" class="nojs notouch section-viewforum ltr">
+
+<div id="wrap" class="wrap">
+    <a id="top" class="top-anchor" accesskey="t"></a>
+    
+    <!-- Header -->
+    <div id="page-header">
+        <div class="headerbar" role="banner">
+            <div class="inner">
+                <div id="site-description" class="site-description">
+                    <div class="logo">
+                        <a href="#" title="Board index">
+                            <svg class="phpbb-logo" width="48" height="48" viewBox="0 0 581 581">
+                                <g>
+                                    <path fill="#0F1419" d="M581,290.5c0,160.5-130,290.5-290.5,290.5S0,451,0,290.5S130,0,290.5,0S581,130,581,290.5z"/>
+                                    <path fill="#98C93C" d="M290.5,72.6c120.3,0,217.9,97.6,217.9,217.9s-97.6,217.9-217.9,217.9S72.6,410.8,72.6,290.5S170.2,72.6,290.5,72.6z"/>
+                                    <path fill="#FFFFFF" d="M217.9,290.5c0,40.1,32.5,72.6,72.6,72.6s72.6-32.5,72.6-72.6s-32.5-72.6-72.6-72.6S217.9,250.4,217.9,290.5z"/>
+                                </g>
+                            </svg>
+                        </a>
+                    </div>
+                    <hgroup>
+                        <h1><a href="#" title="Board index">Test phpBB Board</a></h1>
+                        <p class="site-description-text">A modern phpBB community</p>
+                    </hgroup>
+                </div>
+                
+                <div class="search-header">
+                    <form action="#" method="get" id="search">
+                        <div class="search-box">
+                            <input type="search" name="keywords" id="keywords" maxlength="128" 
+                                   placeholder="Search..." class="inputbox search" />
+                            <button class="button button-search" type="submit" title="Search">
+                                <i class="icon fa-search fa-fw" aria-hidden="true"></i>
+                                <span class="sr-only">Search</span>
+                            </button>
+                            <a href="#" class="button button-search-end" title="Advanced search">
+                                <i class="icon fa-cog fa-fw" aria-hidden="true"></i>
+                                <span class="sr-only">Advanced search</span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="navbar" role="navigation">
+            <div class="inner">
+                <ul id="nav-main" class="nav-main linklist" role="menubar">
+                    <li class="small-icon icon-home breadcrumbs">
+                        <span class="crumb">
+                            <a href="#" accesskey="h">
+                                <i class="icon fa-home fa-fw" aria-hidden="true"></i>
+                                <span>Board index</span>
+                            </a>
+                        </span>
+                    </li>
+                    <li class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+                        <span class="crumb" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                            <a href="#" itemprop="item">
+                                <span itemprop="name">General Discussion</span>
+                            </a>
+                            <meta itemprop="position" content="2" />
+                        </span>
+                    </li>
+                </ul>
+                
+                <ul class="nav-main linklist rightside" role="menubar">
+                    <li class="rightside dropdown-container" id="quick-links">
+                        <a href="#" class="dropdown-trigger" role="button" aria-haspopup="true" 
+                           aria-controls="dropdown-menu-quick-links" title="Quick links">
+                            <i class="icon fa-bars fa-fw" aria-hidden="true"></i>
+                            <span>Quick links</span>
+                        </a>
+                        <div class="dropdown" id="dropdown-menu-quick-links">
+                            <div class="pointer"><div class="pointer-inner"></div></div>
+                            <ul class="dropdown-contents" role="menu">
+                                <li><a href="#" role="menuitem">Search</a></li>
+                                <li><a href="#" role="menuitem">Members</a></li>
+                                <li><a href="#" role="menuitem">FAQ</a></li>
+                                <li><a href="#" role="menuitem">Login</a></li>
+                                <li><a href="#" role="menuitem">Register</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Page Body -->
+    <div id="page-body" class="page-body" role="main">
+        
+        <!-- Forum Header -->
+        <h2 class="forum-title">
+            <a href="#">General Discussion</a>
+        </h2>
+        
+        <!-- Action Bar -->
+        <div class="action-bar top">
+            <div class="buttons">
+                <a href="#" class="button" title="Post a new topic">
+                    <i class="icon fa-plus fa-fw" aria-hidden="true"></i>
+                    <span>New Topic</span>
+                </a>
+            </div>
+            
+            <div class="pagination">
+                Page <strong>1</strong> of <strong>2</strong>
+                <ul>
+                    <li class="active"><span>1</span></li>
+                    <li><a class="button" href="#">2</a></li>
+                    <li class="next"><a class="button" href="#" title="Next">Next</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Topic List -->
+        <div class="forumbg">
+            <div class="inner">
+                <ul class="topiclist">
+                    <li class="header">
+                        <dl class="row-item">
+                            <dt><div class="list-inner">Topics</div></dt>
+                            <dd class="posts">Replies</dd>
+                            <dd class="views">Views</dd>
+                            <dd class="lastpost"><span>Last post</span></dd>
+                        </dl>
+                    </li>
+                </ul>
+                <ul class="topiclist topics">
+                    <li class="row bg1">
+                        <dl class="row-item topic_read_mine">
+                            <dt title="No unread posts">
+                                <div class="list-inner">
+                                    <a href="#" class="topictitle">Welcome to the forum!</a>
+                                    <br />
+                                    <div class="responsive-hide">
+                                        by <strong>Admin</strong> » Today 12:34
+                                    </div>
+                                </div>
+                            </dt>
+                            <dd class="posts">3 <dfn>Replies</dfn></dd>
+                            <dd class="views">45 <dfn>Views</dfn></dd>
+                            <dd class="lastpost">
+                                <dfn>Last post</dfn> by <strong>User123</strong>
+                                <br />Today, 14:30
+                                <a href="#" title="Go to last post">
+                                    <i class="icon fa-external-link-square-alt fa-fw icon-lightgray" aria-hidden="true"></i>
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="row bg2">
+                        <dl class="row-item topic_read">
+                            <dt title="No unread posts">
+                                <div class="list-inner">
+                                    <a href="#" class="topictitle">How to use the forum</a>
+                                    <br />
+                                    <div class="responsive-hide">
+                                        by <strong>Moderator</strong> » Yesterday 15:22
+                                    </div>
+                                </div>
+                            </dt>
+                            <dd class="posts">7 <dfn>Replies</dfn></dd>
+                            <dd class="views">89 <dfn>Views</dfn></dd>
+                            <dd class="lastpost">
+                                <dfn>Last post</dfn> by <strong>Helper</strong>
+                                <br />Yesterday, 09:15
+                                <a href="#" title="Go to last post">
+                                    <i class="icon fa-external-link-square-alt fa-fw icon-lightgray" aria-hidden="true"></i>
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="row bg1">
+                        <dl class="row-item topic_unread">
+                            <dt title="Unread posts">
+                                <div class="list-inner">
+                                    <a href="#" class="topictitle">Feature suggestions</a>
+                                    <br />
+                                    <div class="responsive-hide">
+                                        by <strong>Member456</strong> » 2 hours ago
+                                    </div>
+                                </div>
+                            </dt>
+                            <dd class="posts">12 <dfn>Replies</dfn></dd>
+                            <dd class="views">156 <dfn>Views</dfn></dd>
+                            <dd class="lastpost">
+                                <dfn>Last post</dfn> by <strong>TestUser</strong>
+                                <br />1 hour ago
+                                <a href="#" title="Go to last post">
+                                    <i class="icon fa-external-link-square-alt fa-fw icon-lightgray" aria-hidden="true"></i>
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <li class="row bg2">
+                        <dl class="row-item topic_read">
+                            <dt title="No unread posts">
+                                <div class="list-inner">
+                                    <a href="#" class="topictitle">Bug reports</a>
+                                    <br />
+                                    <div class="responsive-hide">
+                                        by <strong>TechUser</strong> » 3 days ago
+                                    </div>
+                                </div>
+                            </dt>
+                            <dd class="posts">5 <dfn>Replies</dfn></dd>
+                            <dd class="views">78 <dfn>Views</dfn></dd>
+                            <dd class="lastpost">
+                                <dfn>Last post</dfn> by <strong>Admin</strong>
+                                <br />2 days ago
+                                <a href="#" title="Go to last post">
+                                    <i class="icon fa-external-link-square-alt fa-fw icon-lightgray" aria-hidden="true"></i>
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Bottom Action Bar -->
+        <div class="action-bar bottom">
+            <div class="buttons">
+                <a href="#" class="button" title="Post a new topic">
+                    <i class="icon fa-plus fa-fw" aria-hidden="true"></i>
+                    <span>New Topic</span>
+                </a>
+            </div>
+            
+            <div class="pagination">
+                Page <strong>1</strong> of <strong>2</strong>
+                <ul>
+                    <li class="active"><span>1</span></li>
+                    <li><a class="button" href="#">2</a></li>
+                    <li class="next"><a class="button" href="#" title="Next">Next</a></li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- Footer -->
+    <div id="page-footer" class="page-footer">
+        <div class="navbar" role="contentinfo">
+            <div class="inner">
+                <div class="copyright">
+                    Powered by <a href="https://www.phpbb.com/">phpBB</a> © 2000, 2002, 2005, 2007 phpBB Limited
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+</body>
+</html>

@@ -6,33 +6,33 @@
 
 /* Print optimization - Modern approach */
 @page {
-  margin: 2cm 1.5cm;
-  size: A4;
+	margin: 2cm 1.5cm;
+	size: A4;
 }
 
 /* General markup styles */
 * {
-  margin: 0;
-  padding: 0;
-  background: transparent !important;
-  color: #000 !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
+	background: transparent !important;
+	box-shadow: none !important;
+	text-shadow: none !important;
+	color: #000000 !important;
+	margin: 0;
+	padding: 0;
 }
 
 *:before,
 *:after {
-  background: transparent !important;
-  color: #000 !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
+	background: transparent !important;
+	box-shadow: none !important;
+	text-shadow: none !important;
+	color: #000000 !important;
 }
 
 body {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 12pt;
-  line-height: 1.4;
-  color: #000000;
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: 12pt;
+	line-height: 1.4;
+	color: #000000;
 }
 
 /* Hide interactive elements */
@@ -49,20 +49,20 @@ input[type="submit"],
 nav,
 .navigation,
 .breadcrumb-home {
-  display: none !important;
+	display: none !important;
 }
 
 /* Show content images but hide decorative ones */
 img {
-  display: none;
+	display: none;
 }
 
 .content img,
 .postimage,
 .attach-image img {
-  display: inline;
-  max-width: 100%;
-  page-break-inside: avoid;
+	display: inline;
+	max-width: 100%;
+	page-break-inside: avoid;
 }
 
 /* Container for the main body */
@@ -248,8 +248,3 @@ code { display: block; }
 /* stylelint-enable declaration-property-unit-allowed-list */
 
 /* stylelint-enable selector-max-compound-selectors */
-
-
-
-
-/*# sourceMappingURL=print.css.map */

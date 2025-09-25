@@ -3,674 +3,729 @@
 
 /* Base responsive behavior */
 @media (max-width: 1200px) {
-  .container {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  
-  .wrap {
-    margin: 10px;
-    border-radius: 8px;
-  }
+	.container {
+		padding-right: 20px;
+		padding-left: 20px;
+	}
+
+	.wrap {
+		border-radius: 8px;
+		margin: 10px;
+	}
 }
 
 /* Tablet styles (768px to 1024px) */
 @media (max-width: 1024px) {
-  /* Adjust forum layout */
-  .forumlist .forum-item {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .forum-stats {
-    margin-top: 12px;
-    text-align: left;
-  }
-  
-  /* Stack navigation elements */
-  .navbar .nav-links {
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  /* Adjust search box */
-  .search-box {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-  
-  .search-box input {
-    width: 100%;
-  }
+	/* Adjust forum layout */
+	.forumlist .forum-item {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.forum-stats {
+		text-align: left;
+		margin-top: 12px;
+	}
+
+	/* Stack navigation elements */
+	.navbar .nav-links {
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	/* Adjust search box */
+	.search-box {
+		width: 100%;
+		margin-bottom: 16px;
+	}
+
+	.search-box input {
+		width: 100%;
+	}
 }
 
 /* Mobile landscape (768px and below) */
 @media (max-width: 768px) {
-  /* Typography adjustments */
-  h1 { font-size: 1.875rem; }
-  h2 { font-size: 1.5rem; }
-  h3 { font-size: 1.25rem; }
-  h4 { font-size: 1.125rem; }
-  
-  /* Container adjustments */
-  .container {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-  
-  .wrap {
-    margin: 8px;
-    border-radius: 6px;
-  }
-  
-  /* Header adjustments */
-  .headerbar {
-    padding: 12px 16px;
-    text-align: center;
-  }
-  
-  .headerbar h1 {
-    font-size: 1.5rem;
-    margin: 0;
-  }
-  
-  /* Logo responsive adjustments */
-  .phpbb-logo {
-    height: 32px;
-  }
-  
-  #logo {
-    flex-direction: column;
-    gap: var(--space-1);
-  }
-  
-  .site-name {
-    font-size: 1.25rem;
-  }
-  
-  /* Navigation */
-  .navbar {
-    padding: 8px 16px;
-  }
-  
-  .navbar .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  /* Forum list mobile optimization */
-  .forumlist li {
-    margin-bottom: 12px;
-  }
-  
-  .topiclist {
-    border-radius: 6px;
-  }
-  
-  .topiclist li {
-    padding: 12px;
-  }
-  
-  /* Post layout adjustments */
-  .post {
-    margin-bottom: 12px;
-    border-radius: 6px;
-  }
-  
-  .postbody {
-    padding: 16px;
-  }
-  
-  .postprofile {
-    margin-left: 0;
-    margin-top: 16px;
-    padding: 12px;
-  }
-  
-  /* User card adjustments */
-  .user-card {
-    padding: 16px;
-  }
-  
-  .user-card .avatar {
-    width: 60px;
-    height: 60px;
-  }
-  
-  /* Table responsiveness */
-  .responsive-table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  
-  /* Button adjustments */
-  .button, button, input[type="submit"], input[type="button"] {
-    padding: 10px 16px;
-    font-size: 0.9rem;
-    width: 100%;
-    margin-bottom: 8px;
-  }
-  
-  .button.inline {
-    width: auto;
-    display: inline-block;
-    margin-right: 8px;
-    margin-bottom: 8px;
-  }
-  
-  /* Form adjustments */
-  input[type="text"], input[type="password"], input[type="email"], 
-  select, textarea {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-  }
-  
-  /* Pagination mobile */
-  .pagination {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  
-  .pagination li {
-    margin: 2px;
-  }
-  
-  .pagination li a {
-    padding: 8px 12px;
-    min-width: 44px;
-    text-align: center;
-  }
+	/* Typography adjustments */
+	h1 { font-size: 1.875rem; }
+	h2 { font-size: 1.5rem; }
+	h3 { font-size: 1.25rem; }
+	h4 { font-size: 1.125rem; }
+
+	/* Container adjustments */
+	.container {
+		padding-right: 16px;
+		padding-left: 16px;
+	}
+
+	.wrap {
+		border-radius: 6px;
+		margin: 8px;
+	}
+
+	/* Header adjustments */
+	.headerbar {
+		text-align: center;
+		padding: 12px 16px;
+	}
+
+	.headerbar h1 {
+		font-size: 1.5rem;
+		margin: 0;
+	}
+
+	/* Logo responsive adjustments */
+	.phpbb-logo {
+		height: 32px;
+	}
+
+	#logo {
+		flex-direction: column;
+		gap: var(--space-1);
+	}
+
+	.site-name {
+		font-size: 1.25rem;
+	}
+	
+	/* Search box responsive */
+	.search-box {
+		position: static;
+		transform: none;
+		margin: 15px auto;
+		text-align: center;
+		width: 100%;
+		max-width: 320px;
+	}
+	
+	.search-box input {
+		width: 100%;
+		max-width: 200px;
+		margin-bottom: 8px;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	
+	.search-box button,
+	.search-box .button {
+		display: inline-block;
+		margin: 0 2px;
+	}
+
+	/* Navigation */
+	.navbar {
+		padding: 8px 16px;
+	}
+
+	.navbar .nav-links {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	/* Forum list mobile optimization */
+	.forumlist li {
+		margin-bottom: 12px;
+	}
+
+	.topiclist {
+		border-radius: 6px;
+	}
+
+	.topiclist li {
+		padding: 12px;
+	}
+
+	/* Post layout adjustments */
+	.post {
+		border-radius: 6px;
+		margin-bottom: 12px;
+	}
+
+	.postbody {
+		padding: 16px;
+	}
+
+	.postprofile {
+		margin-top: 16px;
+		margin-left: 0;
+		padding: 12px;
+	}
+
+	/* User card adjustments */
+	.user-card {
+		padding: 16px;
+	}
+
+	.user-card .avatar {
+		width: 60px;
+		height: 60px;
+	}
+
+	/* Table responsiveness */
+	.responsive-table {
+		white-space: nowrap;
+		display: block;
+		overflow-x: auto;
+	}
+
+	/* Button adjustments */
+	.button,
+	button,
+	input[type="submit"],
+	input[type="button"] {
+		font-size: 0.9rem;
+		width: 100%;
+		margin-bottom: 8px;
+		padding: 10px 16px;
+	}
+
+	.button.inline {
+		display: inline-block;
+		width: auto;
+		margin-right: 8px;
+		margin-bottom: 8px;
+	}
+
+	/* Form adjustments */
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	select,
+	textarea {
+		font-size: 1rem;
+		width: 100%;
+		padding: 12px;
+	}
+
+	/* Pagination mobile */
+	.pagination {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.pagination li {
+		margin: 2px;
+	}
+
+	.pagination li a {
+		text-align: center;
+		min-width: 44px;
+		padding: 8px 12px;
+	}
 }
 
 /* Mobile portrait (576px and below) */
 @media (max-width: 576px) {
-  /* Further typography reduction */
-  h1 { font-size: 1.5rem; }
-  h2 { font-size: 1.25rem; }
-  h3 { font-size: 1.125rem; }
-  
-  body {
-    font-size: 0.9rem;
-  }
-  
-  /* Minimal container padding */
-  .container {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-  
-  .wrap {
-    margin: 4px;
-    border-radius: 4px;
-  }
-  
-  /* Header compact */
-  .headerbar {
-    padding: 8px 12px;
-  }
-  
-  .headerbar h1 {
-    font-size: 1.25rem;
-  }
-  
-  /* Navigation compact */
-  .navbar {
-    padding: 6px 12px;
-  }
-  
-  /* Forum items stack completely */
-  .forumlist li {
-    margin-bottom: 8px;
-  }
-  
-  .forum-title {
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  
-  .forum-desc {
-    font-size: 0.8rem;
-    margin-top: 4px;
-  }
-  
-  /* Topic list mobile optimized */
-  .topiclist li {
-    padding: 8px;
-  }
-  
-  .topictitle {
-    font-size: 0.9rem;
-    line-height: 1.3;
-  }
-  
-  /* Post mobile layout */
-  .post {
-    margin-bottom: 8px;
-  }
-  
-  .postbody {
-    padding: 12px;
-  }
-  
-  .postprofile {
-    padding: 8px;
-    text-align: center;
-  }
-  
-  .postprofile .avatar {
-    width: 40px;
-    height: 40px;
-  }
-  
-  /* Compact user cards */
-  .user-card {
-    padding: 12px;
-  }
-  
-  .user-card .avatar {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .user-card .username {
-    font-size: 1rem;
-  }
-  
-  /* Compact statistics cards for mobile */
-  .modern-stats-grid {
-    margin-bottom: 12px;
-  }
-  
-  .modern-stats-grid .row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-  
-  .modern-stats-grid .col-md-3 {
-    flex: 0 0 calc(50% - 3px);
-    max-width: calc(50% - 3px);
-  }
-  
-  .stats-card {
-    margin-bottom: 0;
-    padding: 10px 6px;
-    text-align: center;
-  }
-  
-  .stats-card .stat-number {
-    font-size: 1.1rem;
-    margin-bottom: 2px;
-  }
-  
-  .stats-card .stat-label {
-    font-size: 0.7rem;
-    line-height: 1.2;
-  }
-  
-  /* Mobile consistency for online and permissions cards */
-  .modern-online-card,
-  .modern-permissions-card {
-    margin-left: -12px;
-    margin-right: -12px;
-    border-radius: 0;
-  }
-  
-  .modern-online-card .card-body,
-  .modern-permissions-card .card-body {
-    padding: 12px;
-  }
-  
-  /* Mobile button consistency */
-  .mark-topics-btn {
-    font-size: 0.8rem;
-    padding: 6px 10px;
-    margin-bottom: 8px;
-    display: inline-block;
-  }
-  
-  /* Form elements */
-  input[type="text"], input[type="password"], input[type="email"], 
-  select, textarea {
-    padding: 10px;
-    border-radius: 4px;
-  }
-  
-  /* Search box mobile */
-  .search-box input {
-    padding-left: 35px;
-    border-radius: 20px;
-  }
-  
-  /* Dropdown menus mobile */
-  .dropdown-menu {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90vw;
-    max-width: 300px;
-    z-index: 1050;
-  }
-  
-  /* Floating action button mobile */
-  .floating {
-    bottom: 16px;
-    right: 16px;
-    width: 48px;
-    height: 48px;
-  }
-  
-  /* Tooltip mobile behavior */
-  .tooltip::after {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 250px;
-    white-space: normal;
-    text-align: center;
-  }
+	/* Further typography reduction */
+	h1 { font-size: 1.5rem; }
+	h2 { font-size: 1.25rem; }
+	h3 { font-size: 1.125rem; }
+
+	body {
+		font-size: 0.9rem;
+	}
+
+	/* Minimal container padding */
+	.container {
+		padding-right: 12px;
+		padding-left: 12px;
+	}
+
+	.wrap {
+		border-radius: 4px;
+		margin: 4px;
+	}
+
+	/* Header compact */
+	.headerbar {
+		padding: 8px 12px;
+	}
+
+	.headerbar h1 {
+		font-size: 1.25rem;
+	}
+
+	/* Navigation compact */
+	.navbar {
+		padding: 6px 12px;
+	}
+
+	/* Forum items stack completely */
+	.forumlist li {
+		margin-bottom: 8px;
+	}
+
+	.forum-title {
+		font-size: 1rem;
+		font-weight: 600;
+	}
+
+	.forum-desc {
+		font-size: 0.8rem;
+		margin-top: 4px;
+	}
+
+	/* Topic list mobile optimized */
+	.topiclist li {
+		padding: 8px;
+	}
+
+	.topictitle {
+		font-size: 0.9rem;
+		line-height: 1.3;
+	}
+
+	/* Post mobile layout */
+	.post {
+		margin-bottom: 8px;
+	}
+
+	.postbody {
+		padding: 12px;
+	}
+
+	.postprofile {
+		text-align: center;
+		padding: 8px;
+	}
+
+	.postprofile .avatar {
+		width: 40px;
+		height: 40px;
+	}
+
+	/* Compact user cards */
+	.user-card {
+		padding: 12px;
+	}
+
+	.user-card .avatar {
+		width: 50px;
+		height: 50px;
+	}
+
+	.user-card .username {
+		font-size: 1rem;
+	}
+
+	/* Compact statistics cards for mobile */
+	.modern-stats-grid {
+		margin-bottom: 12px;
+	}
+
+	.modern-stats-grid .row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.modern-stats-grid .col-md-3 {
+		flex: 0 0 calc(50% - 3px);
+		max-width: calc(50% - 3px);
+	}
+
+	.stats-card {
+		text-align: center;
+		margin-bottom: 0;
+		padding: 10px 6px;
+	}
+
+	.stats-card .stat-number {
+		font-size: 1.1rem;
+		margin-bottom: 2px;
+	}
+
+	.stats-card .stat-label {
+		font-size: 0.7rem;
+		line-height: 1.2;
+	}
+
+	/* Mobile consistency for online and permissions cards */
+	.modern-online-card,
+	.modern-permissions-card {
+		border-radius: 0;
+		margin-right: -12px;
+		margin-left: -12px;
+	}
+
+	.modern-online-card .card-body,
+	.modern-permissions-card .card-body {
+		padding: 12px;
+	}
+
+	/* Mobile button consistency */
+	.mark-topics-btn {
+		font-size: 0.8rem;
+		display: inline-block;
+		margin-bottom: 8px;
+		padding: 6px 10px;
+	}
+
+	/* Form elements */
+	input[type="text"],
+	input[type="password"],
+	input[type="email"],
+	select,
+	textarea {
+		border-radius: 4px;
+		padding: 10px;
+	}
+
+	/* Search box mobile */
+	.search-box input {
+		border-radius: 20px;
+		padding-left: 35px;
+	}
+
+	/* Dropdown menus mobile */
+	.dropdown-menu {
+		position: fixed;
+		z-index: 1050;
+		top: 50%;
+		left: 50%;
+		width: 90vw;
+		max-width: 300px;
+		transform: translate(-50%, -50%);
+	}
+
+	/* Floating action button mobile */
+	.floating {
+		right: 16px;
+		bottom: 16px;
+		width: 48px;
+		height: 48px;
+	}
+
+	/* Tooltip mobile behavior */
+	.tooltip:after {
+		text-align: center;
+		white-space: normal;
+		position: fixed;
+		bottom: 20px;
+		left: 50%;
+		max-width: 250px;
+		transform: translateX(-50%);
+	}
 }
 
 /* Ultra-small devices (320px and below) */
 @media (max-width: 320px) {
-  body {
-    font-size: 0.85rem;
-  }
-  
-  .container {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-  
-  .wrap {
-    margin: 2px;
-  }
-  
-  .headerbar, .navbar, .forumlist li, .post, .user-card, .stats-card {
-    border-radius: 4px;
-  }
-  
-  .button, button, input[type="submit"], input[type="button"] {
-    padding: 8px 12px;
-    font-size: 0.85rem;
-  }
-  
-  .pagination li a {
-    padding: 6px 10px;
-    font-size: 0.8rem;
-  }
-  
-  /* Extra compact stats for very small screens */
-  .modern-stats-grid .col-md-3 {
-    flex: 0 0 calc(50% - 2px);
-    max-width: calc(50% - 2px);
-  }
-  
-  .stats-card {
-    padding: 8px 4px;
-  }
-  
-  .stats-card .stat-number {
-    font-size: 1rem;
-  }
-  
-  .stats-card .stat-label {
-    font-size: 0.65rem;
-  }
+	body {
+		font-size: 0.85rem;
+	}
+
+	.container {
+		padding-right: 8px;
+		padding-left: 8px;
+	}
+
+	.wrap {
+		margin: 2px;
+	}
+
+	.headerbar,
+	.navbar,
+	.forumlist li,
+	.post,
+	.user-card,
+	.stats-card {
+		border-radius: 4px;
+	}
+
+	.button,
+	button,
+	input[type="submit"],
+	input[type="button"] {
+		font-size: 0.85rem;
+		padding: 8px 12px;
+	}
+
+	.pagination li a {
+		font-size: 0.8rem;
+		padding: 6px 10px;
+	}
+
+	/* Extra compact stats for very small screens */
+	.modern-stats-grid .col-md-3 {
+		flex: 0 0 calc(50% - 2px);
+		max-width: calc(50% - 2px);
+	}
+
+	.stats-card {
+		padding: 8px 4px;
+	}
+
+	.stats-card .stat-number {
+		font-size: 1rem;
+	}
+
+	.stats-card .stat-label {
+		font-size: 0.65rem;
+	}
 }
 
 /* Responsive utilities */
 .mobile-only {
-  display: none;
+	display: none;
 }
 
 .desktop-only {
-  display: block;
+	display: block;
 }
 
 @media (max-width: 768px) {
-  .mobile-only {
-    display: block;
-  }
-  
-  .desktop-only {
-    display: none;
-  }
-  
-  .mobile-hide {
-    display: none !important;
-  }
-  
-  .mobile-show {
-    display: block !important;
-  }
+	.mobile-only {
+		display: block;
+	}
+
+	.desktop-only {
+		display: none;
+	}
+
+	.mobile-hide {
+		display: none !important;
+	}
+
+	.mobile-show {
+		display: block !important;
+	}
 }
 
 /* Touch-friendly interactions */
 @media (hover: none) and (pointer: coarse) {
-  .button, button, input[type="submit"], input[type="button"] {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  .topiclist li, .forumlist li {
-    min-height: 44px;
-  }
-  
-  a, .clickable {
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-  }
+	.button,
+	button,
+	input[type="submit"],
+	input[type="button"] {
+		min-width: 44px;
+		min-height: 44px;
+	}
+
+	.topiclist li,
+	.forumlist li {
+		min-height: 44px;
+	}
+
+	a,
+	.clickable {
+		display: flex;
+		align-items: center;
+		min-height: 44px;
+	}
 }
 
 /* Print styles */
 @media print {
-  .headerbar, .navbar, .floating, .dropdown-menu {
-    display: none !important;
-  }
-  
-  .wrap {
-    box-shadow: none;
-    border: 1px solid #ccc;
-  }
-  
-  body {
-    background: white;
-    color: black;
-  }
-  
-  .post, .user-card, .stats-card {
-    box-shadow: none;
-    border: 1px solid #ccc;
-    page-break-inside: avoid;
-  }
+	.headerbar,
+	.navbar,
+	.floating,
+	.dropdown-menu {
+		display: none !important;
+	}
+
+	.wrap {
+		border: 1px solid #cccccc;
+		box-shadow: none;
+	}
+
+	body {
+		background: white;
+		color: black;
+	}
+
+	.post,
+	.user-card,
+	.stats-card {
+		border: 1px solid #cccccc;
+		box-shadow: none;
+		page-break-inside: avoid;
+	}
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  :root {
-    --primary: #000080;
-    --secondary: #333333;
-    --gray-300: #666666;
-    --gray-600: #333333;
-    --gray-800: #000000;
-  }
-  
-  .button, button, input[type="submit"], input[type="button"] {
-    border: 2px solid currentColor;
-  }
-  
-  a {
-    text-decoration: underline;
-  }
+	:root {
+		--primary: #000080;
+		--secondary: #333333;
+		--gray-300: #666666;
+		--gray-600: #333333;
+		--gray-800: #000000;
+	}
+
+	.button,
+	button,
+	input[type="submit"],
+	input[type="button"] {
+		border: 2px solid currentColor;
+	}
+
+	a {
+		text-decoration: underline;
+	}
 }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  
-  .loading::after {
-    animation: none;
-  }
+	* {
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+
+	.loading:after {
+		animation: none;
+	}
 }
 
 /* Topic View Responsive Styles */
 @media (max-width: 1024px) {
-  .modern-action-bar .row {
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .modern-search {
-    margin-top: 16px;
-  }
-  
-  .topic-stats {
-    gap: 16px;
-  }
-  
-  .stat-cell {
-    min-width: 60px;
-  }
+	.modern-action-bar .row {
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.modern-search {
+		margin-top: 16px;
+	}
+
+	.topic-stats {
+		gap: 16px;
+	}
+
+	.stat-cell {
+		min-width: 60px;
+	}
 }
 
 @media (max-width: 768px) {
-  .modern-action-bar {
-    padding: 12px;
-  }
-  
-  .forum-header-card .forum-title {
-    font-size: 1.25rem;
-  }
-  
-  .topic-content {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .topic-icon {
-    align-self: flex-start;
-    width: 32px;
-    height: 32px;
-  }
-  
-  .topic-stats {
-    display: none;
-  }
-  
-  .mobile-topic-info {
-    display: block;
-  }
-  
-  .pagination-info {
-    flex-direction: column;
-    gap: 12px;
-    text-align: center;
-  }
-  
-  .button-group .button {
-    width: 100%;
-    margin-bottom: 8px;
-  }
-  
-  .modern-search input {
-    font-size: 1rem;
-  }
-  
-  .topictitle {
-    font-size: 1rem;
-  }
-  
-  .topic-meta {
-    font-size: 0.8rem;
-  }
-  
-  .mobile-stats {
-    flex-direction: column;
-    gap: 8px;
-  }
+	.modern-action-bar {
+		padding: 12px;
+	}
+
+	.forum-header-card .forum-title {
+		font-size: 1.25rem;
+	}
+
+	.topic-content {
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.topic-icon {
+		align-self: flex-start;
+		width: 32px;
+		height: 32px;
+	}
+
+	.topic-stats {
+		display: none;
+	}
+
+	.mobile-topic-info {
+		display: block;
+	}
+
+	.pagination-info {
+		text-align: center;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.button-group .button {
+		width: 100%;
+		margin-bottom: 8px;
+	}
+
+	.modern-search input {
+		font-size: 1rem;
+	}
+
+	.topictitle {
+		font-size: 1rem;
+	}
+
+	.topic-meta {
+		font-size: 0.8rem;
+	}
+
+	.mobile-stats {
+		flex-direction: column;
+		gap: 8px;
+	}
 }
 
 @media (max-width: 576px) {
-  .forum-header-card .forum-title {
-    font-size: 1.1rem;
-  }
-  
-  .topic-row {
-    padding: 12px;
-  }
-  
-  .topic-content {
-    gap: 8px;
-  }
-  
-  .topic-icon {
-    width: 28px;
-    height: 28px;
-  }
-  
-  .topictitle {
-    font-size: 0.95rem;
-    line-height: 1.2;
-  }
-  
-  .topic-meta {
-    font-size: 0.75rem;
-  }
-  
-  .mobile-last-post {
-    font-size: 0.8rem;
-  }
-  
-  .modern-action-bar {
-    padding: 8px;
-  }
-  
-  .form-group label {
-    font-size: 0.9rem;
-  }
-  
-  .modern-online-card,
-  .modern-permissions-card {
-    margin-bottom: 16px;
-  }
+	.forum-header-card .forum-title {
+		font-size: 1.1rem;
+	}
+
+	.topic-row {
+		padding: 12px;
+	}
+
+	.topic-content {
+		gap: 8px;
+	}
+
+	.topic-icon {
+		width: 28px;
+		height: 28px;
+	}
+
+	.topictitle {
+		font-size: 0.95rem;
+		line-height: 1.2;
+	}
+
+	.topic-meta {
+		font-size: 0.75rem;
+	}
+
+	.mobile-last-post {
+		font-size: 0.8rem;
+	}
+
+	.modern-action-bar {
+		padding: 8px;
+	}
+
+	.form-group label {
+		font-size: 0.9rem;
+	}
+
+	.modern-online-card,
+	.modern-permissions-card {
+		margin-bottom: 16px;
+	}
 }
 
 @media (max-width: 320px) {
-  .topic-icon {
-    width: 24px;
-    height: 24px;
-  }
-  
-  .topictitle {
-    font-size: 0.9rem;
-  }
-  
-  .topic-feature {
-    font-size: 0.75rem;
-  }
+	.topic-icon {
+		width: 24px;
+		height: 24px;
+	}
+
+	.topictitle {
+		font-size: 0.9rem;
+	}
+
+	.topic-feature {
+		font-size: 0.75rem;
+	}
 }
 
 /* Desktop specific styles */
 @media (min-width: 769px) {
-  .mobile-topic-info {
-    display: none;
-  }
-  
-  .topic-content {
-    align-items: center;
-  }
-  
-  .topic-stats {
-    display: flex;
-  }
+	.mobile-topic-info {
+		display: none;
+	}
+
+	.topic-content {
+		align-items: center;
+	}
+
+	.topic-stats {
+		display: flex;
+	}
 }

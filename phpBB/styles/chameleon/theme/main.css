@@ -2,6 +2,154 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
+All colors MUST be HSL.
+*/
+
+@layer base {
+	:root {
+		/* phpBB Color Palette */
+		/* Cosmic 2.0 (darker variant): 198 100% 38% */
+		/* Odyssey: 218 20% 40% */
+		/* Cosmos: 219 20% 20% */
+
+		/* Base colors */
+		--background: 0 0% 98%;
+		--foreground: 219 20% 20%;
+
+		/* Forum-specific colors - using Cosmos for headers */
+		--forum-header: 219 20% 20%;
+		--forum-header-foreground: 0 0% 98%;
+
+		--card: 0 0% 100%;
+		--card-foreground: 219 20% 20%;
+		--card-hover: 218 20% 97%;
+
+		--popover: 0 0% 100%;
+		--popover-foreground: 219 20% 20%;
+
+		/* Primary - Cosmic 2.0 (darker teal) */
+		--primary: 198 100% 38%;
+		--primary-foreground: 0 0% 100%;
+		--primary-hover: 198 100% 32%;
+
+		/* Secondary - Odyssey based */
+		--secondary: 218 20% 95%;
+		--secondary-foreground: 219 20% 20%;
+		--secondary-hover: 218 20% 90%;
+
+		/* Muted elements - Odyssey tones */
+		--muted: 218 20% 95%;
+		--muted-foreground: 218 20% 40%;
+
+		/* Accent for highlights */
+		--accent: 38 92% 50%;
+		--accent-foreground: 0 0% 100%;
+
+		/* Topic states - using Cosmic 2.0 */
+		--topic-unread: 198 100% 38%;
+		--topic-sticky: 38 92% 50%;
+		--topic-locked: 218 20% 40%;
+		--topic-new: 142 71% 45%;
+
+		/* User badges */
+		--badge-admin: 0 84% 60%;
+		--badge-mod: 142 71% 45%;
+		--badge-user: 218 20% 50%;
+
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 0 0% 100%;
+
+		--border: 218 20% 88%;
+		--input: 218 20% 88%;
+		--ring: 198 100% 38%;
+
+		--radius: 0.5rem;
+
+		/* Spacing system */
+		--forum-spacing-xs: 0.5rem;
+		--forum-spacing-sm: 0.75rem;
+		--forum-spacing-md: 1rem;
+		--forum-spacing-lg: 1.5rem;
+		--forum-spacing-xl: 2rem;
+
+		--sidebar-background: 0 0% 98%;
+
+		--sidebar-foreground: 240 5.3% 26.1%;
+
+		--sidebar-primary: 240 5.9% 10%;
+
+		--sidebar-primary-foreground: 0 0% 98%;
+
+		--sidebar-accent: 240 4.8% 95.9%;
+
+		--sidebar-accent-foreground: 240 5.9% 10%;
+
+		--sidebar-border: 220 13% 91%;
+
+		--sidebar-ring: 217.2 91.2% 59.8%;
+	}
+
+	.dark {
+		/* Dark mode - using Cosmos as base */
+		--background: 219 20% 14%;
+		--foreground: 0 0% 98%;
+
+		--forum-header: 219 20% 10%;
+		--forum-header-foreground: 0 0% 98%;
+
+		--card: 219 20% 18%;
+		--card-foreground: 0 0% 98%;
+		--card-hover: 219 20% 22%;
+
+		--popover: 219 20% 18%;
+		--popover-foreground: 0 0% 98%;
+
+		/* Primary - Cosmic 2.0 (slightly brighter in dark mode) */
+		--primary: 198 100% 44%;
+		--primary-foreground: 0 0% 100%;
+		--primary-hover: 198 100% 50%;
+
+		/* Secondary - Odyssey based */
+		--secondary: 218 20% 24%;
+		--secondary-foreground: 0 0% 98%;
+		--secondary-hover: 218 20% 28%;
+
+		--muted: 218 20% 24%;
+		--muted-foreground: 218 20% 60%;
+
+		--accent: 38 92% 50%;
+		--accent-foreground: 0 0% 100%;
+
+		--topic-unread: 198 100% 44%;
+		--topic-sticky: 38 92% 50%;
+		--topic-locked: 218 20% 50%;
+		--topic-new: 142 71% 45%;
+
+		--badge-admin: 0 84% 60%;
+		--badge-mod: 142 71% 45%;
+		--badge-user: 218 20% 60%;
+
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 0 0% 100%;
+
+		--border: 218 20% 28%;
+		--input: 218 20% 28%;
+		--ring: 198 100% 44%;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+
 .site_logo { background-image: url("./images/site_logo.svg"); }
 
 .avatar-placeholder {

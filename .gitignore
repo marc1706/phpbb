@@ -22,6 +22,7 @@
 !/phpBB/styles/prosilver/theme/en
 !/phpBB/styles/prosilver/theme/images
 !/phpBB/styles/all
+!/phpBB/styles/chameleon
 
 # Excludes all custom env
 /phpBB/config/*

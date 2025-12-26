@@ -40,7 +40,7 @@ All colors MUST be HSL.
 
 		/* Muted elements - Odyssey tones */
 		--muted: 218 20% 95%;
-		--muted-foreground: 218 20% 40%;
+		--muted-foreground: 218 20% 60%;
 
 		/* Accent for highlights */
 		--accent: 38 92% 50%;

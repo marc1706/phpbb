@@ -3,115 +3,20 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="{{ T_FONT_AWESOME_LINK }}" rel="stylesheet">
 	<link href="{{ T_THEME_PATH ~ '/stylesheet.css' }}" rel="stylesheet">
 </head>
 <body>
-<header>
-	<nav class="bg-slate-200 border-gray-200 dark:bg-gray-900">
-		<div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-			<div class="flex flex-row">
-				<a href="{% if U_SITE_HOME %}{{ U_SITE_HOME }}{% else %}{{ U_INDEX }}{% endif %}" title="{% if U_SITE_HOME %}{{ L_SITE_HOME }}{% else %}{{ L_INDEX }}{% endif %}" class="flex items-center space-x-3 rtl:space-x-reverse">
-					{{ Icon('svg', 'logo', SITENAME, true, 'fill-cosmic-500 m-2 h-12') }}
-				</a>
-				<div class="flex flex-col items-start mx-3">
-					<h1 class="text-2xl">{{ SITENAME }}</h1>
-					<p class="text-lg font-light">{{ SITE_DESCRIPTION }}</p>
-				</div>
-			</div>
-			<div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-				<button type="button" class="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-					<span class="sr-only">Open user menu</span>
-					{% if CURRENT_USER_AVATAR_SRC %}
-						<img class="w-10 h-10 rounded-full" src="{{ CURRENT_USER_AVATAR_SRC }}" alt="{{ S_USERNAME }}">
-					{% else %}
-					<span class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-						<svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
-					</span>
-					{% endif %}
-				</button>
-				<!-- Dropdown menu -->
-				<div class="z-50 hidden my-4 text-base list-none bg-slate-200 divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-					<div class="px-4 py-3">
-						<span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-						<span class="block text-sm  text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
-					</div>
-					<ul class="py-2" aria-labelledby="user-menu-button">
-						<li>
-							<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
-						</li>
-						<li>
-							<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-						</li>
-						<li>
-							<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-						</li>
-						<li>
-							<a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-						</li>
-					</ul>
-				</div>
-				<button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
-					<span class="sr-only">Open main menu</span>
-					<svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-						<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-					</svg>
-				</button>
-			</div>
-			<div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
-				<ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-slate-200 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-slate-200 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-					<li>
-						<a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Home</a>
-					</li>
-					<li>
-						<a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-					</li>
-					<li>
-						<a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
-					</li>
-					<li>
-						<a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Pricing</a>
-					</li>
-					<li>
-						<a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<nav class="flex max-w-7xl justify-items-start mx-auto" aria-label="Breadcrumb">
-		<div class="max-w-screen-xl flex flex-wrap items-center p-4">
-			<ol class="inline-flex items-center space-x-1 md:space-x-3">
-				<li class="inline-flex items-center">
-					<a href="#" class="text-gray-700 hover:text-gray-900 inline-flex items-center">
-						{{ Icon('iconify', 'mdi:home', '', false, 'w-5 h-5 mr-2.5') }}
-						Home
-					</a>
-				</li>
-				<li>
-					<div class="flex items-center">
-						{{ Icon('iconify', 'mdi:chevron-right', '', false, 'w-6 h-6 text-gray-400') }}
-						<a href="#" class="text-gray-700 hover:text-gray-900 ml-1 md:ml-2 text-sm font-medium">Projects</a>
-					</div>
-				</li>
-				<li aria-current="page">
-					<div class="flex items-center">
-						{{ Icon('iconify', 'mdi:chevron-right', '', false, 'w-6 h-6 text-gray-400') }}
-						<span class="text-gray-400 ml-1 md:ml-2 text-sm font-medium">Chameleon</span>
-					</div>
-				</li>
-			</ol>
-		</div>
-	</nav>
-</header>
-<main role="main" class="max-w-7xl justify-items-start mx-auto">
-	<h1 class="text-3xl font-bold underline">
-		Hello world!
-	</h1>
-</main>
-<footer>
-	{% INCLUDEJS T_ASSETS_PATH ~ '/iconify/iconify.min.js' %}
-	{$ICONIFY_ICONS}
-	{$SCRIPTS}
-</footer>
+	<div class="min-h-screen bg-background">
+		{% include 'header.html' %}
+		<main role="main" class="max-w-7xl justify-items-start mx-auto">
+			<h1 class="text-3xl font-bold underline">
+				Hello world!
+			</h1>
+		</main>
+		<footer>
+			{$SCRIPTS}
+		</footer>
+	</div>
 </body>
 </html>

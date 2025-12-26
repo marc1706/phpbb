@@ -1,0 +1,7 @@
+<div class="relative overflow-hidden {{ className|default('') }}">
+	<div class="h-full w-full rounded-[inherit]">
+		{{ block('content') }}
+	</div>
+	{% include 'components/scroll_area/scrollbar.html.twig' %}
+	<div class="radix-scroll-area-corner"></div>
+</div>

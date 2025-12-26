@@ -297,7 +297,7 @@
 						}
 					} %}
 				</div>
-				<div class="popover-root">
+				<div class="popover-root relative">
 					<button type="button" class="popover-trigger inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-10 justify-center items-center rounded-md p-0">
 						{{ Icon('font', 'bell', lang('NOTIFICATIONS'), true) }}
 						{% if NOTIFICATIONS_COUNT > 0 %}
@@ -385,7 +385,7 @@
 							{% endembed %}
 						{% endblock %}
 					{% endembed %}
-					{% embed 'components/dropdown_menu/content.html.twig' with {align: "end", className: "w-56 z-50 bg-popover"} %}
+					{% embed 'components/dropdown_menu/content.html.twig' with {align: "end", className: "right-0 w-56 z-50 bg-popover"} %}
 						{% block content %}
 							{% embed 'components/dropdown_menu/label.html.twig' with {className: "font-normal"} %}
 								{% block content %}

@@ -16,3 +16,4 @@ npm ci > /dev/null
 set -x
 node_modules/eslint/bin/eslint.js "phpBB/**/*.js" --ignore-pattern "phpBB/ext/"
 node_modules/eslint/bin/eslint.js "phpBB/**/*.js.twig" --ignore-pattern "phpBB/ext/"
+node_modules/eslint/bin/eslint.js "scripts/*.js"

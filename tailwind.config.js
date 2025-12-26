@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 
 export default {
 	darkMode: ['class'],
-	content: ['./phpBB/styles/chameleon/**/*.{html,js}'],
+	content: ['./phpBB/styles/chameleon/**/*.{html,js,html.twig}'],
 	prefix: "",
 	theme: {
 		container: {
@@ -19,6 +19,10 @@ export default {
 				ring: "hsl(var(--ring))",
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
+				"forum-header": {
+					DEFAULT: "hsl(var(--forum-header))",
+					foreground: "hsl(var(--forum-header-foreground))",
+				},
 				primary: {
 					DEFAULT: "hsl(var(--primary))",
 					foreground: "hsl(var(--primary-foreground))",

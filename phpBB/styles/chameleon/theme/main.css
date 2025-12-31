@@ -9,8 +9,11 @@ All colors MUST be HSL.
 @layer base {
 	:root {
 		/* phpBB Color Palette */
+
 		/* Cosmic 2.0 (darker variant): 198 100% 38% */
+
 		/* Odyssey: 218 20% 40% */
+
 		/* Cosmos: 219 20% 20% */
 
 		/* Base colors */
@@ -153,13 +156,13 @@ All colors MUST be HSL.
 .site_logo { background-image: url("./images/site_logo.svg"); }
 
 .avatar-placeholder {
-    align-items: center;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    white-space: pre;
-    padding-left: calc(50% - 0.5ch);
-    letter-spacing: 2rem;
+	white-space: pre;
+	letter-spacing: 2rem;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	align-items: center;
+	padding-left: calc(50% - 0.5ch);
 }

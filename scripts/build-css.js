@@ -8,3 +8,4 @@ const output = 'phpBB/styles/chameleon/theme/stylesheet.css';
 
 const res = spawnSync('postcss', [ input, '-o', output, '--map' ], { stdio: 'inherit', shell: true, env: process.env });
 process.exit(res.status === null ? 1 : res.status);
+

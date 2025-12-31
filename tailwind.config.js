@@ -1,5 +1,3 @@
-import type { Config } from "tailwindcss";
-
 export default {
 	darkMode: ['class'],
 	content: ['./phpBB/styles/chameleon/**/*.{html,js,html.twig}'],
@@ -108,4 +106,4 @@ export default {
 		},
 	},
 	plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+};

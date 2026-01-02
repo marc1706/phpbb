@@ -377,10 +377,7 @@
 								{% block content %}
 									{% embed 'components/avatar/root.html.twig' with { className: 'h-8 w-8' } %}
 										{% block content %}
-											{% include 'components/avatar/image.html.twig' with { src: 'https://github.com/shadcn.png', alt: 'User' } %}
-											{% embed 'components/avatar/fallback.html.twig' %}
-												{% block content %}JD{% endblock %}
-											{% endembed %}
+											{% include 'components/avatar.html' with {'avatar_data': CURRENT_USER_AVATAR} only %}
 										{% endblock %}
 									{% endembed %}
 								{% endblock %}
@@ -392,7 +389,7 @@
 							{% embed 'components/dropdown_menu/label.html.twig' with {className: "font-normal"} %}
 								{% block content %}
 									<div class="flex flex-col space-y-1">
-										<p class="text-sm font-medium leading-none">John Doe</p>
+										<p class="text-sm font-medium leading-none">{{ CURRENT_USERNAME_SIMPLE }}</p>
 										<p class="text-xs leading-none text-muted-foreground">
 											john@example.com
 										</p>
@@ -404,7 +401,7 @@
 								{% block content %}
 									<a href="/profile/johndoe" class="flex items-center cursor-pointer w-full">
 										<i class="fa-solid fa-user mr-2 h-4 w-4"></i>
-										<span>My Profile</span>
+										<span>{{ lang('READ_PROFILE') }}</span>
 									</a>
 								{% endblock %}
 							{% endembed %}
@@ -412,7 +409,7 @@
 								{% block content %}
 									<a href="/user-cp" class="flex items-center cursor-pointer w-full">
 										<i class="fa-solid fa-gear mr-2 h-4 w-4"></i>
-										<span>Settings</span>
+										<span>{{ lang('SETTINGS') }}</span>
 									</a>
 								{% endblock %}
 							{% endembed %}
@@ -426,9 +423,12 @@
 							<div class="-mx-1 my-1 h-px bg-muted"></div>
 							{% embed 'components/dropdown_menu/item.html.twig' %}
 								{% block content %}
-									<a href="/login" class="flex items-center cursor-pointer w-full">
-										<i class="fa-solid fa-right-from-bracket mr-2 h-4 w-4"></i>
-										<span>Log out</span>
+									<a href="{{ U_LOGIN_LOGOUT }}" title="{{ lang('LOGIN_LOGOUT') }}" accesskey="x" class="flex items-center cursor-pointer w-full">
+									{% if S_USER_LOGGED_IN %}
+										{{ Icon('font', 'right-from-bracket', lang('LOGIN_LOGOUT'), false, 'mr-2 h-4 w-4') }}
+									{% else %}
+										{{ Icon('font', 'right-t-bracket', lang('LOGIN_LOGOUT'), false, 'mr-2 h-4 w-4') }}
+									{% endif %}
 									</a>
 								{% endblock %}
 							{% endembed %}

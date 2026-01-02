@@ -321,46 +321,37 @@
 							</li>
 							{% endif %}
 						</ul>
-						<ul class="flex items-center justify-between p-4 border-b">
-							{% for notification in notifications %}
-								<li class="flex gap-3 -p3 rounded-md hover:bg-accent cursor-pointer transition-colors">
-									<div></div>
-								</li>
-							{% else %}
-								<li class="text-sm text-muted-foreground">{{ lang('NO_NOTIFICATIONS') }}</li>
-							{% endfor %}
-						</ul>
-						{% embed 'components/scroll_area/root.html.twig' with {className: "h-[400px]"} %}
-							{% block content %}
-								<div class="p-2">
-									{notifications.map((notification) => (
-									<div
-										key={notification.id}
-										class={cn(
-									"flex gap-3 p-3 rounded-md hover:bg-accent cursor-pointer transition-colors",
-									notification.unread && "bg-accent/50"
-									)}
-									>
-									<div class="flex-shrink-0 mt-1">
-										{getNotificationIcon(notification.type)}
-									</div>
-									<div class="flex-1 space-y-1">
-										<p class="text-sm">
-											<span class="font-medium">{notification.user}</span>{' '}
-											{notification.message}
-										</p>
-										<p class="text-xs text-muted-foreground">{notification.time}</p>
-									</div>
-									{notification.unread && (
-									<div class="flex-shrink-0">
-										<div class="w-2 h-2 bg-primary rounded-full" />
-									</div>
-									)}
-								</div>
-								))}
+						<div class="h-[400px] relative overflow-y-auto overflow-x-hidden">
+							<div class="h-full w-full rounded-[inherit]">
+								<ul class="flex flex-col p-2 space-y-2">
+									{% for notification in notifications %}
+										<li class="flex gap-3 p-3 rounded-md hover:bg-accent cursor-pointer transition-colors{% if notification.UNREAD %} bg-accent/50{% endif %}{% if notification.STYLING is defined %} {{ notification.STYLING }}{% endif %}{% if not notification.URL %} no-url{% endif %}">
+										{% if notification.URL %}
+											<a class="flex items-start w-full" href="{% if notification.UNREAD %}{{ notification.U_MARK_READ }}{% else %}{{ notification.URL }}{% endif %}" data-real-url="{{ notification.URL }}">
+										{% endif %}
+											{% if notification.AVATAR_HTML %}{{ notification.AVATAR_HTML }}{% else %}<img class="h-8 w-8 rounded-full" src="{{ NO_AVATAR_SOURCE }}" alt="" />{% endif %}
+											<div class="flex-1 space-y-1">
+												<p class="text-sm">
+													<span class="font-medium">{{ notification.FORMATTED_TITLE }}</span>
+												</p>
+												{% if notification.REFERENCE %}<p class="text-sm text-muted-foreground">{{ notification.REFERENCE }}</p>{% endif %}
+												{% if notification.FORUM %}<p class="text-sm text-muted-foreground">{{ notification.FORUM }}</p>{% endif %}
+												{% if notification.REASON %}<p class="text-sm text-muted-foreground">{{ notification.REASON }}</p>{% endif %}
+												<p class="text-xs text-muted-foreground">{{ notification.TIME }}</p>
+											</div>
+										{% if notification.URL %}</a>{% endif %}
+										{% if notification.UNREAD %}
+											<a href="{{ notification.U_MARK_READ }}" class="mark_read icon-mark ml-2" data-ajax="notification.mark_read" title="{{ lang('MARK_READ') }}">
+												{{ Icon('font', 'circle-check', lang('MARK_READ'), true, 'fas c-notification-check-icon') }}
+											</a>
+										{% endif %}
+									</li>
+									{% else %}
+									<li class="text-sm text-muted-foreground">{{ lang('NO_NOTIFICATIONS') }}</li>
+									{% endfor %}
+								</ul>
 							</div>
-							{% endblock %}
-						{% endembed %}
+						</div>
 						<div class="p-2 border-t">
 							{% embed 'components/button.html.twig' with {
 								variant: 'ghost',
@@ -373,7 +364,6 @@
 						</div>
 					{% endblock %}
 				{% endembed %}
-				</div>
 				</div>
 			{% embed 'components/dropdown_menu/root.html.twig' %}
 				{% block content %}
@@ -448,8 +438,6 @@
 			{% endembed %}
 		</div>
 	</div>
-
-	<!-- {/* Mobile Navigation Drawer */} -->
 </header>
 <script>
 (function() {

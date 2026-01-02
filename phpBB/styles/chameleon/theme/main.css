@@ -91,6 +91,8 @@ All colors MUST be HSL.
 		--sidebar-border: 220 13% 91%;
 
 		--sidebar-ring: 217.2 91.2% 59.8%;
+
+		--scrollbar-thumb: 0 0% 0% / 0.1;
 	}
 
 	.dark {
@@ -139,6 +141,8 @@ All colors MUST be HSL.
 		--border: 218 20% 28%;
 		--input: 218 20% 28%;
 		--ring: 198 100% 44%;
+
+		--scrollbar-thumb: 0 0% 0% / 0.5;
 	}
 }
 
@@ -152,6 +156,20 @@ All colors MUST be HSL.
 	}
 }
 
+@layer utilities {
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background-color: hsl(var(--scrollbar-thumb));
+		border-radius: 20px;
+	}
+}
 
 .site_logo { background-image: url("./images/site_logo.svg"); }
 

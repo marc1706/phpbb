@@ -452,8 +452,15 @@
         const contentEl = document.getElementById('theme-switcher-content');
         if (contentEl) {
             contentEl.innerHTML = theme === 'dark'
-                ? `<i class="fa-solid fa-sun mr-2 h-4 w-4"></i><span>Light Mode</span>`
-                : `<i class="fa-solid fa-moon mr-2 h-4 w-4"></i><span>Dark Mode</span>`;
+                ? `<i class="fa-solid fa-sun mr-2 h-4 w-4"></i><span id="theme-switcher-item">Light Mode</span>`
+                : `<i class="fa-solid fa-moon mr-2 h-4 w-4"></i><span id="theme-switcher-item">Dark Mode</span>`;
+
+			const switcher = document.getElementById('theme-switcher-item');
+			if (switcher) {
+				switcher.addEventListener('click', () => {
+					setTheme(html.classList.contains('dark') ? 'light' : 'dark');
+				});
+			}
         }
     };
 
@@ -463,13 +470,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         // Re-apply in case of race condition and to set button text
         setTheme(getTheme());
-
-        const switcher = document.getElementById('theme-switcher-item');
-        if (switcher) {
-            switcher.addEventListener('click', () => {
-                setTheme(html.classList.contains('dark') ? 'light' : 'dark');
-            });
-        }
 
 		const menuItems = document.querySelectorAll('.navigation-menu-item');
 		menuItems.forEach(item => {

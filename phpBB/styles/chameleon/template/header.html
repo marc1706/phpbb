@@ -297,6 +297,14 @@
 						}
 					} %}
 				</div>
+				<a href="{{ U_PRIVATEMSGS }}" class="inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-10 justify-center items-center rounded-md p-0">
+					{{ Icon('font', 'envelope', lang('PRIVATE_MESSAGES'), true) }}
+					{% if PRIVATE_MESSAGE_COUNT > 0 %}
+						<div class="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
+							{{ PRIVATE_MESSAGE_COUNT }}
+						</div>
+					{% endif %}
+				</a>
 				<div class="popover-root relative">
 					<button type="button" class="popover-trigger inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-10 justify-center items-center rounded-md p-0">
 						{{ Icon('font', 'bell', lang('NOTIFICATIONS'), true) }}

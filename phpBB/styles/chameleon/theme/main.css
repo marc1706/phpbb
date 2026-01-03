@@ -170,17 +170,3 @@ All colors MUST be HSL.
 		border-radius: 20px;
 	}
 }
-
-.site_logo { background-image: url("./images/site_logo.svg"); }
-
-.avatar-placeholder {
-	white-space: pre;
-	letter-spacing: 2rem;
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	align-items: center;
-	padding-left: calc(50% - 0.5ch);
-}

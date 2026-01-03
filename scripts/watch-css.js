@@ -6,7 +6,7 @@ const { spawn } = require('child_process');
 const input = 'phpBB/styles/chameleon/theme/main.css';
 const output = 'phpBB/styles/chameleon/theme/stylesheet.css';
 
-const ps = spawn('postcss', [ input, '-o', output, '--watch', '--map' ], { stdio: 'inherit', shell: true, env: process.env });
+const ps = spawn('postcss', [ input, '-o', output, '--watch', '--map', '--verbose' ], { stdio: 'inherit', shell: true, env: process.env });
 
 ps.on('close', (code) => process.exit(code));
 ps.on('error', (err) => {

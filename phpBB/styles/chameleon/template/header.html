@@ -316,7 +316,7 @@
 					</button>
 				{% embed 'components/popover/content.html.twig' with {className: "w-80 p-0 right-0", align: "end"} %}
 					{% block content %}
-						<ul class="flex flex-wrap border-b border-default rounded-t-base">
+						<ul class="flex flex-wrap border-b border-default rounded-t-base p-4">
 							<li class="me-2">
 								<h3 class="font-semibold">{{ lang('NOTIFICATIONS') }}</h3>
 							</li>
@@ -333,7 +333,7 @@
 							<div class="h-full w-full rounded-[inherit]">
 								<ul class="flex flex-col p-2 space-y-2">
 									{% for notification in notifications %}
-										<li class="flex gap-3 p-3 rounded-md hover:bg-accent cursor-pointer transition-colors{% if notification.UNREAD %} bg-accent/50{% endif %}{% if notification.STYLING is defined %} {{ notification.STYLING }}{% endif %}{% if not notification.URL %} no-url{% endif %}">
+										<li class="flex gap-3 p-3 rounded-md hover:bg-primary/20 cursor-pointer transition-colors {% if notification.UNREAD %}bg-accent/20{% else %}bg-secondary{% endif %}{% if notification.STYLING is defined %} {{ notification.STYLING }}{% endif %}{% if not notification.URL %} no-url{% endif %}">
 										{% if notification.URL %}
 											<a class="flex items-start w-full" href="{% if notification.UNREAD %}{{ notification.U_MARK_READ }}{% else %}{{ notification.URL }}{% endif %}" data-real-url="{{ notification.URL }}">
 										{% endif %}

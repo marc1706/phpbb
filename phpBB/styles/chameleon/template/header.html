@@ -309,35 +309,36 @@
 					<button type="button" class="popover-trigger inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-10 justify-center items-center rounded-md p-0">
 						{{ Icon('font', 'bell', lang('NOTIFICATIONS'), true) }}
 						{% if NOTIFICATIONS_COUNT > 0 %}
-							<div class="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
+							<span class="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
 								{{ NOTIFICATIONS_COUNT }}
-							</div>
+							</span>
 						{% endif %}
 					</button>
-				{% embed 'components/popover/content.html.twig' with {className: "w-80 p-0 right-0", align: "end"} %}
+				{% embed 'components/popover/content.html.twig' with {className: "p-0 right-0", align: "end"} %}
 					{% block content %}
-						<ul class="flex flex-wrap border-b border-default rounded-t-base p-4">
+						<ul class="flex flex-wrap items-baseline border-b border-default rounded-t-base p-4">
 							<li class="me-2">
 								<h3 class="font-semibold">{{ lang('NOTIFICATIONS') }}</h3>
 							</li>
-							<li class="ml-auto me-2 text-sm">
+							<li class="ml-auto me-1 text-sm hover:transition-colors hover:text-primary">
 								<a href="{{ U_NOTIFICATION_SETTINGS }}">{{ lang('SETTINGS') }}</a>
 							</li>
 							{% if NOTIFICATIONS_COUNT > 0 %}
-							<li class="me-2 text-sm">
+							<li class="me-1">&bull;</li>
+							<li class="me-1 text-sm hover:transition-colors hover:text-primary">
 								<a href="{{ U_MARK_ALL_NOTIFICATIONS }}" data-ajax="notification.mark_all_read">{{ lang('MARK_ALL_READ') }}</a>
 							</li>
 							{% endif %}
 						</ul>
-						<div class="h-[400px] relative overflow-y-auto overflow-x-hidden custom-scrollbar">
+						<div class="h-96 relative overflow-y-auto overflow-x-hidden custom-scrollbar">
 							<div class="h-full w-full rounded-[inherit]">
-								<ul class="flex flex-col p-2 space-y-2">
+								<ul class="flex flex-col p-1 space-y-2">
 									{% for notification in notifications %}
-										<li class="flex gap-3 p-3 rounded-md hover:bg-primary/20 cursor-pointer transition-colors {% if notification.UNREAD %}bg-accent/20{% else %}bg-secondary{% endif %}{% if notification.STYLING is defined %} {{ notification.STYLING }}{% endif %}{% if not notification.URL %} no-url{% endif %}">
+										<li class="flex relative gap-3 p-3 rounded-md hover:bg-primary/20 cursor-pointer transition-colors {% if notification.UNREAD %}bg-accent/20{% else %}bg-secondary{% endif %}{% if notification.STYLING is defined %} {{ notification.STYLING }}{% endif %}{% if not notification.URL %} no-url{% endif %}">
 										{% if notification.URL %}
-											<a class="flex items-start w-full" href="{% if notification.UNREAD %}{{ notification.U_MARK_READ }}{% else %}{{ notification.URL }}{% endif %}" data-real-url="{{ notification.URL }}">
+											<a class="flex items-start w-full mr-3" href="{% if notification.UNREAD %}{{ notification.U_MARK_READ }}{% else %}{{ notification.URL }}{% endif %}" data-real-url="{{ notification.URL }}">
 										{% endif %}
-											{% if notification.AVATAR_HTML %}{{ notification.AVATAR_HTML }}{% else %}<img class="h-8 w-8 rounded-full" src="{{ NO_AVATAR_SOURCE }}" alt="" />{% endif %}
+											<div class="h-12 w-12 mr-2">{% include 'components/avatar.html' with {avatar_data: notification.AVATAR} only %}</div>
 											<div class="flex-1 space-y-1">
 												<p class="text-sm">
 													<span class="font-medium">{{ notification.FORMATTED_TITLE }}</span>
@@ -349,7 +350,7 @@
 											</div>
 										{% if notification.URL %}</a>{% endif %}
 										{% if notification.UNREAD %}
-											<a href="{{ notification.U_MARK_READ }}" class="mark_read icon-mark ml-2" data-ajax="notification.mark_read" title="{{ lang('MARK_READ') }}">
+											<a href="{{ notification.U_MARK_READ }}" class="absolute mark_read self-center right-0 icon-mark text-muted-foreground hover:text-primary transition-colors" data-ajax="notification.mark_read" title="{{ lang('MARK_READ') }}">
 												{{ Icon('font', 'circle-check', lang('MARK_READ'), true, 'fas c-notification-check-icon') }}
 											</a>
 										{% endif %}
@@ -366,7 +367,7 @@
 								className: "w-full justify-center text-sm"
 							} %}
 							{% block content %}
-								View all notifications
+								{{ lang('SEE_ALL') }}
 							{% endblock %}
 							{% endembed %}
 						</div>

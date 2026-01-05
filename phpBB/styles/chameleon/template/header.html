@@ -300,7 +300,7 @@
 				<a href="{{ U_PRIVATEMSGS }}" class="inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-10 justify-center items-center rounded-md p-0">
 					{{ Icon('font', 'envelope', lang('PRIVATE_MESSAGES'), true) }}
 					{% if PRIVATE_MESSAGE_COUNT > 0 %}
-						<div class="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
+						<div class="absolute -top-1 -end-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
 							{{ PRIVATE_MESSAGE_COUNT }}
 						</div>
 					{% endif %}
@@ -309,18 +309,18 @@
 					<button type="button" class="popover-trigger inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-10 justify-center items-center rounded-md p-0">
 						{{ Icon('font', 'bell', lang('NOTIFICATIONS'), true) }}
 						{% if NOTIFICATIONS_COUNT > 0 %}
-							<span class="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
+							<span class="absolute -top-1 -end-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
 								{{ NOTIFICATIONS_COUNT }}
 							</span>
 						{% endif %}
 					</button>
-				{% embed 'components/popover/content.html.twig' with {className: "p-0 right-0", align: "end"} %}
+				{% embed 'components/popover/content.html.twig' with {className: "p-0 end-0", align: "end"} %}
 					{% block content %}
 						<ul class="flex flex-wrap items-baseline border-b border-default rounded-t-base p-4">
 							<li class="me-2">
 								<h3 class="font-semibold">{{ lang('NOTIFICATIONS') }}</h3>
 							</li>
-							<li class="ml-auto me-1 text-sm hover:transition-colors hover:text-primary">
+							<li class="ms-auto me-1 text-sm hover:transition-colors hover:text-primary">
 								<a href="{{ U_NOTIFICATION_SETTINGS }}">{{ lang('SETTINGS') }}</a>
 							</li>
 							{% if NOTIFICATIONS_COUNT > 0 %}
@@ -334,11 +334,11 @@
 							<div class="h-full w-full rounded-[inherit]">
 								<ul class="flex flex-col p-1 space-y-2">
 									{% for notification in notifications %}
-										<li class="flex relative gap-3 p-3 rounded-md hover:bg-primary/20 cursor-pointer transition-colors {% if notification.UNREAD %}bg-accent/20{% else %}bg-secondary{% endif %}{% if notification.STYLING is defined %} {{ notification.STYLING }}{% endif %}{% if not notification.URL %} no-url{% endif %}">
+										<li class="flex relative gap-2 p-2 rounded-md hover:bg-primary/20 cursor-pointer transition-colors {% if notification.UNREAD %}bg-accent/20{% else %}bg-secondary{% endif %}{% if notification.STYLING is defined %} {{ notification.STYLING }}{% endif %}{% if not notification.URL %} no-url{% endif %}">
 										{% if notification.URL %}
-											<a class="flex items-start w-full mr-3" href="{% if notification.UNREAD %}{{ notification.U_MARK_READ }}{% else %}{{ notification.URL }}{% endif %}" data-real-url="{{ notification.URL }}">
+											<a class="flex items-start w-full me-3" href="{% if notification.UNREAD %}{{ notification.U_MARK_READ }}{% else %}{{ notification.URL }}{% endif %}" data-real-url="{{ notification.URL }}">
 										{% endif %}
-											<div class="h-12 w-12 mr-2">{% include 'components/avatar.html' with {avatar_data: notification.AVATAR} only %}</div>
+											<div class="h-12 w-12 me-2">{% include 'components/avatar.html' with {avatar_data: notification.AVATAR} only %}</div>
 											<div class="flex-1 space-y-1">
 												<p class="text-sm">
 													<span class="font-medium">{{ notification.FORMATTED_TITLE }}</span>
@@ -350,7 +350,7 @@
 											</div>
 										{% if notification.URL %}</a>{% endif %}
 										{% if notification.UNREAD %}
-											<a href="{{ notification.U_MARK_READ }}" class="absolute mark_read self-center right-0 icon-mark text-muted-foreground hover:text-primary transition-colors" data-ajax="notification.mark_read" title="{{ lang('MARK_READ') }}">
+											<a href="{{ notification.U_MARK_READ }}" class="absolute mark_read self-center end-0 icon-mark text-muted-foreground hover:text-primary transition-colors" data-ajax="notification.mark_read" title="{{ lang('MARK_READ') }}">
 												{{ Icon('font', 'circle-check', lang('MARK_READ'), true, 'fas c-notification-check-icon') }}
 											</a>
 										{% endif %}
@@ -393,7 +393,7 @@
 							{% endembed %}
 						{% endblock %}
 					{% endembed %}
-					{% embed 'components/dropdown_menu/content.html.twig' with {align: "end", className: "right-0 w-56 z-50 bg-popover"} %}
+					{% embed 'components/dropdown_menu/content.html.twig' with {align: "end", className: "end-0 w-56 z-50 bg-popover"} %}
 						{% block content %}
 							{% embed 'components/dropdown_menu/label.html.twig' with {className: "font-normal"} %}
 								{% block content %}
@@ -409,7 +409,7 @@
 							{% embed 'components/dropdown_menu/item.html.twig' %}
 								{% block content %}
 									<a href="/profile/johndoe" class="flex items-center cursor-pointer w-full">
-										<i class="fa-solid fa-user mr-2 h-4 w-4"></i>
+										<i class="fa-solid fa-user me-2 h-4 w-4"></i>
 										<span>{{ lang('READ_PROFILE') }}</span>
 									</a>
 								{% endblock %}
@@ -417,7 +417,7 @@
 							{% embed 'components/dropdown_menu/item.html.twig' %}
 								{% block content %}
 									<a href="/user-cp" class="flex items-center cursor-pointer w-full">
-										<i class="fa-solid fa-gear mr-2 h-4 w-4"></i>
+										<i class="fa-solid fa-gear me-2 h-4 w-4"></i>
 										<span>{{ lang('SETTINGS') }}</span>
 									</a>
 								{% endblock %}
@@ -434,9 +434,9 @@
 								{% block content %}
 									<a href="{{ U_LOGIN_LOGOUT }}" title="{{ lang('LOGIN_LOGOUT') }}" accesskey="x" class="flex items-center cursor-pointer w-full">
 									{% if S_USER_LOGGED_IN %}
-										{{ Icon('font', 'right-from-bracket', lang('LOGIN_LOGOUT'), false, 'mr-2 h-4 w-4') }}
+										{{ Icon('font', 'right-from-bracket', lang('LOGIN_LOGOUT'), false, 'me-2 h-4 w-4') }}
 									{% else %}
-										{{ Icon('font', 'right-t-bracket', lang('LOGIN_LOGOUT'), false, 'mr-2 h-4 w-4') }}
+										{{ Icon('font', 'right-t-bracket', lang('LOGIN_LOGOUT'), false, 'me-2 h-4 w-4') }}
 									{% endif %}
 									</a>
 								{% endblock %}
@@ -461,8 +461,8 @@
         const contentEl = document.getElementById('theme-switcher-content');
         if (contentEl) {
             contentEl.innerHTML = theme === 'dark'
-                ? `<i class="fa-solid fa-sun mr-2 h-4 w-4"></i><span id="theme-switcher-item">Light Mode</span>`
-                : `<i class="fa-solid fa-moon mr-2 h-4 w-4"></i><span id="theme-switcher-item">Dark Mode</span>`;
+                ? `<i class="fa-solid fa-sun me-2 h-4 w-4"></i><span id="theme-switcher-item">Light Mode</span>`
+                : `<i class="fa-solid fa-moon me-2 h-4 w-4"></i><span id="theme-switcher-item">Dark Mode</span>`;
 
 			const switcher = document.getElementById('theme-switcher-item');
 			if (switcher) {

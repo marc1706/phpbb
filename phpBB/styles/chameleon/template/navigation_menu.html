@@ -1,273 +1,191 @@
 <nav class="relative max-w-max items-center justify-center">
 	<div class="hidden md:block relative">
 		<ul class="group flex flex-1 list-none items-center justify-center space-x-1">
-			{% embed 'components/navigation_menu/item.html.twig' %}
-				{% block content %}
-					{% include 'components/navigation_menu/trigger.html.twig' with { variant: 'header', content: 'Forum' } %}
-					{% embed 'components/navigation_menu/content.html.twig' %}
-						{% block content %}
-							<ul class="grid gap-3 p-4 w-[400px]">
-								<li>
-									<a href="/" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-home h-4 w-4"></i>
-											Home
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											View all forum categories and recent activity
-										</p>
-									</a>
-								</li>
-								<li>
-									<a
-										href="/category"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-table-cells h-4 w-4"></i>
-											Browse Categories
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											Explore topics organized by categories
-										</p>
-									</a>
-								</li>
-								<li>
-									<a
-										href="/thread"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-arrow-trend-up h-4 w-4"></i>
-											Popular Topics
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											See what's trending in the community
-										</p>
-									</a>
-								</li>
-							</ul>
-						{% endblock %}
-					{% endembed %}
-				{% endblock %}
-			{% endembed %}
-
-			{% embed 'components/navigation_menu/item.html.twig' %}
-				{% block content %}
-					{% include 'components/navigation_menu/trigger.html.twig' with { variant: 'header', content: 'Community' } %}
-					{% embed 'components/navigation_menu/content.html.twig' %}
-						{% block content %}
-							<ul class="grid gap-3 p-4 w-[400px]">
-								<li>
-									<a
-										href="/memberlist"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-users h-4 w-4"></i>
-											Memberlist
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											Browse all registered members
-										</p>
-									</a>
-								</li>
-								<li>
-									<a
-										href="/team"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-shield-halved h-4 w-4"></i>
-											The team
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											View administrators and moderators
-										</p>
-									</a>
-								</li>
-							</ul>
-						{% endblock %}
-					{% endembed %}
-				{% endblock %}
-			{% endembed %}
-
-			{% embed 'components/navigation_menu/item.html.twig' %}
-				{% block content %}
-					{% include 'components/navigation_menu/trigger.html.twig' with { variant: 'header', content: 'Quick links' } %}
-					{% embed 'components/navigation_menu/content.html.twig' %}
-						{% block content %}
-							<ul class="grid gap-3 p-4 w-[400px]">
-								<li>
-									<a
-										href="#"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-check-double h-4 w-4"></i>
-											Mark all forums read
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											Mark all topics as read
-										</p>
-									</a>
-								</li>
-								<li>
-									<a
-										href="/search?type=unread"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-book-open h-4 w-4"></i>
-											Unread posts
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											View topics with new posts since last visit
-										</p>
-									</a>
-								</li>
-								<li>
-									<a
-										href="/search?type=newposts"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-clock h-4 w-4"></i>
-											New posts
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											View posts made since last visit
-										</p>
-									</a>
-								</li>
-								<li>
-									<a
-										href="/search?type=active"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-chart-line h-4 w-4"></i>
-											Active topics
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											View topics with recent activity
-										</p>
-									</a>
-								</li>
-								<li>
-									<a
-										href="/search?type=unanswered"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-eye h-4 w-4"></i>
-											Unanswered topics
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											View topics with no replies
-										</p>
-									</a>
-								</li>
-							</ul>
-						{% endblock %}
-					{% endembed %}
-				{% endblock %}
-			{% endembed %}
-
-			{% embed 'components/navigation_menu/item.html.twig' %}
-				{% block content %}
-					{% include 'components/navigation_menu/trigger.html.twig' with { variant: 'header', content: 'User' } %}
-					{% embed 'components/navigation_menu/content.html.twig' %}
-						{% block content %}
-							<ul class="grid gap-3 p-4 w-[400px]">
-								<li>
-									<a
-										href="/profile/johndoe"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-user h-4 w-4"></i>
-											My Profile
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											View and edit your public profile
-										</p>
-									</a>
-								</li>
-								<li>
-									<a
-										href="/private-messages"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-inbox h-4 w-4"></i>
-											Private Messages
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											View and send private messages
-										</p>
-									</a>
-								</li>
-								<li>
-									<a
-										href="/user-cp"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-gear h-4 w-4"></i>
-											Control Panel
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											Manage your account settings and preferences
-										</p>
-									</a>
-								</li>
-							</ul>
-						{% endblock %}
-					{% endembed %}
-				{% endblock %}
-			{% endembed %}
-
-			{% embed 'components/navigation_menu/item.html.twig' %}
-				{% block content %}
-					{% include 'components/navigation_menu/trigger.html.twig' with { variant: 'header', content: 'Help' } %}
-					{% embed 'components/navigation_menu/content.html.twig' %}
-						{% block content %}
-							<ul class="grid gap-3 p-4 w-[400px]">
-								<li>
-									<a
-										href="/docs"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-circle-question h-4 w-4"></i>
-											Documentation
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											Learn how to use the forum features
-										</p>
-									</a>
-								</li>
-								<li>
-									<a
-										href="/docs"
-										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-									>
-										<div class="flex items-center gap-2 text-sm font-medium leading-none">
-											<i class="fa-solid fa-envelope h-4 w-4"></i>
-											Contact Support
-										</div>
-										<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
-											Get help from our support team
-										</p>
-									</a>
-								</li>
-							</ul>
-						{% endblock %}
-					{% endembed %}
-				{% endblock %}
-			{% endembed %}
+			<li class="navigation-menu-item relative">
+				<button class="navigation-menu-trigger group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-forum-header-foreground hover:bg-white/10 data-[state=open]:bg-white/10">
+					Forum
+					<i class="fa-solid fa-chevron-down relative ms-2 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"></i>
+				</button>
+				<div class="navigation-menu-content absolute hidden left-0 top-full w-full bg-popover text-popover-foreground md:w-auto">
+					<ul class="grid gap-3 p-4 w-[400px]">
+						<li>
+							<a href="/" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-home h-4 w-4"></i>
+									Home
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">View all forum categories and recent activity</p>
+							</a>
+						</li>
+						<li>
+							<a href="/category" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-table-cells h-4 w-4"></i>
+									Browse Categories
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">Explore topics organized by categories</p>
+							</a>
+						</li>
+						<li>
+							<a href="/thread" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-arrow-trend-up h-4 w-4"></i>
+									Popular Topics
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">See what's trending in the community</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li class="navigation-menu-item relative">
+				<button class="navigation-menu-trigger group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-forum-header-foreground hover:bg-white/10 data-[state=open]:bg-white/10">
+					Community
+					<i class="fa-solid fa-chevron-down relative ms-2 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"></i>
+				</button>
+				<div class="navigation-menu-content absolute hidden left-0 top-full w-full bg-popover text-popover-foreground md:w-auto">
+					<ul class="grid gap-3 p-4 w-[400px]">
+						<li>
+							<a href="/memberlist" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-users h-4 w-4"></i>
+									Memberlist
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">Browse all registered members</p>
+							</a>
+						</li>
+						<li>
+							<a href="/team" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-shield-halved h-4 w-4"></i>
+									The team
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">View administrators and moderators</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li class="navigation-menu-item relative">
+				<button class="navigation-menu-trigger group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-forum-header-foreground hover:bg-white/10 data-[state=open]:bg-white/10">
+					Quick links
+					<i class="fa-solid fa-chevron-down relative ms-2 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"></i>
+				</button>
+				<div class="navigation-menu-content absolute hidden left-0 top-full w-full bg-popover text-popover-foreground md:w-auto">
+					<ul class="grid gap-3 p-4 w-[400px]">
+						<li>
+							<a href="#" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-check-double h-4 w-4"></i>
+									Mark all forums read
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">Mark all topics as read</p>
+							</a>
+						</li>
+						<li>
+							<a href="/search?type=unread" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-book-open h-4 w-4"></i>
+									Unread posts
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">View topics with new posts since last visit</p>
+							</a>
+						</li>
+						<li>
+							<a href="/search?type=newposts" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-clock h-4 w-4"></i>
+									New posts
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">View posts made since last visit</p>
+							</a>
+						</li>
+						<li>
+							<a href="/search?type=active" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-chart-line h-4 w-4"></i>
+									Active topics
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">View topics with recent activity</p>
+							</a>
+						</li>
+						<li>
+							<a href="/search?type=unanswered" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-eye h-4 w-4"></i>
+									Unanswered topics
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">View topics with no replies</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li class="navigation-menu-item relative">
+				<button class="navigation-menu-trigger group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-forum-header-foreground hover:bg-white/10 data-[state=open]:bg-white/10">
+					User
+					<i class="fa-solid fa-chevron-down relative ms-2 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"></i>
+				</button>
+				<div class="navigation-menu-content absolute hidden left-0 top-full w-full bg-popover text-popover-foreground md:w-auto">
+					<ul class="grid gap-3 p-4 w-[400px]">
+						<li>
+							<a href="/profile/johndoe" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-user h-4 w-4"></i>
+									My Profile
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">View and edit your public profile</p>
+							</a>
+						</li>
+						<li>
+							<a href="/private-messages" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-inbox h-4 w-4"></i>
+									Private Messages
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">View and send private messages</p>
+							</a>
+						</li>
+						<li>
+							<a href="/user-cp" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-gear h-4 w-4"></i>
+									Control Panel
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">Manage your account settings and preferences</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li class="navigation-menu-item relative">
+				<button class="navigation-menu-trigger group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-forum-header-foreground hover:bg-white/10 data-[state=open]:bg-white/10">
+					Help
+					<i class="fa-solid fa-chevron-down relative ms-2 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"></i>
+				</button>
+				<div class="navigation-menu-content absolute hidden left-0 top-full w-full bg-popover text-popover-foreground md:w-auto">
+					<ul class="grid gap-3 p-4 w-[400px]">
+						<li>
+							<a href="/docs" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-circle-question h-4 w-4"></i>
+									Documentation
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">Learn how to use the forum features</p>
+							</a>
+						</li>
+						<li>
+							<a href="/docs" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+								<div class="flex items-center gap-2 text-sm font-medium leading-none">
+									<i class="fa-solid fa-envelope h-4 w-4"></i>
+									Contact Support
+								</div>
+								<p class="line-clamp-2 text-sm leading-snug text-muted-foreground">Get help from our support team</p>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
 		</ul>
 	</div>
 </nav>
-

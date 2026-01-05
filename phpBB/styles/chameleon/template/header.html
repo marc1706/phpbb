@@ -43,8 +43,7 @@
 							</span>
 						{% endif %}
 					</button>
-				{% embed 'components/popover/content.html.twig' with {className: "p-0 end-0", align: "end"} %}
-					{% block content %}
+					<div class="popover-content hidden absolute top-full mt-2 z-50 w-80 p-0 end-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none">
 						<ul class="flex flex-wrap items-baseline border-b border-default rounded-t-base p-4">
 							<li class="me-2">
 								<h3 class="font-semibold">{{ lang('NOTIFICATIONS') }}</h3>
@@ -100,9 +99,8 @@
 							{% endblock %}
 							{% endembed %}
 						</div>
-					{% endblock %}
-				{% endembed %}
-			</div>
+					</div>
+				</div>
 			{% embed 'components/dropdown_menu/root.html.twig' %}
 				{% block content %}
 					{% embed 'components/dropdown_menu/trigger.html.twig' %}

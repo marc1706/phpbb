@@ -1,8 +1,7 @@
 <nav class="relative max-w-max items-center justify-center">
 	<button id="mobile-menu-trigger" class="lg:hidden inline-flex items-center justify-center rounded-md p-2 text-forum-header-foreground hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-label="Toggle menu">
-		<i class="fa-solid fa-bars h-6 w-6"></i>
+		{{ Icon('font', 'bars', lang('MENU'), true, 'size-6 flex items-center justify-center') }}
 	</button>
-
 	<div id="navigation-menu-container" class="hidden lg:flex lg:relative lg:top-auto lg:left-auto lg:w-auto lg:h-auto lg:bg-transparent lg:shadow-none lg:p-0 fixed top-24 left-0 w-full h-[calc(100vh-6rem)] bg-popover overflow-y-auto lg:overflow-visible border-border/50 shadow-lg p-4 z-40">
 		<ul class="group flex flex-col lg:flex-row flex-1 list-none lg:items-center justify-center space-y-2 lg:space-y-0 lg:space-x-1">
 			<li class="navigation-menu-item relative">

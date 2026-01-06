@@ -1,13 +1,17 @@
 <nav class="relative max-w-max items-center justify-center">
-	<div class="hidden lg:flex relative">
-		<ul class="group flex flex-1 list-none items-center justify-center space-x-1">
+	<button id="mobile-menu-trigger" class="lg:hidden inline-flex items-center justify-center rounded-md p-2 text-forum-header-foreground hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-label="Toggle menu">
+		<i class="fa-solid fa-bars h-6 w-6"></i>
+	</button>
+
+	<div id="navigation-menu-container" class="hidden lg:flex lg:relative lg:top-auto lg:left-auto lg:w-auto lg:h-auto lg:bg-transparent lg:shadow-none lg:p-0 fixed top-24 left-0 w-full h-[calc(100vh-6rem)] bg-popover overflow-y-auto lg:overflow-visible border-border/50 shadow-lg p-4 z-40">
+		<ul class="group flex flex-col lg:flex-row flex-1 list-none lg:items-center justify-center space-y-2 lg:space-y-0 lg:space-x-1">
 			<li class="navigation-menu-item relative">
-				<button class="navigation-menu-trigger group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-forum-header-foreground hover:bg-white/10 data-[state=open]:bg-white/10">
+				<button class="navigation-menu-trigger group inline-flex h-10 w-full lg:w-max items-center justify-between lg:justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-popover-foreground lg:text-forum-header-foreground lg:hover:bg-white/10 data-[state=open]:bg-accent lg:data-[state=open]:bg-white/10">
 					Forum
 					<i class="fa-solid fa-chevron-down relative ms-2 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"></i>
 				</button>
-				<div class="navigation-menu-content absolute hidden left-0 top-full w-full bg-popover text-popover-foreground md:w-auto">
-					<ul class="grid gap-3 p-4 w-[400px]">
+				<div class="navigation-menu-content hidden lg:absolute lg:top-full lg:left-0 w-full lg:w-auto bg-transparent lg:bg-popover text-popover-foreground z-50 shadow-md rounded-md border border-border/50">
+					<ul class="grid gap-3 p-2 lg:p-4 w-full lg:w-[400px]">
 						<li>
 							<a href="/" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
 								<div class="flex items-center gap-2 text-sm font-medium leading-none">
@@ -39,12 +43,12 @@
 				</div>
 			</li>
 			<li class="navigation-menu-item relative">
-				<button class="navigation-menu-trigger group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-forum-header-foreground hover:bg-white/10 data-[state=open]:bg-white/10">
+				<button class="navigation-menu-trigger group inline-flex h-10 w-full lg:w-max items-center justify-between lg:justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-popover-foreground lg:text-forum-header-foreground lg:hover:bg-white/10 data-[state=open]:bg-accent lg:data-[state=open]:bg-white/10">
 					Community
 					<i class="fa-solid fa-chevron-down relative ms-2 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"></i>
 				</button>
-				<div class="navigation-menu-content absolute hidden left-0 top-full w-full bg-popover text-popover-foreground md:w-auto">
-					<ul class="grid gap-3 p-4 w-[400px]">
+				<div class="navigation-menu-content hidden lg:absolute lg:top-full lg:left-0 w-full lg:w-auto bg-transparent lg:bg-popover text-popover-foreground z-50 shadow-md rounded-md border border-border/50">
+					<ul class="grid gap-3 p-2 lg:p-4 w-full lg:w-[400px]">
 						<li>
 							<a href="/memberlist" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
 								<div class="flex items-center gap-2 text-sm font-medium leading-none">
@@ -67,12 +71,12 @@
 				</div>
 			</li>
 			<li class="navigation-menu-item relative">
-				<button class="navigation-menu-trigger group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-forum-header-foreground hover:bg-white/10 data-[state=open]:bg-white/10">
+				<button class="navigation-menu-trigger group inline-flex h-10 w-full lg:w-max items-center justify-between lg:justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-popover-foreground lg:text-forum-header-foreground lg:hover:bg-white/10 data-[state=open]:bg-accent lg:data-[state=open]:bg-white/10">
 					Quick links
 					<i class="fa-solid fa-chevron-down relative ms-2 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"></i>
 				</button>
-				<div class="navigation-menu-content absolute hidden left-0 top-full w-full bg-popover text-popover-foreground md:w-auto">
-					<ul class="grid gap-3 p-4 w-[400px]">
+				<div class="navigation-menu-content hidden lg:absolute lg:top-full lg:left-0 w-full lg:w-auto bg-transparent lg:bg-popover text-popover-foreground z-50 shadow-md rounded-md border border-border/50">
+					<ul class="grid gap-3 p-2 lg:p-4 w-full lg:w-[400px]">
 						<li>
 							<a href="#" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
 								<div class="flex items-center gap-2 text-sm font-medium leading-none">
@@ -122,12 +126,12 @@
 				</div>
 			</li>
 			<li class="navigation-menu-item relative">
-				<button class="navigation-menu-trigger group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-forum-header-foreground hover:bg-white/10 data-[state=open]:bg-white/10">
+				<button class="navigation-menu-trigger group inline-flex h-10 w-full lg:w-max items-center justify-between lg:justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-popover-foreground lg:text-forum-header-foreground lg:hover:bg-white/10 data-[state=open]:bg-accent lg:data-[state=open]:bg-white/10">
 					User
 					<i class="fa-solid fa-chevron-down relative ms-2 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"></i>
 				</button>
-				<div class="navigation-menu-content absolute hidden left-0 top-full w-full bg-popover text-popover-foreground md:w-auto">
-					<ul class="grid gap-3 p-4 w-[400px]">
+				<div class="navigation-menu-content hidden lg:absolute lg:top-full lg:left-0 w-full lg:w-auto bg-transparent lg:bg-popover text-popover-foreground z-50 shadow-md rounded-md border border-border/50">
+					<ul class="grid gap-3 p-2 lg:p-4 w-full lg:w-[400px]">
 						<li>
 							<a href="/profile/johndoe" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
 								<div class="flex items-center gap-2 text-sm font-medium leading-none">
@@ -159,12 +163,12 @@
 				</div>
 			</li>
 			<li class="navigation-menu-item relative">
-				<button class="navigation-menu-trigger group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-forum-header-foreground hover:bg-white/10 data-[state=open]:bg-white/10">
+				<button class="navigation-menu-trigger group inline-flex h-10 w-full lg:w-max items-center justify-between lg:justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 bg-transparent text-popover-foreground lg:text-forum-header-foreground lg:hover:bg-white/10 data-[state=open]:bg-accent lg:data-[state=open]:bg-white/10">
 					Help
 					<i class="fa-solid fa-chevron-down relative ms-2 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"></i>
 				</button>
-				<div class="navigation-menu-content absolute hidden left-0 top-full w-full bg-popover text-popover-foreground md:w-auto">
-					<ul class="grid gap-3 p-4 w-[400px]">
+				<div class="navigation-menu-content hidden lg:absolute lg:top-full lg:left-0 w-full lg:w-auto bg-transparent lg:bg-popover text-popover-foreground z-50 shadow-md rounded-md border border-border/50">
+					<ul class="grid gap-3 p-2 lg:p-4 w-full lg:w-[400px]">
 						<li>
 							<a href="/docs" class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
 								<div class="flex items-center gap-2 text-sm font-medium leading-none">

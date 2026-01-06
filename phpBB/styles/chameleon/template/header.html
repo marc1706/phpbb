@@ -180,24 +180,51 @@
 	// Set initial theme to avoid FOUC
 	setTheme(getTheme());
 
-	// Add click handler for theme toggle
-	contentEl.addEventListener('click', () => {
-		setTheme();
-	});
-
 	document.addEventListener('DOMContentLoaded', () => {
 		// Re-apply in case of race condition and to set button text
 		setTheme(getTheme());
+
+		// Add click handler for theme toggle
+		contentEl.addEventListener('click', () => {
+			setTheme();
+		});
+
+		const mobileMenuTrigger = document.getElementById('mobile-menu-trigger');
+		const mobileMenuContent = document.getElementById('navigation-menu-container');
+
+		const isMobile = () => {
+			// Check if the mobile menu trigger is visible
+			return mobileMenuTrigger && getComputedStyle(mobileMenuTrigger).display !== 'none';
+		};
 
 		const menuItems = document.querySelectorAll('.navigation-menu-item');
 		menuItems.forEach(item => {
 			const content = item.querySelector('.navigation-menu-content');
 			item.addEventListener('mouseenter', () => {
-				if (content) content.classList.remove('hidden');
+				if (!isMobile()) {
+					if (content) content.classList.remove('hidden');
+				}
 			});
 			item.addEventListener('mouseleave', () => {
-				if (content) content.classList.add('hidden');
+				if (!isMobile()) {
+					if (content) content.classList.add('hidden');
+				}
 			});
+
+			// Mobile click handling
+			const trigger = item.querySelector('.navigation-menu-trigger');
+			if (trigger && content) {
+				trigger.addEventListener('click', (e) => {
+					if (isMobile()) {
+						e.preventDefault();
+						content.classList.toggle('hidden');
+						const icon = trigger.querySelector('.fa-chevron-down');
+						if (icon) {
+							icon.style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
+						}
+					}
+				});
+			}
 		});
 
 		const popovers = document.querySelectorAll('.popover-root');
@@ -257,6 +284,21 @@
 				if (c) c.style.display = 'none';
 			});
 		});
+
+		if (mobileMenuTrigger && mobileMenuContent) {
+			mobileMenuTrigger.addEventListener('click', (e) => {
+				e.stopPropagation();
+				mobileMenuContent.classList.toggle('hidden');
+			});
+
+			document.addEventListener('click', (e) => {
+				if (isMobile()) {
+					if (!mobileMenuContent.contains(e.target) && !mobileMenuTrigger.contains(e.target)) {
+						mobileMenuContent.classList.add('hidden');
+					}
+				}
+			});
+		}
 	});
 })();
 </script>

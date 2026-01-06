@@ -1,0 +1,36 @@
+<nav aria-label="Breadcrumb" class="flex items-center text-sm text-muted-foreground mb-4">
+	<ol class="flex items-center gap-3">
+		{% if U_SITE_HOME %}
+		<li>
+			<a href="{{ U_SITE_HOME }}">
+				{{ Icon('font', 'home', lang('SITE_HOME'), false, 'me-2') }}
+			</a>
+		</li>
+		{% endif %}
+
+		{% EVENT overall_header_breadcrumb_prepend %}
+
+		<li>
+			<a href="{{ U_INDEX }}" accesskey="h" data-navbar-reference="index">
+				{% if not U_SITE_HOME %}
+					{{ Icon('font', 'home', lang('INDEX'), false, 'me-2') }}
+				{% else %}
+					{{ Icon('font', 'chevron-right', lang('INDEX'), false, 'me-2') }}
+				{% endif %}
+			</a>
+		</li>
+
+		{% for navlink in navlinks %}
+		{% set NAVLINK_NAME = navlink.BREADCRUMB_NAME | default(navlink.FORUM_NAME) %}
+		{% set NAVLINK_LINK = navlink.U_BREADCRUMB | default(navlink.U_VIEW_FORUM) %}
+
+		{% EVENT overall_header_navlink_prepend %}
+		<li>
+			<a href="{{ NAVLINK_LINK }}">{{ Icon('font', 'chevron-right', NAVLINK_NAME, false, 'me-2') }}</a>
+		</li>
+		{% EVENT overall_header_navlink_append %}
+		{% endfor %}
+
+		{% EVENT overall_header_breadcrumb_append %}
+	</ol>
+</nav>

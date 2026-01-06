@@ -1,12 +1,12 @@
-<header class="sticky top-0 z-50 bg-forum-header text-forum-header-foreground border-b border-border/50">
-	<div class="container mx-auto px-4">
+<header class="lg:sticky top-0 z-50 bg-forum-header text-forum-header-foreground border-b border-border/50">
+	<div class="container mx-auto px-0.5 sm:px-4">
 		<div class="flex items-center justify-between h-24">
 			<!-- Left section with logo and menu -->
-			<div class="flex items-center gap-6">
+			<div class="flex shrink items-center gap-2 sm:gap-6">
 				<a href="{{ U_INDEX }}" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
-					{{ Icon('svg', 'logo', SITENAME, true, 'h-24 w-24 mx-4 text-forum-header-foreground fill-current') }}
+					{{ Icon('svg', 'logo', SITENAME, true, 'h-24 w-24 mx-4 text-forum-header-foreground fill-current sm:block hidden') }}
 					<div class="flex flex-col gap-2">
-						<h1 class="text-xl font-bold leading-none">{{ SITENAME }}</h1>
+						<h1 class="text-lg sm:text-xl font-bold leading-none truncate">{{ SITENAME }}</h1>
 						<span class="text-sm text-muted-foreground leading-none hidden md:block">{{ SITE_DESCRIPTION }}</span>
 					</div>
 				</a>
@@ -14,7 +14,7 @@
 			</div>
 
 			<!-- {/* Search and Actions */} -->
-			<div class="flex items-center gap-3">
+			<div class="flex items-center gap-2 sm:gap-3">
 				<div class="hidden md:block relative">
 					<i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"></i>
 					{% include 'components/input.html.twig' with {
@@ -26,24 +26,24 @@
 						}
 					} %}
 				</div>
-				<a href="{{ U_PRIVATEMSGS }}" class="inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-10 justify-center items-center rounded-md p-0">
+				<a href="{{ U_PRIVATEMSGS }}" class="inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-8 sm:w-10 justify-center items-center rounded-md p-0">
 					{{ Icon('font', 'envelope', lang('PRIVATE_MESSAGES'), true) }}
 					{% if PRIVATE_MESSAGE_COUNT > 0 %}
-						<div class="absolute -top-1 -end-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
+						<div class="absolute -top-1 -end-0.5 sm:-end-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
 							{{ PRIVATE_MESSAGE_COUNT }}
 						</div>
 					{% endif %}
 				</a>
 				<div class="popover-root relative">
-					<button type="button" class="popover-trigger inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-10 justify-center items-center rounded-md p-0">
+					<button type="button" class="popover-trigger inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-8 sm:w-10 justify-center items-center rounded-md p-0">
 						{{ Icon('font', 'bell', lang('NOTIFICATIONS'), true) }}
 						{% if NOTIFICATIONS_COUNT > 0 %}
-							<span class="absolute -top-1 -end-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
+							<span class="absolute -top-1 -end-0.5 sm:-end-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
 								{{ NOTIFICATIONS_COUNT }}
 							</span>
 						{% endif %}
 					</button>
-					<div class="popover-content hidden absolute top-full mt-2 z-50 w-80 p-0 end-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none">
+					<div class="popover-content hidden absolute top-full mt-2 z-50 w-80 p-0 -end-[3.125rem] sm:end-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none">
 						<ul class="flex flex-wrap items-baseline border-b border-default rounded-t-base p-4">
 							<li class="me-2">
 								<h3 class="font-semibold">{{ lang('NOTIFICATIONS') }}</h3>

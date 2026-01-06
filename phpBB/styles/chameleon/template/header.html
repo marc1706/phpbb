@@ -34,8 +34,8 @@
 						</div>
 					{% endif %}
 				</a>
-				<div class="popover-root relative">
-					<button type="button" class="popover-trigger inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-8 sm:w-10 justify-center items-center rounded-md p-0">
+				<div class="dropdown-menu-root relative">
+					<button type="button" class="dropdown-menu-trigger inline-flex text-forum-header-foreground hover:bg-white/10 relative h-10 w-8 sm:w-10 justify-center items-center rounded-md p-0">
 						{{ Icon('font', 'bell', lang('NOTIFICATIONS'), true) }}
 						{% if NOTIFICATIONS_COUNT > 0 %}
 							<span class="absolute -top-1 -end-0.5 sm:-end-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-destructive text-destructive-foreground font-bold">
@@ -43,7 +43,7 @@
 							</span>
 						{% endif %}
 					</button>
-					<div class="popover-content hidden absolute top-full mt-2 z-50 w-80 p-0 -end-[3.125rem] sm:end-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none">
+					<div class="dropdown-menu-content hidden absolute top-full mt-2 z-50 w-80 p-0 -end-[3.125rem] sm:end-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none">
 						<ul class="flex flex-wrap items-baseline border-b border-default rounded-t-base p-4">
 							<li class="me-2">
 								<h3 class="font-semibold">{{ lang('NOTIFICATIONS') }}</h3>
@@ -227,46 +227,22 @@
 			}
 		});
 
-		const popovers = document.querySelectorAll('.popover-root');
 		const dropdowns = document.querySelectorAll('.dropdown-menu-root');
-
-		popovers.forEach(popover => {
-			const trigger = popover.querySelector('.popover-trigger');
-			const content = popover.querySelector('.popover-content');
-			if (trigger && content) {
-				trigger.addEventListener('click', (e) => {
-					e.stopPropagation();
-					const isOpen = content.style.display === 'block';
-					popovers.forEach(p => {
-						const c = p.querySelector('.popover-content');
-						if (c) c.style.display = 'none';
-					});
-					dropdowns.forEach(d => {
-						const c = d.querySelector('.dropdown-menu-content');
-						if (c) c.style.display = 'none';
-					});
-					if (!isOpen) {
-						content.style.display = 'block';
-					}
-				});
-			}
-		});
 
 		dropdowns.forEach(dropdown => {
 			const trigger = dropdown.querySelector('.dropdown-menu-trigger');
 			const content = dropdown.querySelector('.dropdown-menu-content');
 			if (trigger && content) {
-				trigger.addEventListener('click', (e) => {
-					e.stopPropagation();
+				trigger.addEventListener('click', (event) => {
+					event.stopPropagation();
 					const isOpen = content.style.display === 'block';
-					dropdowns.forEach(d => {
-						const c = d.querySelector('.dropdown-menu-content');
-						if (c) c.style.display = 'none';
+					dropdowns.forEach(curDropdown => {
+						const curContent = curDropdown.querySelector('.dropdown-menu-content');
+						if (curContent) {
+							curContent.style.display = 'none';
+						}
 					});
-					popovers.forEach(p => {
-						const c = p.querySelector('.popover-content');
-						if (c) c.style.display = 'none';
-					});
+
 					if (!isOpen) {
 						content.style.display = 'block';
 					}
@@ -275,13 +251,11 @@
 		});
 
 		document.addEventListener('click', () => {
-			popovers.forEach(p => {
-				const c = p.querySelector('.popover-content');
-				if (c) c.style.display = 'none';
-			});
-			dropdowns.forEach(d => {
-				const c = d.querySelector('.dropdown-menu-content');
-				if (c) c.style.display = 'none';
+			dropdowns.forEach(curDropdown => {
+				const curContent = curDropdown.querySelector('.dropdown-menu-content');
+				if (curContent) {
+					curContent.style.display = 'none';
+				}
 			});
 		});
 

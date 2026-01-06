@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>phpBB Chameleon Theme Colors</title>
+	<link rel="stylesheet" href="../theme/stylesheet.css">
+	<style>
+		body {
+			font-family: system-ui, -apple-system, sans-serif;
+			padding: 2rem;
+			background-color: #f0f0f0;
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+
+		.theme-section {
+			background: white;
+			padding: 2rem;
+			border-radius: 1rem;
+			margin-bottom: 2rem;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+		}
+
+		.theme-section.dark-preview {
+			background-color: hsl(219, 20%, 14%); /* Hardcoded base dark bg to match main.css for the container */
+			color: white;
+		}
+
+		h2 {
+			font-size: 1.5rem;
+			font-weight: bold;
+			margin-bottom: 1.5rem;
+			border-bottom: 2px solid #eee;
+			padding-bottom: 0.5rem;
+		}
+
+		.dark-preview h2 {
+			border-color: #333;
+		}
+
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+			gap: 1rem;
+		}
+
+		.color-card {
+			border: 1px solid #e5e7eb;
+			border-radius: 0.5rem;
+			overflow: hidden;
+			background: white;
+			color: #1f2937;
+		}
+
+		.dark-preview .color-card {
+			background: #1f2937;
+			border-color: #374151;
+			color: #f3f4f6;
+		}
+
+		.swatch {
+			height: 80px;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: bold;
+			font-size: 1.2rem;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+			color: white;
+		}
+
+		.info {
+			padding: 0.75rem;
+			font-family: monospace;
+			font-size: 0.85rem;
+		}
+
+		.variable {
+			display: block;
+			font-weight: bold;
+			margin-bottom: 0.25rem;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+	<h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 2rem;">Theme Colors Demo</h1>
+
+	<!-- Default Theme -->
+	<div class="theme-section">
+		<h2>Default Theme</h2>
+		<div class="grid" id="default-grid"></div>
+	</div>
+
+	<!-- Dark Theme -->
+	<div class="theme-section dark-preview dark">
+		<h2>Dark Theme</h2>
+		<div class="grid" id="dark-grid"></div>
+	</div>
+</div>
+
+<script>
+	const variables = [
+		'cosmic',
+		'odyssey',
+		'cosmos',
+		'background',
+		'foreground',
+		'forum-header',
+		'forum-header-foreground',
+		'card',
+		'card-foreground',
+		'card-hover',
+		'popover',
+		'popover-foreground',
+		'primary',
+		'primary-foreground',
+		'primary-hover',
+		'secondary',
+		'secondary-foreground',
+		'secondary-hover',
+		'muted',
+		'muted-foreground',
+		'accent',
+		'accent-foreground',
+		'topic-unread',
+		'topic-sticky',
+		'topic-locked',
+		'topic-new',
+		'badge-admin',
+		'badge-mod',
+		'badge-user',
+		'destructive',
+		'destructive-foreground',
+		'border',
+		'input',
+		'ring',
+		'sidebar-background',
+		'sidebar-foreground',
+		'sidebar-primary',
+		'sidebar-primary-foreground',
+		'sidebar-accent',
+		'sidebar-accent-foreground',
+		'sidebar-border',
+		'sidebar-ring',
+		'scrollbar-thumb',
+	];
+
+	function renderGrid(containerId) {
+		const container = document.getElementById(containerId);
+
+// Get the computed styles for that specific element
+		const style = getComputedStyle(container);
+
+		variables.forEach(v => {
+			const card = document.createElement('div');
+			card.className = 'color-card';
+
+			const swatch = document.createElement('div');
+			swatch.className = 'swatch';
+			const hslValue = style.getPropertyValue(`--${v}`).trim();
+			swatch.style.backgroundColor = `hsl(${hslValue})`;
+			swatch.innerText = 'Aa';
+
+			const info = document.createElement('div');
+			info.className = 'info';
+
+			const variableName = document.createElement('span');
+			variableName.className = 'variable';
+			variableName.innerText = `--${v}`;
+
+			info.appendChild(variableName);
+			card.appendChild(swatch);
+			card.appendChild(info);
+			container.appendChild(card);
+		});
+	}
+
+	renderGrid('default-grid');
+	renderGrid('dark-grid');
+</script>
+</body>
+</html>

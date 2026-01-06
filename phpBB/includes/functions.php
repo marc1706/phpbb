@@ -3819,6 +3819,7 @@ function page_header($page_title = '', $display_online_list = false, $item_id = 
 		'NO_AVATAR_SOURCE'				=> $avatar_helper->get_no_avatar_source(),
 		'PRIVATE_MESSAGE_COUNT'			=> (!empty($user->data['user_unread_privmsg'])) ? $user->data['user_unread_privmsg'] : 0,
 		'CURRENT_USERNAME_SIMPLE'		=> get_username_string('no_profile', $user->data['user_id'], $user->data['username'], $user->data['user_colour']),
+		'CURRENT_USER_EMAIL'			=> $user->data['user_email'],
 		'CURRENT_USERNAME_FULL'			=> get_username_string('full', $user->data['user_id'], $user->data['username'], $user->data['user_colour']),
 		'CURRENT_USER_GROUP_COLOR'		=> $user->data['user_colour'],
 		'UNREAD_NOTIFICATIONS_COUNT'	=> ($notifications !== false) ? $notifications['unread_count'] : '',

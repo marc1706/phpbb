@@ -90,118 +90,100 @@
 							</div>
 						</div>
 						<div class="p-2 border-t">
-							{% embed 'components/button.html.twig' with {
-								variant: 'ghost',
-								className: "w-full justify-center text-sm"
-							} %}
-							{% block content %}
-								{{ lang('SEE_ALL') }}
-							{% endblock %}
-							{% endembed %}
+							<a href="{{ U_VIEW_ALL_NOTIFICATIONS }}" title="{{ lang('SEE_ALL') }}">
+								<button class="justify-self-center w-full h-10 px-4 py-2 gap-2 rounded-md text-sm font-medium hover:bg-accent hover:text-accent-foreground ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">{{ lang('SEE_ALL') }}</button>
+							</a>
 						</div>
 					</div>
 				</div>
-			{% embed 'components/dropdown_menu/root.html.twig' %}
-				{% block content %}
-					{% embed 'components/dropdown_menu/trigger.html.twig' %}
-						{% block content %}
-							{% embed 'components/button.html.twig' with {
-								variant: 'ghost',
-								size: 'icon',
-								className: "inline-flex text-forum-header-foreground hover:bg-white/10 h-10 w-10 rounded-full p-0"
-							} %}
-								{% block content %}
-									{% embed 'components/avatar/root.html.twig' with { className: 'h-8 w-8' } %}
-										{% block content %}
-											{% include 'components/avatar.html' with {'avatar_data': CURRENT_USER_AVATAR} only %}
-										{% endblock %}
-									{% endembed %}
-								{% endblock %}
-							{% endembed %}
-						{% endblock %}
-					{% endembed %}
-					{% embed 'components/dropdown_menu/content.html.twig' with {align: "end", className: "end-0 w-56 z-50 bg-popover"} %}
-						{% block content %}
-							{% embed 'components/dropdown_menu/label.html.twig' with {className: "font-normal"} %}
-								{% block content %}
-									<div class="flex flex-col space-y-1">
-										<p class="text-sm font-medium leading-none">{{ CURRENT_USERNAME_SIMPLE }}</p>
-										<p class="text-xs leading-none text-muted-foreground">
-											john@example.com
-										</p>
-									</div>
-								{% endblock %}
-							{% endembed %}
-							<div class="-mx-1 my-1 h-px bg-muted"></div>
-							{% embed 'components/dropdown_menu/item.html.twig' %}
-								{% block content %}
-									<a href="/profile/johndoe" class="flex items-center cursor-pointer w-full">
-										<i class="fa-solid fa-user me-2 h-4 w-4"></i>
-										<span>{{ lang('READ_PROFILE') }}</span>
-									</a>
-								{% endblock %}
-							{% endembed %}
-							{% embed 'components/dropdown_menu/item.html.twig' %}
-								{% block content %}
-									<a href="/user-cp" class="flex items-center cursor-pointer w-full">
-										<i class="fa-solid fa-gear me-2 h-4 w-4"></i>
-										<span>{{ lang('SETTINGS') }}</span>
-									</a>
-								{% endblock %}
-							{% endembed %}
-							{% embed 'components/dropdown_menu/item.html.twig' with {id: "theme-switcher-item", className: "cursor-pointer"} %}
-								{% block content %}
-									<div id="theme-switcher-content" class="flex items-center w-full">
-										<!-- Populated by JS -->
-									</div>
-								{% endblock %}
-							{% endembed %}
-							<div class="-mx-1 my-1 h-px bg-muted"></div>
-							{% embed 'components/dropdown_menu/item.html.twig' %}
-								{% block content %}
-									<a href="{{ U_LOGIN_LOGOUT }}" title="{{ lang('LOGIN_LOGOUT') }}" accesskey="x" class="flex items-center cursor-pointer w-full">
-									{% if S_USER_LOGGED_IN %}
-										{{ Icon('font', 'right-from-bracket', lang('LOGIN_LOGOUT'), false, 'me-2 h-4 w-4') }}
-									{% else %}
-										{{ Icon('font', 'right-t-bracket', lang('LOGIN_LOGOUT'), false, 'me-2 h-4 w-4') }}
-									{% endif %}
-									</a>
-								{% endblock %}
-							{% endembed %}
-						{% endblock %}
-					{% endembed %}
-				{% endblock %}
-			{% endembed %}
+				<div class="dropdown-menu-root relative">
+					<div class="dropdown-menu-trigger">
+						<button class="inline-flex justify-center items-center size-10 p-0 gap-2 rounded-md hover:bg-white/10 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+							<span class="relative flex size-8 shrink-0 overflow-hidden rounded-full">
+								{% include 'components/avatar.html' with {'avatar_data': CURRENT_USER_AVATAR} only %}
+							</span>
+						</button>
+					</div>
+					<div class="dropdown-menu-content hidden absolute top-full end-0 w-56 mt-2 z-50 min-w-32 overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md max-sm:p-2 {{ className|default('') }}">
+						<div class="px-2 py-1.5 max-sm:px-4 max-sm:py-2 max-sm:text-base">
+							<div class="flex flex-col space-y-1">
+								<p class="font-medium leading-none">{{ CURRENT_USERNAME_SIMPLE }}</p>
+								<p class="text-xs leading-none text-muted-foreground">
+									{{ CURRENT_USER_EMAIL }}
+								</p>
+							</div>
+						</div>
+						<hr class="h-px border-muted my-1 -mx-1"/>
+						<div class="relative flex cursor-default select-none items-center rounded-sm text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground max-sm:py-3 max-sm:px-4 max-sm:text-base">
+							<a href="/profile/johndoe" class="flex items-center cursor-pointer w-full px-2 py-1.5">
+								<i class="fa-solid fa-user me-2 h-4 w-4"></i>
+								<span>{{ lang('READ_PROFILE') }}</span>
+							</a>
+						</div>
+						<div class="relative flex cursor-default select-none items-center rounded-sm text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground max-sm:py-3 max-sm:px-4 max-sm:text-base">
+							<a href="/user-cp" class="flex items-center cursor-pointer w-full px-2 py-1.5">
+								<i class="fa-solid fa-gear me-2 h-4 w-4"></i>
+								<span>{{ lang('SETTINGS') }}</span>
+							</a>
+						</div>
+						<div class="relative flex cursor-pointer select-none items-center rounded-sm text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground max-sm:py-3 max-sm:px-4 max-sm:text-base">
+							<div id="theme-switcher" class="flex items-center w-full px-2 py-1.5">
+								<span data-theme-switcher="default">{{ Icon('font', 'circle-half-stroke', lang('THEME_SWITCH_TOGGLE'), false, 'me-2 size-4') }}</span>
+								<span class="hidden" data-theme-switcher="dark">{{ Icon('font', 'sun', lang('THEME_SWITCH_LIGHT'), false, 'me-2 size-4') }}</span>
+								<span class="hidden" data-theme-switcher="light">{{ Icon('font', 'moon', lang('THEME_SWITCH_DARK'), false, 'me-2 size-4') }}</span>
+							</div>
+						</div>
+						<hr class="h-px border-muted my-1 -mx-1"/>
+						<div class="relative flex cursor-default select-none items-center rounded-sm text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground max-sm:py-3 max-sm:px-4 max-sm:text-base">
+							<a href="{{ U_LOGIN_LOGOUT }}" title="{{ lang('LOGIN_LOGOUT') }}" accesskey="x" class="flex items-center cursor-pointer w-full px-2 py-1.5">
+							{% if S_USER_LOGGED_IN %}
+								{{ Icon('font', 'right-from-bracket', lang('LOGIN_LOGOUT'), false, 'me-2 h-4 w-4') }}
+							{% else %}
+								{{ Icon('font', 'right-t-bracket', lang('LOGIN_LOGOUT'), false, 'me-2 h-4 w-4') }}
+							{% endif %}
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </header>
 <script>
 (function() {
 	const html = document.documentElement;
+	const contentEl = document.getElementById('theme-switcher');
 	const getTheme = () => localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
 	const setTheme = (theme) => {
+		theme = typeof theme !== 'undefined' ? theme : html.classList.contains('dark') ? 'light' : 'dark';
+
 		localStorage.setItem('theme', theme);
-		if (theme === 'dark') html.classList.add('dark');
-		else html.classList.remove('dark');
+		if (theme === 'dark') {
+			html.classList.add('dark');
+		} else {
+			html.classList.remove('dark');
+		}
 
-		const contentEl = document.getElementById('theme-switcher-content');
 		if (contentEl) {
-			contentEl.innerHTML = theme === 'dark'
-				? `<i class="fa-solid fa-sun me-2 h-4 w-4"></i><span id="theme-switcher-item">Light Mode</span>`
-				: `<i class="fa-solid fa-moon me-2 h-4 w-4"></i><span id="theme-switcher-item">Dark Mode</span>`;
-
-			const switcher = document.getElementById('theme-switcher-item');
-			if (switcher) {
-				switcher.addEventListener('click', () => {
-					setTheme(html.classList.contains('dark') ? 'light' : 'dark');
-				});
+			// We have three spans: one for the default button if mode is unknown, one for light mode, one for dark mode
+			for (const curChild of contentEl.children) {
+				if (curChild.dataset.themeSwitcher === theme) {
+					curChild.classList.remove('hidden');
+				} else if (!curChild.classList.contains('hidden')) {
+					curChild.classList.add('hidden');
+				}
 			}
 		}
 	};
 
 	// Set initial theme to avoid FOUC
 	setTheme(getTheme());
+
+	// Add click handler for theme toggle
+	contentEl.addEventListener('click', () => {
+		setTheme();
+	});
 
 	document.addEventListener('DOMContentLoaded', () => {
 		// Re-apply in case of race condition and to set button text
@@ -275,23 +257,6 @@
 				if (c) c.style.display = 'none';
 			});
 		});
-
-		const drawer = document.querySelector('[data-vaul-drawer]');
-		if (drawer) {
-			const trigger = document.querySelector('[data-vaul-trigger]');
-			const overlay = document.querySelector('[data-vaul-overlay]');
-			if(trigger) {
-				trigger.addEventListener('click', (e) => {
-					e.stopPropagation();
-					drawer.setAttribute('data-state', 'open');
-				});
-			}
-			if(overlay) {
-				overlay.addEventListener('click', () => {
-					drawer.setAttribute('data-state', 'closed');
-				});
-			}
-		}
 	});
 })();
 </script>

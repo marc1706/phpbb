@@ -1,0 +1,110 @@
+{% for forum in forumrow %}
+{% if forum.S_IS_CAT or forum.S_FIRST_ROW or forum.S_NO_CAT %}
+<div class="mb-8 w-full">
+	<div class="flex items-center justify-between mb-2">
+		{% if forum.S_IS_CAT %}
+		<h2 class="text-2xl font-bold tracking-tight">
+			<a href="{{ forum.U_VIEWFORUM }}" class="hover:underline">{{ forum.FORUM_NAME }}</a>
+		</h2>
+		{% endif %}
+		<a href="#" class="px-4 py-2 ms-auto" data-toggle="collapse" data-toggle-class="rotate-180" data-toggle-tooltip="Expand" title="Collapse">{{ Icon('font', 'chevron-up', '', true, 'size-5') }}</a>
+	</div>
+	<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+		{% endif %}
+
+		{% if not forum.S_IS_CAT %}
+		<div class="group relative flex flex-col justify-between overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:shadow-md">
+			<div class="p-6">
+				<div class="flex items-start gap-4">
+					<div class="mt-1 text-primary">
+						{% if forum.S_IS_LINK %}
+						{{ Icon('font', 'arrow-up-right-from-square', '', true, 'size-5') }}
+						{% elseif forum.S_LOCKED_FORUM %}
+						{{ Icon('font', 'lock', '', true, 'size-5') }}
+						{% elseif forum.S_UNREAD_FORUM %}
+						{{ Icon('font', 'message', '', true, 'size-5') }}
+						{% else %}
+						{{ Icon('font', 'message', '', true, 'size-5 text-muted-foreground') }}
+						{% endif %}
+					</div>
+					<div class="space-y-1">
+						<h3 class="font-semibold leading-none tracking-tight">
+							<a href="{{ forum.U_VIEWFORUM }}" class="after:absolute after:inset-0">{{ forum.FORUM_NAME }}</a>
+						</h3>
+						{% if forum.FORUM_DESC %}
+						<p class="text-sm text-muted-foreground line-clamp-2">{{ forum.FORUM_DESC }}</p>
+						{% endif %}
+
+						{% if forum.subforum and forum.S_LIST_SUBFORUMS %}
+						<div class="flex flex-wrap gap-2 mt-2 relative z-10">
+							{% for subforum in forum.subforum %}
+							<a href="{{ subforum.U_SUBFORUM }}" class="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80" title="{% if subforum.IS_LINK %}{{ lang('FORUM_LINK') }}{% elseif subforum.S_UNREAD %}{{ lang('UNREAD_POSTS') }}{% else %}{{ lang('NO_UNREAD_POSTS') }}{% endif %}">
+								{{ subforum.SUBFORUM_NAME }}
+							</a>
+							{% endfor %}
+						</div>
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
+					<div class="flex items-center gap-1">
+						{{ Icon('font', 'file', '', true, 'size-3') }}
+						<span>{{ forum.TOPICS }}</span>
+					</div>
+					<div class="flex items-center gap-1">
+						{{ Icon('font', 'message', '', true, 'size-3') }}
+						<span>{{ forum.POSTS }}</span>
+					</div>
+				</div>
+			</div>
+
+			{% if forum.LAST_POST_TIME %}
+			<div class="border-t bg-muted/40 p-4 text-xs">
+				<div class="flex items-center justify-between gap-2">
+					<div class="flex items-center gap-2 truncate relative z-10">
+										<span class="truncate text-muted-foreground">
+											{{ lang('POST_BY_AUTHOR') }} {{ forum.LAST_POSTER_FULL|raw }}
+										</span>
+					</div>
+					<time datetime="{{ forum.LAST_POST_TIME_RFC3339 }}" class="whitespace-nowrap text-muted-foreground">{{ forum.LAST_POST_TIME }}</time>
+				</div>
+				<div class="mt-1 truncate font-medium">
+					<a href="{{ forum.U_LAST_POST }}" class="hover:underline relative z-10">{{ forum.LAST_POST_SUBJECT }}</a>
+				</div>
+			</div>
+			{% else %}
+			<div class="border-t bg-muted/40 p-4 text-xs">
+				<div class="flex items-center justify-between gap-2">
+					<div class="flex items-center gap-2 truncate relative z-10">
+											<span class="truncate text-muted-foreground">
+												{{ lang('NO_POSTS') }}
+											</span>
+					</div>
+				</div>
+				<div class="mt-1 truncate font-medium">
+					<a href="{{ forum.U_LAST_POST }}" class="hover:underline relative z-10">{{ forum.LAST_POST_SUBJECT }}</a>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+		{% endif %}
+
+		{% set last_forum_in_section = not(loop.last) and (forumrow[loop.index0 + 1].S_IS_CAT or forumrow[loop.index0 + 1].S_NO_CAT) %}
+		{% if last_forum_in_section or forum.S_LAST_ROW %}
+	</div>
+</div>
+{% endif %}
+{% else %}
+<div class="flex min-h-[400px] flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center animate-in fade-in-50">
+	<div class="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
+		<div class="flex size-20 items-center justify-center rounded-full bg-muted">
+			{{ Icon('font', 'folder-open', '', true, 'size-10 text-muted-foreground') }}
+		</div>
+		<h3 class="mt-4 text-lg font-semibold">{{ lang('NO_FORUMS') }}</h3>
+		<p class="mb-4 mt-2 text-sm text-muted-foreground">
+			{{ lang('NO_FORUMS_EXPLAIN') }}
+		</p>
+	</div>
+</div>
+{% endfor %}

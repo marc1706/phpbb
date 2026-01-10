@@ -1,31 +1,31 @@
 {% for forum in forumrow %}
 {% if forum.S_IS_CAT or forum.S_FIRST_ROW or forum.S_NO_CAT %}
 <div class="mb-8 w-full">
-	<div class="flex items-center justify-between mb-2">
+	<div class="flex items-center text-foreground justify-between mb-4 border-b-2 border-secondary pb-2 text-lg font-bold">
+		<h3 class="text-xl font-bold tracking-tight">
 		{% if forum.S_IS_CAT %}
-		<h2 class="text-2xl font-bold tracking-tight">
-			<a href="{{ forum.U_VIEWFORUM }}" class="hover:underline">{{ forum.FORUM_NAME }}</a>
-		</h2>
+			<a href="{{ forum.U_VIEWFORUM }}" class="hover:text-muted-foreground">{{ forum.FORUM_NAME }}</a>
+		{% else %}
+			<span class="text-foreground/75">{{ lang('FORUMS') }}</span>
 		{% endif %}
-		<a href="#" class="px-4 py-2 ms-auto" data-toggle="collapse" data-toggle-class="rotate-180" data-toggle-tooltip="Expand" title="Collapse">{{ Icon('font', 'chevron-up', '', true, 'size-5') }}</a>
+		</h3>
+		<a href="#" class="px-4 py-2 ms-auto" aria-expanded="true" data-toggle="collapse" data-toggle-class="rotate-180" data-toggle-tooltip="Expand" title="Collapse">{{ Icon('font', 'chevron-up', '', true, 'size-5 transition-transform duration-300 ease-in-out') }}</a>
 	</div>
-	<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+	<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 transition-all duration-300 ease-in-out origin-top">
 		{% endif %}
 
 		{% if not forum.S_IS_CAT %}
 		<div class="group relative flex flex-col justify-between overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:shadow-md">
 			<div class="p-6">
 				<div class="flex items-start gap-4">
-					<div class="mt-1 text-primary">
-						{% if forum.S_IS_LINK %}
-						{{ Icon('font', 'arrow-up-right-from-square', '', true, 'size-5') }}
-						{% elseif forum.S_LOCKED_FORUM %}
-						{{ Icon('font', 'lock', '', true, 'size-5') }}
-						{% elseif forum.S_UNREAD_FORUM %}
-						{{ Icon('font', 'message', '', true, 'size-5') }}
-						{% else %}
-						{{ Icon('font', 'message', '', true, 'size-5 text-muted-foreground') }}
-						{% endif %}
+					<div class="mt-1 text-2xl {% if forum.S_UNREAD_FORUM %}text-primary{% else %}text-muted-foreground{% endif %} size-8">
+					{% if forum.S_IS_LINK %}
+						{{ Icon('font', 'arrow-up-right-from-square', '', true) }}
+					{% elseif forum.S_LOCKED_FORUM %}
+						{{ Icon('font', 'lock', '', true) }}
+					{% else %}
+						{{ Icon('font', 'table-list', '', true) }}
+					{% endif %}
 					</div>
 					<div class="space-y-1">
 						<h3 class="font-semibold leading-none tracking-tight">
@@ -47,6 +47,7 @@
 					</div>
 				</div>
 
+				{% if not forum.S_IS_LINK %}
 				<div class="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
 					<div class="flex items-center gap-1">
 						{{ Icon('font', 'file', '', true, 'size-3') }}
@@ -57,36 +58,36 @@
 						<span>{{ forum.POSTS }}</span>
 					</div>
 				</div>
+				{% endif %}
 			</div>
 
-			{% if forum.LAST_POST_TIME %}
 			<div class="border-t bg-muted/40 p-4 text-xs">
 				<div class="flex items-center justify-between gap-2">
 					<div class="flex items-center gap-2 truncate relative z-10">
-										<span class="truncate text-muted-foreground">
-											{{ lang('POST_BY_AUTHOR') }} {{ forum.LAST_POSTER_FULL|raw }}
-										</span>
+						<span class="truncate text-muted-foreground">
+						{% if forum.CLICKS %}
+							{{ lang('REDIRECTS') ~ lang('COLON') ~ ' ' ~ forum.CLICKS }}
+						{% elseif not forum.S_IS_LINK %}
+							{% if forum.LAST_POST_TIME %}
+								{{ lang('POST_BY_AUTHOR') }} {{ forum.LAST_POSTER_FULL|raw }}
+							{% else %}
+								{{ lang('NO_POSTS') }}
+							{% endif %}
+						{% else %}
+							&nbsp;
+						{% endif %}
+						</span>
 					</div>
+					{% if forum.LAST_POST_TIME %}
 					<time datetime="{{ forum.LAST_POST_TIME_RFC3339 }}" class="whitespace-nowrap text-muted-foreground">{{ forum.LAST_POST_TIME }}</time>
+					{% endif %}
 				</div>
+				{% if forum.U_LAST_POST %}
 				<div class="mt-1 truncate font-medium">
 					<a href="{{ forum.U_LAST_POST }}" class="hover:underline relative z-10">{{ forum.LAST_POST_SUBJECT }}</a>
 				</div>
+				{% endif %}
 			</div>
-			{% else %}
-			<div class="border-t bg-muted/40 p-4 text-xs">
-				<div class="flex items-center justify-between gap-2">
-					<div class="flex items-center gap-2 truncate relative z-10">
-											<span class="truncate text-muted-foreground">
-												{{ lang('NO_POSTS') }}
-											</span>
-					</div>
-				</div>
-				<div class="mt-1 truncate font-medium">
-					<a href="{{ forum.U_LAST_POST }}" class="hover:underline relative z-10">{{ forum.LAST_POST_SUBJECT }}</a>
-				</div>
-			</div>
-			{% endif %}
 		</div>
 		{% endif %}
 
@@ -108,3 +109,52 @@
 	</div>
 </div>
 {% endfor %}
+
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const toggles = document.querySelectorAll('[data-toggle="collapse"]');
+		toggles.forEach(toggle => {
+			toggle.addEventListener('click', function(e) {
+				e.preventDefault();
+				const container = this.closest('.mb-8').querySelector('.grid');
+				const isExpanded = this.getAttribute('aria-expanded') === 'true';
+				const toggleClass = this.getAttribute('data-toggle-class');
+				const toggleTooltip = this.getAttribute('data-toggle-tooltip');
+				const currentTooltip = this.getAttribute('title');
+
+				if (isExpanded) {
+					container.style.maxHeight = container.scrollHeight + 'px';
+					container.offsetHeight; // Force reflow
+					container.style.maxHeight = '0';
+					container.style.opacity = '0';
+					container.style.marginBottom = '0';
+					container.style.overflow = 'hidden';
+					this.setAttribute('aria-expanded', 'false');
+				} else {
+					container.style.maxHeight = container.scrollHeight + 'px';
+					container.style.opacity = '1';
+					container.style.marginBottom = '';
+					this.setAttribute('aria-expanded', 'true');
+
+					const transitionEndHandler = () => {
+						if (this.getAttribute('aria-expanded') === 'true') {
+							container.style.maxHeight = 'none';
+							container.style.overflow = 'visible';
+						}
+						container.removeEventListener('transitionend', transitionEndHandler);
+					};
+					container.addEventListener('transitionend', transitionEndHandler);
+				}
+
+				if (toggleClass) {
+					this.querySelector('i, svg').classList.toggle(toggleClass);
+				}
+
+				if (toggleTooltip) {
+					this.setAttribute('title', toggleTooltip);
+					this.setAttribute('data-toggle-tooltip', currentTooltip);
+				}
+			});
+		});
+	});
+</script>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+	{% block head %}
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{% if UNREAD_NOTIFICATIONS_COUNT %}({{ UNREAD_NOTIFICATIONS_COUNT }}) {% endif %}{% if not S_VIEWTOPIC and not S_VIEWFORUM %}{{ SITENAME }} - {% endif %}{% if S_IN_MCP %}{{ lang('MCP') }} - {% elseif S_IN_UCP %}{{ lang('UCP') }} - {% endif %}{{ PAGE_TITLE }}{% if S_VIEWTOPIC or S_VIEWFORUM %} - {{ SITENAME }}{% endif %}</title>
+		<link href="{{ T_FONT_AWESOME_LINK }}" rel="stylesheet">
+		<link href="{{ T_THEME_PATH ~ '/stylesheet.css' }}" rel="stylesheet">
+	{% endblock %}
+</head>
+<body>
+	<div class="min-h-screen min-w-80 bg-background flex flex-col">
+		<div id="header">
+			{% block header %}
+				{% include 'header.html' %}
+			{% endblock %}
+		</div>
+
+		<div id="content">
+			{% block content %}
+			{% endblock %}
+		</div>
+
+		<div id="footer">
+			{% block footer %}
+				{% include 'footer.html' %}
+			{% endblock %}
+		</div>
+	</div>
+</body>
+</html>

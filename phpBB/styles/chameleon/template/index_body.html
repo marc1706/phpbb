@@ -8,17 +8,16 @@
 	<link href="{{ T_THEME_PATH ~ '/stylesheet.css' }}" rel="stylesheet">
 </head>
 <body>
-	<div class="min-h-screen min-w-80 bg-background">
+	<div class="min-h-screen min-w-80 bg-background flex flex-col">
 		{% include 'header.html' %}
 
-		<main class="container px-4 py-6 max-w-7xl justify-items-start mx-auto">
+		<main class="container px-4 py-6 max-w-7xl justify-items-start mx-auto flex-grow">
 			{% include 'breadcrumbs.html' %}
 
 			{% include 'forumlist_body.html' %}
 		</main>
-		<footer>
-			{$SCRIPTS}
-		</footer>
+
+		{% include 'footer.html' %}
 	</div>
 </body>
 </html>

@@ -18,6 +18,10 @@ export default {
 				ring: 'hsl(var(--ring, 198 100% 38%) / <alpha-value>)',
 				background: 'hsl(var(--background, 0 0% 98%) / <alpha-value>)',
 				foreground: 'hsl(var(--foreground, 219 20% 20%) / <alpha-value>)',
+				'forum-footer': {
+					DEFAULT: 'hsl(var(--forum-footer, 219 20% 20%) / <alpha-value>)',
+					foreground: 'hsl(var(--forum-header-foreground, 0 0% 98%) / <alpha-value>)',
+				},
 				'forum-header': {
 					DEFAULT: 'hsl(var(--forum-header, 219 20% 20%) / <alpha-value>)',
 					foreground: 'hsl(var(--forum-header-foreground, 0 0% 98%) / <alpha-value>)',

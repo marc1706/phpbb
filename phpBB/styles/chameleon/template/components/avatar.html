@@ -8,7 +8,7 @@
 	{% set color_classes = ['bg-red-700', 'bg-pink-700', 'bg-purple-800', 'bg-violet-800', 'bg-blue-800'] %}
 	{% set color_class = not(avatar_data.id starts with 'g') ? color_classes[avatar_data.id % 5] : 'bg-slate-300' %}
 	{% if avatar_link %}<a href="{{ avatar_link }}" class="avatar">{% endif %}
-	<div class="flex h-full font-bold rounded-full justify-center items-center avatar-placeholder {{ color_class }}">
+	<div class="flex size-full font-bold rounded-full justify-center items-center avatar-placeholder {{ color_class }}">
 		{% set username = username ?: avatar_data.username %}
 		{% set initials = username|striptags|trim(' -+_[]', 'left')|slice(0, 1)|upper %}
 		<div class="text-lg text-zinc-100">{% if initials %}{{ initials }}{% else %}{{ Icon('font', 'user', '', true) }}{% endif %}</div>

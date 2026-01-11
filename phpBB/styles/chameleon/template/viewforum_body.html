@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-<main class="container px-4 py-6 justify-items-start mx-auto">
+<main class="container px-4 py-6">
 	{% include 'breadcrumbs.html' %}
 
 	<div class="flex items-center justify-between mb-6">
@@ -42,7 +42,7 @@
 		{% include 'forumlist_body.html' %}
 	{% endif %}
 
-	<div class="w-full space-y-2">
+	<div class="space-y-2">
 	{% for topic in topicrow %}
 		{% if topic.S_FIRST_ROW %}
 		<!-- Table header -->
@@ -54,7 +54,7 @@
 			<div class="col-span-2 text-center">Last Post</div>
 		</div>
 		{% endif %}
-		<div class="w-full block bg-card border border-border rounded-lg p-4 hover:bg-card transition-colors{% if topic.S_UNREAD_TOPIC %} border-l-4 border-l-primary{% endif %}">
+		<div class="block bg-card border border-border rounded-lg p-4 hover:bg-card transition-colors{% if topic.S_UNREAD_TOPIC %} border-l-4 border-l-primary{% endif %}">
 			<div class="lg:grid lg:grid-cols-12 lg:gap-4 lg:items-center">
 				<div class="lg:col-span-6 flex items-start gap-3 mb-3 lg:mb-0">
 					<div class="flex gap-1 pt-1 size-6">
@@ -139,7 +139,7 @@
 	</div>
 
 	<!-- Pagination Part -->
-	<div class="flex w-full items-center justify-between mt-6">
+	<div class="flex items-center justify-between mt-6">
 	{% for page in pagination %}
 		{% if loop.first %}
 		<button class="inline-flex relative items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"{% if not page.S_IS_PREV %} disabled=""{% endif %}>

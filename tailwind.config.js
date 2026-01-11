@@ -80,6 +80,10 @@ export default {
 				},
 				odyssey: 'hsl(218, 20%, 39%)',
 				cosmos: 'hsl(219, 20%, 20%)',
+				states: {
+					danger: 'hsl(var(--danger, 1 61% 66%) / <alpha-value>)',
+					info: 'hsl(var(--info, 200 66% 56%) / <alpha-value>)',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

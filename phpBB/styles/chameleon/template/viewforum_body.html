@@ -1,0 +1,181 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<main class="container px-4 py-6 justify-items-start mx-auto">
+	{% include 'breadcrumbs.html' %}
+
+	<div class="flex items-center justify-between mb-6">
+		<div>
+			{% EVENT viewforum_forum_title_before %}
+			<h2 class="text-3xl font-bold text-foreground mb-2">
+				{% EVENT viewforum_forum_name_prepend %}
+				<a class="hover:text-primary transition-colors" href="{{ U_VIEW_FORUM }}">{{ FORUM_NAME }}</a>
+				{% EVENT viewforum_forum_name_append %}
+			</h2>
+			{% EVENT viewforum_forum_title_after %}
+
+			{% if FORUM_DESC or MODERATORS or U_MCP %}
+				{% if FORUM_DESC %}<p class="text-muted-foreground mb-1">{{ FORUM_DESC }}</p>{% endif %}
+				{% if MODERATORS %}
+					<p class="mb-1">
+						<strong>{% if S_SINGLE_MODERATOR %}{{ lang('MODERATOR') ~ lang('COLON') }}{% else %}{{ lang('MODERATORS') ~ lang('COLON') }}{% endif %}</strong> {{ MODERATORS }}
+					</p>
+				{% endif %}
+			{% endif %}
+
+			{% if S_FORUM_RULES %}
+				{% if U_FORUM_RULES %}
+					<p class="inline-flex items-center bg-states-info/50 text-sm font-medium leading-none rounded hover:bg-states-info/60 transition-colors">
+						<a class="px-4 py-2" href="{{ U_FORUM_RULES }}">{{ Icon('font', 'section', lang('FORUM_RULES'), false) }}</a>
+					</p>
+				{% else %}
+					<div class="flex flex-col gap-4 px-2 py-2 bg-states-info/50 text-sm font-medium leading-none rounded hover:bg-states-info/60 transition-colors">
+						<p>{{ Icon('font', 'section', lang('FORUM_RULES'), false) }}</p>
+						<p>{{ FORUM_RULES }}</p>
+					</div>
+				{% endif %}
+			{% endif %}
+		</div>
+	</div>
+
+	{% if S_HAS_SUBFORUM %}
+		{% include 'forumlist_body.html' %}
+	{% endif %}
+
+	<div class="w-full space-y-2">
+	{% for topic in topicrow %}
+		{% if topic.S_FIRST_ROW %}
+		<!-- Table header -->
+		<div class="hidden lg:grid grid-cols-12 gap-4 px-4 py-2 text-sm font-medium text-muted-foreground bg-muted/30 rounded-lg">
+			<div class="col-span-6">Topic</div>
+			<div class="col-span-2 text-center">Author</div>
+			<div class="col-span-1 text-center">Replies</div>
+			<div class="col-span-1 text-center">Views</div>
+			<div class="col-span-2 text-center">Last Post</div>
+		</div>
+		{% endif %}
+		<div class="w-full block bg-card border border-border rounded-lg p-4 hover:bg-card transition-colors{% if topic.S_UNREAD_TOPIC %} border-l-4 border-l-primary{% endif %}">
+			<div class="lg:grid lg:grid-cols-12 lg:gap-4 lg:items-center">
+				<div class="lg:col-span-6 flex items-start gap-3 mb-3 lg:mb-0">
+					<div class="flex gap-1 pt-1 size-6">
+						{% if topic.S_POST_GLOBAL %}
+						{{ Icon('font', 'globe', '', true) }}
+						{% elseif topic.S_POST_ANNOUNCE %}
+						{{ Icon('font', 'bullhorn', '', true) }}
+						{% elseif topic.S_POST_STICKY %}
+						{{ Icon('font', 'thumbtack', '', true) }}
+						{% endif %}
+					</div>
+					<div class="flex-1 min-w-0">
+						<div class="flex items-center flex-wrap gap-y-1">
+							{% if topic.U_NEWEST_POST and topic.S_UNREAD_TOPIC and not S_IS_BOT %}
+								{% set topic_link = topic.U_NEWEST_POST %}
+							{% elseif topic.U_VIEW_TOPIC %}
+								{% set topic_link = topic.U_VIEW_TOPIC %}
+							{% else %}
+								{% set topic_link = '' %}
+							{% endif %}
+							{% if topic_link %}
+							<a href="{{ topic_link }}">
+								<h3 class="font-semibold text-foreground hover:text-[hsl(var(--primary))] transition-colors line-clamp-2">{{ topic.TOPIC_TITLE }}</h3>
+							</a>
+							{% else %}
+								<h3 class="font-semibold text-foreground hover:text-[hsl(var(--primary))] transition-colors line-clamp-2">{{ topic.TOPIC_TITLE }}</h3>
+							{% endif %}
+							{% if topic.pagination %}
+							<span class="hidden sm:inline-flex items-center gap-0.5 ml-2">
+								{% for page in topic.pagination %}
+									{% if page.S_IS_ELLIPSIS %}
+										<span class="text-muted-foreground text-xs px-0.5">{{ lang('ELLIPSIS') }}</span>
+									{% elseif not(page.S_IS_PREV) and not(page.S_IS_NEXT) and not (page.S_IS_CURRENT) %}
+										<a class="text-xs px-1.5 py-0.5 rounded bg-muted hover:bg-primary hover:text-primary-foreground text-muted-foreground transition-colors" href="{{ page.PAGE_URL }}">{{ page.PAGE_NUMBER }}</a>
+									{% endif %}
+								{% endfor %}
+							</span>
+							{% endif %}
+						</div>
+						<div class="flex items-center gap-2 text-sm text-muted-foreground lg:hidden">
+							<span>{{ lang('POST_BY_AUTHOR') }} {% EVENT viewforum_body_topic_author_username_prepend %}{{ topic.TOPIC_AUTHOR_FULL }}{% EVENT viewforum_body_topic_author_username_append %}</span>
+						</div>
+					</div>
+				</div>
+				<div class="hidden lg:flex lg:col-span-2 items-center justify-center gap-2">
+					<span class="text-sm font-medium text-foreground">{{ topic.TOPIC_AUTHOR_FULL }}</span>
+				</div>
+				<div class="hidden lg:flex lg:col-span-1 items-center justify-center">
+					<div class="flex items-center gap-1 text-sm text-muted-foreground">
+						{{ Icon('font', 'message', '', true, 'far') }}
+						<span>{{ topic.REPLIES }}</span>
+					</div>
+				</div>
+				<div class="hidden lg:flex lg:col-span-1 items-center justify-center">
+					<div class="flex items-center gap-1 text-sm text-muted-foreground">
+						{{ Icon('font', 'eye', '', true, 'far') }}
+						<span>{{ topic.VIEWS }}</span>
+					</div>
+				</div>
+				<div class="hidden lg:flex lg:col-span-2 flex-col items-center text-sm">
+					<span class="text-foreground font-medium">{{ topic.LAST_POST_AUTHOR_FULL }}</span>
+					<span class="text-muted-foreground text-xs"><time datetime="{{ topic.LAST_POST_TIME_RFC3339 }}">{{ topic.LAST_POST_TIME }}</time></span>
+				</div>
+				<div class="flex items-center justify-between mt-3 pt-3 border-t border-border lg:hidden">
+					<div class="flex items-center gap-4 text-sm text-muted-foreground">
+						<div class="flex items-center gap-1">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square h-4 w-4"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+							<span>45</span></div>
+						<div class="flex items-center gap-1">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye h-4 w-4"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>
+							<span>1234</span>
+						</div>
+					</div>
+					<div class="text-right text-xs text-muted-foreground">
+						<div class="font-medium text-foreground">Moderator</div>
+						<div>2 hours ago</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+
+	<!-- Pagination Part -->
+	<div class="flex w-full items-center justify-between mt-6">
+	{% for page in pagination %}
+		{% if loop.first %}
+		<button class="inline-flex relative items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"{% if not page.S_IS_PREV %} disabled=""{% endif %}>
+		{% if page.S_IS_PREV %}
+			<a class="after:absolute after:inset-0" href="{{ page.PAGE_URL }}" rel="prev" role="button">{{ lang('PREVIOUS') }}</a>
+		{% else %}
+			<span>{{ lang('PREVIOUS') }}</span>
+		{% endif %}
+		</button>
+		<div class="flex items-center gap-2">
+		{% endif %}
+
+		{% if page.S_IS_CURRENT %}
+			<button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3">
+				{{ page.PAGE_NUMBER }}
+			</button>
+		{% elseif page.S_IS_ELLIPSIS %}
+			<span class="text-muted-foreground">{{ lang('ELLIPSIS') }}</span>
+		{% elseif not(page.S_IS_PREV) and not(page.S_IS_NEXT) %}
+			<button class="inline-flex relative items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+				<a class="after:absolute after:inset-0" href="{{ page.PAGE_URL }}" role="button">{{ page.PAGE_NUMBER }}</a>
+			</button>
+		{% endif %}
+
+		{% if loop.last %}
+		</div>
+		<button class="inline-flex relative items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"{% if not page.S_IS_NEXT %} disabled=""{% endif %}>
+		{% if page.S_IS_NEXT %}
+			<a class="after:absolute after:inset-0" href="{{ page.PAGE_URL }}" rel="next" role="button">{{ lang('NEXT') }}</a>
+		{% else %}
+			<span>{{ lang('NEXT') }}</span>
+		{% endif %}
+		</button>
+		{% endif %}
+	{% endfor %}
+	</div>
+
+</main>
+{% endblock %}

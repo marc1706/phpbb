@@ -27,7 +27,7 @@ export default {
 					foreground: 'hsl(var(--forum-header-foreground, 0 0% 98%) / <alpha-value>)',
 				},
 				primary: {
-					DEFAULT: 'hsl(var(--primary, 198 100% 38%) / <alpha-value>)',
+					DEFAULT: 'hsl(var(--primary, 203 100% 26%) / <alpha-value>)',
 					foreground: 'hsl(var(--primary-foreground, 0 0% 100%) / <alpha-value>)',
 				},
 				secondary: {

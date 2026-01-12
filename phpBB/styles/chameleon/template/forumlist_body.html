@@ -1,15 +1,15 @@
 {% for forum in forumrow %}
 {% if forum.S_IS_CAT or forum.S_FIRST_ROW or forum.S_NO_CAT %}
 <div class="mb-8">
-	<div class="flex items-center text-foreground justify-between mb-4 border-b-2 border-secondary pb-2 text-lg font-bold">
+	<div class="flex items-center text-primary-foreground bg-primary rounded-lg px-4 py-3 justify-between mb-4 shadow-sm text-lg font-bold">
 		<h3 class="text-xl font-bold tracking-tight">
 		{% if forum.S_IS_CAT %}
-			<a href="{{ forum.U_VIEWFORUM }}" class="hover:text-muted-foreground">{{ forum.FORUM_NAME }}</a>
+			<a href="{{ forum.U_VIEWFORUM }}" class="hover:text-primary-foreground/80 transition-colors">{{ forum.FORUM_NAME }}</a>
 		{% else %}
-			<span class="text-foreground/75">{{ lang('FORUMS') }}</span>
+			<span class="text-primary-foreground/90">{{ lang('FORUMS') }}</span>
 		{% endif %}
 		</h3>
-		<a href="#" class="px-4 py-2 ms-auto" aria-expanded="true" data-toggle="collapse" data-toggle-class="rotate-180" data-toggle-tooltip="Expand" title="Collapse">{{ Icon('font', 'chevron-up', '', true, 'size-5 transition-transform duration-300 ease-in-out') }}</a>
+		<a href="#" class="px-2 py-1 ms-auto hover:bg-primary-foreground/10 rounded-md transition-colors" aria-expanded="true" data-toggle="collapse" data-toggle-class="rotate-180" data-toggle-tooltip="Expand" title="Collapse">{{ Icon('font', 'chevron-up', '', true, 'transition-transform duration-300 ease-in-out') }}</a>
 	</div>
 	<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 transition-all duration-300 ease-in-out origin-top">
 		{% endif %}
@@ -18,7 +18,7 @@
 		<div class="group relative flex flex-col justify-between overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:shadow-md">
 			<div class="p-6">
 				<div class="flex items-start gap-4">
-					<div class="mt-1 text-2xl {% if forum.S_UNREAD_FORUM %}text-primary{% else %}text-muted-foreground{% endif %} size-8">
+					<div class="flex size-12 shrink-0 items-center justify-center rounded-lg {% if forum.S_UNREAD_FORUM %}bg-primary text-primary-foreground shadow-sm{% else %}bg-muted text-muted-foreground{% endif %}">
 					{% if forum.S_IS_LINK %}
 						{{ Icon('font', 'arrow-up-right-from-square', '', true) }}
 					{% elseif forum.S_LOCKED_FORUM %}

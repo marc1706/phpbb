@@ -38,7 +38,7 @@ All colors MUST be HSL.
 		--popover-foreground: 219 20% 20%;
 
 		/* Primary - Cosmic 2.0 (darker teal) */
-		--primary: 198 100% 38%;
+		--primary: 203 100% 26%;
 		--primary-foreground: 0 0% 100%;
 		--primary-hover: 198 100% 32%;
 
@@ -124,8 +124,8 @@ All colors MUST be HSL.
 		--popover-foreground: 0 0% 98%;
 
 		/* Primary - Cosmic 2.0 (slightly brighter in dark mode) */
-		--primary: 198 100% 44%;
-		--primary-foreground: 0 0% 100%;
+		--primary: 203 80% 18%;
+		--primary-foreground: 203 20% 80%;
 		--primary-hover: 198 100% 50%;
 
 		/* Secondary - Odyssey based */

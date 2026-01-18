@@ -52,7 +52,7 @@ All colors MUST be HSL.
 		--muted-foreground: 218 20% 60%;
 
 		/* Accent for highlights */
-		--accent: 38 92% 50%;
+		--accent: 203 93% 38%;
 		--accent-foreground: 0 0% 100%;
 
 		/* Topic states - using Cosmic 2.0 */
@@ -136,7 +136,7 @@ All colors MUST be HSL.
 		--muted: 218 20% 24%;
 		--muted-foreground: 218 20% 60%;
 
-		--accent: 38 92% 50%;
+		--accent: 203 93% 38%;
 		--accent-foreground: 0 0% 100%;
 
 		--topic-unread: 198 100% 44%;
@@ -179,6 +179,39 @@ All colors MUST be HSL.
 
 	body {
 		@apply bg-background text-foreground;
+	}
+}
+
+@layer components {
+	.navigation-menu-content a:hover .text-muted-foreground,
+	.navigation-menu-content a:focus .text-muted-foreground {
+		@apply text-accent-foreground/90;
+	}
+
+	/**
+	* Viewforum
+	 */
+	.c-posting-button {
+		@apply h-10 px-4 py-2 gap-2 inline-flex items-center justify-center;
+		@apply whitespace-nowrap rounded-md text-sm font-medium transition-colors;
+		@apply ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+		@apply disabled:pointer-events-none disabled:opacity-50;
+		@apply bg-accent hover:bg-primary text-primary-foreground;
+	}
+
+	.forum-watch-link {
+		@apply inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-accent-foreground/80;
+	}
+
+	/**
+	* Forum footer
+	 */
+	.c-forum-footer {
+		@apply mt-12 py-8 bg-forum-footer text-forum-footer-foreground border-t border-border;
+	}
+
+	.c-forum-footer a {
+		@apply hover:text-accent transition-colors;
 	}
 }
 

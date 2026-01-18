@@ -1,3 +1,10 @@
+{% types
+	CLASSES: 'string',
+	ICON: 'string',
+	TITLE: 'string',
+	S_HIDDEN: 'boolean',
+	ATTRIBUTES: 'string',
+%}
 {% apply spaceless %}
 	<i class="o-icon o-icon-font fa-fw fa-{{ ICON ~ (CLASSES ? ' ' ~ CLASSES : ' fas') }}"{% if S_HIDDEN %}{% if TITLE %} title="{{ TITLE }}"{% endif %} aria-hidden="true"{% endif %}{{ ATTRIBUTES }}></i>{% if TITLE %}<span{% if S_HIDDEN %} class="sr-only"{% endif %}>{{ TITLE }}</span>{% endif %}
 {% endapply %}

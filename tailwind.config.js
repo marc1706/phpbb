@@ -43,7 +43,7 @@ export default {
 					foreground: 'hsl(var(--muted-foreground, 218 20% 60%) / <alpha-value>)',
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent, 38 92% 50%) / <alpha-value>)',
+					DEFAULT: 'hsl(var(--accent, 203 93% 38%) / <alpha-value>)',
 					foreground: 'hsl(var(--accent-foreground, 0 0% 100%) / <alpha-value>)',
 				},
 				popover: {
@@ -53,6 +53,7 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card, 0 0% 100%) / <alpha-value>)',
 					foreground: 'hsl(var(--card-foreground, 219 20% 20%) / <alpha-value>)',
+					hover: 'hsl(var(--card-hover, 218 20% 97%) / <alpha-value>)',
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background, 0 0% 98%) / <alpha-value>)',

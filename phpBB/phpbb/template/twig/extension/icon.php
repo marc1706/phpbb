@@ -36,7 +36,7 @@ class icon extends AbstractExtension
 	 *
 	 * @return string						The extension name
 	 */
-	public function getName()
+	public function getName(): string
 	{
 		return 'icon';
 	}
@@ -46,7 +46,7 @@ class icon extends AbstractExtension
 	 *
 	 * @return \Twig\TwigFunction[]			Array of twig functions
 	 */
-	public function getFunctions()
+	public function getFunctions(): array
 	{
 		return [
 			new \Twig\TwigFunction('Icon', [$this, 'icon'], ['needs_environment' => true]),
@@ -63,10 +63,10 @@ class icon extends AbstractExtension
 	 * @param bool			$hidden			Hide the icon title from view
 	 * @param string		$classes		Additional classes (eg. "fa-fw")
 	 * @param array			$attributes		Additional attributes for the icon, where the key is the attribute.
-	 *                      				{'data-ajax': 'mark_forums'} results in ' data-ajax="mark_forums"'
+	 *										{'data-ajax': 'mark_forums'} results in ' data-ajax="mark_forums"'
 	 * @return string
 	 */
-	public function icon(environment $environment, $type, $icon, $title = '', $hidden = false, $classes = '', array $attributes = [])
+	public function icon(environment $environment, string $type, array|string $icon, string $title = '', bool $hidden = false, string $classes = '', array $attributes = []): string
 	{
 		$type = strtolower($type);
 		$icon = is_array($icon) ? $this->get_first_icon($icon) : $icon;
@@ -211,7 +211,7 @@ class icon extends AbstractExtension
 	 * @param string				$view_box	The viewBox attribute value
 	 * @return string							The cleaned SVG
 	 */
-	protected function prepare_svg(\Twig\TemplateWrapper $file, &$view_box = '')
+	protected function prepare_svg(\Twig\TemplateWrapper $file, string &$view_box = ''): string
 	{
 		$code = $file->render();
 		$code = preg_replace( "/<\?xml.+?\?>/", '', $code);
@@ -289,7 +289,7 @@ class icon extends AbstractExtension
 	 * @param array		$icons			Array of icons and their booleans
 	 * @return string					The first 'true' icon
 	 */
-	protected function get_first_icon(array $icons)
+	protected function get_first_icon(array $icons): string
 	{
 		foreach ($icons as $icon => $boolean)
 		{
@@ -316,7 +316,7 @@ class icon extends AbstractExtension
 	 * @param array		$attributes		Associated array of attributes
 	 * @return string
 	 */
-	protected function implode_attributes(array $attributes)
+	protected function implode_attributes(array $attributes): string
 	{
 		$string = '';
 
@@ -332,8 +332,9 @@ class icon extends AbstractExtension
 	 * Get the style tree of the style preferred by the current user.
 	 *
 	 * @return array					Style tree, most specific first
+	 * @phpstan-return string[]
 	 */
-	protected function get_style_list()
+	protected function get_style_list(): array
 	{
 		$style_list = [$this->user->style['style_path']];
 

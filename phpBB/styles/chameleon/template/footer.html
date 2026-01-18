@@ -1,11 +1,11 @@
-<footer class="mt-12 py-8 bg-forum-footer text-forum-footer-foreground border-t border-border">
+<footer class="c-forum-footer">
 	<div class="container mx-auto px-4">
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
 			<!-- Left Side: Breadcrumbs (Bottom) & Watch Link -->
 			<div class="space-y-4">
 				{% block nav_footer_left_side %}
 					{% if U_WATCH_FORUM_LINK and not S_IS_BOT %}
-						<a href="{{ U_WATCH_FORUM_LINK }}" data-ajax="toggle_link" data-toggle-text="{{ S_WATCH_FORUM_TOGGLE }}" data-toggle-url="{{ U_WATCH_FORUM_TOGGLE }}" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">
+						<a class="forum-watch-link" href="{{ U_WATCH_FORUM_LINK }}" data-ajax="toggle_link" data-toggle-text="{{ S_WATCH_FORUM_TOGGLE }}" data-toggle-url="{{ U_WATCH_FORUM_TOGGLE }}">
 							{% if S_WATCHING_FORUM %}
 								{{ Icon('font', 'bell', '', true, 'far') }}
 							{% else %}
@@ -28,11 +28,11 @@
 				<div class="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium">
 					{% block nav_footer_right_side %}
 						{% if not S_IS_BOT %}
-							<a href="{{ U_DELETE_COOKIES }}" data-ajax="true" data-refresh="true" class="hover:text-primary transition-colors">
+							<a href="{{ U_DELETE_COOKIES }}" data-ajax="true" data-refresh="true">
 								{{ Icon('font', 'cookie-bite', lang('DELETE_COOKIES'), false, 'me-1') }}
 							</a>
 							{% if S_DISPLAY_MEMBERLIST %}
-								<a href="{{ U_MEMBERLIST }}" class="hover:text-primary transition-colors">
+								<a href="{{ U_MEMBERLIST }}">
 									{{ Icon('font', 'users', lang('MEMBERLIST'), false, 'me-1') }}
 								</a>
 							{% endif %}
@@ -41,7 +41,7 @@
 						{% EVENT overall_footer_teamlink_before %}
 
 						{% if U_TEAM %}
-							<a href="{{ U_TEAM }}" class="hover:text-primary transition-colors">
+							<a href="{{ U_TEAM }}">
 								{{ Icon('font', 'shield-halved', lang('THE_TEAM'), false, 'me-1') }}
 							</a>
 						{% endif %}
@@ -49,7 +49,7 @@
 						{% EVENT overall_footer_teamlink_after %}
 
 						{% if U_CONTACT_US %}
-							<a href="{{ U_CONTACT_US }}" class="hover:text-primary transition-colors">
+							<a href="{{ U_CONTACT_US }}">
 								{{ Icon('font', 'envelope', lang('CONTACT_US'), false, 'me-1') }}
 							</a>
 						{% endif %}
@@ -75,12 +75,12 @@
 			</div>
 
 			<div class="flex items-center gap-4">
-				<a href="{{ U_PRIVACY }}" class="hover:text-primary transition-colors">{{ lang('PRIVACY_LINK') }}</a>
+				<a href="{{ U_PRIVACY }}">{{ lang('PRIVACY_LINK') }}</a>
 				<span class="text-border">|</span>
-				<a href="{{ U_TERMS_USE }}" class="hover:text-primary transition-colors">{{ lang('TERMS_LINK') }}</a>
+				<a href="{{ U_TERMS_USE }}">{{ lang('TERMS_LINK') }}</a>
 				{% if U_ACP %}
 					<span class="text-border">|</span>
-					<a href="{{ U_ACP }}" class="font-bold hover:text-primary transition-colors">{{ lang('ACP') }}</a>
+					<a href="{{ U_ACP }}" class="font-bold">{{ lang('ACP') }}</a>
 				{% endif %}
 			</div>
 		</div>

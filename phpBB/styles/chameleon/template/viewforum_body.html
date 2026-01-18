@@ -22,21 +22,25 @@
 					</p>
 				{% endif %}
 			{% endif %}
-
-			{% if S_FORUM_RULES %}
-				{% if U_FORUM_RULES %}
-					<p class="inline-flex items-center bg-states-info/50 text-sm font-medium leading-none rounded hover:bg-states-info/60 transition-colors">
-						<a class="px-4 py-2" href="{{ U_FORUM_RULES }}">{{ Icon('font', 'section', lang('FORUM_RULES'), false) }}</a>
-					</p>
-				{% else %}
-					<div class="flex flex-col gap-4 px-2 py-2 bg-states-info/50 text-sm font-medium leading-none rounded hover:bg-states-info/60 transition-colors">
-						<p>{{ Icon('font', 'section', lang('FORUM_RULES'), false) }}</p>
-						<p>{{ FORUM_RULES }}</p>
-					</div>
-				{% endif %}
-			{% endif %}
 		</div>
+		<a href="{{ U_POST_NEW_TOPIC }}" class="button" title="{% if S_IS_LOCKED %}{{ lang('FORUM_LOCKED') }}{% else %}{{ lang('POST_TOPIC') }}{% endif %}">
+			<button class="c-posting-button">{{ Icon('font', 'pencil', lang('BUTTON_NEW_TOPIC')) }}</button>
+		</a>
 	</div>
+	{% if S_FORUM_RULES %}
+	<div class="bg-card border border-border rounded-lg p-4 mb-6">
+		{% if U_FORUM_RULES %}
+		<a href="{{ U_FORUM_RULES }}">
+			<button class="h-10 px-4 py-2 gap-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-accent hover:bg-primary text-primary-foreground">
+				{{ Icon('font', 'section', lang('FORUM_RULES'), false) }}
+			</button>
+		</a>
+		{% else %}
+		<p>{{ Icon('font', 'section', lang('FORUM_RULES'), false, 'mb-4') }}</p>
+		<p>{{ FORUM_RULES }}</p>
+		{% endif %}
+	</div>
+	{% endif %}
 
 	{% if S_HAS_SUBFORUM %}
 		{% include 'forumlist_body.html' %}
@@ -46,7 +50,7 @@
 	{% for topic in topicrow %}
 		{% if topic.S_FIRST_ROW %}
 		<!-- Table header -->
-		<div class="hidden lg:grid grid-cols-12 gap-4 px-4 py-2 text-sm font-medium text-muted-foreground bg-muted/30 rounded-lg">
+		<div class="hidden lg:grid grid-cols-12 gap-4 px-4 py-2 text-sm font-medium text-muted-foreground bg-muted/50 rounded-lg">
 			<div class="col-span-6">Topic</div>
 			<div class="col-span-2 text-center">Author</div>
 			<div class="col-span-1 text-center">Replies</div>
@@ -54,7 +58,7 @@
 			<div class="col-span-2 text-center">Last Post</div>
 		</div>
 		{% endif %}
-		<div class="block bg-card border border-border rounded-lg p-4 hover:bg-card transition-colors{% if topic.S_UNREAD_TOPIC %} border-l-4 border-l-primary{% endif %}">
+		<div class="block bg-card border border-border rounded-lg p-4 hover:bg-card-hover transition-colors{% if topic.S_UNREAD_TOPIC %} border-l-4 border-l-primary{% endif %}">
 			<div class="lg:grid lg:grid-cols-12 lg:gap-4 lg:items-center">
 				<div class="lg:col-span-6 flex items-start gap-3 mb-3 lg:mb-0">
 					<div class="flex gap-1 pt-1 size-6">
@@ -77,10 +81,10 @@
 							{% endif %}
 							{% if topic_link %}
 							<a href="{{ topic_link }}">
-								<h3 class="font-semibold text-foreground hover:text-[hsl(var(--primary))] transition-colors line-clamp-2">{{ topic.TOPIC_TITLE }}</h3>
+								<h3 class="font-semibold text-foreground hover:text-primary transition-colors line-clamp-2">{{ topic.TOPIC_TITLE }}</h3>
 							</a>
 							{% else %}
-								<h3 class="font-semibold text-foreground hover:text-[hsl(var(--primary))] transition-colors line-clamp-2">{{ topic.TOPIC_TITLE }}</h3>
+								<h3 class="font-semibold text-foreground hover:text-primary transition-colors line-clamp-2">{{ topic.TOPIC_TITLE }}</h3>
 							{% endif %}
 							{% if topic.pagination %}
 							<span class="hidden sm:inline-flex items-center gap-0.5 ml-2">

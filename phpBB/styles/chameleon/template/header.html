@@ -1,4 +1,8 @@
-<header class="lg:sticky top-0 z-50 bg-forum-header text-forum-header-foreground border-b border-border/50">
+{% set nav_search_scopes = nav_search_scopes|default([
+	{'id': 'all', 'label': lang('SEARCH_ALL'), 'short': lang('ALL'), 'fields': S_SEARCH_HIDDEN_FIELDS, 'action': U_SEARCH}
+]) %}
+
+<header class="bg-forum-header text-forum-header-foreground border-b border-border/50">
 	<div class="container mx-auto px-0.5 sm:px-4">
 		<div class="flex items-center justify-between h-24">
 			<!-- Left section with logo and menu -->

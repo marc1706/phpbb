@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html dir="{{ S_CONTENT_DIRECTION }}" lang="{{ S_USER_LANG }}">
 <head>
 	{% block head %}
 		<meta charset="utf-8">
@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="flex flex-col min-h-screen min-w-80 bg-background">
-		<div id="header">
+		<div id="header" class="lg:sticky top-0 z-50 ">
 			{% block header %}
 				{% include 'header.html' %}
 			{% endblock %}

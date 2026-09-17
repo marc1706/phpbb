@@ -23,6 +23,7 @@
 !/phpBB/styles/prosilver/theme/images
 !/phpBB/styles/all
 !/phpBB/styles/chameleon
+!/phpBB/styles/neptune
 
 # Excludes all custom env
 /phpBB/config/*

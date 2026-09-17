@@ -175,14 +175,6 @@
 	/**
 	* Viewforum
 	 */
-	.c-posting-button {
-		@apply h-10 px-4 py-2 gap-2 inline-flex items-center justify-center;
-		@apply whitespace-nowrap rounded-md text-sm font-medium transition-colors;
-		@apply ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-		@apply disabled:pointer-events-none disabled:opacity-50;
-		@apply bg-accent hover:bg-primary text-primary-foreground;
-	}
-
 	.forum-watch-link {
 		@apply inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-accent-foreground/80;
 	}

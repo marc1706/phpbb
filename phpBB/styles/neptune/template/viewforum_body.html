@@ -1,0 +1,416 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<!-- phpBB Modern prosilver Tailwind: viewforum_body.html -->
+
+<!-- Forum Header Information -->
+<div class="mb-6 space-y-4">
+	<!-- Forum Watch / Subscription Link -->
+	{% if S_WATCH_FORUM_LINK and not S_IS_BOT %}
+		<div class="flex justify-end">
+			<a href="{{ U_WATCH_FORUM }}" class="forum-watch-link text-xs" title="{{ S_WATCH_FORUM_TITLE }}" data-ajax="toggle_link" data-toggle-class="icon-fa-bookmark" data-toggle-text="{{ S_WATCH_FORUM_TOGGLE }}">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+				</svg>
+				<span>{{ S_WATCH_FORUM_TITLE }}</span>
+			</a>
+		</div>
+	{% endif %}
+
+	<!-- Forum Title & Description Card -->
+	<div class="p-6 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm transition-colors">
+		<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+			<div>
+				<div class="flex items-center gap-2 mb-1.5">
+					<span class="text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+						Forum
+					</span>
+					{% if S_IS_LOCKED %}
+						<span class="text-[10px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 px-2 py-0.5 rounded-full border border-rose-200/40">
+						Locked
+					</span>
+					{% endif %}
+				</div>
+				<h1 class="text-xl sm:text-2xl font-black text-slate-800 dark:text-white tracking-tight">
+					<a href="{{ U_VIEW_FORUM }}" class="hover:text-primary transition-colors">{{ FORUM_NAME }}</a>
+				</h1>
+				{% if FORUM_DESC %}
+					<p class="text-sm text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed max-w-3xl">
+						{{ FORUM_DESC }}
+					</p>
+				{% endif %}
+			</div>
+
+			<!-- Quick Forum Search (if enabled) -->
+			{% if S_DISPLAY_SEARCHBOX %}
+				<form method="get" id="forum-search" action="{{ S_SEARCHBOX_ACTION }}" class="relative min-w-[240px]">
+				<span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+					</svg>
+				</span>
+					<input type="search" name="keywords" id="search_keywords" size="20" placeholder="{{ L_SEARCH_FORUM }}" class="w-full pl-9 pr-4 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary transition-all" />
+					{{ S_SEARCH_LOCAL_HIDDEN_FIELDS }}
+				</form>
+			{% endif %}
+		</div>
+
+		<!-- Forum Moderators (if assigned) -->
+		{% if MODERATORS %}
+			<div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+				<span class="font-bold text-slate-600 dark:text-slate-300">{{ L_MODERATORS }}{{ L_COLON }}</span>
+				<span>{{ MODERATORS }}</span>
+			</div>
+		{% endif %}
+	</div>
+
+	<!-- Forum Rules Banner (if configured) -->
+	{% if S_FORUM_RULES %}
+		<div class="p-4 rounded-xl border border-amber-200 dark:border-amber-900/50 bg-amber-50/70 dark:bg-amber-950/20 text-xs text-amber-800 dark:text-amber-200 space-y-1">
+			<div class="flex items-center gap-2 font-bold uppercase tracking-wider text-[11px] text-amber-700 dark:text-amber-300">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+					<path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+				</svg>
+				{% if U_FORUM_RULES %}
+					<a href="{{ U_FORUM_RULES }}" class="hover:underline">{{ L_FORUM_RULES }}</a>
+				{% else %}
+					{{ L_FORUM_RULES }}
+				{% endif %}
+			</div>
+			{% if FORUM_RULES %}
+				<div class="leading-relaxed pl-6">
+					{{ FORUM_RULES }}
+				</div>
+			{% endif %}
+		</div>
+	{% endif %}
+</div>
+
+<!-- Subforums Listing (if available) -->
+{% if S_HAS_SUBFORUM %}
+	<div class="mb-8">
+		{% if not S_IS_BOT and U_MARK_FORUMS %}
+			<div class="flex justify-end mb-2">
+				<a href="{{ U_MARK_FORUMS }}" class="text-xs font-semibold text-slate-500 hover:text-primary transition-colors" data-ajax="mark_forums_read">
+					{{ L_MARK_SUBFORUMS_READ }}
+				</a>
+			</div>
+		{% endif %}
+		{% include 'forumlist_body.html' %}
+	</div>
+{% endif %}
+
+<!-- Action Bar: Post Topic Button & Pagination (Top) -->
+<div class="flex items-center justify-between flex-wrap gap-4 mb-4 select-none">
+	<!-- Post Topic Button -->
+	<div>
+		{% if not S_IS_BOT and S_DISPLAY_POST_INFO %}
+			<a href="{{ U_POST_NEW_TOPIC }}" class="c-posting-button shadow-sm" role="button">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+				</svg>
+				{% if S_IS_LOCKED %}
+					{{ L_FORUM_LOCKED }}
+				{% else %}
+					{{ L_POST_TOPIC }}
+				{% endif %}
+			</a>
+		{% endif %}
+	</div>
+
+	<!-- Pagination and Mark Read -->
+	<div class="flex items-center gap-4 flex-wrap text-xs text-slate-500 dark:text-slate-400">
+		{% if not S_IS_BOT and U_MARK_TOPICS and loops.topicrow|length %}
+			<a href="{{ U_MARK_TOPICS }}" class="hover:text-primary transition-colors font-semibold" data-ajax="mark_topics_read">
+				{{ L_MARK_TOPICS_READ }}
+			</a>
+		{% endif %}
+
+		<div class="flex items-center gap-1.5 font-mono text-xs">
+			<span class="font-sans font-bold text-slate-700 dark:text-slate-300">{{ TOTAL_TOPICS }}</span>
+			{% if TOTAL_PAGES > 1 %}
+				<span>•</span>
+				<span>Page {{ CURRENT_PAGE|default(1) }} of {{ TOTAL_PAGES|default(1) }}</span>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+<!-- Main Topics Table / Container -->
+<div class="overflow-hidden rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm transition-colors dynamic-forum-block">
+	<!-- Topics Table Header -->
+	<div class="bg-gradient-to-r from-primary to-cosmic px-5 py-3.5 flex items-center justify-between text-white select-none text-xs font-bold uppercase tracking-wider">
+		<div class="flex-1 min-w-0">
+			<span>{{ L_TOPICS }}</span>
+		</div>
+		<div class="hidden sm:flex items-center gap-6 text-center flex-shrink-0 pr-8">
+			<span class="w-16">{{ L_REPLIES }}</span>
+			<span class="w-16">{{ L_VIEWS }}</span>
+		</div>
+		<div class="hidden md:block w-48 text-right flex-shrink-0">
+			<span>{{ L_LAST_POST }}</span>
+		</div>
+	</div>
+
+	<!-- Topics Row Loop -->
+	<div class="divide-y divide-slate-100 dark:divide-slate-800">
+		{% for topicrow in loops.topicrow %}
+
+			<!-- Section Divider for Announcements / Sticky Topics if switched -->
+			{% if topicrow.S_TOPIC_TYPE_SWITCH and not topicrow.S_FIRST_ROW %}
+				<div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-t border-b border-slate-200/60 dark:border-slate-700/60">
+					{{ L_TOPICS }}
+				</div>
+			{% endif %}
+
+			<!-- Individual Topic Item -->
+			<div class="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 p-4 sm:p-5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 transition-all duration-150">
+
+				<!-- Topic Details & Status Icon -->
+				<div class="flex items-start gap-4 flex-1 min-w-0">
+					<!-- Topic State Icon -->
+					<div class="mt-0.5 flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all relative
+					{% if topicrow.S_POST_ANNOUNCE or topicrow.S_POST_GLOBAL %}
+						bg-purple-100 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400
+					{% elseif topicrow.S_POST_STICKY %}
+						bg-amber-100 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400
+					{% elseif topicrow.S_UNREAD_TOPIC %}
+						bg-primary/15 text-primary shadow-sm
+					{% elseif topicrow.S_TOPIC_LOCKED %}
+						bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500
+					{% else %}
+						bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500
+					{% endif %}">
+
+						{% if topicrow.S_POST_ANNOUNCE or topicrow.S_POST_GLOBAL %}
+							<!-- Announcement Megaphone Icon -->
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.421.808 1.037.808 1.73 0 .693-.313 1.309-.808 1.73" />
+							</svg>
+						{% elseif topicrow.S_POST_STICKY %}
+							<!-- Sticky Pin Icon -->
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H7.5m9 0a2.25 2.25 0 00-2.25-2.25h-4.5A2.25 2.25 0 007.5 3.75" />
+							</svg>
+						{% elseif topicrow.S_TOPIC_LOCKED %}
+							<!-- Locked Padlock Icon -->
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+							</svg>
+						{% else %}
+							<!-- Regular Discussion Bubble -->
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a.75.75 0 01-1.074-.765 5.99 5.99 0 013.11-4.708C4.168 14.168 3 11.237 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+							</svg>
+						{% endif %}
+
+						<!-- Unread Ping Indicator -->
+						{% if topicrow.S_UNREAD_TOPIC %}
+							<span class="absolute -top-1 -right-1 flex h-3 w-3">
+						<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+						<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+					</span>
+						{% endif %}
+					</div>
+
+					<!-- Topic Title & Metadata -->
+					<div class="flex-1 min-w-0">
+						<div class="flex items-center gap-2 flex-wrap">
+							<!-- Topic Type Badges -->
+							{% if topicrow.S_POST_GLOBAL %}
+								<span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-950/50 rounded-md">
+								{{ L_GLOBAL_ANNOUNCEMENT }}
+							</span>
+							{% elseif topicrow.S_POST_ANNOUNCE %}
+								<span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-950/50 rounded-md">
+								{{ L_VIEW_TOPIC_ANNOUNCEMENT }}
+							</span>
+							{% elseif topicrow.S_POST_STICKY %}
+								<span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/50 rounded-md">
+								{{ L_VIEW_TOPIC_STICKY }}
+							</span>
+							{% elseif topicrow.S_TOPIC_POLL %}
+								<span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/50 rounded-md">
+								{{ L_VIEW_TOPIC_POLL }}
+							</span>
+							{% endif %}
+
+							<!-- Topic Title Link -->
+							<h3 class="text-sm sm:text-base font-bold text-slate-800 dark:text-white leading-snug">
+								<a href="{{ topicrow.U_VIEW_TOPIC }}" class="hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-sm" title="{{ topicrow.TOPIC_TITLE }}">
+									{{ topicrow.TOPIC_TITLE }}
+								</a>
+							</h3>
+
+							<!-- Unread Post Direct Link -->
+							{% if topicrow.S_UNREAD_TOPIC and not S_IS_BOT %}
+								<a href="{{ topicrow.U_NEWEST_POST }}" title="{{ L_VIEW_NEWEST_POST }}" class="text-primary hover:text-primary/80">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5">
+										<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+									</svg>
+								</a>
+							{% endif %}
+
+							<!-- Attachments Indicator -->
+							{% if topicrow.S_TOPIC_ATTACH %}
+								<span title="{{ L_TOTAL_ATTACHMENTS }}" class="text-slate-400">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.373L8.552 18.32a1.5 1.5 0 01-2.122-2.122l8.76-8.76" />
+							</svg>
+						</span>
+							{% endif %}
+						</div>
+
+						<!-- Author & Creation Info -->
+						<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+							{{ L_POST_BY_AUTHOR }} {{ topicrow.TOPIC_AUTHOR_FULL }} &bull; <time datetime="{{ topicrow.FIRST_POST_TIME }}">{{ topicrow.FIRST_POST_TIME }}</time>
+						</p>
+
+						<!-- Topic Internal Multipage Pagination (if thread has multiple pages) -->
+						{% if topicrow.pagination %}
+							<div class="mt-2 flex items-center gap-1">
+								<span class="text-[10px] font-bold uppercase text-slate-400 mr-1">{{ L_GOTO_PAGE }}:</span>
+								{% for page in topicrow.pagination %}
+									{% if page.S_IS_PREV or page.S_IS_NEXT %}
+									{% elseif page.S_IS_ELLIPSIS %}
+										<span class="text-[11px] text-slate-400 px-1">&hellip;</span>
+									{% else %}
+										<a href="{{ page.PAGE_URL }}" class="px-2 py-0.5 text-[11px] font-semibold rounded bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white text-slate-600 dark:text-slate-300 transition-colors">
+											{{ page.PAGE_NUMBER }}
+										</a>
+									{% endif %}
+								{% endfor %}
+							</div>
+						{% endif %}
+					</div>
+				</div>
+
+				<!-- Numerical Metrics (Replies, Views) & Last Post Box -->
+				<div class="flex items-center gap-6 justify-between md:justify-end border-t border-slate-100 dark:border-slate-800/40 pt-3 md:border-none md:pt-0">
+					<!-- Counters -->
+					<div class="flex items-center gap-4 text-center">
+						<div class="w-16">
+							<div class="text-sm font-mono font-bold text-slate-700 dark:text-slate-200">
+								{{ topicrow.REPLIES }}
+							</div>
+							<div class="text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 mt-0.5">
+								{{ L_REPLIES }}
+							</div>
+						</div>
+						<div class="w-16">
+							<div class="text-sm font-mono font-bold text-slate-700 dark:text-slate-200">
+								{{ topicrow.VIEWS }}
+							</div>
+							<div class="text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 mt-0.5">
+								{{ L_VIEWS }}
+							</div>
+						</div>
+					</div>
+
+					<!-- Last Post Box -->
+					<div class="w-48 text-right flex flex-col items-end gap-0.5 select-none text-xs text-slate-400">
+						<div class="flex items-center gap-1.5 text-slate-600 dark:text-slate-300 font-semibold">
+							<span>{{ topicrow.LAST_POST_AUTHOR_FULL }}</span>
+							<a href="{{ topicrow.U_LAST_POST }}" title="{{ L_VIEW_LATEST_POST }}" class="text-primary hover:text-primary/80">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5">
+									<path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+								</svg>
+							</a>
+						</div>
+						<time class="text-[10px] text-slate-400 block">{{ topicrow.LAST_POST_TIME }}</time>
+					</div>
+				</div>
+
+			</div>
+		{% else %}
+			<!-- Empty State: No Topics in this forum -->
+			<div class="text-center py-16 px-4">
+				<div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center mb-3">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+					</svg>
+				</div>
+				<h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">{{ L_NO_TOPICS }}</h4>
+				<p class="text-xs text-slate-400 max-w-sm mx-auto">There are no topics created in this forum yet. Be the first to start a conversation!</p>
+				{% if not S_IS_BOT and S_DISPLAY_POST_INFO %}
+					<a href="{{ U_POST_NEW_TOPIC }}" class="c-posting-button mt-4 text-xs">
+						{{ L_POST_TOPIC }}
+					</a>
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+<!-- Lower Action Bar: Post Topic Button & Pagination Controls (Bottom) -->
+<div class="flex items-center justify-between flex-wrap gap-4 mt-6 select-none">
+	<div>
+		{% if not S_IS_BOT and S_DISPLAY_POST_INFO %}
+			<a href="{{ U_POST_NEW_TOPIC }}" class="c-posting-button shadow-sm" role="button">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+				</svg>
+				{% if S_IS_LOCKED %}{{ L_FORUM_LOCKED }}{% else %}{{ L_POST_TOPIC }}{% endif %}
+			</a>
+		{% endif %}
+	</div>
+
+	<!-- Pagination Controls List -->
+	{% if TOTAL_TOPICS and TOTAL_PAGES > 1 %}
+		<nav aria-label="Forum pagination" class="flex items-center gap-1 text-xs">
+			{% if PREVIOUS_PAGE %}
+				<a href="{{ PREVIOUS_PAGE }}" class="px-3 py-1.5 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg flex items-center gap-1 font-semibold transition-colors">
+					&larr; Prev
+				</a>
+			{% endif %}
+			<span class="text-xs font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">
+			Page {{ CURRENT_PAGE|default(1) }} of {{ TOTAL_PAGES|default(1) }}
+		</span>
+			{% if NEXT_PAGE %}
+				<a href="{{ NEXT_PAGE }}" class="px-3 py-1.5 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg flex items-center gap-1 font-semibold transition-colors">
+					Next &rarr;
+				</a>
+			{% endif %}
+		</nav>
+	{% endif %}
+
+	<!-- Return to Board Index Link -->
+	<a href="{{ U_INDEX }}" class="text-xs font-bold text-slate-500 hover:text-primary flex items-center gap-1 transition-colors">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+			<path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+		</svg>
+		{{ L_INDEX }}
+	</a>
+</div>
+
+<!-- Forum Display Sorting & Permissions Footer Options -->
+{% if S_DISPLAY_POST_INFO or S_SELECT_SORT_DAYS %}
+	<div class="mt-8 pt-6 border-t border-slate-200/80 dark:border-slate-800/80 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-500 dark:text-slate-400">
+		<!-- Display / Sorting Options -->
+		{% if S_SELECT_SORT_DAYS %}
+			<form method="post" action="{{ S_FORUM_ACTION }}" class="flex items-center flex-wrap gap-2">
+				<span class="font-bold text-slate-700 dark:text-slate-300">{{ L_DISPLAY_TOPICS }}:</span>
+				{{ S_SELECT_SORT_DAYS }}
+				{{ S_SELECT_SORT_KEY }}
+				{{ S_SELECT_SORT_DIR }}
+				<button type="submit" name="sort" class="px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white font-bold transition-colors">
+					{{ L_GO }}
+				</button>
+			</form>
+		{% endif %}
+
+		<!-- Forum Permissions List -->
+		{% if S_DISPLAY_POST_INFO %}
+			<div class="md:text-right space-y-1">
+				<h4 class="font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider text-[10px]">{{ L_FORUM_PERMISSIONS }}</h4>
+				<p class="text-[11px] leading-relaxed text-slate-400">
+					{% for rules in rules_list %}
+						{{ rules }}<br />
+					{% endfor %}
+				</p>
+			</div>
+		{% endif %}
+	</div>
+{% endif %}
+
+{% endblock %}

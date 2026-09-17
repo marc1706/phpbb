@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		/* phpBB Color Palette with #4688ce base */
+
+		/* Cosmic 2.0 (based on #4688ce -> 211 58% 54%) */
+		--cosmic: 211 58% 54%;
+
+		/* Odyssey: 218 20% 39% */
+		--odyssey: 218 20% 39%;
+
+		/* Cosmos: 219 20% 20% */
+		--cosmos: 219 20% 20%;
+
+		/* Base colors */
+		--background: 0 0% 98%;
+		--foreground: 219 20% 20%;
+
+		/* Forum-specific colors - using Cosmos for headers */
+		--forum-header: 219 20% 20%;
+		--forum-header-foreground: 0 0% 98%;
+
+		--forum-footer: 219 20% 20%;
+		--forum-footer-background: 0 0% 98%;
+
+		--card: 0 0% 100%;
+		--card-foreground: 219 20% 20%;
+		--card-hover: 218 20% 97%;
+
+		--popover: 0 0% 100%;
+		--popover-foreground: 219 20% 20%;
+
+		/* Primary - Cosmic 2.0 (#4688ce base) */
+		--primary: 211 58% 54%;
+		--primary-foreground: 0 0% 100%;
+		--primary-hover: 211 58% 45%;
+
+		/* Secondary - Odyssey based */
+		--secondary: 218 20% 95%;
+		--secondary-foreground: 219 20% 20%;
+		--secondary-hover: 218 20% 90%;
+
+		/* Muted elements - Odyssey tones */
+		--muted: 218 20% 95%;
+		--muted-foreground: 218 20% 60%;
+
+		/* Accent for highlights */
+		--accent: 211 58% 54%;
+		--accent-foreground: 0 0% 100%;
+
+		/* Topic states - using Cosmic 2.0 (#4688ce) */
+		--topic-unread: 211 58% 54%;
+		--topic-sticky: 38 92% 50%;
+		--topic-locked: 218 20% 40%;
+		--topic-new: 142 71% 45%;
+
+		/* States */
+		--danger: 1 61% 66%;
+		--info: 211 58% 54%;
+
+		/* User badges */
+		--badge-admin: 0 84% 60%;
+		--badge-mod: 142 71% 45%;
+		--badge-user: 218 20% 50%;
+
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 0 0% 100%;
+
+		--border: 218 20% 88%;
+		--input: 218 20% 88%;
+		--ring: 211 58% 54%;
+
+		--radius: 0.5rem;
+
+		/* Spacing system */
+		--forum-spacing-xs: 0.5rem;
+		--forum-spacing-sm: 0.75rem;
+		--forum-spacing-md: 1rem;
+		--forum-spacing-lg: 1.5rem;
+		--forum-spacing-xl: 2rem;
+
+		--sidebar-background: 0 0% 98%;
+		--sidebar-foreground: 240 5.3% 26.1%;
+		--sidebar-primary: 240 5.9% 10%;
+		--sidebar-primary-foreground: 0 0% 98%;
+		--sidebar-accent: 240 4.8% 95.9%;
+		--sidebar-accent-foreground: 240 5.9% 10%;
+		--sidebar-border: 220 13% 91%;
+		--sidebar-ring: 211 58% 54%;
+
+		--scrollbar-thumb: 0 0% 0% / 0.1;
+	}
+
+	.dark {
+		/* Dark mode - using Cosmos as base */
+		--background: 219 20% 14%;
+		--foreground: 0 0% 98%;
+
+		--forum-header: 219 20% 10%;
+		--forum-header-foreground: 0 0% 98%;
+
+		--forum-footer: 219 20% 10%;
+		--forum-footer-foreground: 0 0% 98%;
+
+		--card: 219 20% 18%;
+		--card-foreground: 0 0% 98%;
+		--card-hover: 219 20% 22%;
+
+		--popover: 219 20% 18%;
+		--popover-foreground: 0 0% 98%;
+
+		/* Primary - Cosmic 2.0 in dark mode */
+		--primary: 211 58% 45%;
+		--primary-foreground: 211 20% 90%;
+		--primary-hover: 211 58% 54%;
+
+		/* Secondary - Odyssey based */
+		--secondary: 218 20% 24%;
+		--secondary-foreground: 0 0% 98%;
+		--secondary-hover: 218 20% 28%;
+
+		--muted: 218 20% 24%;
+		--muted-foreground: 218 20% 60%;
+
+		--accent: 211 58% 54%;
+		--accent-foreground: 0 0% 100%;
+
+		--topic-unread: 211 58% 54%;
+		--topic-sticky: 38 92% 50%;
+		--topic-locked: 218 20% 50%;
+		--topic-new: 142 71% 45%;
+
+		/* States */
+		--danger: 1 61% 66%;
+		--info: 211 58% 54%;
+
+		--badge-admin: 0 84% 60%;
+		--badge-mod: 142 71% 45%;
+		--badge-user: 218 20% 60%;
+
+		--destructive: 0 84% 60%;
+		--destructive-foreground: 0 0% 100%;
+
+		--border: 218 20% 28%;
+		--input: 218 20% 28%;
+		--ring: 211 58% 54%;
+
+		--scrollbar-thumb: 0 0% 0% / 0.5;
+
+		--cosmic: 211 58% 54%;
+		--odyssey: 218 20% 39%;
+		--cosmos: 219 20% 20%;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+@layer components {
+	.navigation-menu-content a:hover .text-muted-foreground,
+	.navigation-menu-content a:focus .text-muted-foreground {
+		@apply text-accent-foreground/90;
+	}
+
+	/**
+	* Viewforum
+	 */
+	.c-posting-button {
+		@apply h-10 px-4 py-2 gap-2 inline-flex items-center justify-center;
+		@apply whitespace-nowrap rounded-md text-sm font-medium transition-colors;
+		@apply ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+		@apply disabled:pointer-events-none disabled:opacity-50;
+		@apply bg-accent hover:bg-primary text-primary-foreground;
+	}
+
+	.forum-watch-link {
+		@apply inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-accent-foreground/80;
+	}
+
+	/**
+	* Forum footer
+	 */
+	.c-forum-footer {
+		@apply mt-12 py-8 bg-forum-footer text-forum-footer-foreground border-t border-border;
+	}
+
+	.c-forum-footer a {
+		@apply hover:text-accent transition-colors;
+	}
+}
+
+@layer utilities {
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background-color: hsl(var(--scrollbar-thumb));
+		border-radius: 20px;
+	}
+}
+
+/**
+* Posting form submit buttons (unlayered so the prosilver fallback posting templates
+* receive the design-system button styling).
+ */
+.button-form,
+.button-form-bold {
+	@apply h-10 px-4 py-2 gap-2 inline-flex items-center justify-center;
+	@apply whitespace-nowrap rounded-lg text-sm font-bold transition-all;
+	@apply ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+	@apply disabled:pointer-events-none disabled:opacity-50;
+	@apply border-0 shadow-sm cursor-pointer;
+	@apply bg-prosilver-600 hover:bg-prosilver-500 text-white;
+	background-image: none;
+	box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.button-form:hover,
+.button-form-bold:hover {
+	background-image: none;
+	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+.button-form:focus,
+.button-form-bold:focus {
+	background-image: none;
+}

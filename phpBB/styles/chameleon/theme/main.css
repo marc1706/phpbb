@@ -8,10 +8,10 @@ All colors MUST be HSL.
 
 @layer base {
 	:root {
-		/* phpBB Color Palette */
+		/* phpBB Color Palette with #4688ce base */
 
-		/* Cosmic 2.0 (darker variant): 198 100% 38% */
-		--cosmic: 198 100% 38%;
+		/* Cosmic 2.0 (based on #4688ce -> 211 58% 54%) */
+		--cosmic: 211 58% 54%;
 
 		/* Odyssey: 218 20% 39% */
 		--odyssey: 218 20% 39%;

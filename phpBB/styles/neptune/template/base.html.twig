@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html dir="{{ S_CONTENT_DIRECTION }}" lang="{{ S_USER_LANG }}" class="h-full">
+<head>
+	{% block head %}
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		{{ META }}
+		<title>{% if UNREAD_NOTIFICATIONS_COUNT %}({{ UNREAD_NOTIFICATIONS_COUNT }}) {% endif %}{% if not S_VIEWTOPIC and not S_VIEWFORUM %}{{ SITENAME }} - {% endif %}{{ PAGE_TITLE }}{% if S_VIEWTOPIC or S_VIEWFORUM %} - {{ SITENAME }}{% endif %}</title>
+
+		<!-- Google Fonts for elevated prosilver typography -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+		<!-- Tailwind CSS CLI / CDN (Configured for quick drop-in setup, see Styleguide for custom bundling advice) -->
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script>
+			tailwind.config = {
+				darkMode: 'class',
+				theme: {
+					extend: {
+						colors: {
+							prosilver: {
+								50: '#f0f6fc',
+								100: '#e2eef9',
+								200: '#c4ddf4',
+								300: '#9ac6ee',
+								400: '#70aee6',
+								500: '#4688ce', // Classic prosilver base blue
+								600: '#3370b5',
+								700: '#255893',
+								800: '#1c4271',
+								900: '#153256',
+								950: '#0a1a2f',
+							}
+						},
+						fontFamily: {
+							sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+							mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+						}
+					}
+				}
+			}
+		</script>
+
+		<!-- Early dark theme detection to avoid FOUC (Flash of Unstyled Content) -->
+		<script>
+			(function () {
+				const savedTheme = localStorage.getItem('prosilver-theme');
+				const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+				if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.classList.remove('dark');
+				}
+			})();
+		</script>
+
+		<link href="{{ T_THEME_PATH }}/stylesheet.css" rel="stylesheet">
+
+		{{ CODES }}
+	{% endblock %}
+</head>
+<body id="phpbb" class="h-full bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans transition-colors duration-200">
+
+	<!-- Accessibility: Skip to Main Content Link -->
+	<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-prosilver-600 focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-prosilver-400">
+		Skip to main content
+	</a>
+
+	<div class="min-h-full flex flex-col">
+		{% block header %}
+			{% include 'header.html' %}
+		{% endblock %}
+
+		<!-- Main Content Landmark -->
+		<main id="main-content" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 focus:outline-none">
+			{% block content %}
+			{% endblock %}
+		</main>
+
+		{% block footer %}
+			{% include 'footer.html' %}
+		{% endblock %}
+	</div>
+</body>
+</html>

@@ -13,37 +13,6 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-		<!-- Tailwind CSS CLI / CDN (Configured for quick drop-in setup, see Styleguide for custom bundling advice) -->
-		<script src="https://cdn.tailwindcss.com"></script>
-		<script>
-			tailwind.config = {
-				darkMode: 'class',
-				theme: {
-					extend: {
-						colors: {
-							prosilver: {
-								50: '#f0f6fc',
-								100: '#e2eef9',
-								200: '#c4ddf4',
-								300: '#9ac6ee',
-								400: '#70aee6',
-								500: '#4688ce', // Classic prosilver base blue
-								600: '#3370b5',
-								700: '#255893',
-								800: '#1c4271',
-								900: '#153256',
-								950: '#0a1a2f',
-							}
-						},
-						fontFamily: {
-							sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-							mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
-						}
-					}
-				}
-			}
-		</script>
-
 		<!-- Early dark theme detection to avoid FOUC (Flash of Unstyled Content) -->
 		<script>
 			(function () {

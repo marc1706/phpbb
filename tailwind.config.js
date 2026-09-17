@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
 	darkMode: [ 'class' ],
-	content: [ './phpBB/styles/chameleon/**/*.{html,js,html.twig}' ],
+	content: [ './phpBB/styles/neptune/**/*.{html,js,html.twig}' ],
 	prefix: '',
 	theme: {
 		container: {
@@ -64,6 +64,19 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground, 240 5.9% 10%) / <alpha-value>)',
 					border: 'hsl(var(--sidebar-border, 220 13% 91%) / <alpha-value>)',
 					ring: 'hsl(var(--sidebar-ring, 217.2 91.2% 59.8%) / <alpha-value>)',
+				},
+				prosilver: {
+					50: '#f0f6fc',
+					100: '#e2eef9',
+					200: '#c4ddf4',
+					300: '#9ac6ee',
+					400: '#70aee6',
+					500: '#4688ce',
+					600: '#3370b5',
+					700: '#255893',
+					800: '#1c4271',
+					900: '#153256',
+					950: '#0a1a2f',
 				},
 				cosmic: {
 					DEFAULT: 'hsl(198, 100%, 44%)',

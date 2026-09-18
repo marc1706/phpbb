@@ -1,0 +1,491 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+<!-- Posting page editor scripts -->
+<script src="{{ T_ASSETS_PATH }}/javascript/jquery-3.7.1.min.js"></script>
+<script src="{{ T_ASSETS_PATH }}/javascript/editor.js"></script>
+<script>
+	var form_name = 'postform';
+	var text_name = {% if S_UCP_ACTION and not S_PRIVMSGS and not S_EDIT_DRAFT %}'signature'{% else %}'message'{% endif %};
+	var load_draft = false;
+	var upload = false;
+
+	// Define the bbCode tags
+	var bbcode = new Array();
+	var bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[list]','[/list]','[list=]','[/list]','[img]','[/img]','[url]','[/url]','[size=]','[/size]'{% for custom_tags in loops.custom_tags %}, {{ custom_tags.BBCODE_NAME }}{% endfor %});
+	var imageTag = false;
+</script>
+
+<!-- Posting header summary -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+	<div>
+		{% if S_PRIVMSGS %}
+			<div class="flex items-center gap-2.5 text-xs text-slate-400 mb-1.5">
+				<span class="font-bold uppercase tracking-wider text-prosilver-500">{{ L_TITLE }}</span>
+			</div>
+			<h1 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white leading-tight">{{ L_TITLE }}</h1>
+		{% else %}
+			<div class="flex items-center gap-2.5 text-xs text-slate-400 mb-1.5">
+				<a href="{{ U_INDEX }}" class="font-bold uppercase tracking-wider text-prosilver-500 hover:underline">{{ SITENAME }}</a>
+				<span>•</span>
+				<a href="{{ U_VIEW_FORUM }}" class="font-bold uppercase tracking-wider text-prosilver-500 hover:underline">{{ FORUM_NAME }}</a>
+				<span>•</span>
+				<span>Posting</span>
+			</div>
+			<h1 class="text-xl md:text-2xl font-black text-slate-800 dark:text-white leading-tight">
+				{% if TOPIC_TITLE %}{{ TOPIC_TITLE }}{% else %}{{ FORUM_NAME }}{% endif %}
+			</h1>
+		{% endif %}
+	</div>
+
+	{% if not S_PRIVMSGS %}
+		<a href="{{ U_VIEW_FORUM }}" class="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-prosilver-600 transition-all">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+				<path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+			</svg>
+			Back to Forum
+		</a>
+	{% endif %}
+</div>
+
+<!-- Forum rules banner -->
+{% if S_FORUM_RULES %}
+	<div class="mb-6 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 text-sm text-amber-800 dark:text-amber-200">
+		{% if U_FORUM_RULES %}
+			<a href="{{ U_FORUM_RULES }}" class="font-bold uppercase tracking-wider hover:underline">{{ L_FORUM_RULES }}</a>
+		{% else %}
+			<strong class="font-black uppercase tracking-wider">{{ L_FORUM_RULES }}</strong>
+			<div class="mt-2 leading-relaxed">{{ FORUM_RULES }}</div>
+		{% endif %}
+	</div>
+{% endif %}
+
+<form id="postform" method="post" action="{{ S_POST_ACTION }}"{{ S_FORM_ENCTYPE }}>
+
+	<!-- Draft loaded notice -->
+	{% if S_DRAFT_LOADED %}
+		<div class="mb-6 p-4 rounded-xl bg-prosilver-50 dark:bg-prosilver-950/40 border border-prosilver-200/80 dark:border-prosilver-800/60 text-sm text-prosilver-800 dark:text-prosilver-200">
+			<strong class="font-black uppercase tracking-wider">{{ L_INFORMATION }}</strong>
+			<div class="mt-1 leading-relaxed">{{ S_PRIVMSGS ? L_DRAFT_LOADED_PM : L_DRAFT_LOADED }}</div>
+		</div>
+	{% endif %}
+
+	<!-- Saved drafts list -->
+	{% if S_SHOW_DRAFTS %}
+		{% if loops.draftrow %}
+		<div class="mb-6 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm overflow-hidden">
+			<div class="px-5 py-4 border-b border-slate-100 dark:border-slate-800">
+				<h2 class="text-sm font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">{{ L_LOAD_DRAFT }}</h2>
+				<p class="mt-1 text-xs text-slate-400">{{ L_LOAD_DRAFT_EXPLAIN }}</p>
+			</div>
+			<ul class="divide-y divide-slate-100 dark:divide-slate-800">
+				{% for draftrow in loops.draftrow %}
+				<li class="px-5 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+					<div class="min-w-0">
+						<a href="{{ draftrow.U_INSERT }}" title="{{ L_LOAD_DRAFT }}" class="font-bold text-sm text-slate-700 dark:text-slate-200 hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors">{{ draftrow.DRAFT_SUBJECT }}</a>
+						<div class="mt-0.5 text-xs text-slate-400">
+							{% if not S_PRIVMSGS %}
+								{% if draftrow.S_LINK_TOPIC %}{{ L_TOPIC }}{{ lang('COLON') }} <a href="{{ draftrow.U_VIEW }}" class="hover:text-prosilver-600">{{ draftrow.TITLE }}</a>
+								{% elseif draftrow.S_LINK_FORUM %}{{ L_FORUM }}{{ lang('COLON') }} <a href="{{ draftrow.U_VIEW }}" class="hover:text-prosilver-600">{{ draftrow.TITLE }}</a>
+								{% else %}{{ L_NO_TOPIC_FORUM }}{% endif %}
+								<span class="hidden sm:inline"> • </span>
+							{% endif %}
+							<span class="sm:hidden">{{ L_SAVE_DATE }}{{ lang('COLON') }} <strong>{{ draftrow.DATE }}</strong></span>
+						</div>
+					</div>
+					<div class="text-xs text-slate-400 hidden sm:block"><span>{{ L_SAVE_DATE }}{{ lang('COLON') }} <strong class="font-mono">{{ draftrow.DATE }}</strong></span></div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+	{% endif %}
+
+	<!-- Post review (existing replies shown to avoid double posting) -->
+	{% if S_POST_REVIEW %}
+		<div class="mb-6">
+			<h2 class="text-sm font-black uppercase tracking-wider text-slate-700 dark:text-slate-200 mb-3">{{ L_POST_REVIEW }}</h2>
+			<p class="text-xs text-slate-400 mb-3">{{ L_POST_REVIEW_EXPLAIN }}</p>
+			<div class="space-y-4">
+				{% for post_review_row in loops.post_review_row %}
+				<article class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm p-5">
+					<h3 class="font-bold text-sm"><a href="{{ post_review_row.U_MINI_POST }}" class="text-slate-700 dark:text-slate-200 hover:text-prosilver-600 transition-colors">{{ post_review_row.POST_SUBJECT }}</a></h3>
+					<p class="mt-1 text-xs text-slate-400">
+						{% if S_IS_BOT %}<span title="{{ post_review_row.MINI_POST }}">{{ post_review_row.MINI_POST }}</span>
+						{% else %}<a href="{{ post_review_row.U_MINI_POST }}" title="{{ post_review_row.MINI_POST }}" class="hover:text-prosilver-600">{{ post_review_row.MINI_POST }}</a>{% endif %}
+						{{ L_POST_BY_AUTHOR }} {% EVENT posting_review_row_post_author_username_prepend %}<strong class="text-slate-600 dark:text-slate-300">{{ post_review_row.POST_AUTHOR_FULL }}</strong>{% EVENT posting_review_row_post_author_username_append %} &raquo; {{ post_review_row.POST_DATE }}
+					</p>
+					<div class="content mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">{{ post_review_row.MESSAGE }}</div>
+					{% if post_review_row.S_HAS_ATTACHMENTS %}
+						{% if loops.post_review_row.attachment %}
+						<div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400">
+							<strong>{{ L_ATTACHMENTS }}</strong>
+							{% for attachment in post_review_row.attachment %}<div class="mt-1">{{ attachment.DISPLAY_ATTACHMENT }}</div>{% endfor %}
+						</div>
+						{% endif %}
+					{% endif %}
+				</article>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+
+	<!-- Message preview -->
+	{% if S_DISPLAY_PREVIEW %}
+	<div class="mb-6">
+		{% if S_HAS_POLL_OPTIONS %}
+		<article class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm p-5 mb-4">
+			<h2 class="font-black text-sm text-slate-800 dark:text-white">{{ L_PREVIEW }}{{ lang('COLON') }} {{ POLL_QUESTION }}</h2>
+			<p class="mt-1 text-xs text-slate-400">{% if L_POLL_LENGTH %}{{ L_POLL_LENGTH }}<br />{% endif %}{{ L_MAX_VOTES }}</p>
+			<div class="mt-4 space-y-2">
+				{% for poll_option in loops.poll_option %}
+					<div class="flex items-center gap-2 text-sm">
+						{% if S_IS_MULTI_CHOICE %}<input type="checkbox" name="vote_id[]" id="vote_{{ poll_option.POLL_OPTION_ID }}" value="{{ poll_option.POLL_OPTION_ID }}"{% if poll_option.POLL_OPTION_VOTED %} checked="checked"{% endif %} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" />
+						{% else %}<input type="radio" name="vote_id[]" id="vote_{{ poll_option.POLL_OPTION_ID }}" value="{{ poll_option.POLL_OPTION_ID }}"{% if poll_option.POLL_OPTION_VOTED %} checked="checked"{% endif %} class="border-slate-300 text-prosilver-600 focus:ring-prosilver-500" />{% endif %}
+						<label for="vote_{{ poll_option.POLL_OPTION_ID }}" class="text-slate-700 dark:text-slate-200">{{ poll_option.POLL_OPTION_CAPTION }}</label>
+					</div>
+				{% endfor %}
+			</div>
+			{% EVENT posting_preview_poll_after %}
+		</article>
+		{% endif %}
+
+		<article class="bg-white dark:bg-slate-900 rounded-xl border border-prosilver-200/80 dark:border-prosilver-800/60 shadow-sm p-5">
+			<h2 class="font-black text-sm text-slate-800 dark:text-white">{{ L_PREVIEW }}{{ lang('COLON') }} {{ PREVIEW_SUBJECT }}</h2>
+			<div class="content mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">{{ PREVIEW_MESSAGE }}</div>
+			{% EVENT posting_preview_content_after %}
+			{% if loops.attachment %}
+			<div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400">
+				<strong>{{ L_ATTACHMENTS }}</strong>
+				{% for attachment in loops.attachment %}<div class="mt-1">{{ attachment.DISPLAY_ATTACHMENT }}</div>{% endfor %}
+			</div>
+			{% endif %}
+			{% if PREVIEW_SIGNATURE %}<div class="mt-4 pt-3 border-t border-dashed border-slate-200 dark:border-slate-800 text-xs text-slate-400 italic">{{ PREVIEW_SIGNATURE }}</div>{% endif %}
+		</article>
+	</div>
+	{% endif %}
+
+	<!-- Posting editor panel -->
+	<div id="postingbox" class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm overflow-hidden">
+		<div class="px-5 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+			<h2 class="text-sm font-black uppercase tracking-wider text-slate-700 dark:text-slate-200">{{ S_PRIVMSGS ? L_TITLE : L_POST_A }}</h2>
+			{% if S_DISPLAY_REVIEW or S_EDIT_DRAFT %}
+				<div class="text-xs font-bold">
+					{% if S_EDIT_DRAFT %}<a href="{{ S_UCP_ACTION }}" class="text-slate-400 hover:text-prosilver-600 mr-3">{{ L_BACK_TO_DRAFTS }}</a>{% endif %}
+					{% if S_DISPLAY_REVIEW %}<a href="#review" class="text-slate-400 hover:text-prosilver-600">{{ L_TOPIC_REVIEW }}</a>{% endif %}
+				</div>
+			{% endif %}
+		</div>
+
+		<div class="p-5 md:p-6 space-y-5">
+			{% if ERROR %}
+				<div class="p-4 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200/80 dark:border-red-800/60 text-sm font-semibold text-red-700 dark:text-red-300">
+					{{ ERROR }}
+				</div>
+			{% endif %}
+
+			{% EVENT posting_editor_topic_icons_before %}
+			{% if S_SHOW_TOPIC_ICONS or S_SHOW_PM_ICONS %}
+			<div>
+				<label for="icon" class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{{ L_ICON }}{{ lang('COLON') }}</label>
+				{% EVENT posting_editor_topic_icons_prepend %}
+				<div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+					<label for="icon" class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+						<input type="radio" name="icon" id="icon" value="0" checked="checked" tabindex="1" class="border-slate-300 text-prosilver-600 focus:ring-prosilver-500" />
+						{% if S_SHOW_TOPIC_ICONS %}{{ L_NO_TOPIC_ICON }}{% else %}{{ L_NO_PM_ICON }}{% endif %}
+					</label>
+					{% for topic_icon in loops.topic_icon %}
+					<label for="icon-{{ topic_icon.ICON_ID }}" class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+						<input type="radio" name="icon" id="icon-{{ topic_icon.ICON_ID }}" value="{{ topic_icon.ICON_ID }}" {{ topic_icon.S_ICON_CHECKED }} tabindex="1" class="border-slate-300 text-prosilver-600 focus:ring-prosilver-500" />
+						<img src="{{ topic_icon.ICON_IMG }}" width="{{ topic_icon.ICON_WIDTH }}" height="{{ topic_icon.ICON_HEIGHT }}" alt="{{ topic_icon.ICON_ALT }}" title="{{ topic_icon.ICON_ALT }}" class="inline" />
+					</label>
+					{% endfor %}
+				</div>
+				{% EVENT posting_editor_topic_icons_append %}
+			</div>
+			{% endif %}
+			{% EVENT posting_editor_topic_icons_after %}
+
+			{% if not S_PRIVMSGS and S_DISPLAY_USERNAME %}
+			<div>
+				<label for="username" class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{{ L_USERNAME }}{{ lang('COLON') }}</label>
+				<input type="text" tabindex="1" name="username" id="username" size="25" value="{{ USERNAME }}" class="w-full max-w-sm text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 px-3 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+			</div>
+			{% endif %}
+
+			{% EVENT posting_editor_subject_before %}
+			{% if S_POST_ACTION or S_PRIVMSGS or S_EDIT_DRAFT %}
+			<div>
+				<label for="subject" class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{{ L_SUBJECT }}{{ lang('COLON') }}</label>
+				{% EVENT posting_editor_subject_prepend %}
+				<input type="text" name="subject" id="subject" size="45" maxlength="{% if S_NEW_MESSAGE %}120{% else %}124{% endif %}" tabindex="2" value="{{ SUBJECT }}{{ DRAFT_SUBJECT }}" class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 px-3 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+				{% EVENT posting_editor_subject_append %}
+			</div>
+			{% endif %}
+			{% EVENT posting_editor_subject_after %}
+
+			{% if S_BBCODE_ALLOWED %}
+			<div id="format-buttons" class="flex flex-wrap items-center gap-1.5 p-2 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800">
+				{% EVENT posting_editor_buttons_before %}
+				<button type="button" accesskey="b" name="addbbcode0" value=" B " onclick="bbstyle(0)" title="{{ L_BBCODE_B_HELP }}" class="w-8 h-8 flex items-center justify-center rounded-md text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">B</button>
+				<button type="button" accesskey="i" name="addbbcode2" value=" i " onclick="bbstyle(2)" title="{{ L_BBCODE_I_HELP }}" class="w-8 h-8 flex items-center justify-center rounded-md text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors italic">I</button>
+				<button type="button" accesskey="u" name="addbbcode4" value=" u " onclick="bbstyle(4)" title="{{ L_BBCODE_U_HELP }}" class="w-8 h-8 flex items-center justify-center rounded-md text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors underline">U</button>
+				{% if S_BBCODE_QUOTE %}
+					<button type="button" accesskey="q" name="addbbcode6" value="Quote" onclick="bbstyle(6)" title="{{ L_BBCODE_Q_HELP }}" class="px-2.5 h-8 flex items-center justify-center rounded-md text-xs font-bold text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">{{ L_QUOTE }}</button>
+				{% endif %}
+				<button type="button" accesskey="c" name="addbbcode8" value="Code" onclick="bbstyle(8)" title="{{ L_BBCODE_C_HELP }}" class="px-2.5 h-8 flex items-center justify-center rounded-md text-xs font-mono font-bold text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">{} Code</button>
+				<button type="button" accesskey="l" name="addbbcode10" value="List" onclick="bbstyle(10)" title="{{ L_BBCODE_L_HELP }}" class="px-2.5 h-8 flex items-center justify-center rounded-md text-xs font-bold text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">&#8226; List</button>
+				<button type="button" accesskey="o" name="addbbcode12" value="List=" onclick="bbstyle(12)" title="{{ L_BBCODE_O_HELP }}" class="px-2.5 h-8 flex items-center justify-center rounded-md text-xs font-bold text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">1. List</button>
+				<button type="button" accesskey="y" name="addlistitem" value="[*]" onclick="bbstyle(-1)" title="{{ L_BBCODE_LISTITEM_HELP }}" class="px-2.5 h-8 flex items-center justify-center rounded-md text-xs font-bold text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">[*]</button>
+				{% if S_BBCODE_IMG %}
+					<button type="button" accesskey="p" name="addbbcode14" value="Img" onclick="bbstyle(14)" title="{{ L_BBCODE_P_HELP }}" class="px-2.5 h-8 flex items-center justify-center rounded-md text-xs font-bold text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">IMG</button>
+				{% endif %}
+				{% if S_LINKS_ALLOWED %}
+					<button type="button" accesskey="w" name="addbbcode16" value="URL" onclick="bbstyle(16)" title="{{ L_BBCODE_W_HELP }}" class="px-2.5 h-8 flex items-center justify-center rounded-md text-xs font-bold text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">{{ L_URL }}</button>
+				{% endif %}
+				<select name="addbbcode18" class="bbcode-size h-8 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 px-1 focus:outline-none focus:ring-2 focus:ring-prosilver-500" onchange="bbfontstyle('[size=' + this.form.addbbcode18.options[this.form.addbbcode18.selectedIndex].value + ']', '[/size]');this.form.addbbcode18.selectedIndex = 2;" title="{{ L_BBCODE_F_HELP }}">
+					<option value="50">{{ L_FONT_TINY }}</option>
+					<option value="85">{{ L_FONT_SMALL }}</option>
+					<option value="100" selected="selected">{{ L_FONT_NORMAL }}</option>
+					{% if not MAX_FONT_SIZE or MAX_FONT_SIZE >= 150 %}
+					<option value="150">{{ L_FONT_LARGE }}</option>
+						{% if not MAX_FONT_SIZE or MAX_FONT_SIZE >= 200 %}<option value="200">{{ L_FONT_HUGE }}</option>{% endif %}
+					{% endif %}
+				</select>
+				{% EVENT posting_editor_buttons_custom_tags_before %}
+				{% for custom_tags in loops.custom_tags %}
+				<button type="button" name="addbbcode{{ custom_tags.BBCODE_ID }}" value="{{ custom_tags.BBCODE_TAG }}" onclick="bbstyle({{ custom_tags.BBCODE_ID }})" title="{{ custom_tags.BBCODE_HELPLINE }}" class="px-2.5 h-8 flex items-center justify-center rounded-md text-xs font-bold text-slate-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-700 transition-colors">{{ custom_tags.BBCODE_TAG }}</button>
+				{% endfor %}
+				{% EVENT posting_editor_buttons_after %}
+			</div>
+			{% endif %}
+
+			{% EVENT posting_editor_message_before %}
+			<div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+				<!-- Message editor -->
+				<div class="lg:col-span-9">
+					<textarea {% if S_UCP_ACTION and not S_PRIVMSGS and not S_EDIT_DRAFT %}name="signature" id="signature" style="height: 9em;"{% else %}name="message" id="message"{% endif %} rows="15" cols="76" tabindex="4" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" class="w-full resize-y text-sm leading-relaxed bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-3 px-3 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">{{ MESSAGE }}{{ DRAFT_MESSAGE }}{{ SIGNATURE }}</textarea>
+				</div>
+
+				<!-- Smiley box -->
+				<aside class="lg:col-span-3">
+					<div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800">
+						{% EVENT posting_editor_smilies_before %}
+						{% if S_SMILIES_ALLOWED and loops.smiley %}
+							<h3 class="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{{ L_SMILIES }}</h3>
+							<div class="grid grid-cols-4 gap-2">
+								{% for smiley in loops.smiley %}
+								<a href="#postingbox" onclick="insert_text('{{ smiley.A_SMILEY_CODE }}', true); return false;" class="hover:scale-110 transition-transform text-center" title="{{ smiley.SMILEY_DESC }}">
+									<img src="{{ smiley.SMILEY_IMG }}" width="{{ smiley.SMILEY_WIDTH }}" height="{{ smiley.SMILEY_HEIGHT }}" alt="{{ smiley.SMILEY_CODE }}" title="{{ smiley.SMILEY_DESC }}" class="inline" />
+								</a>
+								{% endfor %}
+							</div>
+						{% endif %}
+						{% if S_SHOW_SMILEY_LINK and S_SMILIES_ALLOWED %}
+							<div class="mt-3 text-center"><a href="{{ U_MORE_SMILIES }}" onclick="popup(this.href, 750, 350, '_phpbbsmilies'); return false;" class="text-xs font-bold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ L_MORE_SMILIES }}</a></div>
+						{% endif %}
+						{% EVENT posting_editor_smilies_after %}
+						{% if BBCODE_STATUS %}
+						<div class="mt-3 pt-3 border-t border-slate-200/80 dark:border-slate-700 text-xs text-slate-400 leading-relaxed">
+							{{ BBCODE_STATUS }}<br />
+							{% if S_BBCODE_ALLOWED %}
+								{{ IMG_STATUS }}<br />
+								{{ URL_STATUS }}<br />
+							{% endif %}
+							{{ SMILIES_STATUS }}
+						</div>
+						{% endif %}
+						{% EVENT posting_editor_bbcode_status_after %}
+					</div>
+				</aside>
+			</div>
+			{% EVENT posting_editor_message_after %}
+		</div>
+	</div>
+
+	<input type="hidden" name="show_panel" value="options-panel" />
+	{{ S_FORM_TOKEN }}
+
+	{% if not S_SHOW_DRAFTS and not S_UCP_ACTION %}
+	<!-- Posting option tabs -->
+	<div id="tabs" class="mt-6 flex items-center gap-1 border-b border-slate-200 dark:border-slate-800" data-show-panel="{{ SHOW_PANEL ? SHOW_PANEL : 'options-panel' }}" role="tablist">
+		<a href="#options-panel" class="px-4 py-2.5 text-sm font-bold rounded-t-lg text-slate-600 dark:text-slate-300 border-b-2 border-prosilver-600 dark:border-prosilver-400 transition-colors">{{ L_OPTIONS }}</a>
+		{% if S_SHOW_ATTACH_BOX and FILTERS %}
+			<a href="#attach-panel" class="px-4 py-2.5 text-sm font-bold rounded-t-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">{{ L_ATTACHMENTS }}</a>
+		{% endif %}
+		{% if S_SHOW_POLL_BOX or S_POLL_DELETE %}
+			<a href="#poll-panel" class="px-4 py-2.5 text-sm font-bold rounded-t-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">{{ L_ADD_POLL }}</a>
+		{% endif %}
+		{% EVENT posting_editor_add_panel_tab %}
+	</div>
+	{% endif %}
+
+	<!-- Submit buttons -->
+	{% if not S_SHOW_DRAFTS and not S_UCP_ACTION %}
+	<div class="mt-4 flex flex-wrap items-center gap-2">
+		{{ S_HIDDEN_ADDRESS_FIELD }}
+		{{ S_HIDDEN_FIELDS }}
+		{% EVENT posting_editor_submit_buttons %}
+		{% if S_HAS_DRAFTS %}<button type="submit" accesskey="d" tabindex="8" name="load" onclick="load_draft = true;" class="px-4 py-2.5 text-sm font-bold rounded-lg border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">{{ L_LOAD_DRAFT }}</button>{% endif %}
+		{% if S_SAVE_ALLOWED %}<button type="submit" accesskey="k" tabindex="7" name="save" class="px-4 py-2.5 text-sm font-bold rounded-lg border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">{{ L_SAVE_DRAFT }}</button>{% endif %}
+		<button type="submit" tabindex="5" name="preview"{% if not S_PRIVMSGS %} onclick="document.getElementById('postform').action += '#preview';"{% endif %} class="px-4 py-2.5 text-sm font-bold rounded-lg border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">{{ L_PREVIEW }}</button>
+		<button type="submit" accesskey="s" tabindex="6" name="post" class="px-5 py-2.5 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">{{ S_PRIVMSGS ? L_SEND_MESSAGE : L_SUBMIT }}</button>
+	</div>
+	{% endif %}
+
+	<!-- Options panel -->
+	{% if not S_SHOW_DRAFTS and not S_UCP_ACTION %}
+	<div id="options-panel" class="mt-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm p-5">
+		<h3 class="text-sm font-black uppercase tracking-wider text-slate-700 dark:text-slate-200 mb-4">{{ L_OPTIONS }}</h3>
+		{% EVENT posting_editor_options_prepend %}
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-sm text-slate-600 dark:text-slate-300">
+			{% if S_BBCODE_ALLOWED %}<label class="flex items-center gap-2.5"><input type="checkbox" name="disable_bbcode" id="disable_bbcode"{{ S_BBCODE_CHECKED }} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ L_DISABLE_BBCODE }}</label>{% endif %}
+			{% if S_SMILIES_ALLOWED %}<label class="flex items-center gap-2.5"><input type="checkbox" name="disable_smilies" id="disable_smilies"{{ S_SMILIES_CHECKED }} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ L_DISABLE_SMILIES }}</label>{% endif %}
+			{% if S_LINKS_ALLOWED %}<label class="flex items-center gap-2.5"><input type="checkbox" name="disable_magic_url" id="disable_magic_url"{{ S_MAGIC_URL_CHECKED }} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ L_DISABLE_MAGIC_URL }}</label>{% endif %}
+			{% if S_SIG_ALLOWED %}<label class="flex items-center gap-2.5"><input type="checkbox" name="attach_sig" id="attach_sig"{{ S_SIGNATURE_CHECKED }} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ L_ATTACH_SIG }}</label>{% endif %}
+			{% if S_NOTIFY_ALLOWED %}<label class="flex items-center gap-2.5"><input type="checkbox" name="notify" id="notify"{{ S_NOTIFY_CHECKED }} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ L_NOTIFY_REPLY }}</label>{% endif %}
+			{% if S_LOCK_TOPIC_ALLOWED %}<label class="flex items-center gap-2.5"><input type="checkbox" name="lock_topic" id="lock_topic"{{ S_LOCK_TOPIC_CHECKED }} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ L_LOCK_TOPIC }}</label>{% endif %}
+			{% if S_LOCK_POST_ALLOWED %}<label class="flex items-center gap-2.5"><input type="checkbox" name="lock_post" id="lock_post"{{ S_LOCK_POST_CHECKED }} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ L_LOCK_POST }} [{{ L_LOCK_POST_EXPLAIN }}]</label>{% endif %}
+		</div>
+
+		{% if S_TYPE_TOGGLE or S_TOPIC_TYPE_ANNOUNCE or S_TOPIC_TYPE_STICKY %}
+		<hr class="my-4 border-slate-100 dark:border-slate-800" />
+		{% endif %}
+
+		{% if S_TYPE_TOGGLE %}
+		<div class="mb-4">
+			<span class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{% if S_EDIT_POST %}{{ L_CHANGE_TOPIC_TO }}{% else %}{{ L_POST_TOPIC_AS }}{% endif %}{{ lang('COLON') }}</span>
+			<div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+				{% for topic_type in loops.topic_type %}
+				<label for="topic_type-{{ topic_type.VALUE }}" class="flex items-center gap-2 text-slate-600 dark:text-slate-300"><input type="radio" name="topic_type" id="topic_type-{{ topic_type.VALUE }}" value="{{ topic_type.VALUE }}"{{ topic_type.S_CHECKED }} class="border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ topic_type.L_TOPIC_TYPE }}</label>
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+
+		{% if S_TOPIC_TYPE_ANNOUNCE or S_TOPIC_TYPE_STICKY %}
+		<div class="flex flex-col sm:flex-row sm:items-center gap-2 max-w-md text-sm">
+			<label for="topic_time_limit" class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ L_STICK_TOPIC_FOR }}{{ lang('COLON') }}</label>
+			<label for="topic_time_limit" class="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+				<input type="number" min="0" max="999" name="topic_time_limit" id="topic_time_limit" value="{{ TOPIC_TIME_LIMIT }}" class="w-24 text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 px-3 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" /> {{ L_DAYS }}
+			</label>
+			<span class="text-xs text-slate-400">{{ L_STICK_TOPIC_FOR_EXPLAIN }}</span>
+		</div>
+		{% endif %}
+
+		{% if S_SOFTDELETE_ALLOWED or S_DELETE_ALLOWED %}
+		<hr class="my-4 border-slate-100 dark:border-slate-800" />
+		<div class="text-sm text-slate-600 dark:text-slate-300">
+			<span class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{{ lang('DELETE_POST') }}{{ lang('COLON') }}</span>
+			{% if S_SOFTDELETE_ALLOWED %}<label class="flex items-center gap-2.5"><input type="checkbox" name="delete" id="delete" {{ S_SOFTDELETE_CHECKED }} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ lang('DELETE_POST_WARN') }}</label>{% endif %}
+			{% if S_DELETE_ALLOWED %}<label class="flex items-center gap-2.5"><input type="checkbox" name="delete_permanent" id="delete_permanent" class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ lang('DELETE_POST_PERMANENTLY') }}</label>{% endif %}
+		</div>
+		{% endif %}
+
+		{% if S_EDIT_REASON %}
+		<div class="mt-4 max-w-md">
+			<label for="edit_reason" class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{{ L_EDIT_REASON }}{{ lang('COLON') }}</label>
+			<input type="text" name="edit_reason" id="edit_reason" value="{{ EDIT_REASON }}" class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 px-3 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+		</div>
+		{% endif %}
+	</div>
+	{% endif %}
+
+	<!-- Attachments panel -->
+	{% if S_SHOW_ATTACH_BOX and FILTERS %}
+	<div id="attach-panel" class="mt-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm p-5">
+		<h3 class="text-sm font-black uppercase tracking-wider text-slate-700 dark:text-slate-200 mb-4">{{ L_ATTACHMENTS }}</h3>
+		{{ FILTERS }}
+		{% EVENT posting_layout_include_panel_body %}
+	</div>
+	{% endif %}
+
+	<!-- Poll panel -->
+	{% if S_SHOW_POLL_BOX or S_POLL_DELETE %}
+	<div id="poll-panel" class="mt-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm p-5">
+		<h3 class="text-sm font-black uppercase tracking-wider text-slate-700 dark:text-slate-200 mb-4">{{ L_ADD_POLL }}</h3>
+		{% if S_SHOW_POLL_BOX %}<p class="text-xs text-slate-400 mb-4">{{ L_ADD_POLL_EXPLAIN }}</p>{% endif %}
+
+		{% if S_POLL_DELETE %}
+		<div class="mb-4 text-sm text-slate-600 dark:text-slate-300">
+			<label class="flex items-center gap-2.5"><input type="checkbox" name="poll_delete" id="poll_delete"{% if S_POLL_DELETE_CHECKED %} checked="checked"{% endif %} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ L_POLL_DELETE }}</label>
+		</div>
+		{% endif %}
+
+		{% if S_SHOW_POLL_BOX %}
+		<div class="space-y-4 max-w-md">
+			<div>
+				<label for="poll_title" class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{{ lang('POLL_QUESTION') }}{{ lang('COLON') }}</label>
+				<input type="text" name="poll_title" id="poll_title" maxlength="100" value="{{ POLL_TITLE }}" class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 px-3 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+			</div>
+			<div>
+				<label for="poll_option_text" class="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">{{ L_POLL_OPTIONS }}{{ lang('COLON') }}</label>
+				<p class="text-xs text-slate-400 mb-2">{{ L_POLL_OPTIONS_EXPLAIN }}</p>
+				<textarea name="poll_option_text" id="poll_option_text" rows="5" cols="35" class="w-full resize-y text-sm leading-relaxed bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 px-3 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">{{ POLL_OPTIONS }}</textarea>
+			</div>
+			<div class="flex items-center gap-3">
+				<label for="poll_max_options" class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ L_POLL_MAX_OPTIONS }}{{ lang('COLON') }}</label>
+				<input type="number" min="0" max="999" name="poll_max_options" id="poll_max_options" value="{{ POLL_MAX_OPTIONS }}" class="w-24 text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 px-3 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+				<span class="text-xs text-slate-400">{{ L_POLL_MAX_OPTIONS_EXPLAIN }}</span>
+			</div>
+			<div class="flex items-center gap-3">
+				<label for="poll_length" class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ L_POLL_FOR }}{{ lang('COLON') }}</label>
+				<label for="poll_length" class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300"><input type="number" min="0" max="999" name="poll_length" id="poll_length" value="{{ POLL_LENGTH }}" class="w-24 text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 px-3 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" /> {{ L_DAYS }}</label>
+				<span class="text-xs text-slate-400">{{ L_POLL_FOR_EXPLAIN }}</span>
+			</div>
+			{% if S_POLL_VOTE_CHANGE %}
+			<div class="text-sm text-slate-600 dark:text-slate-300">
+				<label class="flex items-center gap-2.5"><input type="checkbox" id="poll_vote_change" name="poll_vote_change"{{ VOTE_CHANGE_CHECKED }} class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" /> {{ L_POLL_VOTE_CHANGE_EXPLAIN }}</label>
+			</div>
+			{% endif %}
+		</div>
+		{% endif %}
+		{% EVENT posting_poll_body_options_after %}
+	</div>
+	{% endif %}
+
+	<!-- Topic review while replying -->
+	{% if S_DISPLAY_REVIEW %}
+	<div id="review" class="mt-8">
+		<h2 class="text-sm font-black uppercase tracking-wider text-slate-700 dark:text-slate-200 mb-3">{{ L_TOPIC_REVIEW }}{{ lang('COLON') }} {{ TOPIC_TITLE }}</h2>
+		<div class="space-y-4">
+			{% for topic_review_row in loops.topic_review_row %}
+			<article id="pr{{ topic_review_row.POST_ID }}" class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm p-5">
+				{% if topic_review_row.S_IGNORE_POST or topic_review_row.S_POST_DELETED %}
+					<div class="text-xs font-semibold text-slate-400">
+						{% if topic_review_row.S_IGNORE_POST %}{{ topic_review_row.L_IGNORE_POST }}{% else %}{{ topic_review_row.L_DELETE_POST }}{% endif %}
+						<a class="hover:text-prosilver-600 underline" href="{{ topic_review_row.U_MINI_POST }}">{{ lang('POST_DISPLAY') }}</a>
+					</div>
+				{% else %}
+					<h3 class="font-bold text-sm"><a href="{{ topic_review_row.U_MINI_POST }}" class="text-slate-700 dark:text-slate-200 hover:text-prosilver-600 transition-colors">{{ topic_review_row.POST_SUBJECT }}</a></h3>
+					{% EVENT posting_topic_review_row_post_details_before %}
+					<p class="mt-1 text-xs text-slate-400">
+						{% if S_IS_BOT %}<span title="{{ topic_review_row.MINI_POST }}">{{ topic_review_row.MINI_POST }}</span>
+						{% else %}<a href="{{ topic_review_row.U_MINI_POST }}" title="{{ topic_review_row.MINI_POST }}" class="hover:text-prosilver-600">{{ topic_review_row.MINI_POST }}</a>{% endif %}
+						{{ L_POST_BY_AUTHOR }} {% EVENT posting_topic_review_row_post_author_username_prepend %}<strong class="text-slate-600 dark:text-slate-300">{{ topic_review_row.POST_AUTHOR_FULL }}</strong>{% EVENT posting_topic_review_row_post_author_username_append %} &raquo; {{ topic_review_row.POST_DATE }}
+					</p>
+					{% EVENT posting_topic_review_row_post_details_after %}
+					<div class="content mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">{{ topic_review_row.MESSAGE }}</div>
+					{% EVENT posting_topic_review_row_content_after %}
+					{% if topic_review_row.S_HAS_ATTACHMENTS %}
+						{% if loops.topic_review_row.attachment %}
+						<div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400">
+							<strong>{{ L_ATTACHMENTS }}</strong>
+							{% for attachment in topic_review_row.attachment %}<div class="mt-1">{{ attachment.DISPLAY_ATTACHMENT }}</div>{% endfor %}
+						</div>
+						{% endif %}
+					{% endif %}
+					{% if topic_review_row.POSTER_QUOTE and topic_review_row.DECODED_MESSAGE %}
+						<a href="#postingbox" onclick="addquote({{ topic_review_row.POST_ID }}, '{{ topic_review_row.POSTER_QUOTE }}', '{{ lang('WROTE')|e('js') }}', {post_id:{{ topic_review_row.POST_ID }},time:{{ topic_review_row.POST_TIME }},user_id:{{ topic_review_row.USER_ID }}});" class="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-prosilver-600 transition-colors">{{ L_QUOTE }} {{ topic_review_row.POST_AUTHOR }}</a>
+						<div id="message_{{ topic_review_row.POST_ID }}" style="display: none;">{{ topic_review_row.DECODED_MESSAGE }}</div>
+					{% endif %}
+				{% endif %}
+			</article>
+			{% endfor %}
+		</div>
+		<div class="mt-3"><a href="#postingbox" class="text-xs font-bold text-slate-400 hover:text-prosilver-600 transition-colors">&uarr; {{ lang('BACK_TO_TOP') }}</a></div>
+	</div>
+	{% endif %}
+
+</form>
+{% endblock %}

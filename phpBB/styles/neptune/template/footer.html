@@ -52,6 +52,26 @@
 	</div>
 </footer>
 
+{% if S_ALLOW_CDN %}
+<script>
+	(function(){
+		const $fa_cdn = document.getElementById('font-awesome'),
+			$span = document.createElement('span');
+		$span.className = 'fa';
+		$span.style.display = 'none';
+		document.body.appendChild($span);
+		if (getComputedStyle($span).fontFamily !== '"Font Awesome 6 Free"') {
+			const $link = document.createElement('link');
+			$link.rel = 'stylesheet';
+			$link.href = "{{ T_ASSETS_PATH ~ '/css/font-awesome.min.css' }}";
+			$fa_cdn.after($link);
+			$fa_cdn.remove();
+		}
+		$span.remove();
+	})();
+</script>
+{% endif %}
+
 <!-- Load Theme Javascript handling interactivity -->
 <script src="{{ T_THEME_PATH }}/theme.js"></script>
 

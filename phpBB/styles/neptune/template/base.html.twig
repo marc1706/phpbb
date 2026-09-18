@@ -13,6 +13,9 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+<!-- Font Awesome icons -->
+		<link id="font-awesome" href="{{ T_FONT_AWESOME_LINK }}" rel="stylesheet">
+
 		<!-- Early dark theme detection to avoid FOUC (Flash of Unstyled Content) -->
 		<script>
 			(function () {
@@ -33,25 +36,25 @@
 </head>
 <body id="phpbb" class="h-full bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans transition-colors duration-200">
 
-	<!-- Accessibility: Skip to Main Content Link -->
-	<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-prosilver-600 focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-prosilver-400">
-		Skip to main content
-	</a>
+<!-- Accessibility: Skip to Main Content Link -->
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-prosilver-600 focus:text-white focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-prosilver-400">
+	Skip to main content
+</a>
 
-	<div class="min-h-full flex flex-col">
-		{% block header %}
-			{% include 'header.html' %}
+<div class="min-h-full flex flex-col">
+	{% block header %}
+		{% include 'header.html' %}
+	{% endblock %}
+
+	<!-- Main Content Landmark -->
+	<main id="main-content" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 focus:outline-none">
+		{% block content %}
 		{% endblock %}
+	</main>
 
-		<!-- Main Content Landmark -->
-		<main id="main-content" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 focus:outline-none">
-			{% block content %}
-			{% endblock %}
-		</main>
-
-		{% block footer %}
-			{% include 'footer.html' %}
-		{% endblock %}
-	</div>
+	{% block footer %}
+		{% include 'footer.html' %}
+	{% endblock %}
+</div>
 </body>
 </html>

@@ -1,0 +1,337 @@
+{% extends "base.html.twig" %}
+
+{% block header %}
+	{% if not S_IN_SEARCH_POPUP %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<!-- phpBB Modern prosilver Tailwind: memberlist_body.html -->
+	<div class="space-y-6">
+		{% if S_IN_SEARCH_POPUP %}
+		<div class="p-4 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm">
+			{% include 'memberlist_search.html' ignore missing %}
+		</div>
+		<form method="post" id="results" action="{{ S_MODE_ACTION }}" onsubmit="insert_marked_users('#results', this.user); return false;" data-form-name="{{ S_FORM_NAME }}" data-field-name="{{ S_FIELD_NAME }}" class="space-y-4">
+			{% else %}
+			<div class="panel bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-4 sm:p-5 shadow-sm" id="memberlist_search"{% if not S_SEARCH_USER %} style="display: none;"{% endif %}>
+				{% include 'memberlist_search.html' ignore missing %}
+			</div>
+			<form method="post" action="{{ S_MODE_ACTION }}" class="space-y-4">
+				{% endif %}
+
+				{% EVENT memberlist_body_page_header_after %}
+
+				{% if S_SHOW_GROUP %}
+					<!-- Group Information Header Banner -->
+					<div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-sm">
+						<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+							<div class="space-y-2">
+								{% EVENT memberlist_body_group_name_before %}
+								<h2 class="group-title text-xl sm:text-2xl font-bold tracking-tight text-slate-800 dark:text-white" {% if GROUP_COLOR %}style="color: #{{ GROUP_COLOR }};"{% endif %}>
+									{{ GROUP_NAME }}
+								</h2>
+								{% EVENT memberlist_body_group_name_after %}
+
+								<div class="group-description text-sm text-slate-600 dark:text-slate-300 flex items-center gap-2 flex-wrap">
+									<span>{{ GROUP_DESC }}</span>
+									{% if GROUP_TYPE %}
+										<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+						{{ GROUP_TYPE }}
+					</span>
+									{% endif %}
+								</div>
+							</div>
+
+							{% if U_MANAGE %}
+								<div>
+									<a href="{{ U_MANAGE }}" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-prosilver-600 dark:text-prosilver-400 bg-prosilver-50 dark:bg-prosilver-950/50 border border-prosilver-200/60 dark:border-prosilver-800/60 hover:bg-prosilver-100 transition-colors">
+										<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+										</svg>
+										<span>{{ lang('MANAGE_GROUP') }}</span>
+									</a>
+								</div>
+							{% endif %}
+						</div>
+
+						{% EVENT memberlist_body_group_desc_after %}
+
+						<div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3">
+							{% include 'avatar.html' with {'avatar_data': AVATAR} only %}
+							{% EVENT memberlist_body_group_rank_before %}
+							{% if RANK_IMG %}
+								<span class="rank-img">{{ RANK_IMG }}</span>
+							{% endif %}
+							{% if GROUP_RANK %}
+								<span class="text-xs font-semibold text-slate-500 dark:text-slate-400">
+					{% if not RANK_IMG %}{{ lang('GROUP_RANK') ~ lang('COLON') }} {% endif %}
+									{{ GROUP_RANK }}
+				</span>
+							{% endif %}
+							{% EVENT memberlist_body_group_rank_after %}
+						</div>
+					</div>
+				{% else %}
+					<!-- Standard Memberlist Page Header & Controls -->
+					{% EVENT memberlist_body_page_title_before %}
+					<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+						<div>
+							<h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-800 dark:text-white">
+								{{ PAGE_TITLE }}
+								{% if SEARCH_WORDS %}
+									<span class="text-sm font-semibold text-slate-400 dark:text-slate-500">
+						{{ lang('COLON') }} <a href="{{ U_SEARCH_WORDS }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ SEARCH_WORDS }}</a>
+					</span>
+								{% endif %}
+							</h2>
+						</div>
+
+						<div class="flex items-center gap-3">
+							{% if U_FIND_MEMBER and not S_SEARCH_USER %}
+								<a href="{{ U_FIND_MEMBER }}" id="member_search" data-alt-text="{{ lang('HIDE_MEMBER_SEARCH') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750 transition-colors">
+									<svg class="w-3.5 h-3.5 text-prosilver-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+									</svg>
+									<span>{{ lang('FIND_USERNAME') }}</span>
+								</a>
+							{% elseif S_SEARCH_USER and U_HIDE_FIND_MEMBER and not S_IN_SEARCH_POPUP %}
+								<a href="{{ U_HIDE_FIND_MEMBER }}" id="member_search" data-alt-text="{{ lang('FIND_USERNAME') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750 transition-colors">
+									<span>{{ lang('HIDE_MEMBER_SEARCH') }}</span>
+								</a>
+							{% endif %}
+						</div>
+					</div>
+
+					<!-- Action Bar Top: Alphabetical Jump Index & Pagination Summary -->
+					<div class="action-bar bar-top flex flex-col md:flex-row md:items-center justify-between gap-3 p-3 bg-slate-50/90 dark:bg-slate-800/70 rounded-xl border border-slate-200/70 dark:border-slate-800">
+						<div class="member-search flex items-center gap-1 flex-wrap text-xs">
+							<span class="font-bold text-slate-400 mr-1 uppercase text-[10px] tracking-wider">{{ lang('INDEX')|default('Index') }}:</span>
+							{% for first_char in loops.first_char %}
+								<a href="{{ first_char.U_SORT }}" class="px-1.5 py-0.5 font-bold rounded text-slate-600 dark:text-slate-300 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-800 transition-colors">
+									{{ first_char.DESC }}
+								</a>
+							{% endfor %}
+						</div>
+
+						<div class="pagination flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400 self-end md:self-auto">
+							<span>{{ TOTAL_USERS }}</span>
+							{% if loops.pagination %}
+								{% include 'pagination.html' %}
+							{% else %}
+								<span>&bull; {{ PAGE_NUMBER }}</span>
+							{% endif %}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if S_LEADERS_SET or not S_SHOW_GROUP or not loops.memberrow %}
+				<!-- Memberlist Directory Table -->
+				<div class="forumbg forumbg-table bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+					<div class="inner overflow-x-auto">
+						<table class="table1 memberlist w-full text-left text-xs text-slate-600 dark:text-slate-300 divide-y divide-slate-100 dark:divide-slate-800/80" id="memberlist">
+							<thead class="bg-slate-50/90 dark:bg-slate-800/70 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+							<tr>
+								<th scope="col" class="name px-4 py-3">
+									<span class="rank-img mr-2"><a href="{{ U_SORT_RANK }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('RANK') }}</a></span>
+									<a href="{{ U_SORT_USERNAME }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">
+										{% if S_SHOW_GROUP and loops.memberrow %}{{ lang('GROUP_LEADER') }}{% else %}{{ lang('USERNAME') }}{% endif %}
+									</a>
+								</th>
+								<th scope="col" class="posts px-4 py-3 text-center sm:text-left"><a href="{{ U_SORT_POSTS }}#memberlist" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('POSTS') }}</a></th>
+								<th scope="col" class="info px-4 py-3 hidden md:table-cell">
+									{% for custom_fields in loops.custom_fields %}
+										{% if not custom_fields.S_FIRST_ROW %}{{ lang('COMMA_SEPARATOR') }} {% endif %}
+										{{ custom_fields.PROFILE_FIELD_NAME }}
+									{% endfor %}
+								</th>
+								<th scope="col" class="joined px-4 py-3 hidden sm:table-cell"><a href="{{ U_SORT_JOINED }}#memberlist" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('JOINED') }}</a></th>
+								{% if U_SORT_ACTIVE %}<th scope="col" class="active px-4 py-3 hidden lg:table-cell"><a href="{{ U_SORT_ACTIVE }}#memberlist" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('LAST_ACTIVE') }}</a></th>{% endif %}
+								{% EVENT memberlist_body_memberlist_after %}
+							</tr>
+							</thead>
+							<tbody class="divide-y divide-slate-100 dark:divide-slate-800/60">
+							{% endif %}
+
+							{% for memberrow in loops.memberrow %}
+							{% if S_SHOW_GROUP and not memberrow.S_GROUP_LEADER and not member_header_rendered %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			<!-- Secondary Table for General Group Members -->
+				<div class="forumbg forumbg-table bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
+					<div class="inner overflow-x-auto">
+						<table class="table1 memberlist w-full text-left text-xs text-slate-600 dark:text-slate-300 divide-y divide-slate-100 dark:divide-slate-800/80">
+							<thead class="bg-slate-50/90 dark:bg-slate-800/70 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+							<tr>
+								<th scope="col" class="name px-4 py-3">
+									<span class="rank-img mr-2"><a href="{{ U_SORT_RANK }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('RANK') }}</a></span>
+									<a href="{{ U_SORT_USERNAME }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('GROUP_MEMBERS') }}</a>
+								</th>
+								<th scope="col" class="posts px-4 py-3 text-center sm:text-left"><a href="{{ U_SORT_POSTS }}#memberlist" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('POSTS') }}</a></th>
+								<th scope="col" class="info px-4 py-3 hidden md:table-cell">
+									{% for field in custom_fields %}{% if not loop.first %}{{ lang('COMMA_SEPARATOR') }} {% endif %}{{ field.PROFILE_FIELD_NAME }}{% endfor %}
+								</th>
+								<th scope="col" class="joined px-4 py-3 hidden sm:table-cell"><a href="{{ U_SORT_JOINED }}#memberlist">{{ lang('JOINED') }}</a></th>
+								{% if U_SORT_ACTIVE %}<th scope="col" class="active px-4 py-3 hidden lg:table-cell"><a href="{{ U_SORT_ACTIVE }}#memberlist">{{ lang('LAST_ACTIVE') }}</a></th>{% endif %}
+								{% EVENT memberlist_body_show_group_after %}
+							</tr>
+							</thead>
+							<tbody class="divide-y divide-slate-100 dark:divide-slate-800/60">
+							{% set member_header_rendered = true %}
+							{% endif %}
+
+							<tr class="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors {% if memberrow.S_INACTIVE %}opacity-60 italic{% endif %}">
+								<td class="px-4 py-3.5">
+									<div class="flex items-center gap-3">
+										{% if S_IN_SEARCH_POPUP and not S_SELECT_SINGLE %}
+											<input type="checkbox" name="user" value="{{ memberrow.USERNAME }}" class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+										{% endif %}
+
+										<span class="rank-img shrink-0">
+					{% EVENT memberlist_body_rank_prepend %}
+											{% if memberrow.RANK_IMG %}
+												{{ memberrow.RANK_IMG }}
+											{% elseif memberrow.RANK_TITLE %}
+												<span class="px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
+							{{ memberrow.RANK_TITLE }}
+						</span>
+											{% endif %}
+											{% EVENT memberlist_body_rank_append %}
+				</span>
+
+										<div class="min-w-0">
+											{% EVENT memberlist_body_username_prepend %}
+											<div class="font-bold text-slate-800 dark:text-slate-100 hover:text-prosilver-600 dark:hover:text-prosilver-400">
+												{{ memberrow.USERNAME_FULL }}
+												{% if memberrow.S_INACTIVE %}
+													<span class="text-xs text-rose-500 font-normal">({{ lang('INACTIVE') }})</span>
+												{% endif %}
+											</div>
+											{% EVENT memberlist_body_username_append %}
+
+											{% if S_IN_SEARCH_POPUP %}
+												<div class="mt-1 text-[11px]">
+													[ <a href="#" onclick="insert_single_user('#results', '{{ memberrow.A_USERNAME }}'); return false;" class="font-bold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('SELECT') }}</a> ]
+												</div>
+											{% endif %}
+										</div>
+									</div>
+								</td>
+
+								<td class="posts px-4 py-3.5 text-center sm:text-left font-semibold">
+									{% if memberrow.POSTS and S_DISPLAY_SEARCH %}
+										<a href="{{ memberrow.U_SEARCH_USER }}" title="{{ lang('SEARCH_USER_POSTS') }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline font-bold">
+											{{ memberrow.POSTS }}
+										</a>
+									{% else %}
+										<span class="text-slate-600 dark:text-slate-400">{{ memberrow.POSTS|default(0) }}</span>
+									{% endif %}
+								</td>
+
+								<td class="info px-4 py-3.5 hidden md:table-cell text-xs text-slate-500 dark:text-slate-400">
+									{% for field in memberrow.custom_fields %}
+										<div>
+											{% if field.S_PROFILE_CONTACT %}
+												<a href="{{ field.PROFILE_FIELD_CONTACT }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">
+													{{ field.PROFILE_FIELD_VALUE }}
+												</a>
+											{% else %}
+												{{ field.PROFILE_FIELD_VALUE }}
+											{% endif %}
+										</div>
+									{% else %}
+										<span class="text-slate-300 dark:text-slate-600">&mdash;</span>
+									{% endfor %}
+								</td>
+
+								<td class="joined px-4 py-3.5 hidden sm:table-cell text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">
+									{{ memberrow.JOINED }}
+								</td>
+
+								{% if S_VIEWONLINE %}
+									<td class="active px-4 py-3.5 hidden lg:table-cell text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">
+										{{ memberrow.LAST_ACTIVE|default('&mdash;') }}
+									</td>
+								{% endif %}
+
+								{% EVENT memberlist_body_memberrow_after %}
+							</tr>
+							{% else %}
+								<tr>
+									<td colspan="{% if S_VIEWONLINE %}5{% else %}4{% endif %}" class="px-6 py-10 text-center text-sm font-medium text-slate-400 dark:text-slate-500">
+										{{ lang('NO_MEMBERS') }}
+									</td>
+								</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				{% if S_IN_SEARCH_POPUP and not S_SELECT_SINGLE %}
+					<!-- Popup Bulk Selection Controls -->
+					<fieldset class="display-actions flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-slate-50 dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-800">
+						<input type="submit" name="submit" value="{{ lang('SELECT_MARKED') }}" class="button1 button button-form-bold px-4 py-2 text-xs font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors" />
+						<div class="text-xs text-slate-500 dark:text-slate-400 space-x-2">
+							<a href="#" onclick="marklist('results', 'user', true); return false;" class="font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('MARK_ALL') }}</a>
+							<span>&bull;</span>
+							<a href="#" onclick="marklist('results', 'user', false); return false;" class="font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('UNMARK_ALL') }}</a>
+						</div>
+					</fieldset>
+				{% endif %}
+
+				{% if S_IN_SEARCH_POPUP %}
+			</form>
+			<form method="post" id="sort-results" action="{{ S_MODE_ACTION }}">
+				{% endif %}
+
+				{% if S_IN_SEARCH_POPUP and not S_SEARCH_USER %}
+					<!-- Popup Display & Sorting Options -->
+					<fieldset class="display-options flex items-center justify-end gap-3 p-4 bg-slate-50 dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+						<label for="sk" class="text-slate-600 dark:text-slate-400 font-medium">
+							{{ lang('SELECT_SORT_METHOD') ~ lang('COLON') }}
+							<select name="sk" id="sk" class="ml-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white">
+								{{ S_MODE_SELECT }}
+							</select>
+						</label>
+						<label for="sd" class="text-slate-600 dark:text-slate-400 font-medium">
+							{{ lang('ORDER') }}
+							<select name="sd" id="sd" class="ml-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white">
+								{{ S_ORDER_SELECT }}
+							</select>
+						</label>
+						<input type="submit" name="sort" value="{{ lang('SUBMIT') }}" class="button1 button button-form-bold px-3 py-1.5 text-xs font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg cursor-pointer transition-colors" />
+					</fieldset>
+				{% endif %}
+
+			</form>
+
+			<!-- Action Bar Bottom: Total Users & Pagination -->
+			<div class="action-bar bar-bottom flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-slate-50/90 dark:bg-slate-800/70 rounded-xl border border-slate-200/70 dark:border-slate-800">
+				<div class="text-xs text-slate-500 dark:text-slate-400 font-semibold">
+					{{ TOTAL_USERS }}
+				</div>
+				<div class="pagination flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+					{% if loops.pagination %}
+						{% include 'pagination.html' %}
+					{% else %}
+						<span>&bull; {{ PAGE_NUMBER }}</span>
+					{% endif %}
+				</div>
+			</div>
+
+			{% EVENT memberlist_body_page_footer_before %}
+	</div>
+{% endblock %}
+
+{% block footer %}
+	{% if not S_IN_SEARCH_POPUP %}
+		{% include 'jumpbox.html' ignore missing %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}

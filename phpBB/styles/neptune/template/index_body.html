@@ -1,5 +1,96 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
+	<!-- phpBB Modern prosilver Tailwind: index_body.html -->
+
+	<p class="text-xs text-slate-400 dark:text-slate-500 mb-3 text-right">{{ CURRENT_TIME }}</p>
+
+	<!-- EVENT index_body_markforums_before -->
+	{% if not S_IS_BOT and U_MARK_FORUMS %}
+		<div class="action-bar compact flex items-center justify-end mb-4">
+			<a href="{{ U_MARK_FORUMS }}" class="text-xs font-semibold text-slate-500 hover:text-sky-600 dark:text-slate-400 dark:hover:text-sky-400 transition-colors flex items-center gap-1.5" accesskey="m" data-ajax="mark_forums_read">
+				{{ Icon('font', 'check', '', true, 'w-3.5 h-3.5 text-sky-500') }}
+				{{ lang('MARK_FORUMS_READ') }}
+			</a>
+		</div>
+	{% endif %}
+	<!-- EVENT index_body_markforums_after -->
+
+	<!-- Board Index Main Forum Categories -->
 	{% include 'forumlist_body.html' %}
+
+	<!-- EVENT index_body_forumlist_body_after -->
+
+	<!-- EVENT index_body_online_list_before -->
+	{% if S_DISPLAY_ONLINE_LIST %}
+		<!-- Active Bottom Session Panel: Who is Online -->
+		<div class="stat-block online-list p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs text-sm text-slate-650 dark:text-slate-350 space-y-3.5 mt-6 transition-colors duration-200">
+			<div class="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+				{{ Icon('font', 'users', '', true, 'w-4 h-4 text-sky-500') }}
+				<h4 class="text-sm sm:text-base font-black text-slate-800 dark:text-slate-200">
+					{% if U_VIEWONLINE %}
+						<a href="{{ U_VIEWONLINE }}" class="hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{{ lang('WHO_IS_ONLINE') }}</a>
+					{% else %}
+						{{ lang('WHO_IS_ONLINE') }}
+					{% endif %}
+				</h4>
+			</div>
+			<p class="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+				{{ TOTAL_USERS_ONLINE }}
+				{% if S_USER_LOGGED_IN %}
+					({{ L_ONLINE_EXPLAIN }})
+				{% endif %}
+			</p>
+			{% if RECORD_USERS %}
+				<p class="text-xs text-slate-400 dark:text-slate-500">
+					{{ RECORD_USERS }}
+				</p>
+			{% endif %}
+			<p class="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300">
+				{{ LOGGED_IN_USER_LIST }}
+				{% if not S_USER_LOGGED_IN and not S_IS_BOT %}
+					<br />{{ lang('LOGIN_EXPLAIN_VIEWONLINE') }}
+				{% endif %}
+			</p>
+			{% if LEGEND %}
+				<p class="text-xs text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-800/60">
+					<span class="font-bold text-slate-600 dark:text-slate-300">{{ lang('LEGEND') }}:</span>
+					{% for group in LEGEND %}
+						{% if group.GROUP_URL %}
+							<a href="{{ group.GROUP_URL }}" style="color: #{{ group.GROUP_COLOR }}">{{ group.GROUP_NAME }}</a>
+						{% else %}
+							<span style="color: #{{ group.GROUP_COLOR }}">{{ group.GROUP_NAME }}</span>
+						{% endif %}{% if not loop.last %}, {% endif %}
+					{% endfor %}
+				</p>
+			{% endif %}
+		</div>
+	{% endif %}
+
+	<!-- EVENT index_body_birthday_block_before -->
+	{% if S_DISPLAY_BIRTHDAY_LIST and loops.birthdays|length %}
+		<div class="stat-block birthday-list p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs text-sm text-slate-650 dark:text-slate-350 space-y-2 mt-4 transition-colors duration-200">
+			<div class="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+				{{ Icon('font', 'cake-candles', '', true, 'w-4 h-4 text-pink-500') }}
+				<h4 class="text-sm sm:text-base font-black text-slate-800 dark:text-slate-200">{{ lang('BIRTHDAYS') }}</h4>
+			</div>
+			<p class="text-xs sm:text-sm leading-relaxed">
+				{% if loops.birthdays|length %}{{ lang('CONGRATULATIONS') }}{{ lang('COLON') }} {% for birthday in loops.birthdays %}{{ birthday.USERNAME }}{% if birthday.AGE is not null %} ({{ birthday.AGE }}){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}{% else %}{{ lang('NO_BIRTHDAYS') }}{% endif %}
+			</p>
+		</div>
+	{% endif %}
+
+	<!-- EVENT index_body_stat_blocks_before -->
+	{% if NEWEST_USER %}
+		<div class="stat-block statistics-list p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs text-sm text-slate-650 dark:text-slate-350 space-y-2 mt-4 transition-colors duration-200">
+			<div class="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
+				{{ Icon('font', 'chart-column', '', true, 'w-4 h-4 text-emerald-500') }}
+				<h4 class="text-sm sm:text-base font-black text-slate-800 dark:text-slate-200">{{ lang('STATISTICS') }}</h4>
+			</div>
+			<p class="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+				{{ TOTAL_POSTS }} &bull; {{ TOTAL_TOPICS }} &bull; {{ TOTAL_USERS }} &bull; {{ NEWEST_USER }}
+			</p>
+		</div>
+	{% endif %}
+	<!-- EVENT index_body_stat_blocks_after -->
 {% endblock %}

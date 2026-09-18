@@ -1,0 +1,54 @@
+<!-- phpBB Modern prosilver Tailwind: pagination.html partial -->
+<ul class="pagination-list flex items-center gap-1 list-none p-0 m-0 text-xs select-none" role="navigation" aria-label="Pagination">
+	{% if BASE_URL and TOTAL_PAGES > 6 %}
+		<li class="dropdown-container relative page-jump">
+			<button type="button" class="button button-icon-only dropdown-trigger h-8 px-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-prosilver-500 transition-colors flex items-center justify-center font-medium shadow-2xs" title="{{ lang('JUMP_TO_PAGE') }}" role="button" aria-haspopup="true" aria-expanded="false">
+				{{ Icon('font', 'level-down-alt fa-rotate-90', lang('JUMP_TO_PAGE'), true, 'w-3.5 h-3.5 text-slate-500 dark:text-slate-400') }}
+				<span class="sr-only">{{ lang('JUMP_TO_PAGE') }}</span>
+			</button>
+			<div class="dropdown hidden absolute left-0 bottom-full mb-2 z-50 p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl min-w-[200px]">
+				<div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
+					{{ lang('JUMP_TO_PAGE') }}{{ lang('COLON') }}
+				</div>
+				<div class="page-jump-form flex items-center gap-1.5">
+					<input type="number" name="page-number" min="1" max="999999" title="{{ lang('JUMP_PAGE_NUMBER') }}" class="inputbox w-20 px-2 py-1 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500" data-per-page="{{ PER_PAGE }}" data-base-url="{{ BASE_URL|e('html_attr') }}" data-start-name="{{ START_NAME }}" />
+					<input type="button" class="button2 px-2.5 py-1 text-xs font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg cursor-pointer transition-colors shadow-2xs" value="{{ lang('GO') }}" />
+				</div>
+			</div>
+		</li>
+	{% endif %}
+
+	{% for page in loops.pagination %}
+		{% if page.S_IS_PREV %}
+			<li class="arrow previous">
+				<a class="button button-icon-only flex items-center justify-center h-8 w-8 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-prosilver-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors shadow-2xs" href="{{ page.PAGE_URL }}" rel="prev" role="button" title="{{ lang('PREVIOUS') }}" aria-label="{{ lang('PREVIOUS') }}">
+					{{ Icon('font', 'chevron-left', lang('PREVIOUS'), true, 'w-3.5 h-3.5') }}
+					<span class="sr-only">{{ lang('PREVIOUS') }}</span>
+				</a>
+			</li>
+		{% elseif page.S_IS_CURRENT %}
+			<li class="active" aria-current="page">
+			<span class="flex items-center justify-center h-8 min-w-[2rem] px-2.5 rounded-lg bg-prosilver-600 text-white font-bold text-xs shadow-xs">
+				{{ page.PAGE_NUMBER }}
+			</span>
+			</li>
+		{% elseif page.S_IS_ELLIPSIS %}
+			<li class="ellipsis flex items-center justify-center h-8 px-1 text-slate-400 dark:text-slate-500 font-bold" role="separator">
+				<span>{{ lang('ELLIPSIS')|default('&hellip;') }}</span>
+			</li>
+		{% elseif page.S_IS_NEXT %}
+			<li class="arrow next">
+				<a class="button button-icon-only flex items-center justify-center h-8 w-8 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-prosilver-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors shadow-2xs" href="{{ page.PAGE_URL }}" rel="next" role="button" title="{{ lang('NEXT') }}" aria-label="{{ lang('NEXT') }}">
+					{{ Icon('font', 'chevron-right', lang('NEXT'), true, 'w-3.5 h-3.5') }}
+					<span class="sr-only">{{ lang('NEXT') }}</span>
+				</a>
+			</li>
+		{% else %}
+			<li class="page">
+				<a class="button flex items-center justify-center h-8 min-w-[2rem] px-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-semibold text-xs hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-prosilver-500 hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors shadow-2xs" href="{{ page.PAGE_URL }}" role="button">
+					{{ page.PAGE_NUMBER }}
+				</a>
+			</li>
+		{% endif %}
+	{% endfor %}
+</ul>

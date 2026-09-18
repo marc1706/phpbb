@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<form id="viewfolder" method="post" action="{{ S_PM_ACTION }}" class="space-y-4">
+		<!-- Folder Bar & Action Buttons -->
+		<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+			<div>
+				<h2 class="text-base sm:text-lg font-black text-slate-800 dark:text-white flex items-center gap-2">
+					{{ CUR_FOLDER_NAME }}
+					<span class="text-xs font-semibold text-slate-400">({{ TOTAL_MESSAGES }})</span>
+				</h2>
+			</div>
+			<div class="flex items-center gap-2">
+				{% if U_POST_NEW_TOPIC %}
+					<a href="{{ U_POST_NEW_TOPIC }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm transition-all">
+						{{ Icon('font', 'plus', '', true, 'w-4 h-4') }}
+						{{ lang('POST_NEW_PM')|default('New Message') }}
+					</a>
+				{% endif %}
+			</div>
+		</div>
+
+		{% if loops.messagerow %}
+			<!-- Messages Table Container -->
+			<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+				<table class="w-full text-left text-xs">
+					<thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-slate-800">
+					<tr>
+						<th class="p-3.5 pl-4">{{ lang('SUBJECT') }}</th>
+						<th class="p-3.5 hidden sm:table-cell">{{ lang('AUTHOR') }}</th>
+						<th class="p-3.5 hidden md:table-cell">{{ lang('SENT_AT') }}</th>
+						<th class="p-3.5 pr-4 text-right">{{ lang('MARK') }}</th>
+					</tr>
+					</thead>
+					<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+					{% for messagerow in loops.messagerow %}
+						<tr class="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors {% if messagerow.PM_CLASS %}{{ messagerow.PM_CLASS }}{% endif %}">
+							<!-- Subject Column -->
+							<td class="p-3.5 pl-4">
+								<div class="flex items-center gap-2.5">
+									{% if messagerow.S_UNREAD %}
+										<span class="w-2.5 h-2.5 rounded-full bg-prosilver-500 ring-4 ring-prosilver-100 dark:ring-prosilver-950 flex-shrink-0" title="{{ lang('UNREAD') }}"></span>
+									{% endif %}
+									<a href="{{ messagerow.U_VIEW }}" class="font-bold text-slate-800 dark:text-white hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors">
+										{{ messagerow.SUBJECT }}
+									</a>
+								</div>
+								<div class="sm:hidden text-[11px] text-slate-400 mt-1">
+									{{ messagerow.MESSAGE_AUTHOR_FULL }} • {{ messagerow.SENT_TIME }}
+								</div>
+							</td>
+							<!-- Author Column -->
+							<td class="p-3.5 hidden sm:table-cell whitespace-nowrap">
+								{{ messagerow.MESSAGE_AUTHOR_FULL }}
+							</td>
+							<!-- Sent Time Column -->
+							<td class="p-3.5 hidden md:table-cell whitespace-nowrap text-slate-500 dark:text-slate-400">
+								{{ messagerow.SENT_TIME }}
+							</td>
+							<!-- Checkbox Action -->
+							<td class="p-3.5 pr-4 text-right">
+								<input type="checkbox" name="marked_msg_id[]" value="{{ messagerow.MESSAGE_ID }}"
+									   class="rounded border-slate-300 text-prosilver-600 focus:ring-prosilver-500" />
+							</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Batch Actions & Controls -->
+			<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3">
+				<div class="flex items-center gap-2 text-xs">
+					<select name="mark_option" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200">
+						<option value="mark_important">{{ lang('MARK_IMPORTANT')|default('Mark as important') }}</option>
+						<option value="delete_marked">{{ lang('DELETE_MARKED')|default('Delete marked') }}</option>
+					</select>
+					<input type="submit" name="submit_mark" value="{{ lang('GO') }}"
+						   class="px-3 py-1.5 text-xs font-bold rounded-lg bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 cursor-pointer transition-colors" />
+				</div>
+
+				{% if TOTAL_PAGES > 1 %}
+					<div class="flex items-center gap-1 text-xs font-semibold">
+						{{ PAGINATION }}
+					</div>
+				{% endif %}
+			</div>
+
+		{% else %}
+			<div class="text-center py-12 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-xs">
+				{{ lang('NO_MESSAGES')|default('There are no messages in this folder.') }}
+			</div>
+		{% endif %}
+
+		{{ S_FORM_TOKEN }}
+	</form>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

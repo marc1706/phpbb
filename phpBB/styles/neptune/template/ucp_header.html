@@ -1,0 +1,110 @@
+<!-- EVENT ucp_header_before -->
+
+<div class="space-y-6">
+	<!-- UCP Page Banner & Title -->
+	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+		<div>
+			<h1 class="text-xl sm:text-2xl font-black text-slate-800 dark:text-white tracking-tight flex items-center gap-2.5">
+				{{ Icon('font', 'user', '', true, 'w-6 h-6 text-prosilver-600 dark:text-prosilver-400') }}
+				{{ lang('UCP') }}
+			</h1>
+			<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+				{{ PAGE_TITLE }}
+			</p>
+		</div>
+		<!-- Quick return button -->
+		<a href="{{ U_INDEX }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-prosilver-600 dark:text-prosilver-400 hover:text-prosilver-700 dark:hover:text-prosilver-300">
+			{{ Icon('font', 'arrow-left', '', true, 'w-4 h-4') }}
+			{{ lang('INDEX') }}
+		</a>
+	</div>
+
+	<!-- Primary Top Navigation Tabs (t_block1) -->
+	<div id="tabs" class="border-b border-slate-200 dark:border-slate-800 overflow-x-auto scrollbar-none">
+		<nav class="flex space-x-1 sm:space-x-2" aria-label="UCP Modules">
+			{% for t_block1 in loops.t_block1 %}
+				<a href="{{ t_block1.U_TITLE }}"
+				   class="px-4 py-2.5 text-xs sm:text-sm font-bold whitespace-nowrap rounded-t-lg transition-all border-b-2 {% if t_block1.S_SELECTED %}border-prosilver-600 text-prosilver-600 dark:border-prosilver-400 dark:text-prosilver-400 bg-prosilver-50/50 dark:bg-prosilver-950/30{% else %}border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700{% endif %}">
+					{{ t_block1.L_TITLE }}
+				</a>
+			{% endfor %}
+		</nav>
+	</div>
+
+	<!-- Main Content Container with Sidebar -->
+	<div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col md:flex-row">
+		<!-- Sidebar Navigation Menu (t_block2 & PM Folders) -->
+		<aside id="cp-menu" class="w-full md:w-64 bg-slate-50/70 dark:bg-slate-950/40 p-4 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 flex-shrink-0 space-y-6">
+			<!-- Sub-sections navigation -->
+			<div>
+				<h2 class="text-[11px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 pb-2">
+					{{ lang('OPTIONS') }}
+				</h2>
+				<nav id="navigation" class="space-y-1" role="navigation">
+					{% for t_block2 in loops.t_block2 %}
+						<a href="{{ t_block2.U_TITLE }}"
+						   class="flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-lg transition-colors {% if t_block2.S_SELECTED %}bg-prosilver-600 text-white font-bold shadow-sm{% else %}text-slate-700 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-white{% endif %}">
+							<span>{{ t_block2.L_TITLE }}</span>
+						</a>
+					{% endfor %}
+				</nav>
+			</div>
+
+			{% if S_PRIVMSGS %}
+				<!-- Private Message Folders & Storage Quota -->
+				<div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+					<h2 class="text-[11px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 pb-2 flex items-center justify-between">
+						<span>{{ lang('PM_FOLDERS')|default('Folders') }}</span>
+						{% if U_POST_NEW_TOPIC %}
+							<a href="{{ U_POST_NEW_TOPIC }}" class="text-[10px] text-prosilver-600 dark:text-prosilver-400 hover:underline font-bold capitalize">+ Compose</a>
+						{% endif %}
+					</h2>
+					<ul class="space-y-1">
+						{% for folder in loops.folder %}
+							<li>
+								<a href="{{ folder.U_FOLDER }}"
+								   class="flex items-center justify-between px-3 py-2 text-xs font-semibold rounded-lg transition-colors {% if folder.S_CUR_FOLDER %}bg-slate-200 dark:bg-slate-800 text-prosilver-700 dark:text-prosilver-300 font-bold{% else %}text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50{% endif %}">
+									<span class="truncate">{{ folder.FOLDER_NAME }}</span>
+									{% if folder.S_UNREAD_MESSAGES %}
+										<span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-prosilver-600 text-white">{{ folder.UNREAD_MESSAGES }}</span>
+									{% endif %}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+
+					{% if FOLDER_STATUS %}
+						<!-- PM Storage Quota Bar -->
+						<div class="mt-4 px-3 space-y-1.5">
+							<div class="flex items-center justify-between text-[11px] font-medium text-slate-500 dark:text-slate-400">
+								<span>{{ lang('FOLDER_STATUS')|default('Storage') }}</span>
+								<span>{{ FOLDER_PERCENT }}%</span>
+							</div>
+							<div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
+								<div class="bg-prosilver-600 h-1.5 rounded-full" style="width: {{ FOLDER_PERCENT }}%"></div>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			{% endif %}
+
+			<!-- Friend list / online quick widget if present -->
+			{% if loops.friends_online %}
+				<div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+					<h2 class="text-[11px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3 pb-2">
+						{{ lang('FRIENDS') }}
+					</h2>
+					<div class="px-3 text-xs space-y-1.5 text-slate-600 dark:text-slate-400">
+						{% for friend in loops.friends_online %}
+							<div class="flex items-center gap-1.5">
+								<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+								<span>{{ friend.USERNAME_FULL }}</span>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+		</aside>
+
+		<!-- Main UCP Working Area -->
+		<main id="cp-main" class="flex-1 p-5 sm:p-7 min-w-0">

@@ -10,7 +10,7 @@
 							<path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a.75.75 0 01-1.074-.765 5.99 5.99 0 013.11-4.708C4.168 14.168 3 11.237 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
 						</svg>
 					</div>
-					<span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white-light font-sans group-hover:text-prosilver-600 dark:group-hover:text-prosilver-400 transition-colors">
+					<span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white font-sans group-hover:text-prosilver-600 dark:group-hover:text-prosilver-400 transition-colors">
 						{{ SITENAME }}
 					</span>
 				</a>
@@ -46,17 +46,32 @@
 					</svg>
 				</button>
 
-				<!-- Notifications Trigger (Logged In) -->
+				<!-- Notifications Trigger Dropdown (Logged In) -->
 				{% if S_USER_LOGGED_IN %}
-					<a href="{{ U_VIEW_ALL_NOTIFICATIONS }}" aria-label="Notifications" class="p-2 relative rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
+					<div class="relative dropdown-container" id="notification_dropdown_parent">
+						<button id="notification_list_button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="{{ lang('NOTIFICATIONS') }}" title="{{ lang('NOTIFICATIONS') }}" class="p-2 relative rounded-lg text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all shadow-2xs">
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+							</svg>
+							{% if NOTIFICATIONS_COUNT %}
+								<span class="absolute -top-1 -right-1 flex h-5 min-w-[1.25rem] px-1 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white shadow-xs animate-in zoom-in-50 duration-150">
+							{{ NOTIFICATIONS_COUNT }}
+						</span>
+							{% endif %}
+						</button>
+
+						{% include 'notification_dropdown.html' %}
+					</div>
+
+					<!-- Private Messages Quick Access (Logged In) -->
+					<a href="{{ U_PRIVATEMSGS }}" aria-label="{{ lang('PRIVATE_MESSAGES') }}" title="{{ lang('PRIVATE_MESSAGES') }}" class="p-2 relative rounded-lg text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all shadow-2xs">
 						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+							<path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
 						</svg>
-						{% if NOTIFICATIONS_COUNT %}
-							<span class="absolute top-1.5 right-1.5 flex h-2 w-2">
-								<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-								<span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-							</span>
+						{% if PRIVATE_MESSAGE_COUNT %}
+							<span class="absolute -top-1 -right-1 flex h-5 min-w-[1.25rem] px-1 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white shadow-xs animate-in zoom-in-50 duration-150">
+						{{ PRIVATE_MESSAGE_COUNT }}
+					</span>
 						{% endif %}
 					</a>
 				{% endif %}
@@ -67,8 +82,8 @@
 						<button id="user-menu-button" aria-expanded="false" aria-haspopup="true" class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
 							<span class="sr-only">Open user menu</span>
 							<div class="w-8 h-8 rounded-full bg-prosilver-100 dark:bg-slate-700 flex items-center justify-center font-semibold text-sm text-prosilver-700 dark:text-prosilver-300">
-<!-- Render user avatar icon or letter -->
-							{{ S_USERNAME|first|upper|default('U') }}
+								<!-- Render user avatar icon or letter -->
+								{{ S_USERNAME|first|upper|default('U') }}
 							</div>
 							<span class="hidden md:inline text-sm font-medium text-slate-700 dark:text-slate-200">
 								{{ CURRENT_USERNAME_SIMPLE }}

@@ -6,9 +6,7 @@
 			<div class="flex items-center gap-3">
 				<a href="{{ U_INDEX }}" title="{{ L_INDEX }}" class="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-md p-1">
 					<div class="w-9 h-9 rounded-lg bg-prosilver-600 flex items-center justify-center text-white shadow-md shadow-prosilver-500/20 group-hover:bg-prosilver-500 transition-colors duration-200">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-5 h-5">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a.75.75 0 01-1.074-.765 5.99 5.99 0 013.11-4.708C4.168 14.168 3 11.237 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
-						</svg>
+						{{ Icon('font', 'comment-dots', '', true, 'w-5 h-5') }}
 					</div>
 					<span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white font-sans group-hover:text-prosilver-600 dark:group-hover:text-prosilver-400 transition-colors">
 						{{ SITENAME }}
@@ -23,9 +21,7 @@
 						<label for="keywords" class="sr-only">{{ L_SEARCH_MINI }}</label>
 						<input type="search" name="keywords" id="keywords" placeholder="{{ L_SEARCH_MINI }}..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 pl-10 pr-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
 						<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-slate-400">
-								<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.604 10.604z" />
-							</svg>
+							{{ Icon('font', 'search', '', true, 'w-4 h-4 text-slate-400') }}
 						</div>
 						{{ S_SEARCH_HIDDEN_FIELDS }}
 					</form>
@@ -37,22 +33,16 @@
 				<!-- Color Mode Switcher -->
 				<button id="theme-toggle" type="button" aria-label="Toggle visual theme" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
 					<!-- Sun Icon -->
-					<svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-						<path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464L4.343 5.757a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414-1.414zm0 7.072l-.707.707a1 1 0 101.414 1.414l.707-.707a1 1 0 00-1.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
-					</svg>
+					<span id="theme-toggle-light-icon" class="hidden">{{ Icon('font', 'sun', '', true, 'w-5 h-5') }}</span>
 					<!-- Moon Icon -->
-					<svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-						<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-					</svg>
+					<span id="theme-toggle-dark-icon" class="hidden">{{ Icon('font', 'moon', '', true, 'w-5 h-5') }}</span>
 				</button>
 
 				<!-- Notifications Trigger Dropdown (Logged In) -->
 				{% if S_USER_LOGGED_IN %}
 					<div class="relative dropdown-container" id="notification_dropdown_parent">
 						<button id="notification_list_button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="{{ lang('NOTIFICATIONS') }}" title="{{ lang('NOTIFICATIONS') }}" class="p-2 relative rounded-lg text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all shadow-2xs">
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-								<path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-							</svg>
+							{{ Icon('font', 'bell', '', true, 'w-5 h-5') }}
 							{% if NOTIFICATIONS_COUNT %}
 								<span class="absolute -top-1 -right-1 flex h-5 min-w-[1.25rem] px-1 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white shadow-xs animate-in zoom-in-50 duration-150">
 							{{ NOTIFICATIONS_COUNT }}
@@ -65,9 +55,7 @@
 
 					<!-- Private Messages Quick Access (Logged In) -->
 					<a href="{{ U_PRIVATEMSGS }}" aria-label="{{ lang('PRIVATE_MESSAGES') }}" title="{{ lang('PRIVATE_MESSAGES') }}" class="p-2 relative rounded-lg text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all shadow-2xs">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-						</svg>
+						{{ Icon('font', 'envelope', '', true, 'w-5 h-5') }}
 						{% if PRIVATE_MESSAGE_COUNT %}
 							<span class="absolute -top-1 -right-1 flex h-5 min-w-[1.25rem] px-1 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white shadow-xs animate-in zoom-in-50 duration-150">
 						{{ PRIVATE_MESSAGE_COUNT }}
@@ -88,9 +76,7 @@
 							<span class="hidden md:inline text-sm font-medium text-slate-700 dark:text-slate-200">
 								{{ CURRENT_USERNAME_SIMPLE }}
 							</span>
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-slate-400">
-								<path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-							</svg>
+							{{ Icon('font', 'chevron-down', '', true, 'w-4 h-4 text-slate-400') }}
 						</button>
 						<!-- Profile Dropdown Panel (Framework-free toggle) -->
 						<div id="user-menu" class="hidden absolute right-0 mt-2 w-56 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl py-1 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
@@ -127,12 +113,8 @@
 				<!-- Mobile Main Menu Trigger -->
 				<button id="mobile-menu-button" type="button" aria-expanded="false" class="md:hidden p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
 					<span class="sr-only">Open main menu</span>
-					<svg id="hamburger-icon" class="block h-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-					</svg>
-					<svg id="close-icon" class="hidden h-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-					</svg>
+					<span id="hamburger-icon" class="block">{{ Icon('font', 'bars', '', true, 'h-5 w-5') }}</span>
+					<span id="close-icon" class="hidden">{{ Icon('font', 'xmark', '', true, 'h-5 w-5') }}</span>
 				</button>
 			</div>
 		</div>
@@ -164,9 +146,7 @@
 					<label for="mobile-keywords" class="sr-only">Search forum</label>
 					<input type="search" name="keywords" id="mobile-keywords" placeholder="Search board..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 pl-10 pr-4 text-slate-800 dark:text-slate-100 placeholder-slate-400" />
 					<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-slate-400">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.604 10.604z" />
-						</svg>
+						{{ Icon('font', 'search', '', true, 'w-4 h-4 text-slate-400') }}
 					</div>
 				</form>
 			</div>
@@ -180,17 +160,13 @@
 		<ol class="flex items-center flex-wrap gap-2 text-xs md:text-sm font-medium text-slate-500 dark:text-slate-400">
 			<li class="flex items-center">
 				<a href="{{ U_INDEX }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-sm">
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor" class="w-4 h-4">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-					</svg>
+					{{ Icon('font', 'home', '', true, 'w-4 h-4') }}
 					Board index
 				</a>
 			</li>
 			{% for navlink in navlinks %}
 				<li class="flex items-center gap-2">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 text-slate-400 dark:text-slate-600">
-						<path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
-					</svg>
+					{{ Icon('font', 'chevron-right', '', true, 'w-4 h-4 text-slate-400 dark:text-slate-600') }}
 					<a href="{{ navlink.U_BREADCRUMB|default(navlink.U_VIEW_FORUM) }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-sm">
 						{{ navlink.BREADCRUMB_NAME|default(navlink.FORUM_NAME) }}
 					</a>

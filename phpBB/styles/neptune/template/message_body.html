@@ -14,9 +14,7 @@
 				<div class="flex items-start gap-4">
 					<!-- System Notice Icon Badge -->
 					<div class="w-10 h-10 rounded-xl bg-prosilver-50 dark:bg-prosilver-950/50 text-prosilver-600 dark:text-prosilver-400 border border-prosilver-200/60 dark:border-prosilver-800/60 flex items-center justify-center shrink-0 mt-0.5" aria-hidden="true">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-						</svg>
+						{{ Icon('font', 'circle-info', '', true, 'w-5 h-5') }}
 					</div>
 
 					<!-- Message Content -->
@@ -32,9 +30,7 @@
 						{% if SCRIPT_NAME == "search" and not S_BOARD_DISABLED and not S_NO_SEARCH and L_RETURN_TO_SEARCH_ADV %}
 							<p class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800/80">
 								<a href="{{ U_SEARCH }}" class="arrow-{{ S_CONTENT_FLOW_BEGIN }} inline-flex items-center gap-2 text-sm font-semibold text-prosilver-600 dark:text-prosilver-400 hover:text-prosilver-700 dark:hover:text-prosilver-300 transition-colors group" accesskey="r">
-									<svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5 rtl:group-hover:translate-x-0.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-										<path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-									</svg>
+									{{ Icon('font', 'arrow-left', '', true, 'w-4 h-4 transition-transform group-hover:-translate-x-0.5 rtl:group-hover:translate-x-0.5 rtl:rotate-180') }}
 									<span>{{ lang('GO_TO_SEARCH_ADV') }}</span>
 								</a>
 							</p>

@@ -1,0 +1,93 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<div class="space-y-6">
+		<div>
+			<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ L_TITLE }}</h2>
+		</div>
+
+		<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+			<p class="text-sm text-slate-700 dark:text-slate-300">{{ L_UCP_WELCOME }}</p>
+
+			{% if loops.topicrow %}
+				<section>
+					<h3 class="mb-3 text-sm font-black text-slate-800 dark:text-white">{{ lang('IMPORTANT_NEWS') }}</h3>
+					<ul class="divide-y divide-slate-100 dark:divide-slate-800 rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+						{% for topicrow in loops.topicrow %}
+							<li class="p-3 sm:p-4 {% if topicrow.S_ROW_COUNT is odd %}bg-slate-50/70 dark:bg-slate-800/30{% else %}bg-white dark:bg-slate-900{% endif %}">
+								<div class="flex items-start justify-between gap-4">
+									<div class="min-w-0">
+										<div class="flex items-center gap-2">
+											<a href="{{ topicrow.U_NEWEST_POST }}" title="{{ topicrow.TOPIC_FOLDER_IMG_ALT }}" class="flex-shrink-0 text-prosilver-600 dark:text-prosilver-400">
+												{{ Icon('svg', {
+													'globe' : topicrow.S_POST_GLOBAL,
+													'bullhorn' : topicrow.S_POST_ANNOUNCE,
+													'thumbtack' : topicrow.S_POST_STICKY,
+													'lock' : topicrow.S_TOPIC_LOCKED,
+													'arrow-right-bold' : topicrow.S_TOPIC_MOVED,
+													'fire' : topicrow.S_TOPIC_HOT,
+													'file-document-outline' : true,
+												}, '', true, 'w-5 h-5') }}
+											</a>
+											{% if topicrow.TOPIC_ICON_IMG and topicrow.S_TOPIC_ICONS %}
+												<img src="{{ T_ICONS_PATH }}{{ topicrow.TOPIC_ICON_IMG }}" alt="" class="w-4 h-4 flex-shrink-0">
+											{% endif %}
+											{% if topicrow.S_UNREAD %}
+												<a href="{{ topicrow.U_NEWEST_POST }}" class="font-bold text-sm text-prosilver-600 dark:text-prosilver-400 hover:underline truncate">{{ topicrow.TOPIC_TITLE }}</a>
+											{% else %}
+												<a href="{{ topicrow.U_VIEW_TOPIC }}" class="font-bold text-sm text-slate-800 dark:text-white hover:text-prosilver-600 dark:hover:text-prosilver-400 truncate">{{ topicrow.TOPIC_TITLE }}</a>
+											{% endif %}
+											{% if lang(topicrow.TOPIC_AUTHOR) == S_USERNAME %}<span class="sr-only">{{ lang('AUTHOR') }}</span>{% endif %}
+										</div>
+										{% if topicrow.pagination %}
+											<div class="flex items-center gap-1 mt-2 text-xs">
+												{{ Icon('font', 'clone', '', true, 'text-slate-400') }}
+												{% for pagination in topicrow.pagination %}
+													{% if pagination.S_IS_CURRENT %}
+														<span class="px-1.5 py-0.5 rounded bg-prosilver-600 text-white">{{ pagination.PAGE_NUMBER }}</span>
+													{% elseif not pagination.S_IS_PREV and not pagination.S_IS_NEXT and not pagination.S_IS_ELLIPSIS %}
+														<a href="{{ pagination.PAGE_URL }}" class="px-1.5 py-0.5 rounded text-prosilver-600 dark:text-prosilver-400 hover:bg-prosilver-50 dark:hover:bg-slate-800">{{ pagination.PAGE_NUMBER }}</a>
+													{% elseif pagination.S_IS_ELLIPSIS %}
+														<span class="text-slate-400">{{ lang('ELLIPSIS') }}</span>
+													{% endif %}
+												{% endfor %}
+											</div>
+										{% endif %}
+										<div class="mt-2 text-xs text-slate-500 dark:text-slate-400">
+											{% if topicrow.ATTACH_ICON_IMG %}{{ Icon('font', 'paperclip', '', true) }} {% endif %}
+											{{ lang('POST_BY_AUTHOR') }} {{ topicrow.TOPIC_AUTHOR_FULL }} &raquo; {{ topicrow.FIRST_POST_TIME }}
+										</div>
+									</div>
+									<div class="hidden sm:block flex-shrink-0 text-right text-xs text-slate-500 dark:text-slate-400">
+										<div>{{ lang('LAST_POST') }} {{ lang('POST_BY_AUTHOR') }} {{ topicrow.LAST_POST_AUTHOR_FULL }}</div>
+										<a href="{{ topicrow.U_LAST_POST }}" title="{{ lang('GOTO_LAST_POST') }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ topicrow.LAST_POST_TIME }}</a>
+									</div>
+								</div>
+							</li>
+						{% endfor %}
+					</ul>
+				</section>
+			{% endif %}
+
+			<section>
+				<h3 class="mb-3 text-sm font-black text-slate-800 dark:text-white">{{ lang('YOUR_DETAILS') }}</h3>
+				<!-- EVENT ucp_main_front_user_activity_before -->
+				<dl class="grid grid-cols-1 sm:grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-sm">
+					<!-- EVENT ucp_main_front_user_activity_prepend -->
+					<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('JOINED') }}{{ lang('COLON') }}</dt><dd class="text-slate-800 dark:text-slate-200">{{ JOINED }}</dd>
+					<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('LAST_ACTIVE') }}{{ lang('COLON') }}</dt><dd class="text-slate-800 dark:text-slate-200">{{ LAST_VISIT_YOU }}</dd>
+					<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('TOTAL_POSTS') }}{{ lang('COLON') }}</dt><dd class="text-slate-800 dark:text-slate-200">{{ POSTS }}{% if POSTS_PCT %}{% if S_DISPLAY_SEARCH %} | <strong><a href="{{ U_SEARCH_USER }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('SEARCH_YOUR_POSTS') }}</a></strong>{% endif %}<br>({{ POSTS_DAY }} / {{ POSTS_PCT }}){% endif %}</dd>
+					{% if ACTIVE_FORUM != '' %}<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('ACTIVE_IN_FORUM') }}{{ lang('COLON') }}</dt><dd><strong><a href="{{ U_ACTIVE_FORUM }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ ACTIVE_FORUM }}</a></strong><br>({{ ACTIVE_FORUM_POSTS }} / {{ ACTIVE_FORUM_PCT }})</dd>{% endif %}
+					{% if ACTIVE_TOPIC != '' %}<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('ACTIVE_IN_TOPIC') }}{{ lang('COLON') }}</dt><dd><strong><a href="{{ U_ACTIVE_TOPIC }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ ACTIVE_TOPIC }}</a></strong><br>({{ ACTIVE_TOPIC_POSTS }} / {{ ACTIVE_TOPIC_PCT }})</dd>{% endif %}
+					{% if WARNINGS %}<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('YOUR_WARNINGS') }}{{ lang('COLON') }}</dt><dd class="text-red-600 dark:text-red-400">{{ Icon('font', 'exclamation-triangle', '', true) }} [{{ WARNINGS }}]</dd>{% endif %}
+					<!-- EVENT ucp_main_front_user_activity_append -->
+				</dl>
+				<!-- EVENT ucp_main_front_user_activity_after -->
+			</section>
+		</div>
+	</div>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

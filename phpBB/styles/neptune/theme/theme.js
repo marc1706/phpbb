@@ -64,7 +64,36 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
-	// 3. Mobile Hamburger Menu Toggler
+	// 3. Notification Dropdown
+	const notificationBtn = document.getElementById('notification_list_button');
+	const notificationMenu = document.getElementById('notification_list');
+	const notificationParent = document.getElementById('notification_dropdown_parent');
+
+	if (notificationBtn && notificationMenu && notificationParent) {
+		notificationBtn.addEventListener('click', (e) => {
+			e.stopPropagation();
+			const isExpanded = notificationBtn.getAttribute('aria-expanded') === 'true';
+			notificationBtn.setAttribute('aria-expanded', !isExpanded);
+			notificationMenu.classList.toggle('hidden');
+		});
+
+		document.addEventListener('click', (event) => {
+			if (!notificationParent.contains(event.target)) {
+				notificationBtn.setAttribute('aria-expanded', 'false');
+				notificationMenu.classList.add('hidden');
+			}
+		});
+
+		notificationParent.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+				notificationBtn.setAttribute('aria-expanded', 'false');
+				notificationMenu.classList.add('hidden');
+				notificationBtn.focus();
+			}
+		});
+	}
+
+	// 4. Mobile Hamburger Menu Toggler
 	const mobileMenuBtn = document.getElementById('mobile-menu-button');
 	const mobileMenu = document.getElementById('mobile-menu');
 	const hamburgerIcon = document.getElementById('hamburger-icon');
@@ -86,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
-	// 4. phpBB Accessibility Helper - Keyboard Tab Traps and focus landmarks
+	// 5. phpBB Accessibility Helper - Keyboard Tab Traps and focus landmarks
 	const focusables = document.querySelectorAll('a[href], button, input, textarea, select');
 	focusables.forEach(elem => {
 		elem.addEventListener('focus', () => {

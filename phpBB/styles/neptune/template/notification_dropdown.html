@@ -1,7 +1,7 @@
 {# phpBB 3.3.x / 4.x Modern Tailwind Style: notification_dropdown.html #}
-<div id="notification-menu" class="dropdown dropdown-extended dropdown-up notification-menu absolute end-2 sm:end-4 mt-2 w-[calc(100vw-1rem)] max-w-[380px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl z-50 overflow-hidden leading-normal text-slate-800 dark:text-slate-100 hidden" role="menu" aria-label="{{ lang('NOTIFICATIONS') }}">
+<div id="notification-menu" class="dropdown dropdown-extended dropdown-up notification-menu fixed start-2 end-2 top-[4.5rem] w-auto max-w-none sm:absolute sm:start-auto sm:end-0 sm:top-full sm:mt-2 sm:w-[380px] sm:max-w-[380px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl z-50 overflow-hidden leading-normal text-slate-800 dark:text-slate-100 hidden" role="menu" aria-label="{{ lang('NOTIFICATIONS') }}">
 	<!-- Pointer Caret Arrow (Aligned under Bell Trigger) -->
-	<div class="pointer absolute -top-1.5 end-3.5 sm:end-auto sm:start-7 w-3.5 h-3.5 bg-slate-100 dark:bg-slate-800 border-t border-s border-slate-200 dark:border-slate-700 transform rotate-45 z-20"></div>
+	<div class="pointer hidden sm:block absolute -top-1.5 end-7 w-3.5 h-3.5 bg-slate-100 dark:bg-slate-800 border-t border-s border-slate-200 dark:border-slate-700 transform rotate-45 z-20"></div>
 
 	<div class="dropdown-contents relative z-10">
 		<!-- Notification Header Bar: NOTIFICATIONS (left) & Settings • Mark all read (right) -->

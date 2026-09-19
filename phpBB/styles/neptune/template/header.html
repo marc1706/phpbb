@@ -4,7 +4,7 @@
 		<div class="flex items-center justify-between h-16">
 			<!-- Brand Header Logo -->
 			<div class="flex items-center gap-3">
-				<!-- EVENT navbar_header_quick_links_before -->
+				{% EVENT navbar_header_quick_links_before %}
 				<!-- Quick links (desktop only; on mobile the same items live in the header menu) -->
 				<div class="relative hidden md:block dropdown-container" id="quick-links-parent">
 					<button id="quick-links-button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="{{ lang('QUICK_LINKS') }}" title="{{ lang('QUICK_LINKS') }}" class="flex items-center p-2 -ms-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
@@ -119,9 +119,9 @@
 						</ul>
 					</div>
 				</div>
-				<!-- EVENT navbar_header_quick_links_after -->
+				{% EVENT navbar_header_quick_links_after %}
 
-				<a href="{{ U_INDEX }}" title="{{ L_INDEX }}" class="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-md p-1">
+				<a href="{{ U_INDEX }}" title="{{ lang('INDEX') }}" class="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-md p-1">
 					<div class="w-9 h-9 rounded-lg bg-prosilver-600 flex items-center justify-center text-white shadow-md shadow-prosilver-500/20 group-hover:bg-prosilver-500 transition-colors duration-200">
 						{{ Icon('font', 'comment-dots', '', true, 'w-5 h-5') }}
 					</div>
@@ -135,8 +135,8 @@
 			{% if S_DISPLAY_SEARCH and not S_IN_SEARCH %}
 				<div class="hidden md:block flex-1 max-w-sm mx-8">
 					<form action="{{ U_SEARCH }}" method="get" id="search" role="search" class="relative">
-						<label for="keywords" class="sr-only">{{ L_SEARCH_MINI }}</label>
-						<input type="search" name="keywords" id="keywords" placeholder="{{ L_SEARCH_MINI }}..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 ps-10 pe-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+						<label for="keywords" class="sr-only">{{ lang('SEARCH_MINI') }}</label>
+						<input type="search" name="keywords" id="keywords" placeholder="{{ lang('SEARCH_MINI') }}..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 ps-10 pe-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
 						<div class="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none">
 							{{ Icon('font', 'search', '', true, 'w-4 h-4 text-slate-400') }}
 						</div>
@@ -157,8 +157,8 @@
 
 				<!-- Notifications Trigger Dropdown (Logged In) -->
 				{% if S_REGISTERED_USER and S_NOTIFICATIONS_DISPLAY %}
-					<div class="relative dropdown-container" id="notification_dropdown_parent">
-						<button id="notification_list_button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="{{ lang('NOTIFICATIONS') }}" title="{{ lang('NOTIFICATIONS') }}" class="p-2 relative rounded-lg text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all shadow-2xs">
+					<div class="relative dropdown-container" id="notification-dropdown-parent">
+						<button id="notification-button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="{{ lang('NOTIFICATIONS') }}" title="{{ lang('NOTIFICATIONS') }}" class="p-2 relative rounded-lg text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all shadow-2xs">
 							{{ Icon('font', 'bell', '', true, 'w-5 h-5') }}
 							{% if NOTIFICATIONS_COUNT %}
 								<span class="absolute -top-1 -end-1 flex h-5 min-w-[1.25rem] px-1 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white shadow-xs animate-in zoom-in-50 duration-150">
@@ -200,7 +200,7 @@
 						<!-- Profile Dropdown Panel (Framework-free toggle) -->
 						<div id="user-menu" class="hidden absolute end-0 mt-2 w-56 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl py-1 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
 							<div class="px-4 py-2.5 border-b border-slate-100 dark:border-slate-800">
-								<p class="text-xs text-slate-400 dark:text-slate-500">{{ L_LOGGED_IN_AS }}</p>
+								<p class="text-xs text-slate-400 dark:text-slate-500">{{ lang('LOGGED_IN_AS') }}</p>
 								<p class="text-sm font-semibold text-slate-800 dark:text-white truncate">{{ CURRENT_USERNAME_SIMPLE }}</p>
 							</div>
 							{% if U_RESTORE_PERMISSIONS %}
@@ -209,7 +209,7 @@
 									{{ lang('RESTORE_PERMISSIONS') }}
 								</a>
 							{% endif %}
-							<!-- EVENT navbar_header_profile_list_before -->
+							{% EVENT navbar_header_profile_list_before %}
 							<a href="{{ U_PROFILE }}" title="{{ lang('PROFILE') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
 								{{ Icon('font', 'sliders', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
 								{{ lang('PROFILE') }}
@@ -227,11 +227,11 @@
 									<span class="ms-auto text-xs font-semibold px-2 py-0.5 rounded-full bg-prosilver-100 text-prosilver-700 dark:bg-prosilver-950 dark:text-prosilver-400">{{ PRIVATE_MESSAGE_COUNT|default(0) }}</span>
 								</a>
 							{% endif %}
-							<!-- EVENT navbar_header_profile_list_after -->
+							{% EVENT navbar_header_profile_list_after %}
 							<div class="border-t border-slate-100 dark:border-slate-800 mt-1"></div>
-							<a href="{{ U_LOGIN_LOGOUT }}" title="{{ L_LOGIN_LOGOUT }}" accesskey="x" class="flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors">
+							<a href="{{ U_LOGIN_LOGOUT }}" title="{{ lang('LOGIN_LOGOUT') }}" accesskey="x" class="flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors">
 								{{ Icon('font', 'power-off', '', true, 'w-4 h-4 flex-shrink-0') }}
-								{{ L_LOGIN_LOGOUT }}
+								{{ lang('LOGIN_LOGOUT') }}
 							</a>
 						</div>
 					</div>
@@ -239,11 +239,11 @@
 					<!-- Login and Reg Buttons -->
 					<div class="flex items-center gap-2">
 						<a href="{{ U_LOGIN_LOGOUT }}" class="px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
-							{{ L_LOGIN_LOGOUT }}
+							{{ lang('LOGIN_LOGOUT') }}
 						</a>
 						{% if S_REGISTER_ENABLED and not S_SHOW_COPPA %}
 							<a href="{{ U_REGISTER }}" class="px-4 py-2 text-sm font-semibold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm shadow-prosilver-600/10 hover:shadow-md hover:shadow-prosilver-500/15 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
-								{{ L_REGISTER }}
+								{{ lang('REGISTER') }}
 							</a>
 						{% endif %}
 					</div>
@@ -292,8 +292,8 @@
 		{% if S_DISPLAY_SEARCH and not S_IN_SEARCH %}
 			<div class="px-4 py-3 border-t border-slate-100 dark:border-slate-800 mt-1">
 				<form action="{{ U_SEARCH }}" method="get" role="search" class="relative">
-					<label for="mobile-keywords" class="sr-only">{{ L_SEARCH_MINI }}</label>
-					<input type="search" name="keywords" id="mobile-keywords" placeholder="{{ L_SEARCH_MINI }}..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 ps-10 pe-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+					<label for="mobile-keywords" class="sr-only">{{ lang('SEARCH_MINI') }}</label>
+					<input type="search" name="keywords" id="mobile-keywords" placeholder="{{ lang('SEARCH_MINI') }}..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 ps-10 pe-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
 					<div class="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none">
 						{{ Icon('font', 'search', '', true, 'w-4 h-4 text-slate-400') }}
 					</div>
@@ -306,11 +306,11 @@
 		<div class="px-4 py-3 border-t border-slate-100 dark:border-slate-800 mt-1 space-y-1">
 			{% if S_USER_LOGGED_IN %}
 				<a href="{{ U_LOGIN_LOGOUT }}" accesskey="x" class="block px-3 py-2.5 rounded-lg text-base font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20">
-					{{ L_LOGIN_LOGOUT }}
+					{{ lang('LOGIN_LOGOUT') }}
 				</a>
 			{% elseif not S_IS_BOT %}
 				<a href="{{ U_LOGIN_LOGOUT }}" accesskey="x" class="block px-3 py-2.5 rounded-lg text-base font-semibold text-prosilver-600 dark:text-prosilver-400 hover:bg-slate-50 dark:hover:bg-slate-800">
-					{{ L_LOGIN_LOGOUT }}
+					{{ lang('LOGIN_LOGOUT') }}
 				</a>
 				{% if S_REGISTER_ENABLED and not S_SHOW_COPPA %}
 					<a href="{{ U_REGISTER }}" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">

@@ -16,10 +16,95 @@
 	{% endif %}
 	<!-- EVENT index_body_markforums_after -->
 
+	<!-- EVENT index_body_forumlist_body_before -->
+
 	<!-- Board Index Main Forum Categories -->
 	{% include 'forumlist_body.html' %}
 
 	<!-- EVENT index_body_forumlist_body_after -->
+
+	{% if not S_USER_LOGGED_IN and not S_IS_BOT %}
+		<!-- Quick Login Panel (guests only) -->
+		<div class="quick-login-block mt-6 p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs transition-colors duration-200">
+			<div class="flex items-center justify-between gap-3 pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+				<div class="flex items-center gap-2">
+					{{ Icon('font', 'right-to-bracket', '', true, 'w-4 h-4 text-prosilver-500') }}
+					<h4 class="text-sm sm:text-base font-black text-slate-800 dark:text-slate-200">
+						<a href="{{ U_LOGIN_LOGOUT }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors">{{ L_LOGIN_LOGOUT }}</a>
+					</h4>
+				</div>
+				{% if S_REGISTER_ENABLED %}
+					<a href="{{ U_REGISTER }}" class="text-xs font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline flex items-center gap-1.5 transition-colors">
+						{{ Icon('font', 'user-plus', '', true, 'w-3.5 h-3.5') }}
+						{{ L_REGISTER }}
+					</a>
+				{% endif %}
+			</div>
+
+			<form method="post" action="{{ S_LOGIN_ACTION }}" id="quick-login">
+				<fieldset class="quick-login border-0 p-0 m-0">
+					<legend class="sr-only">{{ L_LOGIN_LOGOUT }}</legend>
+
+					<div class="flex flex-col md:flex-row md:items-end gap-3 md:gap-4">
+						<!-- Username -->
+						<div class="flex-1 min-w-0">
+							<label for="username" class="block text-[11px] uppercase font-extrabold tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">
+								{{ L_USERNAME }}
+							</label>
+							<div class="relative">
+								<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+									{{ Icon('font', 'user', '', true, 'w-4 h-4 text-slate-400') }}
+								</div>
+								<input type="text" tabindex="1" name="username" id="username" title="{{ L_USERNAME }}" autocomplete="username"
+									class="inputbox w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 pl-10 pr-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+							</div>
+						</div>
+
+						<!-- Password -->
+						<div class="flex-1 min-w-0">
+							<label for="password" class="block text-[11px] uppercase font-extrabold tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">
+								{{ L_PASSWORD }}
+							</label>
+							<div class="relative">
+								<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+									{{ Icon('font', 'key', '', true, 'w-4 h-4 text-slate-400') }}
+								</div>
+								<input type="password" tabindex="2" name="password" id="password" title="{{ L_PASSWORD }}" autocomplete="current-password"
+									class="inputbox w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 pl-10 pr-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+							</div>
+						</div>
+
+						<!-- Submit -->
+						<div class="md:flex-shrink-0">
+							<button type="submit" tabindex="5" name="login" value="{{ L_LOGIN }}"
+								class="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm shadow-prosilver-600/10 hover:shadow-md hover:shadow-prosilver-500/15 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all cursor-pointer">
+								{{ Icon('font', 'right-to-bracket', '', true, 'w-4 h-4') }}
+								{{ L_LOGIN }}
+							</button>
+						</div>
+					</div>
+
+					<div class="flex items-center flex-wrap gap-x-4 gap-y-2 mt-3.5">
+						{% if S_AUTOLOGIN_ENABLED %}
+							<label for="autologin" class="flex items-center gap-2 text-xs font-medium text-slate-600 dark:text-slate-400 cursor-pointer select-none">
+								<input type="checkbox" tabindex="4" name="autologin" id="autologin" checked
+									class="w-4 h-4 rounded border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-800 text-prosilver-600 focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-0 transition-all cursor-pointer" />
+								{{ L_LOG_ME_IN }}
+							</label>
+						{% endif %}
+						{% if U_SEND_PASSWORD %}
+							<a href="{{ U_SEND_PASSWORD }}" class="text-xs font-semibold text-slate-500 hover:text-prosilver-600 dark:text-slate-400 dark:hover:text-prosilver-400 transition-colors">
+								{{ L_FORGOT_PASS }}
+							</a>
+						{% endif %}
+					</div>
+
+					{{ S_LOGIN_REDIRECT }}
+					{{ S_FORM_TOKEN_LOGIN }}
+				</fieldset>
+			</form>
+		</div>
+	{% endif %}
 
 	<!-- EVENT index_body_online_list_before -->
 	{% if S_DISPLAY_ONLINE_LIST %}
@@ -35,6 +120,7 @@
 					{% endif %}
 				</h4>
 			</div>
+			<!-- EVENT index_body_block_online_prepend -->
 			<p class="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
 				{{ TOTAL_USERS_ONLINE }}
 				{% if S_USER_LOGGED_IN %}
@@ -64,6 +150,7 @@
 					{% endfor %}
 				</p>
 			{% endif %}
+			<!-- EVENT index_body_block_online_append -->
 		</div>
 	{% endif %}
 
@@ -74,9 +161,11 @@
 				{{ Icon('font', 'cake-candles', '', true, 'w-4 h-4 text-pink-500') }}
 				<h4 class="text-sm sm:text-base font-black text-slate-800 dark:text-slate-200">{{ lang('BIRTHDAYS') }}</h4>
 			</div>
+			<!-- EVENT index_body_block_birthday_prepend -->
 			<p class="text-xs sm:text-sm leading-relaxed">
 				{% if loops.birthdays|length %}{{ lang('CONGRATULATIONS') }}{{ lang('COLON') }} {% for birthday in loops.birthdays %}{{ birthday.USERNAME }}{% if birthday.AGE is not null %} ({{ birthday.AGE }}){% endif %}{% if not loop.last %}, {% endif %}{% endfor %}{% else %}{{ lang('NO_BIRTHDAYS') }}{% endif %}
 			</p>
+			<!-- EVENT index_body_block_birthday_append -->
 		</div>
 	{% endif %}
 
@@ -87,9 +176,11 @@
 				{{ Icon('font', 'chart-column', '', true, 'w-4 h-4 text-emerald-500') }}
 				<h4 class="text-sm sm:text-base font-black text-slate-800 dark:text-slate-200">{{ lang('STATISTICS') }}</h4>
 			</div>
+			<!-- EVENT index_body_block_stats_prepend -->
 			<p class="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-400">
 				{{ TOTAL_POSTS }} &bull; {{ TOTAL_TOPICS }} &bull; {{ TOTAL_USERS }} &bull; {{ NEWEST_USER }}
 			</p>
+			<!-- EVENT index_body_block_stats_append -->
 		</div>
 	{% endif %}
 	<!-- EVENT index_body_stat_blocks_after -->

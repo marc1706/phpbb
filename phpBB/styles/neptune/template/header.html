@@ -3,7 +3,7 @@
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex items-center justify-between h-16">
 			<!-- Brand Header Logo -->
-			<div class="flex items-center gap-3">
+			<div class="flex items-center gap-3 min-w-0">
 				{% EVENT navbar_header_quick_links_before %}
 				<!-- Quick links (desktop only; on mobile the same items live in the header menu) -->
 				<div class="relative hidden md:block dropdown-container" id="quick-links-parent">
@@ -121,11 +121,11 @@
 				</div>
 				{% EVENT navbar_header_quick_links_after %}
 
-				<a href="{{ U_INDEX }}" title="{{ lang('INDEX') }}" class="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-md p-1">
-					<div class="w-9 h-9 rounded-lg bg-prosilver-600 flex items-center justify-center text-white shadow-md shadow-prosilver-500/20 group-hover:bg-prosilver-500 transition-colors duration-200">
+				<a href="{{ U_INDEX }}" title="{{ lang('INDEX') }}" class="flex items-center gap-2 min-w-0 group focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-md p-1">
+					<div class="w-9 h-9 flex-shrink-0 rounded-lg bg-prosilver-600 hidden sm:flex items-center justify-center text-white shadow-md shadow-prosilver-500/20 group-hover:bg-prosilver-500 transition-colors duration-200">
 						{{ Icon('font', 'comment-dots', '', true, 'w-5 h-5') }}
 					</div>
-					<span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white font-sans group-hover:text-prosilver-600 dark:group-hover:text-prosilver-400 transition-colors">
+					<span class="text-lg sm:text-xl font-bold tracking-tight text-slate-800 dark:text-white font-sans truncate group-hover:text-prosilver-600 dark:group-hover:text-prosilver-400 transition-colors">
 						{{ SITENAME }}
 					</span>
 				</a>
@@ -146,7 +146,7 @@
 			{% endif %}
 
 			<!-- Topbar actions and Dark Theme Toggle & Mobile Menu Trigger -->
-			<div class="flex items-center gap-2">
+			<div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
 				<!-- Color Mode Switcher -->
 				<button id="theme-toggle" type="button" aria-label="Toggle visual theme" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
 					<!-- Sun Icon -->

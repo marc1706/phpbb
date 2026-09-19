@@ -30,7 +30,7 @@
 					<div class="w-14">{{ lang('TOPICS') }}</div>
 					<div class="w-14">{{ lang('POSTS') }}</div>
 				</div>
-				<div class="w-36 sm:w-44 text-right">{{ lang('LAST_POST') }}</div>
+				<div class="w-36 sm:w-44 text-end">{{ lang('LAST_POST') }}</div>
 			</div>
 			<!-- EVENT forumlist_body_category_header_row_append -->
 		</div>
@@ -100,7 +100,7 @@
 
 						{% if forumrow.S_UNREAD_FORUM %}
 							<!-- Unread Dot Badge Indicator -->
-							<span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+							<span class="absolute -top-1 -end-1 flex h-2.5 w-2.5">
 								<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
 								<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-sky-500"></span>
 							</span>
@@ -177,7 +177,7 @@
 						</div>
 					</div>
 
-					<div class="lastpost text-right text-xs text-slate-400 dark:text-slate-500 w-36 sm:w-44 select-none leading-tight">
+					<div class="lastpost text-end text-xs text-slate-400 dark:text-slate-500 w-36 sm:w-44 select-none leading-tight">
 						{% if forumrow.U_UNAPPROVED_TOPICS %}
 							<a href="{{ forumrow.U_UNAPPROVED_TOPICS }}" title="{{ lang('TOPICS_UNAPPROVED') }}" class="text-amber-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
 								{{ Icon('font', 'circle-question', '', true, 'fas w-3.5 h-3.5') }}<span class="sr-only">{{ lang('TOPICS_UNAPPROVED') }}</span>

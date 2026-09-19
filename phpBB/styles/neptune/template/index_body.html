@@ -3,7 +3,7 @@
 {% block content %}
 	<!-- phpBB Modern prosilver Tailwind: index_body.html -->
 
-	<p class="text-xs text-slate-400 dark:text-slate-500 mb-3 text-right">{{ CURRENT_TIME }}</p>
+	<p class="text-xs text-slate-400 dark:text-slate-500 mb-3 text-end">{{ CURRENT_TIME }}</p>
 
 	<!-- EVENT index_body_markforums_before -->
 	{% if not S_IS_BOT and U_MARK_FORUMS %}
@@ -52,11 +52,11 @@
 								{{ L_USERNAME }}
 							</label>
 							<div class="relative">
-								<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+								<div class="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none">
 									{{ Icon('font', 'user', '', true, 'w-4 h-4 text-slate-400') }}
 								</div>
 								<input type="text" tabindex="1" name="username" id="username" title="{{ L_USERNAME }}" autocomplete="username"
-									class="inputbox w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 pl-10 pr-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+									class="inputbox w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 ps-10 pe-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
 							</div>
 						</div>
 
@@ -66,11 +66,11 @@
 								{{ L_PASSWORD }}
 							</label>
 							<div class="relative">
-								<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+								<div class="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none">
 									{{ Icon('font', 'key', '', true, 'w-4 h-4 text-slate-400') }}
 								</div>
 								<input type="password" tabindex="2" name="password" id="password" title="{{ L_PASSWORD }}" autocomplete="current-password"
-									class="inputbox w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 pl-10 pr-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+									class="inputbox w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 ps-10 pe-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
 							</div>
 						</div>
 

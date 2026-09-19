@@ -7,11 +7,11 @@
 				<!-- EVENT navbar_header_quick_links_before -->
 				<!-- Quick links (desktop only; on mobile the same items live in the header menu) -->
 				<div class="relative hidden md:block dropdown-container" id="quick-links-parent">
-					<button id="quick-links-button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="{{ lang('QUICK_LINKS') }}" title="{{ lang('QUICK_LINKS') }}" class="flex items-center p-2 -ml-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
+					<button id="quick-links-button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="{{ lang('QUICK_LINKS') }}" title="{{ lang('QUICK_LINKS') }}" class="flex items-center p-2 -ms-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
 						{{ Icon('font', 'bars', '', true, 'w-5 h-5') }}
 					</button>
 
-					<div id="quick-links-menu" class="hidden absolute left-0 mt-2 w-64 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl py-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+					<div id="quick-links-menu" class="hidden absolute start-0 mt-2 w-64 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl py-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
 						<ul role="menu" class="quick-links-contents">
 							{% block quick_links_items %}
 								{% if S_DISPLAY_SEARCH %}
@@ -136,8 +136,8 @@
 				<div class="hidden md:block flex-1 max-w-sm mx-8">
 					<form action="{{ U_SEARCH }}" method="get" id="search" role="search" class="relative">
 						<label for="keywords" class="sr-only">{{ L_SEARCH_MINI }}</label>
-						<input type="search" name="keywords" id="keywords" placeholder="{{ L_SEARCH_MINI }}..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 pl-10 pr-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
-						<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+						<input type="search" name="keywords" id="keywords" placeholder="{{ L_SEARCH_MINI }}..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2 ps-10 pe-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+						<div class="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none">
 							{{ Icon('font', 'search', '', true, 'w-4 h-4 text-slate-400') }}
 						</div>
 						{{ S_SEARCH_HIDDEN_FIELDS }}
@@ -161,7 +161,7 @@
 						<button id="notification_list_button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="{{ lang('NOTIFICATIONS') }}" title="{{ lang('NOTIFICATIONS') }}" class="p-2 relative rounded-lg text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all shadow-2xs">
 							{{ Icon('font', 'bell', '', true, 'w-5 h-5') }}
 							{% if NOTIFICATIONS_COUNT %}
-								<span class="absolute -top-1 -right-1 flex h-5 min-w-[1.25rem] px-1 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white shadow-xs animate-in zoom-in-50 duration-150">
+								<span class="absolute -top-1 -end-1 flex h-5 min-w-[1.25rem] px-1 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white shadow-xs animate-in zoom-in-50 duration-150">
 							{{ NOTIFICATIONS_COUNT }}
 						</span>
 							{% endif %}
@@ -176,7 +176,7 @@
 					<a href="{{ U_PRIVATEMSGS }}" aria-label="{{ lang('PRIVATE_MESSAGES') }}" title="{{ lang('PRIVATE_MESSAGES') }}" class="p-2 relative rounded-lg text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all shadow-2xs">
 						{{ Icon('font', 'envelope', '', true, 'w-5 h-5') }}
 						{% if PRIVATE_MESSAGE_COUNT %}
-							<span class="absolute -top-1 -right-1 flex h-5 min-w-[1.25rem] px-1 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white shadow-xs animate-in zoom-in-50 duration-150">
+							<span class="absolute -top-1 -end-1 flex h-5 min-w-[1.25rem] px-1 items-center justify-center rounded-full bg-red-600 text-[10px] font-black text-white shadow-xs animate-in zoom-in-50 duration-150">
 						{{ PRIVATE_MESSAGE_COUNT }}
 					</span>
 						{% endif %}
@@ -185,7 +185,7 @@
 
 				<!-- Logged-in Profile Menu Button OR Login Buttons -->
 				{% if S_USER_LOGGED_IN %}
-					<div class="relative ml-2" id="user-menu-parent">
+					<div class="relative ms-2" id="user-menu-parent">
 						<button id="user-menu-button" aria-expanded="false" aria-haspopup="true" class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
 							<span class="sr-only">Open user menu</span>
 							<div class="w-8 h-8 rounded-full bg-prosilver-100 dark:bg-slate-700 flex items-center justify-center font-semibold text-sm text-prosilver-700 dark:text-prosilver-300">
@@ -198,7 +198,7 @@
 							{{ Icon('font', 'chevron-down', '', true, 'w-4 h-4 text-slate-400') }}
 						</button>
 						<!-- Profile Dropdown Panel (Framework-free toggle) -->
-						<div id="user-menu" class="hidden absolute right-0 mt-2 w-56 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl py-1 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+						<div id="user-menu" class="hidden absolute end-0 mt-2 w-56 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl py-1 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
 							<div class="px-4 py-2.5 border-b border-slate-100 dark:border-slate-800">
 								<p class="text-xs text-slate-400 dark:text-slate-500">{{ L_LOGGED_IN_AS }}</p>
 								<p class="text-sm font-semibold text-slate-800 dark:text-white truncate">{{ CURRENT_USERNAME_SIMPLE }}</p>
@@ -224,7 +224,7 @@
 								<a href="{{ U_PRIVATEMSGS }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
 									{{ Icon('font', 'inbox', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
 									{{ lang('PRIVATE_MESSAGES') }}
-									<span class="ml-auto text-xs font-semibold px-2 py-0.5 rounded-full bg-prosilver-100 text-prosilver-700 dark:bg-prosilver-950 dark:text-prosilver-400">{{ PRIVATE_MESSAGE_COUNT|default(0) }}</span>
+									<span class="ms-auto text-xs font-semibold px-2 py-0.5 rounded-full bg-prosilver-100 text-prosilver-700 dark:bg-prosilver-950 dark:text-prosilver-400">{{ PRIVATE_MESSAGE_COUNT|default(0) }}</span>
 								</a>
 							{% endif %}
 							<!-- EVENT navbar_header_profile_list_after -->
@@ -293,8 +293,8 @@
 			<div class="px-4 py-3 border-t border-slate-100 dark:border-slate-800 mt-1">
 				<form action="{{ U_SEARCH }}" method="get" role="search" class="relative">
 					<label for="mobile-keywords" class="sr-only">{{ L_SEARCH_MINI }}</label>
-					<input type="search" name="keywords" id="mobile-keywords" placeholder="{{ L_SEARCH_MINI }}..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 pl-10 pr-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
-					<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+					<input type="search" name="keywords" id="mobile-keywords" placeholder="{{ L_SEARCH_MINI }}..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 ps-10 pe-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
+					<div class="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none">
 						{{ Icon('font', 'search', '', true, 'w-4 h-4 text-slate-400') }}
 					</div>
 					{{ S_SEARCH_HIDDEN_FIELDS }}

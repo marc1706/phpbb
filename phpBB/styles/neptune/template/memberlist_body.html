@@ -106,7 +106,7 @@
 					<!-- Action Bar Top: Alphabetical Jump Index & Pagination Summary -->
 					<div class="action-bar bar-top flex flex-col md:flex-row md:items-center justify-between gap-3 p-3 bg-slate-50/90 dark:bg-slate-800/70 rounded-xl border border-slate-200/70 dark:border-slate-800">
 						<div class="member-search flex items-center gap-1 flex-wrap text-xs">
-							<span class="font-bold text-slate-400 mr-1 uppercase text-[10px] tracking-wider">{{ lang('INDEX')|default('Index') }}:</span>
+							<span class="font-bold text-slate-400 me-1 uppercase text-[10px] tracking-wider">{{ lang('INDEX')|default('Index') }}:</span>
 							{% for first_char in loops.first_char %}
 								<a href="{{ first_char.U_SORT }}" class="px-1.5 py-0.5 font-bold rounded text-slate-600 dark:text-slate-300 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:bg-white dark:hover:bg-slate-800 transition-colors">
 									{{ first_char.DESC }}
@@ -129,16 +129,16 @@
 				<!-- Memberlist Directory Table -->
 				<div class="forumbg forumbg-table bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
 					<div class="inner overflow-x-auto">
-						<table class="table1 memberlist w-full text-left text-xs text-slate-600 dark:text-slate-300 divide-y divide-slate-100 dark:divide-slate-800/80" id="memberlist">
+						<table class="table1 memberlist w-full text-start text-xs text-slate-600 dark:text-slate-300 divide-y divide-slate-100 dark:divide-slate-800/80" id="memberlist">
 							<thead class="bg-slate-50/90 dark:bg-slate-800/70 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
 							<tr>
 								<th scope="col" class="name px-4 py-3">
-									<span class="rank-img mr-2"><a href="{{ U_SORT_RANK }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('RANK') }}</a></span>
+									<span class="rank-img me-2"><a href="{{ U_SORT_RANK }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('RANK') }}</a></span>
 									<a href="{{ U_SORT_USERNAME }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">
 										{% if S_SHOW_GROUP and loops.memberrow %}{{ lang('GROUP_LEADER') }}{% else %}{{ lang('USERNAME') }}{% endif %}
 									</a>
 								</th>
-								<th scope="col" class="posts px-4 py-3 text-center sm:text-left"><a href="{{ U_SORT_POSTS }}#memberlist" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('POSTS') }}</a></th>
+								<th scope="col" class="posts px-4 py-3 text-center sm:text-start"><a href="{{ U_SORT_POSTS }}#memberlist" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('POSTS') }}</a></th>
 								<th scope="col" class="info px-4 py-3 hidden md:table-cell">
 									{% for custom_fields in loops.custom_fields %}
 										{% if not custom_fields.S_FIRST_ROW %}{{ lang('COMMA_SEPARATOR') }} {% endif %}
@@ -163,14 +163,14 @@
 			<!-- Secondary Table for General Group Members -->
 				<div class="forumbg forumbg-table bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
 					<div class="inner overflow-x-auto">
-						<table class="table1 memberlist w-full text-left text-xs text-slate-600 dark:text-slate-300 divide-y divide-slate-100 dark:divide-slate-800/80">
+						<table class="table1 memberlist w-full text-start text-xs text-slate-600 dark:text-slate-300 divide-y divide-slate-100 dark:divide-slate-800/80">
 							<thead class="bg-slate-50/90 dark:bg-slate-800/70 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
 							<tr>
 								<th scope="col" class="name px-4 py-3">
-									<span class="rank-img mr-2"><a href="{{ U_SORT_RANK }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('RANK') }}</a></span>
+									<span class="rank-img me-2"><a href="{{ U_SORT_RANK }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('RANK') }}</a></span>
 									<a href="{{ U_SORT_USERNAME }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('GROUP_MEMBERS') }}</a>
 								</th>
-								<th scope="col" class="posts px-4 py-3 text-center sm:text-left"><a href="{{ U_SORT_POSTS }}#memberlist" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('POSTS') }}</a></th>
+								<th scope="col" class="posts px-4 py-3 text-center sm:text-start"><a href="{{ U_SORT_POSTS }}#memberlist" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('POSTS') }}</a></th>
 								<th scope="col" class="info px-4 py-3 hidden md:table-cell">
 									{% for field in custom_fields %}{% if not loop.first %}{{ lang('COMMA_SEPARATOR') }} {% endif %}{{ field.PROFILE_FIELD_NAME }}{% endfor %}
 								</th>
@@ -221,7 +221,7 @@
 									</div>
 								</td>
 
-								<td class="posts px-4 py-3.5 text-center sm:text-left font-semibold">
+								<td class="posts px-4 py-3.5 text-center sm:text-start font-semibold">
 									{% if memberrow.POSTS and S_DISPLAY_SEARCH %}
 										<a href="{{ memberrow.U_SEARCH_USER }}" title="{{ lang('SEARCH_USER_POSTS') }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline font-bold">
 											{{ memberrow.POSTS }}
@@ -275,7 +275,7 @@
 					<!-- Popup Bulk Selection Controls -->
 					<fieldset class="display-actions flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-slate-50 dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-800">
 						<input type="submit" name="submit" value="{{ lang('SELECT_MARKED') }}" class="button1 button button-form-bold px-4 py-2 text-xs font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors" />
-						<div class="text-xs text-slate-500 dark:text-slate-400 space-x-2">
+						<div class="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
 							<a href="#" onclick="marklist('results', 'user', true); return false;" class="font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('MARK_ALL') }}</a>
 							<span>&bull;</span>
 							<a href="#" onclick="marklist('results', 'user', false); return false;" class="font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('UNMARK_ALL') }}</a>
@@ -293,13 +293,13 @@
 					<fieldset class="display-options flex items-center justify-end gap-3 p-4 bg-slate-50 dark:bg-slate-850 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
 						<label for="sk" class="text-slate-600 dark:text-slate-400 font-medium">
 							{{ lang('SELECT_SORT_METHOD') ~ lang('COLON') }}
-							<select name="sk" id="sk" class="ml-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white">
+							<select name="sk" id="sk" class="ms-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white">
 								{{ S_MODE_SELECT }}
 							</select>
 						</label>
 						<label for="sd" class="text-slate-600 dark:text-slate-400 font-medium">
 							{{ lang('ORDER') }}
-							<select name="sd" id="sd" class="ml-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white">
+							<select name="sd" id="sd" class="ms-1 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white">
 								{{ S_ORDER_SELECT }}
 							</select>
 						</label>

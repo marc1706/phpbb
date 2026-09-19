@@ -850,6 +850,10 @@ video {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+.my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
 .-mb-0\.5 {
   margin-bottom: -0.125rem;
 }
@@ -921,6 +925,9 @@ video {
 }
 .mt-auto {
   margin-top: auto;
+}
+.-ml-2 {
+  margin-left: -0.5rem;
 }
 .block {
   display: block;
@@ -1071,6 +1078,12 @@ video {
 }
 .w-full {
   width: 100%;
+}
+.w-64 {
+  width: 16rem;
+}
+.w-px {
+  width: 1px;
 }
 .min-w-0 {
   min-width: 0px;
@@ -1582,6 +1595,9 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
+.bg-slate-300\/70 {
+  background-color: rgb(203 213 225 / 0.7);
+}
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
@@ -1787,6 +1803,9 @@ video {
 }
 .pt-8 {
   padding-top: 2rem;
+}
+.pt-1\.5 {
+  padding-top: 0.375rem;
 }
 .text-left {
   text-align: left;
@@ -2009,6 +2028,10 @@ video {
 }
 .text-white\/70 {
   color: rgb(255 255 255 / 0.7);
+}
+.text-orange-500 {
+  --tw-text-opacity: 1;
+  color: rgb(249 115 22 / var(--tw-text-opacity, 1));
 }
 .underline {
   text-decoration-line: underline;
@@ -2300,6 +2323,11 @@ video {
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-amber-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 251 235 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:text-amber-600:hover {
@@ -2703,6 +2731,10 @@ video {
   background-color: rgb(2 6 23 / 0.4);
 }
 
+.dark\:bg-slate-700\/70:is(.dark *) {
+  background-color: rgb(51 65 85 / 0.7);
+}
+
 .dark\:text-amber-200:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(253 230 138 / var(--tw-text-opacity, 1));
@@ -2859,6 +2891,10 @@ video {
 
 .dark\:hover\:bg-slate-800\/70:hover:is(.dark *) {
   background-color: rgb(30 41 59 / 0.7);
+}
+
+.dark\:hover\:bg-amber-950\/20:hover:is(.dark *) {
+  background-color: rgb(69 26 3 / 0.2);
 }
 
 .dark\:hover\:text-amber-400:hover:is(.dark *) {
@@ -3205,6 +3241,10 @@ video {
 
   .lg\:col-span-9 {
     grid-column: span 9 / span 9;
+  }
+
+  .lg\:inline {
+    display: inline;
   }
 
   .lg\:table-cell {

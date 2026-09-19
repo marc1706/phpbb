@@ -45,7 +45,7 @@
 				<span class="absolute inset-y-0 start-3 flex items-center pointer-events-none text-slate-400">
 					{{ Icon('font', 'search', '', true, 'w-4 h-4') }}
 				</span>
-					<input type="search" name="keywords" id="search_keywords" size="20" placeholder="{{ L_SEARCH_FORUM }}" class="w-full ps-9 pe-4 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary transition-all" />
+					<input type="search" name="keywords" id="search_keywords" size="20" placeholder="{{ lang('SEARCH_FORUM') }}" class="w-full ps-9 pe-4 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary transition-all" />
 					{{ S_SEARCH_LOCAL_HIDDEN_FIELDS }}
 				</form>
 			{% endif %}
@@ -54,7 +54,7 @@
 		<!-- Forum Moderators (if assigned) -->
 		{% if MODERATORS %}
 			<div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
-				<span class="font-bold text-slate-600 dark:text-slate-300">{{ L_MODERATORS }}{{ L_COLON }}</span>
+				<span class="font-bold text-slate-600 dark:text-slate-300">{{ lang('MODERATORS') ~ lang('COLON') }}</span>
 				<span>{{ MODERATORS }}</span>
 			</div>
 		{% endif %}
@@ -66,9 +66,9 @@
 			<div class="flex items-center gap-2 font-bold uppercase tracking-wider text-[11px] text-amber-700 dark:text-amber-300">
 				{{ Icon('font', 'triangle-exclamation', '', true, 'w-4 h-4') }}
 				{% if U_FORUM_RULES %}
-					<a href="{{ U_FORUM_RULES }}" class="hover:underline">{{ L_FORUM_RULES }}</a>
+					<a href="{{ U_FORUM_RULES }}" class="hover:underline">{{ lang('FORUM_RULES') }}</a>
 				{% else %}
-					{{ L_FORUM_RULES }}
+					{{ lang('FORUM_RULES') }}
 				{% endif %}
 			</div>
 			{% if FORUM_RULES %}
@@ -86,7 +86,7 @@
 		{% if not S_IS_BOT and U_MARK_FORUMS %}
 			<div class="flex justify-end mb-2">
 				<a href="{{ U_MARK_FORUMS }}" class="text-xs font-semibold text-slate-500 hover:text-primary transition-colors" data-ajax="mark_forums_read">
-					{{ L_MARK_SUBFORUMS_READ }}
+					{{ lang('MARK_SUBFORUMS_READ') }}
 				</a>
 			</div>
 		{% endif %}
@@ -114,7 +114,7 @@
 	<div class="flex items-center gap-4 flex-wrap text-xs text-slate-500 dark:text-slate-400">
 		{% if not S_IS_BOT and U_MARK_TOPICS and loops.topicrow|length %}
 			<a href="{{ U_MARK_TOPICS }}" class="hover:text-primary transition-colors font-semibold" data-ajax="mark_topics_read">
-				{{ L_MARK_TOPICS_READ }}
+				{{ lang('MARK_TOPICS_READ') }}
 			</a>
 		{% endif %}
 
@@ -138,14 +138,14 @@
 	<!-- Topics Table Header -->
 	<div class="bg-gradient-to-r from-primary to-cosmic px-5 py-3.5 flex items-center justify-between text-white select-none text-xs font-bold uppercase tracking-wider">
 		<div class="flex-1 min-w-0">
-			<span>{{ L_TOPICS }}</span>
+			<span>{{ lang('TOPICS') }}</span>
 		</div>
 		<div class="hidden sm:flex items-center gap-6 text-center flex-shrink-0 pe-8">
-			<span class="w-16">{{ L_REPLIES }}</span>
-			<span class="w-16">{{ L_VIEWS }}</span>
+			<span class="w-16">{{ lang('REPLIES') }}</span>
+			<span class="w-16">{{ lang('VIEWS') }}</span>
 		</div>
 		<div class="hidden md:block w-48 text-end flex-shrink-0">
-			<span>{{ L_LAST_POST }}</span>
+			<span>{{ lang('LAST_POST') }}</span>
 		</div>
 	</div>
 
@@ -156,7 +156,7 @@
 			<!-- Section Divider for Announcements / Sticky Topics if switched -->
 			{% if topicrow.S_TOPIC_TYPE_SWITCH and not topicrow.S_FIRST_ROW %}
 				<div class="bg-slate-50 dark:bg-slate-800/60 px-5 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-t border-b border-slate-200/60 dark:border-slate-700/60">
-					{{ L_TOPICS }}
+					{{ lang('TOPICS') }}
 				</div>
 			{% endif %}
 
@@ -208,19 +208,19 @@
 							<!-- Topic Type Badges -->
 							{% if topicrow.S_POST_GLOBAL %}
 								<span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-950/50 rounded-md">
-								{{ L_GLOBAL_ANNOUNCEMENT }}
+								{{ lang('GLOBAL_ANNOUNCEMENT') }}
 							</span>
 							{% elseif topicrow.S_POST_ANNOUNCE %}
 								<span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-950/50 rounded-md">
-								{{ L_VIEW_TOPIC_ANNOUNCEMENT }}
+								{{ lang('VIEW_TOPIC_ANNOUNCEMENT') }}
 							</span>
 							{% elseif topicrow.S_POST_STICKY %}
 								<span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/50 rounded-md">
-								{{ L_VIEW_TOPIC_STICKY }}
+								{{ lang('VIEW_TOPIC_STICKY') }}
 							</span>
 							{% elseif topicrow.S_TOPIC_POLL %}
 								<span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/50 rounded-md">
-								{{ L_VIEW_TOPIC_POLL }}
+								{{ lang('VIEW_TOPIC_POLL') }}
 							</span>
 							{% endif %}
 
@@ -233,14 +233,14 @@
 
 							<!-- Unread Post Direct Link -->
 							{% if topicrow.S_UNREAD_TOPIC and not S_IS_BOT %}
-								<a href="{{ topicrow.U_NEWEST_POST }}" title="{{ L_VIEW_NEWEST_POST }}" class="text-primary hover:text-primary/80">
+								<a href="{{ topicrow.U_NEWEST_POST }}" title="{{ lang('VIEW_NEWEST_POST') }}" class="text-primary hover:text-primary/80">
 									{{ Icon('font', 'arrow-right', '', true, 'w-3.5 h-3.5') }}
 								</a>
 							{% endif %}
 
 							<!-- Attachments Indicator -->
 							{% if topicrow.S_TOPIC_ATTACH %}
-								<span title="{{ L_TOTAL_ATTACHMENTS }}" class="text-slate-400">
+								<span title="{{ lang('TOTAL_ATTACHMENTS') }}" class="text-slate-400">
 							{{ Icon('font', 'paperclip', '', true, 'w-3.5 h-3.5') }}
 						</span>
 							{% endif %}
@@ -248,13 +248,13 @@
 
 						<!-- Author & Creation Info -->
 						<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-							{{ L_POST_BY_AUTHOR }} {{ topicrow.TOPIC_AUTHOR_FULL }} &bull; <time datetime="{{ topicrow.FIRST_POST_TIME }}">{{ topicrow.FIRST_POST_TIME }}</time>
+							{{ lang('POST_BY_AUTHOR') }} {{ topicrow.TOPIC_AUTHOR_FULL }} &bull; <time datetime="{{ topicrow.FIRST_POST_TIME }}">{{ topicrow.FIRST_POST_TIME }}</time>
 						</p>
 
 						<!-- Topic Internal Multipage Pagination (if thread has multiple pages) -->
 						{% if topicrow.pagination %}
 							<div class="mt-2 flex items-center gap-1">
-								<span class="text-[10px] font-bold uppercase text-slate-400 me-1">{{ L_GOTO_PAGE }}:</span>
+								<span class="text-[10px] font-bold uppercase text-slate-400 me-1">{{ lang('GOTO_PAGE') }}:</span>
 								{% for page in topicrow.pagination %}
 									{% if page.S_IS_PREV or page.S_IS_NEXT %}
 									{% elseif page.S_IS_ELLIPSIS %}
@@ -279,7 +279,7 @@
 								{{ topicrow.REPLIES }}
 							</div>
 							<div class="text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 mt-0.5">
-								{{ L_REPLIES }}
+								{{ lang('REPLIES') }}
 							</div>
 						</div>
 						<div class="w-16">
@@ -287,7 +287,7 @@
 								{{ topicrow.VIEWS }}
 							</div>
 							<div class="text-[10px] uppercase font-bold tracking-wider text-slate-400 dark:text-slate-500 mt-0.5">
-								{{ L_VIEWS }}
+								{{ lang('VIEWS') }}
 							</div>
 						</div>
 					</div>
@@ -296,7 +296,7 @@
 					<div class="w-48 text-end flex flex-col items-end gap-0.5 select-none text-xs text-slate-400">
 						<div class="flex items-center gap-1.5 text-slate-600 dark:text-slate-300 font-semibold">
 							<span>{{ topicrow.LAST_POST_AUTHOR_FULL }}</span>
-							<a href="{{ topicrow.U_LAST_POST }}" title="{{ L_VIEW_LATEST_POST }}" class="text-primary hover:text-primary/80">
+							<a href="{{ topicrow.U_LAST_POST }}" title="{{ lang('VIEW_LATEST_POST') }}" class="text-primary hover:text-primary/80">
 								{{ Icon('font', 'chevron-right', '', true, 'w-3.5 h-3.5') }}
 							</a>
 						</div>
@@ -311,7 +311,7 @@
 				<div class="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 mx-auto flex items-center justify-center mb-3">
 					{{ Icon('font', 'file-lines', '', true, 'w-6 h-6') }}
 				</div>
-				<h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">{{ L_NO_TOPICS }}</h4>
+				<h4 class="text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">{{ lang('NO_TOPICS') }}</h4>
 				<p class="text-xs text-slate-400 max-w-sm mx-auto">There are no topics created in this forum yet. Be the first to start a conversation!</p>
 				{% if not S_IS_BOT and S_DISPLAY_POST_INFO %}
 					<a href="{{ U_POST_NEW_TOPIC }}" class="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all mt-4">
@@ -350,7 +350,7 @@
 	<!-- Return to Board Index Link -->
 	<a href="{{ U_INDEX }}" class="text-xs font-bold text-slate-500 hover:text-primary flex items-center gap-1 transition-colors">
 		{{ Icon('font', 'chevron-left', '', true, 'w-4 h-4') }}
-		{{ L_INDEX }}
+		{{ lang('INDEX') }}
 	</a>
 </div>
 
@@ -360,12 +360,12 @@
 		<!-- Display / Sorting Options -->
 		{% if S_SELECT_SORT_DAYS %}
 			<form method="post" action="{{ S_FORUM_ACTION }}" class="flex items-center flex-wrap gap-2">
-				<span class="font-bold text-slate-700 dark:text-slate-300">{{ L_DISPLAY_TOPICS }}:</span>
+				<span class="font-bold text-slate-700 dark:text-slate-300">{{ lang('DISPLAY_TOPICS') }}:</span>
 				{{ S_SELECT_SORT_DAYS }}
 				{{ S_SELECT_SORT_KEY }}
 				{{ S_SELECT_SORT_DIR }}
 				<button type="submit" name="sort" class="px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-primary hover:text-white font-bold transition-colors">
-					{{ L_GO }}
+					{{ lang('GO') }}
 				</button>
 			</form>
 		{% endif %}
@@ -373,7 +373,7 @@
 		<!-- Forum Permissions List -->
 		{% if S_DISPLAY_POST_INFO %}
 			<div class="md:text-end space-y-1">
-				<h4 class="font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider text-[10px]">{{ L_FORUM_PERMISSIONS }}</h4>
+				<h4 class="font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider text-[10px]">{{ lang('FORUM_PERMISSIONS') }}</h4>
 				<p class="text-[11px] leading-relaxed text-slate-400">
 					{% for rules in rules_list %}
 						{{ rules }}<br />

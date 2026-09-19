@@ -5,12 +5,12 @@
 		</div>
 	{% endif %}
 
-	<!-- EVENT forumlist_body_category_header_before -->
+	{% EVENT forumlist_body_category_header_before %}
 	{% if forumrow.S_IS_CAT or forumrow.S_FIRST_ROW or forumrow.S_NO_CAT %}
 		<div class="mb-6 overflow-hidden rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs transition-colors duration-200">
 		<!-- Category Title bar -->
 		<div class="p-4 text-white flex items-center justify-between gap-4 select-none bg-gradient-to-r from-prosilver-600 to-prosilver-500">
-			<!-- EVENT forumlist_body_category_header_row_prepend -->
+			{% EVENT forumlist_body_category_header_row_prepend %}
 			<h3 class="text-sm sm:text-base font-black tracking-wider uppercase flex items-center gap-2.5 min-w-0">
 				{% if forumrow.S_IS_CAT and forumrow.FORUM_IMAGE %}
 					<span class="forum-image flex-shrink-0">{{ forumrow.FORUM_IMAGE|raw }}</span>
@@ -32,20 +32,20 @@
 				</div>
 				<div class="w-36 sm:w-44 text-end">{{ lang('LAST_POST') }}</div>
 			</div>
-			<!-- EVENT forumlist_body_category_header_row_append -->
+			{% EVENT forumlist_body_category_header_row_append %}
 		</div>
 
 		<!-- Forums row listing container -->
 		<div class="divide-y divide-slate-100 dark:divide-slate-800/80">
 	{% endif %}
-	<!-- EVENT forumlist_body_category_header_after -->
+	{% EVENT forumlist_body_category_header_after %}
 
 	{% if not forumrow.S_IS_CAT %}
-		<!-- EVENT forumlist_body_forum_row_before -->
+		{% EVENT forumlist_body_forum_row_before %}
 		{% if forumrow.S_IS_LINK %}
 			<!-- Redirect / External Link Forum Row -->
 			<div class="hover:bg-slate-50/50 dark:hover:bg-slate-850/20 p-4 sm:p-5 flex items-center justify-between gap-4 transition-all duration-150">
-				<!-- EVENT forumlist_body_forum_row_prepend -->
+				{% EVENT forumlist_body_forum_row_prepend %}
 				<div class="flex items-start gap-3.5 flex-1 min-w-0">
 					<!-- Link Icon -->
 					<div class="w-11 h-11 rounded-lg flex items-center justify-center bg-indigo-50 dark:bg-indigo-950/40 text-indigo-500 flex-shrink-0" title="{{ lang('FORUM_LINK') }}">
@@ -53,9 +53,9 @@
 					</div>
 					<div class="min-w-0">
 						{% if forumrow.FORUM_IMAGE %}
-							<!-- EVENT forumlist_body_forum_image_before -->
-							<span class="forum-image block mb-1.5"><!-- EVENT forumlist_body_forum_image_prepend -->{{ forumrow.FORUM_IMAGE|raw }}<!-- EVENT forumlist_body_forum_image_append --></span>
-							<!-- EVENT forumlist_body_forum_image_after -->
+							{% EVENT forumlist_body_forum_image_before %}
+							<span class="forum-image block mb-1.5">{% EVENT forumlist_body_forum_image_prepend %}{{ forumrow.FORUM_IMAGE|raw }}{% EVENT forumlist_body_forum_image_append %}</span>
+							{% EVENT forumlist_body_forum_image_after %}
 						{% endif %}
 						<a href="{{ forumrow.U_VIEWFORUM }}" class="text-base font-black text-slate-800 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1">
 							{{ forumrow.FORUM_NAME }}
@@ -66,7 +66,7 @@
 						{% endif %}
 						{% if forumrow.MODERATORS %}
 							<p class="forum-mods text-xs text-slate-500 dark:text-slate-400 mt-1.5">
-								<span class="font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">{{ forumrow.L_MODERATOR_STR }}{{ lang('COLON') }}</span>
+								<span class="font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">{{ forumrow.L_MODERATOR_STR ~ lang('COLON') }}</span>
 								{{ forumrow.MODERATORS|raw }}
 							</p>
 						{% endif %}
@@ -74,15 +74,15 @@
 				</div>
 				{% if forumrow.CLICKS is not empty %}
 					<div class="redirect text-sm font-bold text-slate-500 flex-shrink-0 self-center">
-						{{ lang('REDIRECTS') }}{{ lang('COLON') }} <span class="font-mono font-black text-slate-700 dark:text-slate-300">{{ forumrow.CLICKS }}</span>
+						{{ lang('REDIRECTS') ~ lang('COLON') }} <span class="font-mono font-black text-slate-700 dark:text-slate-300">{{ forumrow.CLICKS }}</span>
 					</div>
 				{% endif %}
-				<!-- EVENT forumlist_body_forum_row_append -->
+				{% EVENT forumlist_body_forum_row_append %}
 			</div>
 		{% else %}
 			<!-- Standard Forum Row -->
 			<div class="hover:bg-slate-50/50 dark:hover:bg-slate-850/20 p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all duration-150">
-				<!-- EVENT forumlist_body_forum_row_prepend -->
+				{% EVENT forumlist_body_forum_row_prepend %}
 				<div class="flex items-start gap-3.5 flex-1 min-w-0">
 					<!-- Speech / Status Icon with unread pulsing dot -->
 					<a href="{{ forumrow.U_VIEWFORUM }}" title="{{ forumrow.FORUM_FOLDER_IMG_ALT }}"
@@ -109,9 +109,9 @@
 
 					<div class="min-w-0 flex-1">
 						{% if forumrow.FORUM_IMAGE %}
-							<!-- EVENT forumlist_body_forum_image_before -->
-							<span class="forum-image block mb-1.5"><!-- EVENT forumlist_body_forum_image_prepend -->{{ forumrow.FORUM_IMAGE|raw }}<!-- EVENT forumlist_body_forum_image_append --></span>
-							<!-- EVENT forumlist_body_forum_image_after -->
+							{% EVENT forumlist_body_forum_image_before %}
+							<span class="forum-image block mb-1.5">{% EVENT forumlist_body_forum_image_prepend %}{{ forumrow.FORUM_IMAGE|raw }}{% EVENT forumlist_body_forum_image_append %}</span>
+							{% EVENT forumlist_body_forum_image_after %}
 						{% endif %}
 
 						<h4 class="text-base sm:text-lg font-black text-slate-800 dark:text-white leading-snug flex items-center gap-2">
@@ -135,18 +135,18 @@
 
 						{% if forumrow.MODERATORS %}
 							<p class="forum-mods text-xs text-slate-500 dark:text-slate-400 mt-1.5">
-								<span class="font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">{{ forumrow.L_MODERATOR_STR }}{{ lang('COLON') }}</span>
+								<span class="font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">{{ forumrow.L_MODERATOR_STR ~ lang('COLON') }}</span>
 								{{ forumrow.MODERATORS|raw }}
 							</p>
 						{% endif %}
 
 						<!-- Subforums inline list -->
 						{% if forumrow.subforum and forumrow.S_LIST_SUBFORUMS %}
-							<!-- EVENT forumlist_body_subforums_before -->
+							{% EVENT forumlist_body_subforums_before %}
 							<div class="forum-subs flex items-center gap-2 mt-1.5 flex-wrap">
-								<span class="text-xs uppercase font-extrabold text-slate-400 dark:text-slate-500">{{ forumrow.L_SUBFORUM_STR }}{{ lang('COLON') }}</span>
+								<span class="text-xs uppercase font-extrabold text-slate-400 dark:text-slate-500">{{ forumrow.L_SUBFORUM_STR ~ lang('COLON') }}</span>
 								{% for subforum in forumrow.subforum %}
-									<!-- EVENT forumlist_body_subforum_link_prepend -->
+									{% EVENT forumlist_body_subforum_link_prepend %}
 									<a href="{{ subforum.U_SUBFORUM }}" class="subforum {% if subforum.S_UNREAD %}unread{% else %}read{% endif %} text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline transition-colors inline-flex items-center gap-1 {% if subforum.S_UNREAD %}font-black{% endif %}"
 										title="{% if subforum.IS_LINK %}{{ lang('FORUM_LINK') }}{% elseif subforum.S_UNREAD %}{{ lang('UNREAD_POSTS') }}{% else %}{{ lang('NO_UNREAD_POSTS') }}{% endif %}">
 										{% if subforum.IS_LINK %}
@@ -156,10 +156,10 @@
 										{% endif %}
 										{{ subforum.SUBFORUM_NAME }}
 									</a>{% if not loop.last %}<span class="text-slate-300 dark:text-slate-600">{{ lang('COMMA_SEPARATOR') }}</span>{% endif %}
-									<!-- EVENT forumlist_body_subforum_link_append -->
+									{% EVENT forumlist_body_subforum_link_append %}
 								{% endfor %}
 							</div>
-							<!-- EVENT forumlist_body_subforums_after -->
+							{% EVENT forumlist_body_subforums_after %}
 						{% endif %}
 					</div>
 				</div>
@@ -190,13 +190,13 @@
 
 						{% if forumrow.LAST_POST_TIME_RFC3339 %}
 							{% if forumrow.S_DISPLAY_SUBJECT %}
-								<!-- EVENT forumlist_body_last_post_title_prepend -->
+								{% EVENT forumlist_body_last_post_title_prepend %}
 								<a href="{{ forumrow.U_LAST_POST }}" title="{{ forumrow.LAST_POST_SUBJECT }}" class="lastsubject font-black text-slate-700 dark:text-slate-350 hover:text-sky-600 dark:hover:text-sky-400 truncate block text-xs">
 									{{ forumrow.LAST_POST_SUBJECT_TRUNCATED }}
 								</a>
 							{% endif %}
 							<span class="block text-[11px] text-slate-500 dark:text-slate-400 mt-1 font-semibold truncate">
-								{{ lang('POST_BY_AUTHOR') }} <!-- EVENT forumlist_body_last_poster_username_prepend -->{{ forumrow.LAST_POSTER_FULL|raw }}<!-- EVENT forumlist_body_last_poster_username_append -->
+								{{ lang('POST_BY_AUTHOR') }} {% EVENT forumlist_body_last_poster_username_prepend %}{{ forumrow.LAST_POSTER_FULL|raw }}{% EVENT forumlist_body_last_poster_username_append %}
 								{% if not S_IS_BOT %}
 									<a href="{{ forumrow.U_LAST_POST }}" title="{{ lang('VIEW_LATEST_POST') }}" class="text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
 										{{ Icon('font', 'arrow-up-right-from-square', '', true, 'fas w-3 h-3') }}<span class="sr-only">{{ lang('VIEW_LATEST_POST') }}</span>
@@ -215,16 +215,16 @@
 						{% endif %}
 					</div>
 				</div>
-				<!-- EVENT forumlist_body_forum_row_append -->
+				{% EVENT forumlist_body_forum_row_append %}
 			</div>
 		{% endif %}
-		<!-- EVENT forumlist_body_forum_row_after -->
+		{% EVENT forumlist_body_forum_row_after %}
 	{% endif %}
 
 	{% if forumrow.S_LAST_ROW %}
 		</div>
 		</div>
-		<!-- EVENT forumlist_body_last_row_after -->
+		{% EVENT forumlist_body_last_row_after %}
 	{% endif %}
 
 {% else %}

@@ -5,11 +5,11 @@
 
 	<div class="space-y-6">
 		<div>
-			<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ L_TITLE }}</h2>
+			<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
 		</div>
 
 		<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
-			<p class="text-sm text-slate-700 dark:text-slate-300">{{ L_UCP_WELCOME }}</p>
+			<p class="text-sm text-slate-700 dark:text-slate-300">{{ lang('UCP_WELCOME') }}</p>
 
 			{% if loops.topicrow %}
 				<section>
@@ -32,7 +32,7 @@
 												}, '', true, 'w-5 h-5') }}
 											</a>
 											{% if topicrow.TOPIC_ICON_IMG and topicrow.S_TOPIC_ICONS %}
-												<img src="{{ T_ICONS_PATH }}{{ topicrow.TOPIC_ICON_IMG }}" alt="" class="w-4 h-4 flex-shrink-0">
+												<img src="{{ T_ICONS_PATH ~ topicrow.TOPIC_ICON_IMG }}" alt="" class="w-4 h-4 flex-shrink-0">
 											{% endif %}
 											{% if topicrow.S_UNREAD %}
 												<a href="{{ topicrow.U_NEWEST_POST }}" class="font-bold text-sm text-prosilver-600 dark:text-prosilver-400 hover:underline truncate">{{ topicrow.TOPIC_TITLE }}</a>
@@ -73,18 +73,18 @@
 
 			<section>
 				<h3 class="mb-3 text-sm font-black text-slate-800 dark:text-white">{{ lang('YOUR_DETAILS') }}</h3>
-				<!-- EVENT ucp_main_front_user_activity_before -->
+				{% EVENT ucp_main_front_user_activity_before %}
 				<dl class="grid grid-cols-1 sm:grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-sm">
-					<!-- EVENT ucp_main_front_user_activity_prepend -->
-					<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('JOINED') }}{{ lang('COLON') }}</dt><dd class="text-slate-800 dark:text-slate-200">{{ JOINED }}</dd>
-					<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('LAST_ACTIVE') }}{{ lang('COLON') }}</dt><dd class="text-slate-800 dark:text-slate-200">{{ LAST_VISIT_YOU }}</dd>
-					<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('TOTAL_POSTS') }}{{ lang('COLON') }}</dt><dd class="text-slate-800 dark:text-slate-200">{{ POSTS }}{% if POSTS_PCT %}{% if S_DISPLAY_SEARCH %} | <strong><a href="{{ U_SEARCH_USER }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('SEARCH_YOUR_POSTS') }}</a></strong>{% endif %}<br>({{ POSTS_DAY }} / {{ POSTS_PCT }}){% endif %}</dd>
-					{% if ACTIVE_FORUM != '' %}<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('ACTIVE_IN_FORUM') }}{{ lang('COLON') }}</dt><dd><strong><a href="{{ U_ACTIVE_FORUM }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ ACTIVE_FORUM }}</a></strong><br>({{ ACTIVE_FORUM_POSTS }} / {{ ACTIVE_FORUM_PCT }})</dd>{% endif %}
-					{% if ACTIVE_TOPIC != '' %}<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('ACTIVE_IN_TOPIC') }}{{ lang('COLON') }}</dt><dd><strong><a href="{{ U_ACTIVE_TOPIC }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ ACTIVE_TOPIC }}</a></strong><br>({{ ACTIVE_TOPIC_POSTS }} / {{ ACTIVE_TOPIC_PCT }})</dd>{% endif %}
-					{% if WARNINGS %}<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('YOUR_WARNINGS') }}{{ lang('COLON') }}</dt><dd class="text-red-600 dark:text-red-400">{{ Icon('font', 'exclamation-triangle', '', true) }} [{{ WARNINGS }}]</dd>{% endif %}
-					<!-- EVENT ucp_main_front_user_activity_append -->
+					{% EVENT ucp_main_front_user_activity_prepend %}
+					<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('JOINED') ~ lang('COLON') }}</dt><dd class="text-slate-800 dark:text-slate-200">{{ JOINED }}</dd>
+					<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('LAST_ACTIVE') ~ lang('COLON') }}</dt><dd class="text-slate-800 dark:text-slate-200">{{ LAST_VISIT_YOU }}</dd>
+					<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('TOTAL_POSTS') ~ lang('COLON') }}</dt><dd class="text-slate-800 dark:text-slate-200">{{ POSTS }}{% if POSTS_PCT %}{% if S_DISPLAY_SEARCH %} | <strong><a href="{{ U_SEARCH_USER }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('SEARCH_YOUR_POSTS') }}</a></strong>{% endif %}<br>({{ POSTS_DAY }} / {{ POSTS_PCT }}){% endif %}</dd>
+					{% if ACTIVE_FORUM != '' %}<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('ACTIVE_IN_FORUM') ~ lang('COLON') }}</dt><dd><strong><a href="{{ U_ACTIVE_FORUM }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ ACTIVE_FORUM }}</a></strong><br>({{ ACTIVE_FORUM_POSTS }} / {{ ACTIVE_FORUM_PCT }})</dd>{% endif %}
+					{% if ACTIVE_TOPIC != '' %}<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('ACTIVE_IN_TOPIC') ~ lang('COLON') }}</dt><dd><strong><a href="{{ U_ACTIVE_TOPIC }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ ACTIVE_TOPIC }}</a></strong><br>({{ ACTIVE_TOPIC_POSTS }} / {{ ACTIVE_TOPIC_PCT }})</dd>{% endif %}
+					{% if WARNINGS %}<dt class="font-semibold text-slate-500 dark:text-slate-400">{{ lang('YOUR_WARNINGS') ~ lang('COLON') }}</dt><dd class="text-red-600 dark:text-red-400">{{ Icon('font', 'exclamation-triangle', '', true) }} [{{ WARNINGS }}]</dd>{% endif %}
+					{% EVENT ucp_main_front_user_activity_append %}
 				</dl>
-				<!-- EVENT ucp_main_front_user_activity_after -->
+				{% EVENT ucp_main_front_user_activity_after %}
 			</section>
 		</div>
 	</div>

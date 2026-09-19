@@ -1,5 +1,5 @@
 {# phpBB 3.3.x / 4.x Modern Tailwind Style: notification_dropdown.html #}
-<div id="notification_list" class="dropdown dropdown-extended dropdown-up notification_list absolute end-2 sm:end-4 mt-2 w-[calc(100vw-1rem)] max-w-[380px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl z-50 overflow-hidden leading-normal text-slate-800 dark:text-slate-100 hidden" role="menu" aria-label="{{ lang('NOTIFICATIONS') }}">
+<div id="notification-menu" class="dropdown dropdown-extended dropdown-up notification-menu absolute end-2 sm:end-4 mt-2 w-[calc(100vw-1rem)] max-w-[380px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl z-50 overflow-hidden leading-normal text-slate-800 dark:text-slate-100 hidden" role="menu" aria-label="{{ lang('NOTIFICATIONS') }}">
 	<!-- Pointer Caret Arrow (Aligned under Bell Trigger) -->
 	<div class="pointer absolute -top-1.5 end-3.5 sm:end-auto sm:start-7 w-3.5 h-3.5 bg-slate-100 dark:bg-slate-800 border-t border-s border-slate-200 dark:border-slate-700 transform rotate-45 z-20"></div>
 
@@ -18,36 +18,38 @@
 			</div>
 		</div>
 
-		<!-- Push Notifications Quick Toggle Bar (Placed below Header) -->
-		{% if S_PUSH_NOTIFICATIONS_AVAILABLE|default(true) %}
-			<div class="push-notification-bar px-3.5 py-2.5 bg-[#f4f8fc] dark:bg-slate-850 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-2.5">
+		<!-- Web push subscribe bar. Only shown while the user is not subscribed: webpush.js
+			 toggles the "hidden" class on the two buttons, theme.js hides the whole bar as
+			 soon as the subscribe button is hidden. -->
+		{% if NOTIFICATIONS_WEBPUSH_ENABLE and notification_types is not defined %}
+			<div class="webpush-subscribe px-3.5 py-2.5 bg-[#f4f8fc] dark:bg-slate-850 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-2.5">
 				<div class="flex items-center gap-2.5 min-w-0">
-					<div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors {% if S_PUSH_NOTIFICATIONS_ENABLED %}bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30{% else %}bg-slate-200/70 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-300/60 dark:border-slate-700{% endif %}">
+					<div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-slate-200/70 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-300/60 dark:border-slate-700">
 						{{ Icon('font', 'bell', '', true, 'w-3.5 h-3.5') }}
 					</div>
 					<div class="min-w-0">
-						<div class="flex items-center gap-1.5 leading-tight">
-						<span class="text-[11px] font-bold text-slate-900 dark:text-slate-100">
+						<span class="block text-[11px] font-bold text-slate-900 dark:text-slate-100 leading-tight">
 							{{ lang('NOTIFY_WEB_PUSH') }}
 						</span>
-							{% if S_PUSH_NOTIFICATIONS_ENABLED %}
-								<span class="inline-flex items-center px-1.5 py-0.2 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800">
-							ON
-						</span>
-							{% endif %}
-						</div>
 						<p class="text-[10px] text-slate-500 dark:text-slate-400 leading-tight truncate mt-0.5">
-							{% if S_PUSH_NOTIFICATIONS_ENABLED %}
-								{{ lang('PUSH_NOTIFICATIONS_ACTIVE') }}
-							{% else %}
-								{{ lang('NOTIFY_WEB_PUSH_ENABLE') }}
-							{% endif %}
+							{{ lang('NOTIFY_WEB_PUSH_ENABLE') }}
 						</p>
 					</div>
 				</div>
-				<!-- Accessible Switch Toggle Button -->
-				<button type="button" role="switch" aria-checked="{% if S_PUSH_NOTIFICATIONS_ENABLED %}true{% else %}false{% endif %}" data-ajax="notification.toggle_push" class="relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-prosilver-500 {% if S_PUSH_NOTIFICATIONS_ENABLED %}bg-prosilver-600{% else %}bg-slate-300 dark:bg-slate-700{% endif %}" title="{{ lang('TOGGLE_PUSH_NOTIFICATIONS')|default('Toggle push notifications') }}">
-					<span class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out {% if S_PUSH_NOTIFICATIONS_ENABLED %}translate-x-4 rtl:-translate-x-4{% else %}translate-x-0{% endif %}"></span>
+
+				<!-- Accessible Switch Toggle Buttons -->
+				<button type="button" role="switch" aria-checked="false" id="subscribe_webpush" name="subscribe_webpush"
+						class="notification-subscribe-toggle relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-300 dark:bg-slate-700 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-prosilver-500 disabled:cursor-not-allowed disabled:opacity-50"
+						title="{{ lang('NOTIFY_WEB_PUSH_SUBSCRIBE') }}" aria-label="{{ lang('NOTIFY_WEB_PUSH_SUBSCRIBE') }}"
+						data-l-err="{{ lang('INFORMATION')|e('html_attr') }}"
+						data-l-msg="{{ lang('NOTIFY_WEB_PUSH_DENIED')|e('html_attr') }}"
+						data-disabled-msg="{{ lang('NOTIFY_WEB_PUSH_DISABLED')|e('html_attr') }}">
+					<span class="pointer-events-none inline-block h-4 w-4 translate-x-0 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out"></span>
+				</button>
+				<button type="button" role="switch" aria-checked="true" id="unsubscribe_webpush" name="unsubscribe_webpush"
+						class="notification-subscribe-toggle hidden relative h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-prosilver-600 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-prosilver-500"
+						title="{{ lang('NOTIFY_WEB_PUSH_SUBSCRIBED') }}" aria-label="{{ lang('NOTIFY_WEB_PUSH_SUBSCRIBED') }}">
+					<span class="pointer-events-none inline-block h-4 w-4 translate-x-4 rtl:-translate-x-4 transform rounded-full bg-white shadow-md ring-0 transition duration-200 ease-in-out"></span>
 				</button>
 			</div>
 		{% endif %}

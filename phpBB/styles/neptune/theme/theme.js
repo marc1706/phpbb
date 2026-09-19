@@ -1,8 +1,115 @@
 /**
  * phpBB prosilver Modern Theme JS
  * Pure vanilla ES6 JavaScript. Framework and library free.
- * Handles: Dark Theme Toggle, Menu Dropdowns, Accessible Keyboard navigations, Hamburger toggling.
+ * Handles: Dark Theme Toggle, Menu Dropdowns, Accessible Keyboard navigations, Hamburger toggling,
+ * web push subscribing, and the minimal phpbb helpers required by core scripts.
  */
+
+/**
+ * Minimal phpbb global.
+ *
+ * Core scripts loaded via INCLUDEJS -- webpush.js in particular -- expect a global
+ * `phpbb` object offering alert(), loadingIndicator() and alertTime. prosilver gets
+ * those from assets/javascript/core.js, which requires jQuery. This style is library
+ * free, so only the handful of helpers that are actually needed are implemented
+ * natively here. Each one is defined only if it does not exist yet, so additionally
+ * loading core.js keeps working.
+ */
+(() => {
+	window.phpbb = window.phpbb || {};
+
+	if (typeof phpbb.alertTime !== 'number') {
+		phpbb.alertTime = 100;
+	}
+
+	/**
+	 * Fade an element out and remove it from the DOM.
+	 *
+	 * @param {HTMLElement} element Element to fade out
+	 * @param {number} duration Fade duration in milliseconds
+	 */
+	function fadeOutAndRemove(element, duration) {
+		if (!element || !element.parentNode) {
+			return;
+		}
+
+		element.style.transition = 'opacity ' + duration + 'ms ease-in-out';
+		element.style.opacity = '0';
+		setTimeout(() => element.remove(), duration);
+	}
+
+	if (typeof phpbb.alert !== 'function') {
+		/**
+		 * Display a modal alert box.
+		 *
+		 * @param {string} title Title of the alert
+		 * @param {string} message Message of the alert
+		 * @returns {HTMLElement} Alert element
+		 */
+		phpbb.alert = (title, message) => {
+			const overlay = document.createElement('div');
+			overlay.className = 'phpbb-alert fixed inset-0 z-100 flex items-center justify-center bg-slate-900/60 px-4';
+			overlay.setAttribute('role', 'alertdialog');
+			overlay.setAttribute('aria-modal', 'true');
+
+			const box = document.createElement('div');
+			box.className = 'w-full max-w-sm rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl p-5 text-slate-800 dark:text-slate-100';
+			box.tabIndex = -1;
+
+			const heading = document.createElement('h3');
+			heading.className = 'text-sm font-bold mb-2';
+			heading.textContent = title;
+
+			const text = document.createElement('p');
+			text.className = 'text-xs leading-relaxed text-slate-600 dark:text-slate-300';
+			text.textContent = message;
+
+			box.append(heading, text);
+			overlay.append(box);
+			document.body.append(overlay);
+
+			const keyHandler = (event) => {
+				if (event.key === 'Escape') {
+					closeAlert();
+				}
+			};
+
+			function closeAlert() {
+				document.removeEventListener('keydown', keyHandler);
+				fadeOutAndRemove(overlay, phpbb.alertTime);
+			}
+
+			overlay.addEventListener('click', closeAlert);
+			document.addEventListener('keydown', keyHandler);
+			box.focus();
+
+			return overlay;
+		};
+	}
+
+	if (typeof phpbb.loadingIndicator !== 'function') {
+		/**
+		 * Show the loading indicator.
+		 *
+		 * @returns {{fadeOut: function(number): void}} Handle offering a jQuery compatible fadeOut()
+		 */
+		phpbb.loadingIndicator = () => {
+			let indicator = document.getElementById('loading_indicator');
+
+			if (!indicator) {
+				indicator = document.createElement('div');
+				indicator.id = 'loading_indicator';
+				indicator.className = 'fixed inset-0 z-100 flex items-center justify-center bg-slate-900/30';
+				indicator.innerHTML = '<span class="h-8 w-8 rounded-full border-2 border-white/40 border-t-white animate-spin"></span>';
+				document.body.append(indicator);
+			}
+
+			return {
+				fadeOut: (duration) => fadeOutAndRemove(indicator, duration || phpbb.alertTime),
+			};
+		};
+	}
+})();
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -85,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	registerDropdown('quick-links-button', 'quick-links-menu', 'quick-links-parent');
 	registerDropdown('user-menu-button', 'user-menu', 'user-menu-parent');
-	registerDropdown('notification_list_button', 'notification_list', 'notification_dropdown_parent');
+	registerDropdown('notification-button', 'notification-menu', 'notification-dropdown-parent');
 
 	// Single document listener dismisses whichever dropdown the click fell outside of
 	document.addEventListener('click', (event) => {
@@ -118,7 +225,28 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
-	// 5. phpBB Accessibility Helper - Keyboard Tab Traps and focus landmarks
+	// 5. Web push subscribe bar in the notifications dropdown
+	// webpush.js only toggles the `hidden` class on the subscribe/unsubscribe buttons.
+	// The dropdown should merely offer subscribing, so the entire bar is hidden as soon
+	// as the subscribe button is, i.e. once the user is subscribed. Unsubscribing stays
+	// available in the UCP notification settings.
+	const webpushBar = document.querySelector('.webpush-subscribe');
+	const subscribeButton = document.getElementById('subscribe_webpush');
+
+	if (webpushBar && subscribeButton) {
+		const syncWebpushBar = () => {
+			webpushBar.classList.toggle('hidden', subscribeButton.classList.contains('hidden'));
+		};
+
+		new MutationObserver(syncWebpushBar).observe(subscribeButton, {
+			attributes: true,
+			attributeFilter: ['class'],
+		});
+
+		syncWebpushBar();
+	}
+
+	// 6. phpBB Accessibility Helper - Keyboard Tab Traps and focus landmarks
 	const focusables = document.querySelectorAll('a[href], button, input, textarea, select');
 	focusables.forEach(elem => {
 		elem.addEventListener('focus', () => {

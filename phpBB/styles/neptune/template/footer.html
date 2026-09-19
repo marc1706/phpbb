@@ -6,18 +6,18 @@
 			<div>
 				<h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">Navigation</h3>
 				<ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
-					<li><a href="{{ U_FAQ }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all flex items-center gap-1">{{ L_FAQ }}</a></li>
-					<li><a href="{{ U_MEMBERLIST }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all flex items-center gap-1">{{ L_MEMBERLIST }}</a></li>
+					<li><a href="{{ U_FAQ }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all flex items-center gap-1">{{ lang('FAQ') }}</a></li>
+					<li><a href="{{ U_MEMBERLIST }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all flex items-center gap-1">{{ lang('MEMBERLIST') }}</a></li>
 					{% if U_TEAM %}<li><a href="{{ U_TEAM }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all flex items-center gap-1">The Team</a></li>{% endif %}
 				</ul>
 			</div>
 			<div>
 				<h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">User & Session</h3>
 				<ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
-					{% if U_DELETE_COOKIES %}<li><a href="{{ U_DELETE_COOKIES }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all">{{ L_DELETE_COOKIES }}</a></li>{% endif %}
-					<li><a href="{{ U_CONTACT_US }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all">{{ L_CONTACT_US }}</a></li>
+					{% if U_DELETE_COOKIES %}<li><a href="{{ U_DELETE_COOKIES }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all">{{ lang('DELETE_COOKIES') }}</a></li>{% endif %}
+					<li><a href="{{ U_CONTACT_US }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all">{{ lang('CONTACT_US') }}</a></li>
 					{% if not S_USER_LOGGED_IN %}
-						<li><a href="{{ U_LOGIN_LOGOUT }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all">{{ L_LOGIN_LOGOUT }}</a></li>
+						<li><a href="{{ U_LOGIN_LOGOUT }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all">{{ lang('LOGIN_LOGOUT') }}</a></li>
 					{% endif %}
 				</ul>
 			</div>
@@ -72,7 +72,15 @@
 </script>
 {% endif %}
 
-<!-- Load Theme Javascript handling interactivity -->
+<!-- Load Theme Javascript handling interactivity. This has to stay in front of the
+	 scripts queued via INCLUDEJS as it provides the minimal phpbb helpers that core
+	 scripts such as webpush.js expect to find. -->
 <script src="{{ T_THEME_PATH }}/theme.js"></script>
+
+{% if NOTIFICATIONS_WEBPUSH_ENABLE %}
+	<script src="{{ T_ASSETS_PATH }}/javascript/webpush.js?assets_version={{ T_ASSETS_VERSION }}"></script>
+{% endif %}
+
+{{ definition.SCRIPTS }}
 
 {{ CODES_FOOTER }}

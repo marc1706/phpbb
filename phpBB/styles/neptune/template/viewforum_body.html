@@ -42,10 +42,10 @@
 			<!-- Quick Forum Search (if enabled) -->
 			{% if S_DISPLAY_SEARCHBOX %}
 				<form method="get" id="forum-search" action="{{ S_SEARCHBOX_ACTION }}" class="relative min-w-[240px]">
-				<span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
+				<span class="absolute inset-y-0 start-3 flex items-center pointer-events-none text-slate-400">
 					{{ Icon('font', 'search', '', true, 'w-4 h-4') }}
 				</span>
-					<input type="search" name="keywords" id="search_keywords" size="20" placeholder="{{ L_SEARCH_FORUM }}" class="w-full pl-9 pr-4 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary transition-all" />
+					<input type="search" name="keywords" id="search_keywords" size="20" placeholder="{{ L_SEARCH_FORUM }}" class="w-full ps-9 pe-4 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary transition-all" />
 					{{ S_SEARCH_LOCAL_HIDDEN_FIELDS }}
 				</form>
 			{% endif %}
@@ -72,7 +72,7 @@
 				{% endif %}
 			</div>
 			{% if FORUM_RULES %}
-				<div class="leading-relaxed pl-6">
+				<div class="leading-relaxed ps-6">
 					{{ FORUM_RULES }}
 				</div>
 			{% endif %}
@@ -140,11 +140,11 @@
 		<div class="flex-1 min-w-0">
 			<span>{{ L_TOPICS }}</span>
 		</div>
-		<div class="hidden sm:flex items-center gap-6 text-center flex-shrink-0 pr-8">
+		<div class="hidden sm:flex items-center gap-6 text-center flex-shrink-0 pe-8">
 			<span class="w-16">{{ L_REPLIES }}</span>
 			<span class="w-16">{{ L_VIEWS }}</span>
 		</div>
-		<div class="hidden md:block w-48 text-right flex-shrink-0">
+		<div class="hidden md:block w-48 text-end flex-shrink-0">
 			<span>{{ L_LAST_POST }}</span>
 		</div>
 	</div>
@@ -195,7 +195,7 @@
 
 						<!-- Unread Ping Indicator -->
 						{% if topicrow.S_UNREAD_TOPIC %}
-							<span class="absolute -top-1 -right-1 flex h-3 w-3">
+							<span class="absolute -top-1 -end-1 flex h-3 w-3">
 						<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
 						<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
 					</span>
@@ -254,7 +254,7 @@
 						<!-- Topic Internal Multipage Pagination (if thread has multiple pages) -->
 						{% if topicrow.pagination %}
 							<div class="mt-2 flex items-center gap-1">
-								<span class="text-[10px] font-bold uppercase text-slate-400 mr-1">{{ L_GOTO_PAGE }}:</span>
+								<span class="text-[10px] font-bold uppercase text-slate-400 me-1">{{ L_GOTO_PAGE }}:</span>
 								{% for page in topicrow.pagination %}
 									{% if page.S_IS_PREV or page.S_IS_NEXT %}
 									{% elseif page.S_IS_ELLIPSIS %}
@@ -293,7 +293,7 @@
 					</div>
 
 					<!-- Last Post Box -->
-					<div class="w-48 text-right flex flex-col items-end gap-0.5 select-none text-xs text-slate-400">
+					<div class="w-48 text-end flex flex-col items-end gap-0.5 select-none text-xs text-slate-400">
 						<div class="flex items-center gap-1.5 text-slate-600 dark:text-slate-300 font-semibold">
 							<span>{{ topicrow.LAST_POST_AUTHOR_FULL }}</span>
 							<a href="{{ topicrow.U_LAST_POST }}" title="{{ L_VIEW_LATEST_POST }}" class="text-primary hover:text-primary/80">
@@ -372,7 +372,7 @@
 
 		<!-- Forum Permissions List -->
 		{% if S_DISPLAY_POST_INFO %}
-			<div class="md:text-right space-y-1">
+			<div class="md:text-end space-y-1">
 				<h4 class="font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider text-[10px]">{{ L_FORUM_PERMISSIONS }}</h4>
 				<p class="text-[11px] leading-relaxed text-slate-400">
 					{% for rules in rules_list %}

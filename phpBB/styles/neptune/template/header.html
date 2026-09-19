@@ -4,6 +4,123 @@
 		<div class="flex items-center justify-between h-16">
 			<!-- Brand Header Logo -->
 			<div class="flex items-center gap-3">
+				<!-- EVENT navbar_header_quick_links_before -->
+				<!-- Quick links (desktop only; on mobile the same items live in the header menu) -->
+				<div class="relative hidden md:block dropdown-container" id="quick-links-parent">
+					<button id="quick-links-button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="{{ lang('QUICK_LINKS') }}" title="{{ lang('QUICK_LINKS') }}" class="flex items-center p-2 -ml-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
+						{{ Icon('font', 'bars', '', true, 'w-5 h-5') }}
+					</button>
+
+					<div id="quick-links-menu" class="hidden absolute left-0 mt-2 w-64 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl py-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+						<ul role="menu" class="quick-links-contents">
+							{% block quick_links_items %}
+								{% if S_DISPLAY_SEARCH %}
+									{% if S_REGISTERED_USER %}
+										<li role="none">
+											<a href="{{ U_SEARCH_SELF }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+												{{ Icon('font', 'file', '', true, 'far w-4 h-4 text-slate-400 flex-shrink-0') }}
+												{{ lang('SEARCH_SELF') }}
+											</a>
+										</li>
+									{% endif %}
+									{% if S_USER_LOGGED_IN %}
+										<li role="none">
+											<a href="{{ U_SEARCH_NEW }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+												{{ Icon('font', 'file', '', true, 'far w-4 h-4 text-sky-500 flex-shrink-0') }}
+												{{ lang('SEARCH_NEW') }}
+											</a>
+										</li>
+									{% endif %}
+									{% if S_LOAD_UNREADS %}
+										<li role="none">
+											<a href="{{ U_SEARCH_UNREAD }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+												{{ Icon('font', 'envelope', '', true, 'far w-4 h-4 text-sky-500 flex-shrink-0') }}
+												{{ lang('SEARCH_UNREAD') }}
+											</a>
+										</li>
+									{% endif %}
+									<li role="none">
+										<a href="{{ U_SEARCH_UNANSWERED }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+											{{ Icon('font', 'comment-slash', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+											{{ lang('SEARCH_UNANSWERED') }}
+										</a>
+									</li>
+									<li role="none">
+										<a href="{{ U_SEARCH_ACTIVE_TOPICS }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+											{{ Icon('font', 'fire', '', true, 'w-4 h-4 text-orange-500 flex-shrink-0') }}
+											{{ lang('SEARCH_ACTIVE_TOPICS') }}
+										</a>
+									</li>
+									{% if U_MARK_FORUMS %}
+										<li role="none">
+											<a href="{{ U_MARK_FORUMS }}" role="menuitem" accesskey="m" data-ajax="mark_forums_read" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+												{{ Icon('font', 'book-open-reader', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+												{{ lang('MARK_FORUMS_READ') }}
+											</a>
+										</li>
+									{% endif %}
+									<li role="none" class="my-1 border-t border-slate-100 dark:border-slate-800"></li>
+									<li role="none">
+										<a href="{{ U_SEARCH }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+											{{ Icon('font', 'magnifying-glass', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+											{{ lang('SEARCH_ADV') }}
+										</a>
+									</li>
+								{% endif %}
+
+								{% if not S_IS_BOT and (S_DISPLAY_MEMBERLIST or U_TEAM) %}
+									<li role="none" class="my-1 border-t border-slate-100 dark:border-slate-800"></li>
+									{% if S_DISPLAY_MEMBERLIST %}
+										<li role="none">
+											<a href="{{ U_MEMBERLIST }}" title="{{ lang('MEMBERLIST_EXPLAIN') }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+												{{ Icon('font', 'users', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+												{{ lang('MEMBERLIST') }}
+											</a>
+										</li>
+									{% endif %}
+									{% if U_TEAM %}
+										<li role="none">
+											<a href="{{ U_TEAM }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+												{{ Icon('font', 'shield-halved', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+												{{ lang('THE_TEAM') }}
+											</a>
+										</li>
+									{% endif %}
+								{% endif %}
+
+								<li role="none" class="my-1 border-t border-slate-100 dark:border-slate-800"></li>
+								<li role="none">
+									<a href="{{ U_FAQ }}" rel="help" title="{{ lang('FAQ_EXPLAIN') }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+										{{ Icon('font', 'circle-question', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+										{{ lang('FAQ') }}
+									</a>
+								</li>
+
+								{% if U_ACP or U_MCP %}
+									<li role="none" class="my-1 border-t border-slate-100 dark:border-slate-800"></li>
+									{% if U_ACP %}
+										<li role="none">
+											<a href="{{ U_ACP }}" title="{{ lang('ACP') }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-prosilver-700 dark:text-prosilver-400 hover:bg-prosilver-50 dark:hover:bg-slate-800 transition-colors">
+												{{ Icon('font', 'gears', '', true, 'w-4 h-4 flex-shrink-0') }}
+												{{ lang('ACP') }}
+											</a>
+										</li>
+									{% endif %}
+									{% if U_MCP %}
+										<li role="none">
+											<a href="{{ U_MCP }}" title="{{ lang('MCP') }}" role="menuitem" class="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-prosilver-700 dark:text-prosilver-400 hover:bg-prosilver-50 dark:hover:bg-slate-800 transition-colors">
+												{{ Icon('font', 'gavel', '', true, 'w-4 h-4 flex-shrink-0') }}
+												{{ lang('MCP') }}
+											</a>
+										</li>
+									{% endif %}
+								{% endif %}
+							{% endblock quick_links_items %}
+						</ul>
+					</div>
+				</div>
+				<!-- EVENT navbar_header_quick_links_after -->
+
 				<a href="{{ U_INDEX }}" title="{{ L_INDEX }}" class="flex items-center gap-2 group focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-md p-1">
 					<div class="w-9 h-9 rounded-lg bg-prosilver-600 flex items-center justify-center text-white shadow-md shadow-prosilver-500/20 group-hover:bg-prosilver-500 transition-colors duration-200">
 						{{ Icon('font', 'comment-dots', '', true, 'w-5 h-5') }}
@@ -39,7 +156,7 @@
 				</button>
 
 				<!-- Notifications Trigger Dropdown (Logged In) -->
-				{% if S_USER_LOGGED_IN %}
+				{% if S_REGISTERED_USER and S_NOTIFICATIONS_DISPLAY %}
 					<div class="relative dropdown-container" id="notification_dropdown_parent">
 						<button id="notification_list_button" type="button" aria-expanded="false" aria-haspopup="true" aria-label="{{ lang('NOTIFICATIONS') }}" title="{{ lang('NOTIFICATIONS') }}" class="p-2 relative rounded-lg text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all shadow-2xs">
 							{{ Icon('font', 'bell', '', true, 'w-5 h-5') }}
@@ -52,8 +169,10 @@
 
 						{% include 'notification_dropdown.html' %}
 					</div>
+				{% endif %}
 
-					<!-- Private Messages Quick Access (Logged In) -->
+				<!-- Private Messages Quick Access (Logged In) -->
+				{% if S_REGISTERED_USER and S_DISPLAY_PM %}
 					<a href="{{ U_PRIVATEMSGS }}" aria-label="{{ lang('PRIVATE_MESSAGES') }}" title="{{ lang('PRIVATE_MESSAGES') }}" class="p-2 relative rounded-lg text-slate-600 hover:text-slate-800 dark:text-slate-300 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all shadow-2xs">
 						{{ Icon('font', 'envelope', '', true, 'w-5 h-5') }}
 						{% if PRIVATE_MESSAGE_COUNT %}
@@ -84,14 +203,34 @@
 								<p class="text-xs text-slate-400 dark:text-slate-500">{{ L_LOGGED_IN_AS }}</p>
 								<p class="text-sm font-semibold text-slate-800 dark:text-white truncate">{{ CURRENT_USERNAME_SIMPLE }}</p>
 							</div>
-							<a href="{{ U_PROFILE }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-								User Control Panel
+							{% if U_RESTORE_PERMISSIONS %}
+								<a href="{{ U_RESTORE_PERMISSIONS }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/20 transition-colors">
+									{{ Icon('font', 'rotate', '', true, 'w-4 h-4 flex-shrink-0') }}
+									{{ lang('RESTORE_PERMISSIONS') }}
+								</a>
+							{% endif %}
+							<!-- EVENT navbar_header_profile_list_before -->
+							<a href="{{ U_PROFILE }}" title="{{ lang('PROFILE') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+								{{ Icon('font', 'sliders', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+								{{ lang('PROFILE') }}
 							</a>
-							<a href="{{ U_PRIVATEMSGS }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-								Private Messages <span class="ml-auto text-xs font-semibold px-2 py-0.5 rounded-full bg-prosilver-100 text-prosilver-700 dark:bg-prosilver-950 dark:text-prosilver-400">{{ PRIVATE_MESSAGE_COUNT|default(0) }}</span>
-							</a>
+							{% if U_USER_PROFILE %}
+								<a href="{{ U_USER_PROFILE }}" title="{{ lang('READ_PROFILE') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+									{{ Icon('font', 'user', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+									{{ lang('READ_PROFILE') }}
+								</a>
+							{% endif %}
+							{% if S_DISPLAY_PM %}
+								<a href="{{ U_PRIVATEMSGS }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+									{{ Icon('font', 'inbox', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+									{{ lang('PRIVATE_MESSAGES') }}
+									<span class="ml-auto text-xs font-semibold px-2 py-0.5 rounded-full bg-prosilver-100 text-prosilver-700 dark:bg-prosilver-950 dark:text-prosilver-400">{{ PRIVATE_MESSAGE_COUNT|default(0) }}</span>
+								</a>
+							{% endif %}
+							<!-- EVENT navbar_header_profile_list_after -->
 							<div class="border-t border-slate-100 dark:border-slate-800 mt-1"></div>
-							<a href="{{ U_LOGIN_LOGOUT }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors">
+							<a href="{{ U_LOGIN_LOGOUT }}" title="{{ L_LOGIN_LOGOUT }}" accesskey="x" class="flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors">
+								{{ Icon('font', 'power-off', '', true, 'w-4 h-4 flex-shrink-0') }}
 								{{ L_LOGIN_LOGOUT }}
 							</a>
 						</div>
@@ -124,33 +263,62 @@
 	<div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 pb-4 transition-colors">
 		<div class="px-4 pt-3 pb-2 space-y-1">
 			<a href="{{ U_INDEX }}" class="block px-3 py-2.5 rounded-lg text-base font-semibold text-prosilver-600 dark:text-prosilver-400 bg-prosilver-50 dark:bg-slate-800">
-				Forum Board Index
+				{{ lang('INDEX') }}
 			</a>
-			<a href="{{ U_FAQ }}" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
-				Board FAQ
-			</a>
-			<a href="{{ U_MEMBERLIST }}" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
-				Memberlist & Search
-			</a>
-			{% if S_DISPLAY_SEARCH %}
-				<a href="{{ U_SEARCH }}" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
-					Advanced Search
+			{% if S_USER_LOGGED_IN %}
+				<a href="{{ U_PROFILE }}" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+					{{ lang('PROFILE') }}
 				</a>
+				{% if S_DISPLAY_PM %}
+					<a href="{{ U_PRIVATEMSGS }}" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+						{{ lang('PRIVATE_MESSAGES') }}
+						{% if PRIVATE_MESSAGE_COUNT %}
+							<span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-prosilver-100 text-prosilver-700 dark:bg-prosilver-950 dark:text-prosilver-400">{{ PRIVATE_MESSAGE_COUNT }}</span>
+						{% endif %}
+					</a>
+				{% endif %}
 			{% endif %}
+		</div>
+
+		<!-- Mobile Quick Links: same items as the desktop dropdown -->
+		<div class="px-2 py-1.5 border-t border-slate-100 dark:border-slate-800 mt-1">
+			<p class="px-4 pt-1.5 pb-1 text-[11px] uppercase font-extrabold tracking-wider text-slate-400 dark:text-slate-500">{{ lang('QUICK_LINKS') }}</p>
+			<ul role="menu" class="quick-links-contents">
+				{{ block('quick_links_items', _self) }}
+			</ul>
 		</div>
 
 		<!-- Mobile Quick Search -->
 		{% if S_DISPLAY_SEARCH and not S_IN_SEARCH %}
-			<div class="px-4 py-2 border-t border-slate-100 dark:border-slate-800 mt-2">
-				<form action="{{ U_SEARCH }}" method="get" class="relative">
-					<label for="mobile-keywords" class="sr-only">Search forum</label>
-					<input type="search" name="keywords" id="mobile-keywords" placeholder="Search board..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 pl-10 pr-4 text-slate-800 dark:text-slate-100 placeholder-slate-400" />
+			<div class="px-4 py-3 border-t border-slate-100 dark:border-slate-800 mt-1">
+				<form action="{{ U_SEARCH }}" method="get" role="search" class="relative">
+					<label for="mobile-keywords" class="sr-only">{{ L_SEARCH_MINI }}</label>
+					<input type="search" name="keywords" id="mobile-keywords" placeholder="{{ L_SEARCH_MINI }}..." class="w-full text-sm bg-slate-100 dark:bg-slate-800 border-none rounded-lg py-2.5 pl-10 pr-4 text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all" />
 					<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
 						{{ Icon('font', 'search', '', true, 'w-4 h-4 text-slate-400') }}
 					</div>
+					{{ S_SEARCH_HIDDEN_FIELDS }}
 				</form>
 			</div>
 		{% endif %}
+
+		<!-- Mobile session actions -->
+		<div class="px-4 py-3 border-t border-slate-100 dark:border-slate-800 mt-1 space-y-1">
+			{% if S_USER_LOGGED_IN %}
+				<a href="{{ U_LOGIN_LOGOUT }}" accesskey="x" class="block px-3 py-2.5 rounded-lg text-base font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20">
+					{{ L_LOGIN_LOGOUT }}
+				</a>
+			{% elseif not S_IS_BOT %}
+				<a href="{{ U_LOGIN_LOGOUT }}" accesskey="x" class="block px-3 py-2.5 rounded-lg text-base font-semibold text-prosilver-600 dark:text-prosilver-400 hover:bg-slate-50 dark:hover:bg-slate-800">
+					{{ L_LOGIN_LOGOUT }}
+				</a>
+				{% if S_REGISTER_ENABLED and not S_SHOW_COPPA %}
+					<a href="{{ U_REGISTER }}" class="block px-3 py-2.5 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
+						{{ lang('REGISTER') }}
+					</a>
+				{% endif %}
+			{% endif %}
+		</div>
 	</div>
 </header>
 

@@ -179,8 +179,8 @@ services:
             - '%core.php_ext%'
             - '%core.adm_relative_path%'
 
-    plupload:
-        class: phpbb\plupload\plupload
+    uploader:
+        class: phpbb\uploader\uploader
         arguments:
             - '%core.root_path%'
             - '@config'

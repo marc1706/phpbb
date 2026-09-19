@@ -1045,10 +1045,10 @@ class parse_message extends bbcode_firstpass
 	var $allow_url_bbcode = true;
 
 	/**
-	* The plupload object used for dealing with attachments
-	* @var \phpbb\plupload\plupload
+	* The uploader object used for dealing with attachments
+	* @var \phpbb\uploader\uploader
 	*/
-	protected $plupload;
+	protected $uploader;
 
 	/**
 	* Init - give message here or manually
@@ -1452,9 +1452,9 @@ class parse_message extends bbcode_firstpass
 		{
 			$this->warn_msg[] = $language->lang('FORM_INVALID');
 
-			if ($request->is_ajax() && $this->plupload)
+			if ($request->is_ajax() && $this->uploader)
 			{
-				$this->plupload->emit_error(-400, 'FORM_INVALID');
+				$this->uploader->emit_error(-400, 'FORM_INVALID');
 			}
 
 			return false;
@@ -1588,7 +1588,7 @@ class parse_message extends bbcode_firstpass
 
 		if ($preview || $refresh || count($error))
 		{
-			if (isset($this->plupload) && $this->plupload->is_active())
+			if (isset($this->uploader) && $this->uploader->is_active())
 			{
 				$json_response = new \phpbb\json_response();
 			}
@@ -1642,7 +1642,7 @@ class parse_message extends bbcode_firstpass
 
 					// Reindex Array
 					$this->attachment_data = array_values($this->attachment_data);
-					if (isset($this->plupload) && $this->plupload->is_active())
+					if (isset($this->uploader) && $this->uploader->is_active())
 					{
 						$json_response->send($this->attachment_data);
 					}
@@ -1713,7 +1713,7 @@ class parse_message extends bbcode_firstpass
 						}, $this->message);
 						$this->filename_data['filecomment'] = '';
 
-						if (isset($this->plupload) && $this->plupload->is_active())
+						if (isset($this->uploader) && $this->uploader->is_active())
 						{
 							$download_url = $controller_helper->route(
 								'phpbb_storage_attachment',
@@ -1733,9 +1733,9 @@ class parse_message extends bbcode_firstpass
 					$error[] = $user->lang('TOO_MANY_ATTACHMENTS', (int) $cfg['max_attachments']);
 				}
 
-				if (!empty($error) && isset($this->plupload) && $this->plupload->is_active())
+				if (!empty($error) && isset($this->uploader) && $this->uploader->is_active())
 				{
-					// If this is a plupload (and thus ajax) request, give the
+					// If this is an uploader (and thus ajax) request, give the
 					// client the first error we have
 					$json_response->send(array(
 						'jsonrpc' => '2.0',
@@ -1961,15 +1961,15 @@ class parse_message extends bbcode_firstpass
 	}
 
 	/**
-	* Setter function for passing the plupload object
+	* Setter function for passing the uploader object
 	*
-	* @param \phpbb\plupload\plupload $plupload The plupload object
+	* @param \phpbb\uploader\uploader $uploader The uploader object
 	*
 	* @return null
 	*/
-	public function set_plupload(\phpbb\plupload\plupload $plupload)
+	public function set_uploader(\phpbb\uploader\uploader $uploader)
 	{
-		$this->plupload = $plupload;
+		$this->uploader = $uploader;
 	}
 
 	/**

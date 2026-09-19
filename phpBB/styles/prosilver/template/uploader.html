@@ -1,0 +1,36 @@
+<script>
+phpbb.uploader = {
+	config: {
+		url: '{S_UPLOADER_URL}',
+		max_file_size: '{FILESIZE}',
+		chunk_size: '{CHUNK_SIZE}',
+		file_data_name: 'fileupload',
+		add_file: '{LA_ADD_FILE}',
+		form_hook: '#postform',
+		drop_element: '#message',
+		headers: {'X-PHPBB-USING-UPLOADER': '1', 'X-Requested-With': 'XMLHttpRequest'}
+	},
+	filters: {FILTERS},
+	resize: {S_RESIZE},
+	lang: {
+		ERROR: '{LA_ERROR}',
+		TOO_MANY_ATTACHMENTS: '{LA_TOO_MANY_ATTACHMENTS}',
+		FORM_INVALID: '{LA_FORM_INVALID}',
+		FILE_TOO_LARGE: '{LA_UPLOADER_ERR_FILE_TOO_LARGE}',
+		INVALID_EXTENSION: '{LA_UPLOADER_ERR_FILE_INVALID_EXT}',
+		RESPONSE_ERROR: '{LA_UPLOADER_ERR_RESPONSE}',
+		units: {
+			b: '{LA_BYTES_SHORT}',
+			kb: '{LA_KB}',
+			mb: '{LA_MB}',
+			gb: '{LA_GB}',
+			tb: '{LA_TB}'
+		}
+	},
+	order: '{ATTACH_ORDER}',
+	maxFiles: {MAX_ATTACHMENTS},
+	data: {S_ATTACH_DATA}
+}
+</script>
+<!-- INCLUDEJS {T_ASSETS_PATH}/dropzone/dropzone.js -->
+<!-- INCLUDEJS {T_ASSETS_PATH}/javascript/uploader.js -->

@@ -160,7 +160,7 @@ class add_config_settings extends database_task
 			'newest_username' => $this->install_config->get('admin_name'),
 
 			'avatar_salt'	=> md5(mt_rand()),
-			'plupload_salt'	=> md5(mt_rand()),
+			'uploader_salt'	=> md5(mt_rand()),
 
 			'sitename'	=> $this->install_config->get('board_name'),
 			'site_desc'	=> $this->install_config->get('board_description'),

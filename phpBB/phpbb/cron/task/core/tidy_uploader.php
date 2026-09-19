@@ -14,9 +14,9 @@
 namespace phpbb\cron\task\core;
 
 /**
-* Cron task for cleaning plupload's temporary upload directory.
+* Cron task for cleaning the attachment uploader's temporary upload directory.
 */
-class tidy_plupload extends \phpbb\cron\task\base
+class tidy_uploader extends \phpbb\cron\task\base
 {
 	/**
 	* How old a file must be (in seconds) before it is deleted.
@@ -49,10 +49,10 @@ class tidy_plupload extends \phpbb\cron\task\base
 	protected $user;
 
 	/**
-	* Directory where plupload stores temporary files.
+	* Directory where the uploader stores temporary files.
 	* @var string
 	*/
-	protected $plupload_upload_path;
+	protected $uploader_upload_path;
 
 	/**
 	* Constructor.
@@ -69,7 +69,7 @@ class tidy_plupload extends \phpbb\cron\task\base
 		$this->log = $log;
 		$this->user = $user;
 
-		$this->plupload_upload_path = $this->phpbb_root_path . $this->config['upload_path'] . '/plupload';
+		$this->uploader_upload_path = $this->phpbb_root_path . $this->config['upload_path'] . '/uploader';
 	}
 
 	/**
@@ -81,12 +81,12 @@ class tidy_plupload extends \phpbb\cron\task\base
 		$last_valid_timestamp = time() - $this->max_file_age;
 		try
 		{
-			$iterator = new \DirectoryIterator($this->plupload_upload_path);
+			$iterator = new \DirectoryIterator($this->uploader_upload_path);
 			foreach ($iterator as $file)
 			{
-				if (strpos($file->getBasename(), $this->config['plupload_salt']) !== 0)
+				if (strpos($file->getBasename(), $this->config['uploader_salt']) !== 0)
 				{
-					// Skip over any non-plupload files.
+					// Skip over any files that are not ours.
 					continue;
 				}
 
@@ -98,14 +98,14 @@ class tidy_plupload extends \phpbb\cron\task\base
 		}
 		catch (\UnexpectedValueException $e)
 		{
-			$this->log->add('critical', $this->user->data['user_id'], $this->user->ip, 'LOG_PLUPLOAD_TIDY_FAILED', false, array(
-				$this->plupload_upload_path,
+			$this->log->add('critical', $this->user->data['user_id'], $this->user->ip, 'LOG_UPLOADER_TIDY_FAILED', false, array(
+				$this->uploader_upload_path,
 				$e->getMessage(),
 				$e->getTraceAsString()
 			));
 		}
 
-		$this->config->set('plupload_last_gc', time());
+		$this->config->set('uploader_last_gc', time());
 	}
 
 	/**
@@ -113,7 +113,7 @@ class tidy_plupload extends \phpbb\cron\task\base
 	*/
 	public function is_runnable()
 	{
-		return !empty($this->config['plupload_salt']) && is_dir($this->plupload_upload_path);
+		return !empty($this->config['uploader_salt']) && is_dir($this->uploader_upload_path);
 	}
 
 	/**
@@ -121,6 +121,6 @@ class tidy_plupload extends \phpbb\cron\task\base
 	*/
 	public function should_run()
 	{
-		return $this->config['plupload_last_gc'] < time() - $this->cron_frequency;
+		return $this->config['uploader_last_gc'] < time() - $this->cron_frequency;
 	}
 }

@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------- /*
-	$Plupload
+	$Uploader
 /* -------------------------------------------------------------- */
 
 .attach-panel-multi {
@@ -72,15 +72,15 @@
 }
 
 .file-status.file-working {
-	background: url("./images/plupload/throbber.gif");
+	background: url("./images/uploader/throbber.gif");
 }
 
 .file-status.file-uploaded {
-	background: url("./images/plupload/done.gif");
+	background: url("./images/uploader/done.gif");
 }
 
 .file-status.file-error {
-	background: url("./images/plupload/error.gif");
+	background: url("./images/uploader/error.gif");
 }
 
 .file-status {
@@ -92,4 +92,10 @@
 .file-name {
 	vertical-align: bottom;
 	max-width: 65%;
+}
+
+.dz-drag-hover,
+#message.drag-hover {
+	outline: 2px dashed #105289;
+	outline-offset: -2px;
 }

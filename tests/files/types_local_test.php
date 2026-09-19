@@ -31,8 +31,8 @@ class phpbb_files_types_local_test extends phpbb_test_case
 	/** @var \phpbb\request\request_interface */
 	protected $request;
 
-	/** @var \phpbb\plupload\plupload */
-	protected $plupload;
+	/** @var \phpbb\uploader\uploader */
+	protected $uploader;
 
 	/** @var string phpBB root path */
 	protected $phpbb_root_path;
@@ -61,10 +61,10 @@ class phpbb_files_types_local_test extends phpbb_test_case
 				'mimetype.extension_guesser' => new \phpbb\mimetype\extension_guesser(),
 			))));
 		$this->factory = new \phpbb\files\factory($this->container);
-		$this->plupload = $this->getMockBuilder('\phpbb\plupload\plupload')
+		$this->uploader = $this->getMockBuilder('\phpbb\uploader\uploader')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->plupload->expects($this->any())
+		$this->uploader->expects($this->any())
 			->method('handle_upload')
 			->willReturn(array());
 

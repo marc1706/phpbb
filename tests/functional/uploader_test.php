@@ -14,7 +14,7 @@
 /**
  * @group functional
  */
-class phpbb_functional_plupload_test extends phpbb_functional_test_case
+class phpbb_functional_uploader_test extends phpbb_functional_test_case
 {
 	const CHUNKS = 4;
 	private $path;
@@ -92,7 +92,7 @@ class phpbb_functional_plupload_test extends phpbb_functional_test_case
 				'error' => UPLOAD_ERR_OK,
 			);
 
-			self::$client->setServerParameter('HTTP_X_PHPBB_USING_PLUPLOAD', '1');
+			self::$client->setServerParameter('HTTP_X_PHPBB_USING_UPLOADER', '1');
 
 			$crawler = self::$client->request(
 				'POST',
@@ -105,7 +105,7 @@ class phpbb_functional_plupload_test extends phpbb_functional_test_case
 					'add_file' => $this->lang('ADD_FILE'),
 				), $file_form_data),
 				array('fileupload' => $file),
-				array('X-PHPBB-USING-PLUPLOAD' => '1')
+				array('X-PHPBB-USING-UPLOADER' => '1')
 			);
 
 			if ($i < self::CHUNKS - 1)
@@ -139,7 +139,7 @@ class phpbb_functional_plupload_test extends phpbb_functional_test_case
 
 		$file_form_data = $this->get_hidden_fields(null, $url);
 
-		self::$client->setServerParameter('HTTP_X_PHPBB_USING_PLUPLOAD', '1');
+		self::$client->setServerParameter('HTTP_X_PHPBB_USING_UPLOADER', '1');
 		self::$client->request(
 			'POST',
 			$url . '&sid=' . $this->sid,

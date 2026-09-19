@@ -637,12 +637,12 @@ if ($mode == 'edit')
 $orig_poll_options_size = count($post_data['poll_options']);
 
 $message_parser = new parse_message();
-/* @var $plupload \phpbb\plupload\plupload */
-$plupload = $phpbb_container->get('plupload');
+/* @var $uploader \phpbb\uploader\uploader */
+$uploader = $phpbb_container->get('uploader');
 
 /* @var $mimetype_guesser \phpbb\mimetype\guesser */
 $mimetype_guesser = $phpbb_container->get('mimetype.guesser');
-$message_parser->set_plupload($plupload);
+$message_parser->set_uploader($uploader);
 
 if (isset($post_data['post_text']))
 {
@@ -2090,7 +2090,7 @@ $allowed = ($auth->acl_get('f_attach', $forum_id) && $auth->acl_get('u_attach') 
 if ($allowed)
 {
 	$max_files = ($auth->acl_get('a_') || $auth->acl_get('m_', $forum_id)) ? 0 : (int) $config['max_attachments'];
-	$plupload->configure($cache, $template, $s_action, $forum_id, $max_files);
+	$uploader->configure($cache, $template, $s_action, $forum_id, $max_files);
 }
 
 // Attachment entry

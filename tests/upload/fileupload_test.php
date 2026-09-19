@@ -79,12 +79,12 @@ class phpbb_fileupload_test extends phpbb_test_case
 				'mimetype.extension_guesser' => new \phpbb\mimetype\extension_guesser(),
 			))));
 		$this->factory = new \phpbb\files\factory($this->container);
-		$plupload = new \phpbb\plupload\plupload($phpbb_root_path, $config, $this->request, new \phpbb\user($this->language, '\phpbb\datetime'), $this->php_ini, $this->mimetype_guesser);
+		$uploader = new \phpbb\uploader\uploader($phpbb_root_path, $config, $this->request, new \phpbb\user($this->language, '\phpbb\datetime'), $this->php_ini, $this->mimetype_guesser);
 		$this->container->set('files.types.form', new \phpbb\files\types\form(
 			$this->factory,
 			$this->language,
 			$this->php_ini,
-			$plupload,
+			$uploader,
 			$this->request
 		));
 		$this->container->set('files.types.local', new \phpbb\files\types\local(

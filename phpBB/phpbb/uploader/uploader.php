@@ -11,12 +11,20 @@
 *
 */
 
-namespace phpbb\plupload;
+namespace phpbb\uploader;
 
 /**
-* This class handles all server-side plupload functions
+* This class handles the server side of the JavaScript attachment uploader:
+* it configures the client, reassembles chunked uploads and reports errors
+* back as JSON.
+*
+* It is deliberately named after what it does rather than after the library
+* that happens to drive it in the browser (currently Dropzone, see
+* assets/javascript/uploader.js), so that swapping that library out does not
+* ripple through the namespace, the service id, the stored configuration or
+* the temporary upload directory.
 */
-class plupload
+class uploader
 {
 	/**
 	* @var string
@@ -55,7 +63,7 @@ class plupload
 	protected $upload_directory;
 
 	/**
-	* Temporary upload directory for plupload uploads.
+	* Temporary upload directory for chunked uploads.
 	* @var string
 	*/
 	protected $temporary_directory;
@@ -83,8 +91,8 @@ class plupload
 	}
 
 	/**
-	* Plupload allows for chunking so we must check for that and assemble
-	* the whole file first before performing any checks on it.
+	* The uploader may split a file into chunks, so we must check for that and
+	* assemble the whole file first before performing any checks on it.
 	*
 	* @param string $form_name The name of the file element in the upload form
 	*
@@ -96,8 +104,8 @@ class plupload
 	{
 		$chunks_expected = $this->request->variable('chunks', 0);
 
-		// If chunking is disabled or we are not using plupload, just return
-		// and handle the file as usual
+		// If chunking is disabled or the file was sent in one piece, just
+		// return and handle the file as usual
 		if ($chunks_expected < 2)
 		{
 			return null;
@@ -106,7 +114,7 @@ class plupload
 		$file_name = $this->request->variable('name', '');
 		$chunk = $this->request->variable('chunk', 0);
 
-		$this->user->add_lang('plupload');
+		$this->user->add_lang('uploader');
 		$this->prepare_temporary_directory();
 
 		$file_path = $this->temporary_filepath($file_name);
@@ -143,7 +151,7 @@ class plupload
 	}
 
 	/**
-	* Fill in the plupload configuration options in the template
+	* Fill in the uploader configuration options in the template
 	*
 	* @param \phpbb\cache\service		$cache
 	* @param \phpbb\template\template	$template
@@ -161,26 +169,26 @@ class plupload
 
 		$template->assign_vars(array(
 			'S_RESIZE'			=> $resize,
-			'S_PLUPLOAD'		=> true,
+			'S_UPLOADER'		=> true,
 			'FILTERS'			=> $filters,
 			'CHUNK_SIZE'		=> $chunk_size,
-			'S_PLUPLOAD_URL'	=> html_entity_decode($s_action, ENT_COMPAT),
+			'S_UPLOADER_URL'	=> html_entity_decode($s_action, ENT_COMPAT),
 			'MAX_ATTACHMENTS'	=> $max_files,
 			'ATTACH_ORDER'		=> ($this->config['display_order']) ? 'asc' : 'desc',
 			'L_TOO_MANY_ATTACHMENTS'	=> $this->user->lang('TOO_MANY_ATTACHMENTS', $max_files),
 		));
 
-		$this->user->add_lang('plupload');
+		$this->user->add_lang('uploader');
 	}
 
 	/**
-	* Checks whether the page request was sent by plupload or not
+	* Checks whether the page request was sent by the JavaScript uploader or not
 	*
 	* @return bool
 	*/
 	public function is_active()
 	{
-		return $this->request->header('X-PHPBB-USING-PLUPLOAD', false);
+		return (bool) $this->request->header('X-PHPBB-USING-UPLOADER', false);
 	}
 
 	/**
@@ -217,13 +225,14 @@ class plupload
 	}
 
 	/**
-	 * Looks at the list of allowed extensions and generates a string
-	 * appropriate for use in configuring plupload with
+	 * Looks at the list of allowed extensions and generates the JSON encoded
+	 * list of extension groups that the uploader is configured with
 	 *
 	 * @param \phpbb\cache\service	$cache		Cache service object
 	 * @param int					$forum_id	The forum identifier
 	 *
-	 * @return string
+	 * @return string JSON encoded array of objects with the keys title,
+	 *                extensions and max_file_size
 	 */
 	public function generate_filter_string(\phpbb\cache\service $cache, int $forum_id)
 	{
@@ -242,39 +251,38 @@ class plupload
 
 		foreach ($groups as $group => $group_info)
 		{
-			$filters[] = sprintf(
-				"{title: '%s', extensions: '%s', max_file_size: %s}",
-				addslashes(ucfirst(strtolower($group))),
-				addslashes(implode(',', $group_info['extensions'])),
-				$group_info['max_file_size']
-			);
+			$filters[] = [
+				'title'			=> ucfirst(strtolower($group)),
+				'extensions'	=> implode(',', $group_info['extensions']),
+				'max_file_size'	=> $group_info['max_file_size'],
+			];
 		}
 
-		return implode(',', $filters);
+		return json_encode($filters, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 	}
 
 	/**
-	* Generates a string that is used to tell plupload to automatically resize
-	* files before uploading them.
+	* Generates the JSON encoded settings that are used to tell the uploader to
+	* automatically resize images before uploading them.
 	*
-	* @return string
+	* @return string JSON encoded object with the keys width, height, quality
+	*                and preserve_headers, or "null" if resizing is disabled
 	*/
 	public function generate_resize_string()
 	{
-		$resize = '';
+		$resize = null;
+
 		if ($this->config['img_max_height'] > 0 && $this->config['img_max_width'] > 0)
 		{
-			$preserve_headers_value = $this->config['img_strip_metadata'] ? 'false' : 'true';
-			$resize = sprintf(
-				'resize: {width: %d, height: %d, quality: %d, preserve_headers: %s},',
-				(int) $this->config['img_max_width'],
-				(int) $this->config['img_max_height'],
-				(int) $this->config['img_quality'],
-				$preserve_headers_value
-			);
+			$resize = [
+				'width'				=> (int) $this->config['img_max_width'],
+				'height'			=> (int) $this->config['img_max_height'],
+				'quality'			=> (int) $this->config['img_quality'],
+				'preserve_headers'	=> !$this->config['img_strip_metadata'],
+			];
 		}
 
-		return $resize;
+		return json_encode($resize);
 	}
 
 	/**
@@ -314,11 +322,11 @@ class plupload
 
 	protected function temporary_filepath($file_name)
 	{
-		// Must preserve the extension for plupload to work.
+		// Must preserve the extension so that the mimetype can be guessed.
 		return sprintf(
 			'%s/%s_%s%s',
 			$this->temporary_directory,
-			$this->config['plupload_salt'],
+			$this->config['uploader_salt'],
 			md5($file_name),
 			\phpbb\files\filespec::get_extension($file_name)
 		);
@@ -340,7 +348,7 @@ class plupload
 		$upload = $this->request->file($form_name);
 		if ($is_multipart && (!isset($upload['tmp_name']) || !is_uploaded_file($upload['tmp_name'])))
 		{
-			$this->emit_error(103, 'PLUPLOAD_ERR_MOVE_UPLOADED');
+			$this->emit_error(103, 'UPLOADER_ERR_MOVE_UPLOADED');
 		}
 
 		$tmp_file = $this->temporary_filepath($upload['tmp_name']);
@@ -348,19 +356,19 @@ class plupload
 
 		if (!$filesystem->is_writable($this->temporary_directory) || !move_uploaded_file($upload['tmp_name'], $tmp_file))
 		{
-			$this->emit_error(103, 'PLUPLOAD_ERR_MOVE_UPLOADED');
+			$this->emit_error(103, 'UPLOADER_ERR_MOVE_UPLOADED');
 		}
 
 		$out = fopen("{$file_path}.part", $chunk == 0 ? 'wb' : 'ab');
 		if (!$out)
 		{
-			$this->emit_error(102, 'PLUPLOAD_ERR_OUTPUT');
+			$this->emit_error(102, 'UPLOADER_ERR_OUTPUT');
 		}
 
 		$in = fopen(($is_multipart) ? $tmp_file : 'php://input', 'rb');
 		if (!$in)
 		{
-			$this->emit_error(101, 'PLUPLOAD_ERR_INPUT');
+			$this->emit_error(101, 'UPLOADER_ERR_INPUT');
 		}
 
 		while ($buf = fread($in, 4096))
@@ -403,7 +411,7 @@ class plupload
 	protected function set_default_directories()
 	{
 		$this->upload_directory = $this->phpbb_root_path . $this->config['upload_path'];
-		$this->temporary_directory = $this->upload_directory . '/plupload';
+		$this->temporary_directory = $this->upload_directory . '/uploader';
 	}
 
 	/**

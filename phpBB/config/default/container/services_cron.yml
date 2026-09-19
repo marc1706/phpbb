@@ -128,15 +128,15 @@ services:
         tags:
             - { name: cron.task }
 
-    cron.task.core.tidy_plupload:
-        class: phpbb\cron\task\core\tidy_plupload
+    cron.task.core.tidy_uploader:
+        class: phpbb\cron\task\core\tidy_uploader
         arguments:
             - '%core.root_path%'
             - '@config'
             - '@log'
             - '@user'
         calls:
-            - [set_name, [cron.task.core.tidy_plupload]]
+            - [set_name, [cron.task.core.tidy_uploader]]
         tags:
             - { name: cron.task }
 

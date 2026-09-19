@@ -72,8 +72,8 @@ class filespec_storage
 	/** @var language Language class */
 	protected $language;
 
-	/** @var \phpbb\plupload\plupload|null The plupload object */
-	protected $plupload;
+	/** @var \phpbb\uploader\uploader|null The uploader object */
+	protected $uploader;
 
 	/** @var \phpbb\mimetype\guesser|null phpBB Mimetype guesser */
 	protected $mimetype_guesser;
@@ -84,13 +84,13 @@ class filespec_storage
 	 * @param language					$language Language
 	 * @param \FastImageSize\FastImageSize $imagesize Imagesize class
 	 * @param \phpbb\mimetype\guesser|null	$mimetype_guesser Mime type guesser
-	 * @param \phpbb\plupload\plupload|null	$plupload Plupload
+	 * @param \phpbb\uploader\uploader|null	$uploader Uploader
 	 */
-	public function __construct(language $language, \FastImageSize\FastImageSize $imagesize, \phpbb\mimetype\guesser|null $mimetype_guesser = null, \phpbb\plupload\plupload|null $plupload = null)
+	public function __construct(language $language, \FastImageSize\FastImageSize $imagesize, \phpbb\mimetype\guesser|null $mimetype_guesser = null, \phpbb\uploader\uploader|null $uploader = null)
 	{
 		$this->language = $language;
 		$this->imagesize = $imagesize;
-		$this->plupload = $plupload;
+		$this->uploader = $uploader;
 		$this->mimetype_guesser = $mimetype_guesser;
 	}
 
@@ -259,14 +259,14 @@ class filespec_storage
 	 */
 	public function is_uploaded()
 	{
-		$is_plupload = $this->plupload && $this->plupload->is_active();
+		$is_uploader = $this->uploader && $this->uploader->is_active();
 
-		if (!$this->local && !$is_plupload && !is_uploaded_file($this->filename))
+		if (!$this->local && !$is_uploader && !is_uploaded_file($this->filename))
 		{
 			return false;
 		}
 
-		if (($this->local || $is_plupload) && !file_exists($this->filename))
+		if (($this->local || $is_uploader) && !file_exists($this->filename))
 		{
 			return false;
 		}

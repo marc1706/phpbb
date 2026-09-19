@@ -33,7 +33,7 @@ services:
             - '@files.upload'
             - '@language'
             - '@event_dispatcher'
-            - '@plupload'
+            - '@uploader'
             - '@storage.attachment'
             - '@filesystem.temp'
             - '@user'

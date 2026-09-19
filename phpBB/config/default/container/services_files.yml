@@ -14,7 +14,7 @@ services:
             - '@upload_imagesize'
             - '%core.root_path%'
             - '@mimetype.guesser'
-            - '@plupload'
+            - '@uploader'
 
     files.filespec_storage:
         class: phpbb\files\filespec_storage
@@ -23,7 +23,7 @@ services:
             - '@language'
             - '@upload_imagesize'
             - '@mimetype.guesser'
-            - '@plupload'
+            - '@uploader'
 
     files.upload:
         class: phpbb\files\upload
@@ -41,7 +41,7 @@ services:
             - '@files.factory'
             - '@language'
             - '@php_ini'
-            - '@plupload'
+            - '@uploader'
             - '@request'
 
     files.types.form_storage:
@@ -51,7 +51,7 @@ services:
             - '@files.factory'
             - '@language'
             - '@php_ini'
-            - '@plupload'
+            - '@uploader'
             - '@request'
 
     files.types.local:

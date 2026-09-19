@@ -31,8 +31,8 @@ class phpbb_files_types_form_test extends phpbb_test_case
 	/** @var \phpbb\request\request_interface */
 	protected $request;
 
-	/** @var \phpbb\plupload\plupload */
-	protected $plupload;
+	/** @var \phpbb\uploader\uploader */
+	protected $uploader;
 
 	/** @var string phpBB root path */
 	protected $phpbb_root_path;
@@ -61,10 +61,10 @@ class phpbb_files_types_form_test extends phpbb_test_case
 				'mimetype.extension_guesser' => new \phpbb\mimetype\extension_guesser(),
 			))));
 		$this->factory = new \phpbb\files\factory($this->container);
-		$this->plupload = $this->getMockBuilder('\phpbb\plupload\plupload')
+		$this->uploader = $this->getMockBuilder('\phpbb\uploader\uploader')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->plupload->expects($this->any())
+		$this->uploader->expects($this->any())
 			->method('handle_upload')
 			->willReturn(array());
 
@@ -133,7 +133,7 @@ class phpbb_files_types_form_test extends phpbb_test_case
 	/**
 	 * @dataProvider data_upload_form
 	 */
-	public function test_upload_form($upload, $expected, $plupload = array())
+	public function test_upload_form($upload, $expected, $uploader = array())
 	{
 		$this->request = $this->createMock('\phpbb\request\request');
 		$this->request->expects($this->any())
@@ -150,14 +150,14 @@ class phpbb_files_types_form_test extends phpbb_test_case
 			)));
 		$this->container->set('files.filespec', $filespec);
 		$this->factory = new \phpbb\files\factory($this->container);
-		$this->plupload = $this->getMockBuilder('\phpbb\plupload\plupload')
+		$this->uploader = $this->getMockBuilder('\phpbb\uploader\uploader')
 			->disableOriginalConstructor()
 			->getMock();
-		$this->plupload->expects($this->any())
+		$this->uploader->expects($this->any())
 			->method('handle_upload')
-			->willReturn($plupload);
+			->willReturn($uploader);
 
-		$type_form = new \phpbb\files\types\form($this->factory, $this->language, $this->php_ini, $this->plupload, $this->request);
+		$type_form = new \phpbb\files\types\form($this->factory, $this->language, $this->php_ini, $this->uploader, $this->request);
 		$upload = new \phpbb\files\upload($this->factory, $this->language, $this->php_ini, $this->request);
 		$upload->set_allowed_extensions(array('png'));
 		$type_form->set_upload($upload);

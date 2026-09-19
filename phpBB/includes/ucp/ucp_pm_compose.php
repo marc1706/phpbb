@@ -542,10 +542,10 @@ function compose_pm($id, $mode, $action, $user_folders = array())
 		$icon_id = 0;
 	}
 
-	/* @var $plupload \phpbb\plupload\plupload */
-	$plupload = $phpbb_container->get('plupload');
+	/* @var $uploader \phpbb\uploader\uploader */
+	$uploader = $phpbb_container->get('uploader');
 	$message_parser = new parse_message();
-	$message_parser->set_plupload($plupload);
+	$message_parser->set_uploader($uploader);
 
 	$message_parser->message = ($action == 'reply') ? '' : $message_text;
 	unset($message_text);
@@ -1390,7 +1390,7 @@ function compose_pm($id, $mode, $action, $user_folders = array())
 	if ($allowed)
 	{
 		$max_files = ($auth->acl_gets('a_', 'm_')) ? 0 : (int) $config['max_attachments_pm'];
-		$plupload->configure($cache, $template, $s_action, false, $max_files);
+		$uploader->configure($cache, $template, $s_action, false, $max_files);
 	}
 
 	// Attachment entry

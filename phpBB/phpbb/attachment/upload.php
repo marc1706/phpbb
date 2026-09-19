@@ -18,7 +18,7 @@ use phpbb\cache\service;
 use phpbb\config\config;
 use phpbb\event\dispatcher;
 use phpbb\language\language;
-use phpbb\plupload\plupload;
+use phpbb\uploader\uploader;
 use phpbb\storage\storage;
 use phpbb\filesystem\temp;
 use phpbb\user;
@@ -49,8 +49,8 @@ class upload
 	/** @var string */
 	protected $phpbb_root_path;
 
-	/** @var plupload Plupload */
-	protected $plupload;
+	/** @var uploader Uploader */
+	protected $uploader;
 
 	/** @var storage */
 	protected $storage;
@@ -81,12 +81,12 @@ class upload
 	 * @param \phpbb\files\upload $files_upload
 	 * @param language $language
 	 * @param dispatcher $phpbb_dispatcher
-	 * @param plupload $plupload
+	 * @param uploader $uploader
 	 * @param storage $storage
 	 * @param temp $temp
 	 * @param user $user
 	 */
-	public function __construct(auth $auth, service $cache, config $config, \phpbb\files\upload $files_upload, language $language, dispatcher $phpbb_dispatcher, plupload $plupload, storage $storage, temp $temp, user $user)
+	public function __construct(auth $auth, service $cache, config $config, \phpbb\files\upload $files_upload, language $language, dispatcher $phpbb_dispatcher, uploader $uploader, storage $storage, temp $temp, user $user)
 	{
 		$this->auth = $auth;
 		$this->cache = $cache;
@@ -94,7 +94,7 @@ class upload
 		$this->files_upload = $files_upload;
 		$this->language = $language;
 		$this->phpbb_dispatcher = $phpbb_dispatcher;
-		$this->plupload = $plupload;
+		$this->uploader = $uploader;
 		$this->storage = $storage;
 		$this->temp = $temp;
 		$this->user = $user;
@@ -287,9 +287,9 @@ class upload
 		{
 			$this->file->remove($this->storage);
 
-			if ($this->plupload && $this->plupload->is_active())
+			if ($this->uploader && $this->uploader->is_active())
 			{
-				$this->plupload->emit_error(104, 'ATTACHED_IMAGE_NOT_IMAGE');
+				$this->uploader->emit_error(104, 'ATTACHED_IMAGE_NOT_IMAGE');
 			}
 
 			// If this error occurs a user tried to exploit an IE Bug by renaming extensions

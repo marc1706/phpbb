@@ -1,7 +1,7 @@
 <div class="panel bg3 panel-container" id="attach-panel">
 	<div class="inner">
 
-	<p>{L_ADD_ATTACHMENT_EXPLAIN} <span class="hidden" id="drag-n-drop-message">{L_PLUPLOAD_DRAG_TEXTAREA}</span></p>
+	<p>{L_ADD_ATTACHMENT_EXPLAIN} <span class="hidden" id="drag-n-drop-message">{L_UPLOADER_DRAG_TEXTAREA}</span></p>
 	{% if MAX_ATTACHMENT_FILESIZE is not empty %}<p>{{ MAX_ATTACHMENT_FILESIZE }}</p>{% endif %}
 
 	<fieldset class="fields2" id="attach-panel-basic">
@@ -19,7 +19,7 @@
 	</fieldset>
 
 	<div id="attach-panel-multi" class="attach-panel-multi">
-		<input type="button" class="button1 button button-form-bold" value="{L_PLUPLOAD_ADD_FILES}" id="add_files" />
+		<input type="button" class="button1 button button-form-bold" value="{L_UPLOADER_ADD_FILES}" id="add_files" />
 	</div>
 
 	{% EVENT posting_attach_body_file_list_before %}
@@ -28,10 +28,10 @@
 			<table class="table1 zebra-list fixed-width-table">
 				<thead>
 					<tr>
-						<th class="attach-name">{L_PLUPLOAD_FILENAME}</th>
+						<th class="attach-name">{L_UPLOADER_FILENAME}</th>
 						<th class="attach-comment">{L_FILE_COMMENT}</th>
-						<th class="attach-filesize">{L_PLUPLOAD_SIZE}</th>
-						<th class="attach-status">{L_PLUPLOAD_STATUS}</th>
+						<th class="attach-filesize">{L_UPLOADER_SIZE}</th>
+						<th class="attach-status">{L_UPLOADER_STATUS}</th>
 					</tr>
 				</thead>
 				<tbody class="responsive-skip-empty file-list" id="file-list">

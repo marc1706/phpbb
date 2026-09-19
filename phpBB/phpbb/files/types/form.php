@@ -17,7 +17,7 @@ use bantu\IniGetWrapper\IniGetWrapper;
 use phpbb\files\factory;
 use phpbb\files\filespec;
 use phpbb\language\language;
-use phpbb\plupload\plupload;
+use phpbb\uploader\uploader;
 use phpbb\request\request;
 
 class form extends base
@@ -25,8 +25,8 @@ class form extends base
 	/** @var factory Files factory */
 	protected $factory;
 
-	/** @var plupload */
-	protected $plupload;
+	/** @var uploader */
+	protected $uploader;
 
 	/** @var request */
 	protected $request;
@@ -37,15 +37,15 @@ class form extends base
 	 * @param factory			$factory	Files factory
 	 * @param language			$language	Language class
 	 * @param IniGetWrapper		$php_ini	ini_get() wrapper
-	 * @param plupload			$plupload	Plupload
+	 * @param uploader			$uploader	Uploader
 	 * @param request	$request	Request object
 	 */
-	public function __construct(factory $factory, language $language, IniGetWrapper $php_ini, plupload $plupload, request $request)
+	public function __construct(factory $factory, language $language, IniGetWrapper $php_ini, uploader $uploader, request $request)
 	{
 		$this->factory = $factory;
 		$this->language = $language;
 		$this->php_ini = $php_ini;
-		$this->plupload = $plupload;
+		$this->uploader = $uploader;
 		$this->request = $request;
 	}
 
@@ -72,7 +72,7 @@ class form extends base
 		$upload = $this->request->file($form_name);
 		unset($upload['local_mode']);
 
-		$result = $this->plupload->handle_upload($form_name);
+		$result = $this->uploader->handle_upload($form_name);
 		if (is_array($result))
 		{
 			$upload = array_merge($upload, $result);

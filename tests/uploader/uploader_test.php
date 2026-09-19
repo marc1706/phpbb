@@ -11,7 +11,7 @@
  *
  */
 
-class phpbb_plupload_test extends phpbb_test_case
+class phpbb_uploader_test extends phpbb_test_case
 {
 	public static function generate_resize_string_data()
 	{
@@ -21,14 +21,14 @@ class phpbb_plupload_test extends phpbb_test_case
 				0,
 				85,
 				0,
-				'',
+				'null',
 			),
 			array(
 				130,
 				150,
 				85,
 				1,
-				'resize: {width: 130, height: 150, quality: 85, preserve_headers: false},'
+				'{"width":130,"height":150,"quality":85,"preserve_headers":false}'
 			),
 		);
 	}
@@ -49,7 +49,7 @@ class phpbb_plupload_test extends phpbb_test_case
 			'img_strip_metadata'	=> $config_metadata,
 			'upload_path'		=> 'files',
 		));
-		$plupload = new \phpbb\plupload\plupload(
+		$uploader = new \phpbb\uploader\uploader(
 			'',
 			$config,
 			new phpbb_mock_request,
@@ -58,7 +58,7 @@ class phpbb_plupload_test extends phpbb_test_case
 			new \phpbb\mimetype\guesser(array(new \phpbb\mimetype\extension_guesser))
 		);
 
-		$this->assertEquals($expected, $plupload->generate_resize_string());
+		$this->assertEquals($expected, $uploader->generate_resize_string());
 	}
 
 	public static function data_get_chunk_size()
@@ -122,7 +122,7 @@ class phpbb_plupload_test extends phpbb_test_case
 				['post_max_size', $limits_ary['post_max_size']]
 			]));
 
-		$plupload = new \phpbb\plupload\plupload(
+		$uploader = new \phpbb\uploader\uploader(
 			'',
 			$config,
 			new phpbb_mock_request,
@@ -131,6 +131,6 @@ class phpbb_plupload_test extends phpbb_test_case
 			new \phpbb\mimetype\guesser(array(new \phpbb\mimetype\extension_guesser))
 		);
 
-		$this->assertEquals($expected, $plupload->get_chunk_size());
+		$this->assertEquals($expected, $uploader->get_chunk_size());
 	}
 }

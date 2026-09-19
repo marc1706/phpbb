@@ -536,21 +536,21 @@ class phpbb_filespec_test extends phpbb_test_case
 	{
 		$filespec = new \phpbb\files\filespec($this->filesystem, $this->language, new \bantu\IniGetWrapper\IniGetWrapper, new \FastImageSize\FastImageSize(), $this->phpbb_root_path, null);
 		$reflection_filespec = new ReflectionClass($filespec);
-		$plupload_property = $reflection_filespec->getProperty('plupload');
-		$plupload_mock = $this->getMockBuilder('\phpbb\plupload\plupload')
+		$uploader_property = $reflection_filespec->getProperty('uploader');
+		$uploader_mock = $this->getMockBuilder('\phpbb\uploader\uploader')
 			->disableOriginalConstructor()
 			->getMock();
-		$plupload_mock->expects($this->any())
+		$uploader_mock->expects($this->any())
 			->method('is_active')
 			->will($this->returnValue(true));
-		$plupload_property->setValue($filespec, $plupload_mock);
+		$uploader_property->setValue($filespec, $uploader_mock);
 		$is_uploaded = $reflection_filespec->getMethod('is_uploaded');
 
-		// Plupload is active and file does not exist
+		// Uploader is active and file does not exist
 		$this->assertFalse($is_uploaded->invoke($filespec));
 
-		// Plupload is not active and file was not uploaded
-		$plupload_property->setValue($filespec, null);
+		// Uploader is not active and file was not uploaded
+		$uploader_property->setValue($filespec, null);
 		$this->assertFalse($is_uploaded->invoke($filespec));
 	}
 }

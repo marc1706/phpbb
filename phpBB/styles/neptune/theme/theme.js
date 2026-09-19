@@ -33,65 +33,68 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
-	// 2. Head User Dropdown Controller
-	const userMenuBtn = document.getElementById('user-menu-button');
-	const userMenu = document.getElementById('user-menu');
-	const userMenuParent = document.getElementById('user-menu-parent');
+	// 2. Generic dropdown controller
+	// Registers a trigger/panel pair: toggling, click-outside dismissal, Escape to
+	// close, and closing any sibling dropdown so only one panel is ever open.
+	const dropdowns = [];
 
-	if (userMenuBtn && userMenu) {
-		userMenuBtn.addEventListener('click', (e) => {
+	function closeDropdown(entry, refocus = false) {
+		entry.button.setAttribute('aria-expanded', 'false');
+		entry.menu.classList.add('hidden');
+
+		if (refocus) {
+			entry.button.focus();
+		}
+	}
+
+	function registerDropdown(buttonId, menuId, parentId) {
+		const button = document.getElementById(buttonId);
+		const menu = document.getElementById(menuId);
+		const parent = document.getElementById(parentId);
+
+		if (!button || !menu || !parent) {
+			return;
+		}
+
+		const entry = { button, menu, parent };
+		dropdowns.push(entry);
+
+		button.addEventListener('click', (e) => {
+			e.preventDefault();
 			e.stopPropagation();
-			const isExpanded = userMenuBtn.getAttribute('aria-expanded') === 'true';
-			userMenuBtn.setAttribute('aria-expanded', !isExpanded);
-			userMenu.classList.toggle('hidden');
+
+			const willOpen = menu.classList.contains('hidden');
+
+			// Only one dropdown open at a time
+			dropdowns.forEach(other => {
+				if (other !== entry) {
+					closeDropdown(other);
+				}
+			});
+
+			button.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+			menu.classList.toggle('hidden', !willOpen);
 		});
 
-		// Close menu when clicking outside
-		document.addEventListener('click', (event) => {
-			if (!userMenuParent.contains(event.target)) {
-				userMenuBtn.setAttribute('aria-expanded', 'false');
-				userMenu.classList.add('hidden');
-			}
-		});
-
-		// Keyboard support - Escape closes menu
-		userMenuParent.addEventListener('keydown', (e) => {
+		parent.addEventListener('keydown', (e) => {
 			if (e.key === 'Escape') {
-				userMenuBtn.setAttribute('aria-expanded', 'false');
-				userMenu.classList.add('hidden');
-				userMenuBtn.focus();
+				closeDropdown(entry, true);
 			}
 		});
 	}
 
-	// 3. Notification Dropdown
-	const notificationBtn = document.getElementById('notification_list_button');
-	const notificationMenu = document.getElementById('notification_list');
-	const notificationParent = document.getElementById('notification_dropdown_parent');
+	registerDropdown('quick-links-button', 'quick-links-menu', 'quick-links-parent');
+	registerDropdown('user-menu-button', 'user-menu', 'user-menu-parent');
+	registerDropdown('notification_list_button', 'notification_list', 'notification_dropdown_parent');
 
-	if (notificationBtn && notificationMenu && notificationParent) {
-		notificationBtn.addEventListener('click', (e) => {
-			e.stopPropagation();
-			const isExpanded = notificationBtn.getAttribute('aria-expanded') === 'true';
-			notificationBtn.setAttribute('aria-expanded', !isExpanded);
-			notificationMenu.classList.toggle('hidden');
-		});
-
-		document.addEventListener('click', (event) => {
-			if (!notificationParent.contains(event.target)) {
-				notificationBtn.setAttribute('aria-expanded', 'false');
-				notificationMenu.classList.add('hidden');
+	// Single document listener dismisses whichever dropdown the click fell outside of
+	document.addEventListener('click', (event) => {
+		dropdowns.forEach(entry => {
+			if (!entry.parent.contains(event.target)) {
+				closeDropdown(entry);
 			}
 		});
-
-		notificationParent.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') {
-				notificationBtn.setAttribute('aria-expanded', 'false');
-				notificationMenu.classList.add('hidden');
-				notificationBtn.focus();
-			}
-		});
-	}
+	});
 
 	// 4. Mobile Hamburger Menu Toggler
 	const mobileMenuBtn = document.getElementById('mobile-menu-button');

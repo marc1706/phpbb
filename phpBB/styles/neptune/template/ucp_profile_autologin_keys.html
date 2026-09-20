@@ -1,0 +1,79 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<form id="ucp" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+		<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
+
+		<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+			<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('PROFILE_AUTOLOGIN_KEYS') }}</p>
+			{% if ERROR %}
+				<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+					{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+					<span>{{ ERROR }}</span>
+				</div>
+			{% endif %}
+			{% DEFINE COLSPAN = 4 %}
+			<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+				<table class="table1 w-full text-start text-xs">
+					<thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-slate-800">
+						<tr>
+							{% EVENT ucp_profile_autologin_keys_thead_key_before %}
+							<th scope="col" class="name p-3.5 ps-4">{{ lang('LOGIN_KEY') }}</th>
+							{% EVENT ucp_profile_autologin_keys_thead_key_after %}
+							<th scope="col" class="center p-3.5 hidden sm:table-cell">{{ lang('IP') }}</th>
+							<th scope="col" class="center p-3.5 hidden md:table-cell">{{ lang('LOGIN_TIME') }}</th>
+							{% EVENT ucp_profile_autologin_keys_thead_mark_before %}
+							<th scope="col" class="center mark p-3.5 pe-4 text-end">{{ lang('MARK') }}</th>
+							{% EVENT ucp_profile_autologin_keys_thead_mark_after %}
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+					{% for sessions in loops.sessions %}
+						<tr class="{% if sessions.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %} hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors">
+							{% EVENT ucp_profile_autologin_keys_tbody_key_before %}
+							<td class="p-3.5 ps-4">
+								<label for="{{ sessions.KEY }}" class="font-mono font-bold text-slate-800 dark:text-white cursor-pointer break-all">{{ sessions.KEY }}</label>
+								<div class="sm:hidden text-[11px] text-slate-400 mt-1">{{ sessions.IP }} &bull; {{ sessions.LOGIN_TIME }}</div>
+								<div class="hidden sm:block md:hidden text-[11px] text-slate-400 mt-1">{{ sessions.LOGIN_TIME }}</div>
+							</td>
+							{% EVENT ucp_profile_autologin_keys_tbody_key_after %}
+							<td class="center p-3.5 hidden sm:table-cell whitespace-nowrap">{{ sessions.IP }}</td>
+							<td class="center p-3.5 hidden md:table-cell whitespace-nowrap text-slate-500 dark:text-slate-400">{{ sessions.LOGIN_TIME }}</td>
+							{% EVENT ucp_profile_autologin_keys_tbody_mark_before %}
+							<td class="center mark p-3.5 pe-4 text-end">
+								<input type="checkbox" name="keys[]" value="{{ sessions.KEY }}" id="{{ sessions.KEY }}" class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+							</td>
+							{% EVENT ucp_profile_autologin_keys_tbody_mark_after %}
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="{{ definition.COLSPAN }}" class="bg1 text-center py-12 text-slate-500 dark:text-slate-400 text-sm">{{ lang('PROFILE_NO_AUTOLOGIN_KEYS') }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		{% if loops.sessions %}
+			<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+				<div class="text-xs text-slate-500 dark:text-slate-400">
+					<a href="#" onclick="$('#ucp input:checkbox').prop('checked', true); return false;" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('MARK_ALL') }}</a>
+					&bull;
+					<a href="#" onclick="$('#ucp input:checkbox').prop('checked', false); return false;" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('UNMARK_ALL') }}</a>
+				</div>
+				<div class="flex flex-wrap items-center justify-end gap-2">
+					{{ S_HIDDEN_FIELDS }}
+					<input type="submit" name="submit" value="{{ L_DELETE_MARKED }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-red-600 hover:bg-red-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+					{{ S_FORM_TOKEN }}
+				</div>
+			</div>
+		{% endif %}
+
+	</form>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

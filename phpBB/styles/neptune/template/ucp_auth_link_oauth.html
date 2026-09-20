@@ -1,0 +1,30 @@
+<!-- phpBB Modern prosilver Tailwind: ucp_auth_link_oauth.html -->
+{% for oauth in loops.oauth %}
+	<form id="ucp_oauth_{{ oauth.SERVICE_ID }}" method="post" action="{{ S_UCP_ACTION }}" class="space-y-3 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+		<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ oauth.SERVICE_NAME }}</h3>
+
+		<fieldset class="fields2 space-y-3">
+			{% if oauth.UNIQUE_ID %}
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4">
+					<div class="sm:col-span-1">
+						<span class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('UCP_AUTH_LINK_ID') ~ lang('COLON') }}</span>
+					</div>
+					<div class="sm:col-span-2 text-sm text-slate-600 dark:text-slate-400">
+						{{ oauth.UNIQUE_ID }}
+					</div>
+				</div>
+				<div class="flex flex-wrap items-center justify-end gap-2">
+					<input type="submit" name="submit" tabindex="6" value="{{ lang('UCP_AUTH_LINK_UNLINK') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+				</div>
+			{% else %}
+				<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('UCP_AUTH_LINK_ASK') }}</p>
+				<div class="flex flex-wrap items-center justify-end gap-2">
+					<input type="submit" name="submit" tabindex="6" value="{{ lang('UCP_AUTH_LINK_LINK') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+				</div>
+			{% endif %}
+		</fieldset>
+		{{ oauth.HIDDEN_FIELDS }}
+		{{ S_HIDDEN_FIELDS }}
+		{{ S_FORM_TOKEN }}
+	</form>
+{% endfor %}

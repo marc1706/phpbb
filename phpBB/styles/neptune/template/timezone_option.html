@@ -1,0 +1,20 @@
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+	<div class="sm:col-span-1">
+		<label for="timezone" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('BOARD_TIMEZONE') ~ lang('COLON') }}</label>
+	</div>
+	<div class="sm:col-span-2 space-y-2">
+		{% if TIMEZONE_OPTIONS %}
+			<div id="tz_select_date" class="flex flex-wrap items-center gap-2" style="display: none;">
+				{% set tz_date_data = TIMEZONE_OPTIONS | merge({ options: [{ value: "", label: lang('SELECT_CURRENT_TIME') }] | merge(TIMEZONE_OPTIONS.options) }) %}
+				{{ FormsSelect(tz_date_data | merge({class: 'autowidth tz_select w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500', id: 'tz_date', name: 'tz_date', group_only: true})) }}
+				<input type="button" id="tz_select_date_suggest" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" style="display: none;" timezone-preselect="{% if S_TZ_PRESELECT %}true{% else %}false{% endif %}" data-l-suggestion="{{ lang('TIMEZONE_DATE_SUGGESTION') }}" value="{{ lang('TIMEZONE_DATE_SUGGESTION') }}" />
+			</div>
+		{% endif %}
+		<div>
+			{% set tz_select_data = TIMEZONE_OPTIONS | merge({ options: [{ value: "", label: lang('SELECT_TIMEZONE') }] | merge(TIMEZONE_OPTIONS.options) }) %}
+			{{ FormsSelect(tz_select_data | merge({class: 'autowidth tz_select w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500', id: 'timezone'})) }}
+
+			{% INCLUDEJS('timezone.js') %}
+		</div>
+	</div>
+</div>

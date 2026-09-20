@@ -1,0 +1,345 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<div class="space-y-6">
+		<div>
+			<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight"{% if GROUP_COLOUR %} style="color:#{{ GROUP_COLOUR }};"{% endif %}>{{ lang('USERGROUPS') }}{% if GROUP_NAME %} :: {{ GROUP_NAME }}{% endif %}</h2>
+		</div>
+
+		<form id="ucp" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+			{% if S_EDIT %}
+
+				<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+					{% if S_ERROR %}
+						<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+							{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+							<span>{{ ERROR_MSG }}</span>
+						</div>
+					{% endif %}
+
+					<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('GROUPS_EXPLAIN') }}</p>
+
+					<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('GROUP_DETAILS') }}</h3>
+
+					<fieldset>
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+							<div class="sm:col-span-1">
+								<label for="group_name" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('GROUP_NAME') ~ lang('COLON') }}</label>
+							</div>
+							<div class="sm:col-span-2 space-y-2">
+								{% if S_SPECIAL_GROUP %}
+									<strong class="text-sm font-bold text-slate-800 dark:text-white"{% if GROUP_COLOUR %} style="color: #{{ GROUP_COLOUR }};"{% endif %}>{{ GROUP_NAME }}</strong>
+									<input name="group_name" type="hidden" value="{{ GROUP_INTERNAL_NAME }}" />
+								{% else %}
+									<input name="group_name" type="text" id="group_name" value="{{ GROUP_INTERNAL_NAME }}" class="inputbox w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+								{% endif %}
+							</div>
+						</div>
+
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800{% if S_SPECIAL_GROUP %} last:border-0{% endif %}">
+							<div class="sm:col-span-1">
+								<label for="group_desc" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('GROUP_DESC') ~ lang('COLON') }}</label>
+							</div>
+							<div class="sm:col-span-2 space-y-2">
+								<textarea id="group_desc" name="group_desc" rows="5" cols="45" class="inputbox w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors">{{ GROUP_DESC }}</textarea>
+								<div class="flex flex-wrap items-center gap-4">
+									<label for="desc_parse_bbcode" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+										<input type="checkbox" class="radio rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" name="desc_parse_bbcode" id="desc_parse_bbcode"{% if S_DESC_BBCODE_CHECKED %} checked="checked"{% endif %} />
+										<span>{{ lang('PARSE_BBCODE') }}</span>
+									</label>
+									<label for="desc_parse_smilies" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+										<input type="checkbox" class="radio rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" name="desc_parse_smilies" id="desc_parse_smilies"{% if S_DESC_SMILIES_CHECKED %} checked="checked"{% endif %} />
+										<span>{{ lang('PARSE_SMILIES') }}</span>
+									</label>
+									<label for="desc_parse_urls" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+										<input type="checkbox" class="radio rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" name="desc_parse_urls" id="desc_parse_urls"{% if S_DESC_URLS_CHECKED %} checked="checked"{% endif %} />
+										<span>{{ lang('PARSE_URLS') }}</span>
+									</label>
+								</div>
+							</div>
+						</div>
+
+						{% if not S_SPECIAL_GROUP %}
+							<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+								<div class="sm:col-span-1">
+									<label for="group_type1" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('GROUP_TYPE') ~ lang('COLON') }}</label>
+									<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('GROUP_TYPE_EXPLAIN') }}</span>
+								</div>
+								<div class="sm:col-span-2 space-y-2">
+									<div class="flex flex-wrap items-center gap-4">
+										<label for="group_type1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+											<input type="radio" class="radio rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" name="group_type" id="group_type1" value="{{ GROUP_TYPE_FREE }}"{{ GROUP_FREE }} />
+											<span>{{ lang('GROUP_OPEN') }}</span>
+										</label>
+										<label for="group_type2" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+											<input type="radio" class="radio rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" name="group_type" id="group_type2" value="{{ GROUP_TYPE_OPEN }}"{{ GROUP_OPEN }} />
+											<span>{{ lang('GROUP_REQUEST') }}</span>
+										</label>
+										<label for="group_type3" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+											<input type="radio" class="radio rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" name="group_type" id="group_type3" value="{{ GROUP_TYPE_CLOSED }}"{{ GROUP_CLOSED }} />
+											<span>{{ lang('GROUP_CLOSED') }}</span>
+										</label>
+										<label for="group_type4" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+											<input type="radio" class="radio rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" name="group_type" id="group_type4" value="{{ GROUP_TYPE_HIDDEN }}"{{ GROUP_HIDDEN }} />
+											<span>{{ lang('GROUP_HIDDEN') }}</span>
+										</label>
+									</div>
+								</div>
+							</div>
+						{% else %}
+							<input name="group_type" type="hidden" value="{{ GROUP_TYPE_SPECIAL }}" />
+						{% endif %}
+					</fieldset>
+
+				</div>
+
+				<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+					<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('GROUP_SETTINGS_SAVE') }}</h3>
+
+					<fieldset>
+						{% EVENT ucp_group_settings_before %}
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+							<div class="sm:col-span-1">
+								<label for="group_colour" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('GROUP_COLOR') ~ lang('COLON') }}</label>
+								<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('GROUP_COLOR_EXPLAIN') }}</span>
+							</div>
+							<div class="sm:col-span-2 space-y-2">
+								<div class="flex flex-wrap items-center gap-2">
+									<input name="group_colour" type="text" id="group_colour" value="{{ GROUP_COLOUR }}" size="6" maxlength="6" class="inputbox narrow w-24 px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+									<span class="inline-block w-8 h-8 rounded-lg border border-slate-300 dark:border-slate-700" style="background-color: #{{ GROUP_COLOUR }};">&nbsp;&nbsp;&nbsp;</span>
+									<span class="text-sm text-slate-500 dark:text-slate-400">[ <a href="#" id="color_palette_toggle" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('COLOUR_SWATCH') }}</a> ]</span>
+								</div>
+								<div id="color_palette_placeholder" class="color_palette_placeholder hidden" data-color-palette="h" data-height="12" data-width="15" data-target="#group_colour"></div>
+							</div>
+						</div>
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+							<div class="sm:col-span-1">
+								<label for="group_rank" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('GROUP_RANK') ~ lang('COLON') }}</label>
+							</div>
+							<div class="sm:col-span-2 space-y-2">
+								<select name="group_rank" id="group_rank" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_RANK_OPTIONS }}</select>
+							</div>
+						</div>
+						{% EVENT ucp_group_settings_after %}
+					</fieldset>
+				</div>
+
+				{% include 'ucp_avatar_options.html' %}
+
+				<div class="flex flex-wrap items-center justify-end gap-2 pt-2">
+					{{ S_HIDDEN_FIELDS }}
+					<input type="submit" name="update" value="{{ lang('SUBMIT') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+					{{ S_FORM_TOKEN }}
+				</div>
+
+			{% elseif S_LIST %}
+
+				<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+					{% if S_ERROR %}
+						<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+							{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+							<span>{{ ERROR_MSG }}</span>
+						</div>
+					{% endif %}
+
+					<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('GROUPS_EXPLAIN') }}</p>
+
+					{% if loops.leader %}
+						<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+							<table class="table1 w-full text-start text-xs">
+								<thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-slate-800">
+									<tr>
+										<th scope="col" class="name p-3.5 ps-4">{{ lang('GROUP_LEAD') }}</th>
+										<th scope="col" class="info p-3.5 hidden sm:table-cell">{{ lang('GROUP_DEFAULT') }}</th>
+										<th scope="col" class="posts p-3.5 hidden sm:table-cell">{{ lang('POSTS') }}</th>
+										<th scope="col" class="joined p-3.5 hidden md:table-cell">{{ lang('JOINED') }}</th>
+										<th scope="col" class="mark p-3.5 pe-4 text-end">{{ lang('MARK') }}</th>
+									</tr>
+								</thead>
+								<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+									{% for leader in loops.leader %}
+										<tr class="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors {% if leader.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
+											<td class="name p-3.5 ps-4 font-semibold text-slate-800 dark:text-white">
+												{{ leader.USERNAME_FULL }}
+												<div class="sm:hidden text-[11px] text-slate-400 mt-1">
+													{{ lang('GROUP_DEFAULT') ~ lang('COLON') }} {% if leader.S_GROUP_DEFAULT %}{{ lang('YES') }}{% else %}{{ lang('NO') }}{% endif %} &bull; {{ leader.USER_POSTS }} &bull; {{ leader.JOINED }}
+												</div>
+											</td>
+											<td class="p-3.5 hidden sm:table-cell">{% if leader.S_GROUP_DEFAULT %}{{ lang('YES') }}{% else %}{{ lang('NO') }}{% endif %}</td>
+											<td class="posts p-3.5 hidden sm:table-cell">{{ leader.USER_POSTS }}</td>
+											<td class="joined p-3.5 hidden md:table-cell whitespace-nowrap text-slate-500 dark:text-slate-400">{{ leader.JOINED }}</td>
+											<td class="mark p-3.5 pe-4 text-end">&nbsp;</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					{% endif %}
+
+					<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+						<table class="table1 w-full text-start text-xs">
+							<thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-slate-800">
+								<tr>
+									<th scope="col" class="name p-3.5 ps-4">{{ lang('MEMBERS') }}</th>
+									<th scope="col" class="info p-3.5 hidden sm:table-cell">{{ lang('GROUP_DEFAULT') }}</th>
+									<th scope="col" class="posts p-3.5 hidden sm:table-cell">{{ lang('POSTS') }}</th>
+									<th scope="col" class="joined p-3.5 hidden md:table-cell">{{ lang('JOINED') }}</th>
+									<th scope="col" class="mark p-3.5 pe-4 text-end">{{ lang('MARK') }}</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+								{% for member in loops.member %}
+									{% if member.S_PENDING %}
+										<tr class="bg-slate-50 dark:bg-slate-800/60">
+											<th scope="colgroup" colspan="5" class="p-3.5 ps-4 text-start text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ lang('GROUP_PENDING') }}</th>
+										</tr>
+									{% elseif member.S_APPROVED %}
+										<tr class="bg-slate-50 dark:bg-slate-800/60">
+											<th scope="colgroup" colspan="5" class="p-3.5 ps-4 text-start text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ lang('GROUP_APPROVED') }}</th>
+										</tr>
+									{% else %}
+										<tr class="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors {% if member.S_ROW_COUNT is even %}bg1{% else %}bg2{% endif %}">
+											<td class="name p-3.5 ps-4 font-semibold text-slate-800 dark:text-white">
+												{{ member.USERNAME_FULL }}
+												<div class="sm:hidden text-[11px] text-slate-400 mt-1">
+													{{ lang('GROUP_DEFAULT') ~ lang('COLON') }} {% if member.S_GROUP_DEFAULT %}{{ lang('YES') }}{% else %}{{ lang('NO') }}{% endif %} &bull; {{ member.USER_POSTS }} &bull; {{ member.JOINED }}
+												</div>
+											</td>
+											<td class="p-3.5 hidden sm:table-cell">{% if member.S_GROUP_DEFAULT %}{{ lang('YES') }}{% else %}{{ lang('NO') }}{% endif %}</td>
+											<td class="posts p-3.5 hidden sm:table-cell">{{ member.USER_POSTS }}</td>
+											<td class="joined p-3.5 hidden md:table-cell whitespace-nowrap text-slate-500 dark:text-slate-400">{{ member.JOINED }}</td>
+											<td class="mark p-3.5 pe-4 text-end">
+												<input type="checkbox" name="mark[]" value="{{ member.USER_ID }}" class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+											</td>
+										</tr>
+									{% endif %}
+								{% else %}
+									<tr>
+										<td colspan="5" class="bg1 p-6 text-center text-sm text-slate-500 dark:text-slate-400">{{ lang('GROUPS_NO_MEMBERS') }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+
+					{% if loops.pagination %}
+						<div class="action-bar bar-bottom flex items-center justify-end">
+							<div class="pagination flex items-center gap-1 text-xs font-semibold">
+								{% include 'pagination.html' %}
+							</div>
+						</div>
+					{% endif %}
+				</div>
+
+				<fieldset class="display-actions flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-800">
+					<div class="flex flex-wrap items-center gap-2">
+						<select name="action" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500"><option value="">{{ lang('SELECT_OPTION') }}</option>{{ S_ACTION_OPTIONS }}</select>
+						<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="update" value="{{ lang('SUBMIT') }}" />
+					</div>
+					<div class="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+						<a href="#" onclick="marklist('ucp', 'mark', true); return false;" class="font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('MARK_ALL') }}</a>
+						<span>&bull;</span>
+						<a href="#" onclick="marklist('ucp', 'mark', false); return false;" class="font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('UNMARK_ALL') }}</a>
+					</div>
+				</fieldset>
+
+				<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+					<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('ADD_USERS') }}</h3>
+
+					<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('ADD_USERS_UCP_EXPLAIN') }}</p>
+
+					<fieldset>
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+							<div class="sm:col-span-1">
+								<label for="default0" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('USER_GROUP_DEFAULT') ~ lang('COLON') }}</label>
+								<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('USER_GROUP_DEFAULT_EXPLAIN') }}</span>
+							</div>
+							<div class="sm:col-span-2 space-y-2">
+								<div class="flex flex-wrap items-center gap-4">
+									<label for="default1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+										<input type="radio" name="default" id="default1" value="1" class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+										<span>{{ lang('YES') }}</span>
+									</label>
+									<label for="default0" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+										<input type="radio" name="default" id="default0" value="0" checked="checked" class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+										<span>{{ lang('NO') }}</span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+							<div class="sm:col-span-1">
+								<label for="usernames" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('USERNAME') ~ lang('COLON') }}</label>
+								<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('USERNAMES_EXPLAIN') }}</span>
+							</div>
+							<div class="sm:col-span-2 space-y-2">
+								<textarea name="usernames" id="usernames" rows="3" cols="30" class="inputbox w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors"></textarea>
+								<strong><a href="{{ U_FIND_USERNAME }}" onclick="find_username(this.href); return false;" class="inline-flex items-center gap-1.5 text-sm font-bold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ Icon('font', 'user', '', true, 'w-3.5 h-3.5') }}{{ lang('FIND_USERNAME') }}</a></strong>
+							</div>
+						</div>
+					</fieldset>
+
+				</div>
+
+				<div class="flex flex-wrap items-center justify-end gap-2 pt-2">
+					<input class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="addusers" value="{{ lang('SUBMIT') }}" />
+					{{ S_FORM_TOKEN }}
+				</div>
+
+			{% else %}
+
+				<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+					{% if S_ERROR %}
+						<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+							{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+							<span>{{ ERROR_MSG }}</span>
+						</div>
+					{% endif %}
+
+					<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('GROUPS_EXPLAIN') }}</p>
+
+					{% if loops.leader %}
+						<section class="space-y-0">
+							<div class="flex items-center justify-between gap-4 px-3 py-2 rounded-t-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+								<span>{{ lang('GROUP_LEADER') }}</span>
+								<span class="info flex-shrink-0">{{ lang('OPTIONS') }}</span>
+							</div>
+							<ul class="topiclist cplist two-long-columns responsive-show-all divide-y divide-slate-100 dark:divide-slate-800 border border-t-0 border-slate-200 dark:border-slate-800 rounded-b-lg overflow-hidden">
+								{% for leader in loops.leader %}
+									<li class="row {% if leader.S_ROW_COUNT is odd %}bg1 bg-slate-50/70 dark:bg-slate-800/30{% else %}bg2 bg-white dark:bg-slate-900{% endif %}">
+										<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 p-3 sm:p-4">
+											<div class="list-inner min-w-0 text-sm">
+												<a href="{{ leader.U_EDIT }}" class="topictitle font-bold text-prosilver-600 dark:text-prosilver-400 hover:underline"{% if leader.GROUP_COLOUR %} style="color: #{{ leader.GROUP_COLOUR }};"{% endif %}>{{ leader.GROUP_NAME }}</a>
+												{% if leader.GROUP_DESC %}<div class="mt-1 text-xs text-slate-600 dark:text-slate-400">{{ leader.GROUP_DESC }}</div>{% endif %}
+											</div>
+											<div class="flex flex-shrink-0 items-center gap-3 text-xs">
+												<span class="option"><a href="{{ leader.U_EDIT }}" class="font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('EDIT') }}</a></span>
+												<span class="option"><a href="{{ leader.U_LIST }}" class="font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('GROUP_LIST') }}</a></span>
+											</div>
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
+						</section>
+					{% else %}
+						<div class="text-center py-12 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-sm">
+							<strong>{{ lang('NO_LEADERS') }}</strong>
+						</div>
+					{% endif %}
+
+				</div>
+
+			{% endif %}
+
+		</form>
+	</div>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

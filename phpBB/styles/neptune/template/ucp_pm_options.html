@@ -1,0 +1,257 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
+
+	<form id="ucp" method="post" action="{{ S_UCP_ACTION }}" class="mt-4 space-y-6">
+
+	<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+		<div class="inner space-y-6">
+
+		{% if ERROR_MESSAGE %}
+			<div class="error flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+				{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+				<span>{{ ERROR_MESSAGE }}</span>
+			</div>
+		{% endif %}
+		{% if NOTIFICATION_MESSAGE %}
+			<div class="error flex items-start gap-2.5 p-3 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-sm text-amber-700 dark:text-amber-300" role="alert">
+				{{ Icon('font', 'circle-info', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+				<span>{{ NOTIFICATION_MESSAGE }}</span>
+			</div>
+		{% endif %}
+
+		<section class="space-y-3">
+			<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('DEFINED_RULES') }}</h3>
+
+			<ol class="def-rules list-none p-0 m-0 divide-y divide-slate-100 dark:divide-slate-800 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+			{% for rule in loops.rule %}
+				<li class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors">
+					<span class="min-w-0 break-words">
+						<strong class="font-semibold text-slate-800 dark:text-white">{{ lang('IF') }}</strong> {{ rule.CHECK }} <em>{{ rule.RULE }}</em> {% if rule.STRING %}<strong class="font-semibold text-slate-800 dark:text-white">{{ rule.STRING }}</strong> | {% endif %}{{ rule.ACTION }}{% if rule.FOLDER %}{{ lang('COLON') }} {{ rule.FOLDER }}{% endif %}
+					</span>
+					<span class="right-box flex-shrink-0">
+						<input type="submit" name="delete_rule[{{ rule.RULE_ID }}]" value="{{ lang('DELETE_RULE') }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-red-600 hover:bg-red-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+					</span>
+				</li>
+			{% else %}
+				<li class="p-3.5 text-sm text-slate-500 dark:text-slate-400">
+					<strong class="font-semibold">{{ lang('NO_RULES_DEFINED') }}</strong>
+				</li>
+			{% endfor %}
+			</ol>
+		</section>
+
+		<section class="space-y-3">
+			<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('ADD_NEW_RULE') }}</h3>
+
+			<fieldset class="fields2 divide-y divide-slate-100 dark:divide-slate-800">
+
+			{% if S_CHECK_DEFINED %}
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+					<div class="sm:col-span-1">
+						<label{% if S_CHECK_SELECT %} for="check_option"{% endif %} class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('IF') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 flex flex-wrap items-center gap-2">
+						{% if S_CHECK_SELECT %}
+							<select name="check_option" id="check_option" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_CHECK_OPTIONS }}</select>
+							<input type="submit" name="next" value="{{ lang('NEXT_STEP') }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+						{% else %}
+							<span class="text-sm text-slate-700 dark:text-slate-300">{{ CHECK_CURRENT }}</span><input type="hidden" name="check_option" value="{{ CHECK_OPTION }}" />
+						{% endif %}
+					</div>
+				</div>
+			{% endif %}
+
+			{% if S_RULE_DEFINED %}
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+					<div class="sm:col-span-1">
+						{% if S_RULE_SELECT %}
+							<input type="submit" name="back[rule]" value="{{ lang('PREVIOUS_STEP') }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors" />
+						{% else %}
+							<label class="block text-sm font-semibold text-slate-800 dark:text-slate-200">&nbsp;</label>
+						{% endif %}
+					</div>
+					<div class="sm:col-span-2 flex flex-wrap items-center gap-2">
+						{% if S_RULE_SELECT %}
+							<select name="rule_option" id="rule_option" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_RULE_OPTIONS }}</select>
+							<input type="submit" name="next" value="{{ lang('NEXT_STEP') }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+						{% else %}
+							<em class="text-sm text-slate-700 dark:text-slate-300">{{ RULE_CURRENT }}</em><input type="hidden" name="rule_option" value="{{ RULE_OPTION }}" />
+						{% endif %}
+					</div>
+				</div>
+			{% endif %}
+
+			{% if S_COND_DEFINED %}
+				{% if S_COND_SELECT or COND_CURRENT %}
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+						<div class="sm:col-span-1">
+							{% if S_COND_SELECT %}
+								<input type="submit" name="back[cond]" value="{{ lang('PREVIOUS_STEP') }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors" />
+							{% else %}
+								<label class="block text-sm font-semibold text-slate-800 dark:text-slate-200">&nbsp;</label>
+							{% endif %}
+						</div>
+						<div class="sm:col-span-2 flex flex-wrap items-center gap-2">
+							{% if S_COND_SELECT %}
+								{% if S_TEXT_CONDITION %}
+									<input type="text" name="rule_string" value="{{ CURRENT_STRING }}" maxlength="250" class="inputbox medium w-full sm:w-64 px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+								{% elseif S_USER_CONDITION %}
+									<input type="text" name="rule_string" value="{{ CURRENT_STRING }}" class="inputbox tiny w-full sm:w-40 px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />&nbsp;<span class="text-sm text-slate-600 dark:text-slate-400">[ <a href="{{ U_FIND_USERNAME }}" onclick="find_username(this.href); return false;" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('FIND_USERNAME') }}</a> ]</span>
+								{% elseif S_GROUP_CONDITION %}
+									<input type="hidden" name="rule_string" value="{{ CURRENT_STRING }}" />{% if S_GROUP_OPTIONS %}<select name="rule_group_id" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_GROUP_OPTIONS }}</select>{% else %}<span class="text-sm text-slate-600 dark:text-slate-400">{{ lang('NO_GROUPS') }}</span>{% endif %}
+								{% endif %}
+								<input type="submit" name="next" value="{{ lang('NEXT_STEP') }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+							{% else %}
+								<strong class="text-sm font-semibold text-slate-800 dark:text-white">{{ COND_CURRENT }}</strong><input type="hidden" name="rule_string" value="{{ CURRENT_STRING }}" /><input type="hidden" name="rule_user_id" value="{{ CURRENT_USER_ID }}" /><input type="hidden" name="rule_group_id" value="{{ CURRENT_GROUP_ID }}" />
+							{% endif %}
+						</div>
+					</div>
+				{% endif %}
+				<input type="hidden" name="cond_option" value="{{ COND_OPTION }}" />
+			{% endif %}
+
+			{% if NONE_CONDITION %}<input type="hidden" name="cond_option" value="none" />{% endif %}
+
+			{% if S_ACTION_DEFINED %}
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+					<div class="sm:col-span-1">
+						{% if S_ACTION_SELECT %}
+							<input type="submit" name="back[action]" value="{{ lang('PREVIOUS_STEP') }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors" />
+						{% else %}
+							<label class="block text-sm font-semibold text-slate-800 dark:text-slate-200">&nbsp;</label>
+						{% endif %}
+					</div>
+					<div class="sm:col-span-2 flex flex-wrap items-center gap-2">
+						{% if S_ACTION_SELECT %}
+							<select name="action_option" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_ACTION_OPTIONS }}</select>
+							<input type="submit" name="add_rule" value="{{ lang('ADD_RULE') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+						{% else %}
+							<span class="text-sm text-slate-700 dark:text-slate-300">{{ ACTION_CURRENT }}</span><input type="hidden" name="action_option" value="{{ ACTION_OPTION }}" />
+						{% endif %}
+					</div>
+				</div>
+			{% endif %}
+
+			</fieldset>
+		</section>
+
+		<section class="space-y-3">
+			<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('FOLDER_OPTIONS') }}</h3>
+
+			<fieldset class="fields2 divide-y divide-slate-100 dark:divide-slate-800">
+
+			{% if not S_MAX_FOLDER_ZERO %}
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+					<div class="sm:col-span-1">
+						<label for="foldername" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('ADD_FOLDER') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 flex flex-wrap items-center gap-2">
+						{% if S_MAX_FOLDER_REACHED %}
+							<span class="text-sm text-slate-600 dark:text-slate-400">{{ lang('MAX_FOLDER_REACHED') }}</span>
+						{% else %}
+							<input type="text" name="foldername" id="foldername" size="30" maxlength="30" class="inputbox medium w-full sm:w-64 px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+							<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="addfolder" value="{{ lang('ADD') }}" />
+						{% endif %}
+					</div>
+				</div>
+			{% endif %}
+
+			{% if S_FOLDER_OPTIONS %}
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+					<div class="sm:col-span-1">
+						<label for="rename_folder_id" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('RENAME_FOLDER') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						<select name="rename_folder_id" id="rename_folder_id" class="w-full sm:w-auto px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_FOLDER_OPTIONS }}</select>
+					</div>
+				</div>
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+					<div class="sm:col-span-1">
+						<label for="new_folder_name" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('NEW_FOLDER_NAME') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 flex flex-wrap items-center gap-2">
+						<input type="text" name="new_folder_name" id="new_folder_name" maxlength="30" class="inputbox tiny w-full sm:w-40 px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="rename_folder" value="{{ lang('RENAME') }}" />
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+					<div class="sm:col-span-1">
+						<label for="remove_folder_id" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('REMOVE_FOLDER') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 space-y-3">
+						<select name="remove_folder_id" id="remove_folder_id" class="w-full sm:w-auto px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_FOLDER_OPTIONS }}</select>
+						<div class="flex flex-wrap items-center gap-2">
+							<label for="remove_action1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="remove_action" id="remove_action1" value="1" checked="checked" class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('MOVE_DELETED_MESSAGES_TO') ~ lang('COLON') }}</span>
+							</label>
+							<select name="move_to" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_TO_FOLDER_OPTIONS }}</select>
+						</div>
+						<div>
+							<label for="remove_action2" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="remove_action" id="remove_action2" value="2" class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('DELETE_MESSAGES_IN_FOLDER') }}</span>
+							</label>
+						</div>
+						<div>
+							<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-red-600 hover:bg-red-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="remove_folder" value="{{ lang('REMOVE') }}" />
+						</div>
+					</div>
+				</div>
+			{% endif %}
+
+			<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+				<div class="sm:col-span-1">
+					<label for="full_action1" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('IF_FOLDER_FULL') ~ lang('COLON') }}</label>
+				</div>
+				<div class="sm:col-span-2 space-y-3">
+					<div>
+						<label for="full_action1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+							<input type="radio" name="full_action" id="full_action1" value="1"{{ S_DELETE_CHECKED }} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+							<span>{{ lang('DELETE_OLDEST_MESSAGES') }}</span>
+						</label>
+					</div>
+					<div class="flex flex-wrap items-center gap-2">
+						<label for="full_action2" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+							<input type="radio" name="full_action" id="full_action2" value="2"{{ S_MOVE_CHECKED }} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+							<span>{{ lang('MOVE_TO_FOLDER') ~ lang('COLON') }}</span>
+						</label>
+						<select name="full_move_to" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_FULL_FOLDER_OPTIONS }}</select>
+					</div>
+					<div>
+						<label for="full_action3" class="inline-flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer whitespace-normal">
+							<input type="radio" name="full_action" id="full_action3" value="3"{{ S_HOLD_CHECKED }} class="mt-0.5 rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+							<span>{{ lang('HOLD_NEW_MESSAGES') }}</span>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3">
+				<div class="sm:col-span-1">
+					<label class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('DEFAULT_ACTION') ~ lang('COLON') }}</label>
+					<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('DEFAULT_ACTION_EXPLAIN') }}</span>
+				</div>
+				<div class="sm:col-span-2 space-y-3">
+					<div class="text-sm text-slate-700 dark:text-slate-300">{{ DEFAULT_ACTION }}</div>
+					<div>
+						<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="fullfolder" value="{{ lang('CHANGE') }}" />
+					</div>
+				</div>
+			</div>
+
+			</fieldset>
+		</section>
+
+		</div>
+		{{ S_FORM_TOKEN }}
+	</div>
+	</form>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

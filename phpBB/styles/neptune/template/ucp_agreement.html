@@ -1,0 +1,63 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	<!-- phpBB Modern prosilver Tailwind: ucp_agreement.html -->
+	<div class="max-w-3xl mx-auto py-6 sm:py-10 space-y-6">
+		{% if S_SHOW_COPPA or S_REGISTRATION %}
+
+			{% if LANG_OPTIONS %}
+				<form method="post" action="{{ S_UCP_ACTION }}" id="register">
+					<div class="flex flex-wrap items-center justify-end gap-2">
+						<label for="{{ LANG_OPTIONS.id }}" class="text-sm font-semibold text-slate-700 dark:text-slate-300">{{ lang('LANGUAGE') ~ lang('COLON') }}</label>
+						{{ FormsSelect(LANG_OPTIONS | merge({class: 'px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500'})) }}
+						{{ S_HIDDEN_FIELDS }}
+					</div>
+				</form>
+
+				<script>
+					/**
+					 * Change language on change
+					 */
+					document.querySelector("{{ '#' ~ LANG_OPTIONS.id }}").addEventListener('change', (event) => {
+						const langIso = event.target.value;
+						document.cookie = '{{ COOKIE_NAME }}_lang=' + langIso + '; path={{ COOKIE_PATH }}';
+						document.forms['register'].change_lang.value = langIso;
+						document.forms['register'].submit();
+					});
+				</script>
+			{% endif %}
+
+			<form method="post" action="{{ S_UCP_ACTION }}" id="agreement" class="space-y-6">
+
+				<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4">
+					<h2 class="sitename-title text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ SITENAME }} - {{ lang('REGISTRATION') }}</h2>
+					{% EVENT ucp_agreement_terms_before %}
+					<div class="agreement text-sm text-slate-600 dark:text-slate-400 leading-relaxed space-y-3 max-h-[28rem] overflow-y-auto">{% if S_SHOW_COPPA %}<p class="agreement-text">{{ lang('COPPA_BIRTHDAY') }}</p>{% else %}{{ lang('TERMS_OF_USE') }}{% endif %}</div>
+					{% EVENT ucp_agreement_terms_after %}
+				</div>
+
+				<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6">
+					<div class="flex flex-wrap items-center justify-end gap-2">
+						{% if S_SHOW_COPPA %}
+							<input type="submit" name="coppa_no" id="coppa_no" value="{{ L_COPPA_NO }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors" />
+							<input type="submit" name="coppa_yes" id="coppa_yes" value="{{ L_COPPA_YES }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+						{% else %}
+							<input type="submit" name="agreed" id="agreed" value="{{ lang('AGREE') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors" />
+							<input type="submit" name="not_agreed" value="{{ lang('NOT_AGREE') }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+						{% endif %}
+						{{ S_HIDDEN_FIELDS }}
+						{{ S_FORM_TOKEN }}
+					</div>
+				</div>
+			</form>
+
+		{% elseif S_AGREEMENT %}
+
+			<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4">
+				<h2 class="sitename-title text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ SITENAME }} - {{ AGREEMENT_TITLE }}</h2>
+				<div class="agreement text-sm text-slate-600 dark:text-slate-400 leading-relaxed space-y-3">{{ AGREEMENT_TEXT }}</div>
+			</div>
+
+		{% endif %}
+	</div>
+{% endblock %}

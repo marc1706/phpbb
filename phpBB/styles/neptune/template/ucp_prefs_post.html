@@ -1,0 +1,108 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<form id="ucp" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+		<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
+
+		<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+			<fieldset>
+				{% if ERROR %}
+					<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+						{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+						<span>{{ ERROR }}</span>
+					</div>
+				{% endif %}
+				{% EVENT ucp_prefs_post_prepend %}
+
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+					<div class="sm:col-span-1">
+						<label for="bbcode1" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('DEFAULT_BBCODE') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						<div class="flex flex-wrap items-center gap-4">
+							<label for="bbcode1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="bbcode" id="bbcode1" value="1"{% if S_BBCODE %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('YES') }}</span>
+							</label>
+							<label for="bbcode0" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="bbcode" id="bbcode0" value="0"{% if not S_BBCODE %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('NO') }}</span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+					<div class="sm:col-span-1">
+						<label for="smilies1" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('DEFAULT_SMILIES') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						<div class="flex flex-wrap items-center gap-4">
+							<label for="smilies1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="smilies" id="smilies1" value="1"{% if S_SMILIES %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('YES') }}</span>
+							</label>
+							<label for="smilies0" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="smilies" id="smilies0" value="0"{% if not S_SMILIES %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('NO') }}</span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				{% if S_SIG_ALLOWED %}
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+						<div class="sm:col-span-1">
+							<label for="sig1" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('DEFAULT_ADD_SIG') ~ lang('COLON') }}</label>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							<div class="flex flex-wrap items-center gap-4">
+								<label for="sig1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+									<input type="radio" name="sig" id="sig1" value="1"{% if S_SIG %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+									<span>{{ lang('YES') }}</span>
+								</label>
+								<label for="sig0" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+									<input type="radio" name="sig" id="sig0" value="0"{% if not S_SIG %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+									<span>{{ lang('NO') }}</span>
+								</label>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+					<div class="sm:col-span-1">
+						<label for="notify1" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('DEFAULT_NOTIFY') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						<div class="flex flex-wrap items-center gap-4">
+							<label for="notify1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="notify" id="notify1" value="1"{% if S_NOTIFY %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('YES') }}</span>
+							</label>
+							<label for="notify0" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="notify" id="notify0" value="0"{% if not S_NOTIFY %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('NO') }}</span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				{% EVENT ucp_prefs_post_append %}
+			</fieldset>
+
+		</div>
+
+		<div class="flex flex-wrap items-center justify-end gap-2 pt-2">
+			{{ S_HIDDEN_FIELDS }}
+			<input type="submit" name="submit" value="{{ lang('SUBMIT') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+			{{ S_FORM_TOKEN }}
+		</div>
+	</form>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

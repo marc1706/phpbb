@@ -1,0 +1,28 @@
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+	<div class="sm:col-span-1">
+		<label for="avatar_gravatar_email" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('GRAVATAR_AVATAR_EMAIL') ~ lang('COLON') }}</label>
+		<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('GRAVATAR_AVATAR_EMAIL_EXPLAIN') }}</span>
+	</div>
+	<div class="sm:col-span-2 space-y-2">
+		<input type="email" name="avatar_gravatar_email" id="avatar_gravatar_email" value="{{ AVATAR_GRAVATAR_EMAIL }}" data-reset-on-edit="#avatar_gravatar_width, #avatar_gravatar_height" class="inputbox w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+	</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+	<div class="sm:col-span-1">
+		<label for="avatar_gravatar_width" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('GRAVATAR_AVATAR_SIZE') ~ lang('COLON') }}</label>
+		<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('GRAVATAR_AVATAR_SIZE_EXPLAIN') }}</span>
+	</div>
+	<div class="sm:col-span-2">
+		<div class="flex flex-wrap items-center gap-2">
+			<label for="avatar_gravatar_width" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+				<input type="number" name="avatar_gravatar_width" id="avatar_gravatar_width" min="{{ AVATAR_MIN_WIDTH }}" max="{{ AVATAR_MAX_WIDTH }}" value="{{ AVATAR_GRAVATAR_WIDTH }}" class="inputbox autowidth w-24 px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+				<span>{{ lang('PIXEL') }}</span>
+			</label>
+			<span class="text-sm text-slate-500 dark:text-slate-400">&times;</span>
+			<label for="avatar_gravatar_height" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+				<input type="number" name="avatar_gravatar_height" id="avatar_gravatar_height" min="{{ AVATAR_MIN_HEIGHT }}" max="{{ AVATAR_MAX_HEIGHT }}" value="{{ AVATAR_GRAVATAR_HEIGHT }}" class="inputbox autowidth w-24 px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+				<span>{{ lang('PIXEL') }}</span>
+			</label>
+		</div>
+	</div>
+</div>

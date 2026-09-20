@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<!-- phpBB Modern prosilver Tailwind: ucp_auth_link.html -->
+	<div class="space-y-6">
+		<div>
+			<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('UCP_AUTH_LINK_TITLE') }}</h2>
+		</div>
+
+		<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+			{% if ERROR %}
+				<div class="error flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+					{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+					<span>{{ ERROR }}</span>
+				</div>
+			{% endif %}
+
+			{% if PROVIDER_TEMPLATE_FILE %}
+				{% include PROVIDER_TEMPLATE_FILE %}
+			{% endif %}
+		</div>
+	</div>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

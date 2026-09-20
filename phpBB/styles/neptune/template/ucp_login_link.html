@@ -1,0 +1,77 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	<!-- phpBB Modern prosilver Tailwind: ucp_login_link.html -->
+	<div class="max-w-3xl mx-auto py-6 sm:py-10">
+		<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+			<div class="space-y-2">
+				<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ SITENAME }} - {{ lang('LOGIN_LINK') }}</h2>
+				<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('LOGIN_LINK_EXPLAIN') }}</p>
+			</div>
+
+			{% if LOGIN_LINK_ERROR %}
+				<div class="error flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+					{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+					<span>{{ LOGIN_LINK_ERROR }}</span>
+				</div>
+			{% endif %}
+
+			<section class="content space-y-4 pt-2 border-t border-slate-100 dark:border-slate-800">
+				<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('REGISTER') }}</h3>
+
+				<form action="{{ REGISTER_ACTION }}" method="post" id="register">
+					<fieldset class="fields1">
+						<div class="flex flex-wrap items-center justify-end gap-2">
+							{{ S_HIDDEN_FIELDS }}<input type="submit" name="register" tabindex="1" value="{{ lang('REGISTER') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+						</div>
+					</fieldset>
+				</form>
+			</section>
+
+			<section class="content space-y-4 pt-2 border-t border-slate-100 dark:border-slate-800">
+				<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('LOGIN') }}</h3>
+
+				<form action="{{ LOGIN_ACTION }}" method="post" id="login">
+					<fieldset class="fields1">
+						{% if LOGIN_ERROR %}
+							<div class="error flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+								{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+								<span>{{ LOGIN_ERROR }}</span>
+							</div>
+						{% endif %}
+
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+							<div class="sm:col-span-1">
+								<label for="{{ USERNAME_CREDENTIAL }}" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('USERNAME') ~ lang('COLON') }}</label>
+							</div>
+							<div class="sm:col-span-2 space-y-2">
+								<input type="text" tabindex="2" name="{{ USERNAME_CREDENTIAL }}" id="{{ USERNAME_CREDENTIAL }}" size="25" value="{{ LOGIN_USERNAME }}" autocomplete="username" class="inputbox autowidth w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+							</div>
+						</div>
+
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+							<div class="sm:col-span-1">
+								<label for="{{ PASSWORD_CREDENTIAL }}" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('PASSWORD') ~ lang('COLON') }}</label>
+							</div>
+							<div class="sm:col-span-2 space-y-2">
+								<input type="password" tabindex="3" id="{{ PASSWORD_CREDENTIAL }}" name="{{ PASSWORD_CREDENTIAL }}" size="25" autocomplete="current-password" class="inputbox autowidth w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+							</div>
+						</div>
+
+						{% if CAPTCHA_TEMPLATE and S_CONFIRM_CODE %}
+							{% DEFINE CAPTCHA_TAB_INDEX = 4 %}
+							{% include CAPTCHA_TEMPLATE %}
+						{% endif %}
+
+						{{ S_LOGIN_REDIRECT }}
+
+						<div class="flex flex-wrap items-center justify-end gap-2 pt-4">
+							{{ S_HIDDEN_FIELDS }}<input type="submit" name="login" tabindex="5" value="{{ lang('LOGIN') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+						</div>
+					</fieldset>
+				</form>
+			</section>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,183 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<form id="ucp" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+		<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
+
+		<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+			<fieldset>
+				{% if ERROR %}
+					<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+						{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+						<span>{{ ERROR }}</span>
+					</div>
+				{% endif %}
+				{% EVENT ucp_prefs_personal_prepend %}
+
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+					<div class="sm:col-span-1">
+						<label for="viewemail0" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('SHOW_EMAIL') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						<div class="flex flex-wrap items-center gap-4">
+							<label for="viewemail1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="viewemail" id="viewemail1" value="1"{% if S_VIEW_EMAIL %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('YES') }}</span>
+							</label>
+							<label for="viewemail0" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="viewemail" id="viewemail0" value="0"{% if not S_VIEW_EMAIL %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('NO') }}</span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+					<div class="sm:col-span-1">
+						<label for="massemail1" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('ADMIN_EMAIL') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						<div class="flex flex-wrap items-center gap-4">
+							<label for="massemail1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="massemail" id="massemail1" value="1"{% if S_MASS_EMAIL %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('YES') }}</span>
+							</label>
+							<label for="massemail0" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="massemail" id="massemail0" value="0"{% if not S_MASS_EMAIL %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('NO') }}</span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+					<div class="sm:col-span-1">
+						<label for="allowpm1" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('ALLOW_PM') ~ lang('COLON') }}</label>
+						<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('ALLOW_PM_EXPLAIN') }}</span>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						<div class="flex flex-wrap items-center gap-4">
+							<label for="allowpm1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="allowpm" id="allowpm1" value="1"{% if S_ALLOW_PM %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('YES') }}</span>
+							</label>
+							<label for="allowpm0" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+								<input type="radio" name="allowpm" id="allowpm0" value="0"{% if not S_ALLOW_PM %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+								<span>{{ lang('NO') }}</span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				{% if S_CAN_HIDE_ONLINE %}
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+						<div class="sm:col-span-1">
+							<label for="hideonline0" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('HIDE_ONLINE') ~ lang('COLON') }}</label>
+							<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('HIDE_ONLINE_EXPLAIN') }}</span>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							<div class="flex flex-wrap items-center gap-4">
+								<label for="hideonline1" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+									<input type="radio" name="hideonline" id="hideonline1" value="1"{% if S_HIDE_ONLINE %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+									<span>{{ lang('YES') }}</span>
+								</label>
+								<label for="hideonline0" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+									<input type="radio" name="hideonline" id="hideonline0" value="0"{% if not S_HIDE_ONLINE %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+									<span>{{ lang('NO') }}</span>
+								</label>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+
+				{% if S_MORE_LANGUAGES %}
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+						<div class="sm:col-span-1">
+							<label for="{{ LANG_OPTIONS.id }}" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('BOARD_LANGUAGE') ~ lang('COLON') }}</label>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							{{ FormsSelect(LANG_OPTIONS | merge({class: 'w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500'})) }}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if S_STYLE_OPTIONS and S_MORE_STYLES %}
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+						<div class="sm:col-span-1">
+							<label for="user_style" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('BOARD_STYLE') ~ lang('COLON') }}</label>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							{{ FormsSelect(S_STYLE_OPTIONS | merge({class: 'w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500'})) }}
+						</div>
+					</div>
+				{% endif %}
+
+				{% include 'timezone_option.html' %}
+
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+					<div class="sm:col-span-1">
+						<label for="dateformat" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('BOARD_DATE_FORMAT') ~ lang('COLON') }}</label>
+						<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('BOARD_DATE_FORMAT_EXPLAIN') }}</span>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						<select name="dateoptions" id="dateoptions" onchange="if(this.value=='custom'){phpbb.toggleDisplay('custom_date',1);}else{phpbb.toggleDisplay('custom_date',-1);} if (this.value == 'custom') { document.getElementById('dateformat').value = default_dateformat; } else { document.getElementById('dateformat').value = this.value; }" class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">
+							{{ S_DATEFORMAT_OPTIONS }}
+						</select>
+						<div id="custom_date" style="display:none;">
+							<input type="text" name="dateformat" id="dateformat" value="{{ DATE_FORMAT }}" maxlength="64" class="inputbox narrow w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						</div>
+					</div>
+				</div>
+
+				{% EVENT ucp_prefs_personal_append %}
+			</fieldset>
+
+		</div>
+
+		<div class="flex flex-wrap items-center justify-end gap-2 pt-2">
+			{{ S_HIDDEN_FIELDS }}
+			<input type="submit" name="submit" value="{{ lang('SUBMIT') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+			{{ S_FORM_TOKEN }}
+		</div>
+	</form>
+
+	<script>
+		var date_format = '{{ A_DATE_FORMAT }}';
+		var default_dateformat = '{{ A_DEFAULT_DATEFORMAT }}';
+
+		function customDates()
+		{
+			var e = document.getElementById('dateoptions');
+
+			e.selectedIndex = e.length - 1;
+
+			// Loop and match date_format in menu
+			for (var i = 0; i < e.length; i++)
+			{
+				if (e.options[i].value == date_format)
+				{
+					e.selectedIndex = i;
+					break;
+				}
+			}
+
+			// Show/hide custom field
+			if (e.selectedIndex == e.length - 1)
+			{
+				phpbb.toggleDisplay('custom_date',1);
+			}
+			else
+			{
+				phpbb.toggleDisplay('custom_date',-1);
+			}
+		}
+
+		window.onload = customDates;
+	</script>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

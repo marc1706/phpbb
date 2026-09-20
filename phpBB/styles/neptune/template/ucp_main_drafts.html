@@ -1,0 +1,96 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<form id="postform" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+		<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
+
+		{% if S_EDIT_DRAFT %}
+
+			<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4">
+				<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('DRAFTS_EXPLAIN') }}</p>
+
+				{% include 'posting_editor.html' %}
+			</div>
+
+			<div class="submit-buttons flex flex-wrap items-center justify-end gap-2 pt-2">
+				{{ S_HIDDEN_FIELDS }}
+				<input type="submit" name="submit" value="{{ lang('SAVE') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+				{{ S_FORM_TOKEN }}
+			</div>
+
+		{% else %}
+
+			<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4">
+
+				<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('DRAFTS_EXPLAIN') }}</p>
+
+				{% if loops.draftrow %}
+					<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+						<table class="topiclist cplist w-full text-start text-xs">
+							<thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-slate-800">
+								<tr>
+									<th scope="col" class="p-3.5 ps-4 text-start">{{ lang('DRAFT_TITLE') }}</th>
+									<th scope="col" class="info p-3.5 hidden sm:table-cell text-start">{{ lang('SAVE_DATE') }}</th>
+									<th scope="col" class="mark p-3.5 pe-4 text-end whitespace-nowrap">{{ lang('MARK') }}</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+								{% for draftrow in loops.draftrow %}
+									<tr class="row transition-colors {% if draftrow.S_ROW_COUNT is odd %}bg1 bg-slate-50/70 dark:bg-slate-800/30{% else %}bg2 bg-white dark:bg-slate-900{% endif %} hover:bg-slate-50 dark:hover:bg-slate-800/50">
+										<td class="p-3.5 ps-4">
+											<div class="list-inner min-w-0">
+												<a class="topictitle font-bold text-sm text-slate-800 dark:text-white hover:text-prosilver-600 dark:hover:text-prosilver-400" href="{{ draftrow.U_VIEW_EDIT }}">{{ draftrow.DRAFT_SUBJECT }}</a><br />
+												<span class="text-[11px] text-slate-500 dark:text-slate-400">
+													{% if draftrow.S_LINK_TOPIC %}{{ lang('TOPIC') ~ lang('COLON') }} <a href="{{ draftrow.U_VIEW }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ draftrow.TITLE }}</a>
+													{% elseif draftrow.S_LINK_FORUM %}{{ lang('FORUM') ~ lang('COLON') }} <a href="{{ draftrow.U_VIEW }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ draftrow.TITLE }}</a>
+													{% elseif S_PRIVMSGS %}
+													{% else %}{{ lang('NO_TOPIC_FORUM') }}{% endif %}
+												</span>
+												<div class="sm:hidden mt-1 text-[11px] text-slate-400 dark:text-slate-500">
+													{{ lang('SAVE_DATE') ~ lang('COLON') }} <strong class="text-slate-600 dark:text-slate-300">{{ draftrow.DATE }}</strong><br />
+													{% if draftrow.U_INSERT %}<a href="{{ draftrow.U_INSERT }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('LOAD_DRAFT') }}</a> &bull; {% endif %}<a href="{{ draftrow.U_VIEW_EDIT }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('VIEW_EDIT') }}</a>
+												</div>
+											</div>
+										</td>
+										<td class="info p-3.5 hidden sm:table-cell align-top text-[11px] text-slate-500 dark:text-slate-400 whitespace-nowrap">
+											{{ draftrow.DATE }}<br />{% if draftrow.U_INSERT %}<a href="{{ draftrow.U_INSERT }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('LOAD_DRAFT') }}</a> &bull; {% endif %}<a href="{{ draftrow.U_VIEW_EDIT }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('VIEW_EDIT') }}</a>
+										</td>
+										<td class="mark p-3.5 pe-4 text-end align-middle">
+											<input type="checkbox" name="d[{{ draftrow.DRAFT_ID }}]" id="d{{ draftrow.DRAFT_ID }}" class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				{% else %}
+					<div class="text-center py-12 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-sm">
+						<strong>{{ lang('NO_SAVED_DRAFTS') }}</strong>
+					</div>
+				{% endif %}
+
+			</div>
+
+			{% if loops.draftrow %}
+				<div class="display-actions flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+					<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+						<a href="#" onclick="marklist('postform', '', true); return false;" class="text-prosilver-600 dark:text-prosilver-400 hover:underline font-semibold">{{ lang('MARK_ALL') }}</a>
+						<span>&bull;</span>
+						<a href="#" onclick="marklist('postform', '', false); return false;" class="text-prosilver-600 dark:text-prosilver-400 hover:underline font-semibold">{{ lang('UNMARK_ALL') }}</a>
+					</div>
+					<div class="flex flex-wrap items-center justify-end gap-2">
+						<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-red-600 hover:bg-red-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="delete" value="{{ L_DELETE_MARKED }}" />
+						{{ S_FORM_TOKEN }}
+					</div>
+				</div>
+			{% endif %}
+
+		{% endif %}
+
+	</form>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<form id="ucp" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+		<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
+
+		<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4">
+
+			<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('ATTACHMENTS_EXPLAIN') }}</p>
+
+			{% if loops.attachrow %}
+				<div class="action-bar bar-top flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+					<div class="pagination flex flex-wrap items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+						{{ NUM_ATTACHMENTS }}
+						{% if loops.pagination %}
+							{% include 'pagination.html' %}
+						{% else %}
+							&bull; {{ PAGE_NUMBER }}
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+					<table class="topiclist cplist w-full text-start text-xs">
+						<thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-slate-800">
+							<tr>
+								<th scope="col" class="p-3.5 ps-4 text-start"><a href="{{ U_SORT_FILENAME }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('FILENAME') }}</a></th>
+								<th scope="col" class="extra p-3.5 hidden sm:table-cell text-start"><a href="{{ U_SORT_DOWNLOADS }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('DOWNLOADS') }}</a></th>
+								<th scope="col" class="time p-3.5 hidden md:table-cell text-start"><a href="{{ U_SORT_POST_TIME }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ lang('POST_TIME') }}</a></th>
+								<th scope="col" class="mark p-3.5 pe-4 text-end whitespace-nowrap">{{ lang('MARK') }}</th>
+							</tr>
+						</thead>
+						<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+							{% for attachrow in loops.attachrow %}
+								<tr class="row transition-colors {% if attachrow.S_ROW_COUNT is odd %}bg1 bg-slate-50/70 dark:bg-slate-800/30{% else %}bg2 bg-white dark:bg-slate-900{% endif %} hover:bg-slate-50 dark:hover:bg-slate-800/50">
+									<td class="p-3.5 ps-4">
+										<div class="list-inner min-w-0">
+											<a href="{{ attachrow.U_VIEW_ATTACHMENT }}" class="topictitle attachment-filename ellipsis-text font-bold text-sm text-slate-800 dark:text-white hover:text-prosilver-600 dark:hover:text-prosilver-400 break-all" title="{{ attachrow.FILENAME }}">{{ attachrow.FILENAME }}</a>
+											<span class="text-[11px] text-slate-500 dark:text-slate-400">({{ attachrow.SIZE }})</span><br />
+											<span class="text-[11px] text-slate-500 dark:text-slate-400">
+												{% if attachrow.S_IN_MESSAGE %}{{ lang('PM') ~ lang('COLON') }} {% else %}{{ lang('TOPIC') ~ lang('COLON') }} {% endif %}<a href="{{ attachrow.U_VIEW_TOPIC }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ attachrow.TOPIC_TITLE }}</a>
+											</span>
+											<div class="md:hidden mt-1 text-[11px] text-slate-400 dark:text-slate-500">
+												{{ lang('DOWNLOADS') ~ lang('COLON') }} {{ attachrow.DOWNLOAD_COUNT }} &bull; {{ attachrow.POST_TIME }}
+											</div>
+										</div>
+									</td>
+									<td class="extra p-3.5 hidden sm:table-cell align-top text-[11px] text-slate-500 dark:text-slate-400 whitespace-nowrap">{{ attachrow.DOWNLOAD_COUNT }}</td>
+									<td class="time p-3.5 hidden md:table-cell align-top text-[11px] text-slate-500 dark:text-slate-400 whitespace-nowrap">{{ attachrow.POST_TIME }}</td>
+									<td class="mark p-3.5 pe-4 text-end align-middle">
+										<input type="checkbox" name="attachment[{{ attachrow.ATTACH_ID }}]" value="1"{% if attachrow.S_LOCKED %} disabled title="{{ lang('ATTACHMENT_LOCKED') }}"{% endif %} class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500 disabled:opacity-40" />
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+
+				<div class="action-bar bar-bottom flex flex-col md:flex-row md:items-center justify-between gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+					<div class="display-options flex flex-wrap items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+						{% include 'display_options.html' %}
+						{{ S_FORM_TOKEN }}
+					</div>
+
+					<div class="pagination flex flex-wrap items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+						{{ NUM_ATTACHMENTS }}
+						{% if loops.pagination %}
+							{% include 'pagination.html' %}
+						{% else %}
+							&bull; {{ PAGE_NUMBER }}
+						{% endif %}
+					</div>
+				</div>
+
+			{% else %}
+				<div class="text-center py-12 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-sm">
+					<strong>{{ lang('UCP_NO_ATTACHMENTS') }}</strong>
+				</div>
+			{% endif %}
+
+		</div>
+
+		{% if S_ATTACHMENT_ROWS %}
+			<div class="display-actions flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+				<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+					<a href="#" onclick="marklist('ucp', 'attachment', true); return false;" class="text-prosilver-600 dark:text-prosilver-400 hover:underline font-semibold">{{ lang('MARK_ALL') }}</a>
+					<span>&bull;</span>
+					<a href="#" onclick="marklist('ucp', 'attachment', false); return false;" class="text-prosilver-600 dark:text-prosilver-400 hover:underline font-semibold">{{ lang('UNMARK_ALL') }}</a>
+				</div>
+				<div class="flex flex-wrap items-center justify-end gap-2">
+					<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-red-600 hover:bg-red-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="delete" value="{{ L_DELETE_MARKED }}" />
+					{{ S_FORM_TOKEN }}
+				</div>
+			</div>
+		{% endif %}
+	</form>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

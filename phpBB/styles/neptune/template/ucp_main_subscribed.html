@@ -1,0 +1,209 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<form id="ucp" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+		<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
+
+		<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+			<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('WATCHED_EXPLAIN') }}</p>
+
+			{% if loops.forumrow %}
+				<section class="space-y-3">
+					<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+						<table class="topiclist cplist w-full text-start text-xs">
+							<thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-slate-800">
+								<tr>
+									<th scope="col" class="p-3.5 ps-4 text-start">{{ lang('WATCHED_FORUMS') }}</th>
+									<th scope="col" class="lastpost p-3.5 hidden md:table-cell text-start">{{ lang('LAST_POST') }}</th>
+									<th scope="col" class="mark p-3.5 pe-4 text-end whitespace-nowrap">{{ lang('MARK') }}</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+								{% for forumrow in loops.forumrow %}
+									<tr class="row transition-colors {% if forumrow.S_ROW_COUNT is odd %}bg1 bg-slate-50/70 dark:bg-slate-800/30{% else %}bg2 bg-white dark:bg-slate-900{% endif %} hover:bg-slate-50 dark:hover:bg-slate-800/50">
+										<td class="p-3.5 ps-4">
+											<div class="flex items-start gap-2.5">
+												<a class="row-item-link{% if forumrow.S_UNREAD_FORUM %} unread{% else %} read{% endif %} flex-shrink-0 mt-0.5 text-prosilver-600 dark:text-prosilver-400" href="{{ forumrow.U_VIEWFORUM }}">
+													{{ Icon('svg', {
+														'link-variant' : forumrow.S_IS_LINK,
+														'lock' : forumrow.S_LOCKED_FORUM,
+														'file-document-box-multiple-outline' : forumrow.S_SUBFORUMS,
+														'file-document-box-outline' : true,
+													}, '', true, 'w-5 h-5') }}
+												</a>
+												<div class="list-inner min-w-0">
+													<a href="{{ forumrow.U_VIEWFORUM }}" class="forumtitle font-bold text-sm text-slate-800 dark:text-white hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ forumrow.FORUM_NAME }}</a><br />
+													<span class="text-[11px] text-slate-500 dark:text-slate-400">{{ forumrow.FORUM_DESC }}</span>
+													{% if forumrow.LAST_POST_TIME %}
+														<div class="md:hidden mt-1 text-[11px] text-slate-400 dark:text-slate-500">
+															{{ lang('LAST_POST') }} {{ lang('POST_BY_AUTHOR') }} {{ forumrow.LAST_POST_AUTHOR_FULL }} &laquo; <a href="{{ forumrow.U_LAST_POST }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ forumrow.LAST_POST_TIME }}</a>
+														</div>
+													{% endif %}
+												</div>
+											</div>
+										</td>
+										<td class="lastpost p-3.5 hidden md:table-cell align-top text-[11px] text-slate-500 dark:text-slate-400 whitespace-nowrap">
+											{% if forumrow.LAST_POST_TIME_RFC3339 %}
+												<dfn class="sr-only">{{ lang('LAST_POST') }} </dfn>{{ lang('POST_BY_AUTHOR') }} {{ forumrow.LAST_POST_AUTHOR_FULL }}
+												<a href="{{ forumrow.U_LAST_POST }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">
+													{{ Icon('font', 'arrow-up-right-from-square', VIEW_LATEST_POST, true, 'w-3 h-3 inline-block') }}
+												</a>
+												<br /><time datetime="{{ forumrow.LAST_POST_TIME_RFC3339 }}">{{ forumrow.LAST_POST_TIME }}</time>
+											{% else %}
+												{{ lang('NO_POSTS') }}<br />&nbsp;
+											{% endif %}
+										</td>
+										<td class="mark p-3.5 pe-4 text-end align-middle">
+											<input type="checkbox" name="f[{{ forumrow.FORUM_ID }}]" id="f{{ forumrow.FORUM_ID }}" class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</section>
+			{% elseif S_FORUM_NOTIFY %}
+				<section class="space-y-3">
+					<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('WATCHED_FORUMS') }}</h3>
+					<div class="text-center py-12 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-sm">
+						<strong>{{ lang('NO_WATCHED_FORUMS') }}</strong>
+					</div>
+				</section>
+			{% endif %}
+
+			{% if loops.topicrow %}
+				<section class="space-y-3">
+					<div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+						<table class="topiclist cplist w-full text-start text-xs">
+							<thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold border-b border-slate-200 dark:border-slate-800">
+								<tr>
+									<th scope="col" class="p-3.5 ps-4 text-start">{{ lang('WATCHED_TOPICS') }}</th>
+									<th scope="col" class="lastpost p-3.5 hidden md:table-cell text-start">{{ lang('LAST_POST') }}</th>
+									<th scope="col" class="mark p-3.5 pe-4 text-end whitespace-nowrap">{{ lang('MARK') }}</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+								{% for topicrow in loops.topicrow %}
+									<tr class="row transition-colors {% if topicrow.S_TOPIC_REPORTED %}reported bg-red-50/60 dark:bg-red-950/20{% elseif topicrow.S_ROW_COUNT is odd %}bg1 bg-slate-50/70 dark:bg-slate-800/30{% else %}bg2 bg-white dark:bg-slate-900{% endif %} hover:bg-slate-50 dark:hover:bg-slate-800/50">
+										<td class="p-3.5 ps-4">
+											<div class="flex items-start gap-2.5">
+												<a class="row-item-link{% if topicrow.S_UNREAD_TOPIC %} unread{% else %} read{% endif %} flex-shrink-0 mt-0.5 text-prosilver-600 dark:text-prosilver-400" href="{{ topicrow.U_NEWEST_POST }}" title="{{ topicrow.TOPIC_FOLDER_IMG_ALT }}">
+													{{ Icon('svg', {
+														'globe' : topicrow.S_POST_GLOBAL,
+														'bullhorn' : topicrow.S_POST_ANNOUNCE,
+														'thumbtack' : topicrow.S_POST_STICKY,
+														'lock' : topicrow.S_TOPIC_LOCKED,
+														'arrow-right-bold' : topicrow.S_TOPIC_MOVED,
+														'fire' : topicrow.S_TOPIC_HOT,
+														'file-document-outline' : true,
+													}, '', true, 'w-5 h-5') }}
+												</a>
+												{% if lang(topicrow.TOPIC_AUTHOR) == S_USERNAME %}
+													<span class="row-item-link-mine sr-only">{{ lang('AUTHOR') }}</span>
+												{% endif%}
+												{% if topicrow.TOPIC_ICON_IMG and S_TOPIC_ICONS %}
+													<img class="row-item-sub w-4 h-4 flex-shrink-0 mt-1" src="{{ T_ICONS_PATH }}{{ topicrow.TOPIC_ICON_IMG }}" alt="">
+												{% endif %}
+												<div class="list-inner min-w-0">
+													{% if topicrow.S_UNREAD_TOPIC %}
+														<a href="{{ topicrow.U_NEWEST_POST }}" class="topictitle unread font-bold text-sm text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ topicrow.TOPIC_TITLE }}</a>
+													{% else %}
+														<a href="{{ topicrow.U_VIEW_TOPIC }}" class="topictitle font-bold text-sm text-slate-800 dark:text-white hover:text-prosilver-600 dark:hover:text-prosilver-400">{{ topicrow.TOPIC_TITLE }}</a>
+													{% endif %}
+													{% if topicrow.S_TOPIC_UNAPPROVED or topicrow.S_POSTS_UNAPPROVED %}
+														<a href="{{ topicrow.U_MCP_QUEUE }}" title="{{ lang('TOPIC_UNAPPROVED') }}" class="ms-1 text-amber-600 dark:text-amber-400">
+															{{ Icon('font', 'circle-question', lang('TOPIC_UNAPPROVED'), true, 'w-4 h-4') }}
+														</a>
+													{% endif %}
+													{% if topicrow.S_TOPIC_REPORTED %}
+														<a href="{{ topicrow.U_MCP_REPORT }}" title="{{ lang('TOPIC_REPORTED') }}" class="ms-1 text-red-600 dark:text-red-400">
+															{{ Icon('font', 'triangle-exclamation', lang('TOPIC_REPORTED'), true, 'w-4 h-4') }}
+														</a>
+													{% endif %}
+													{% EVENT ucp_main_subscribed_topic_title_after %}
+													{% if topicrow.pagination %}
+														<div class="pagination flex items-center gap-1 mt-2 text-xs">
+															<span>{{ Icon('font', 'clone', '', true, 'text-slate-400') }}</span>
+															{% for pagination in topicrow.pagination %}
+																{% if pagination.S_IS_PREV %}
+																{% elseif pagination.S_IS_CURRENT %}
+																	<span class="active px-1.5 py-0.5 rounded bg-prosilver-600 text-white">{{ pagination.PAGE_NUMBER }}</span>
+																{% elseif pagination.S_IS_ELLIPSIS %}
+																	<span class="ellipsis text-slate-400">{{ lang('ELLIPSIS') }}</span>
+																{% elseif pagination.S_IS_NEXT %}
+																{% else %}
+																	<a class="button px-1.5 py-0.5 rounded text-prosilver-600 dark:text-prosilver-400 hover:bg-prosilver-50 dark:hover:bg-slate-800" href="{{ pagination.PAGE_URL }}" role="button">{{ pagination.PAGE_NUMBER }}</a>
+																{% endif %}
+															{% endfor %}
+														</div>
+													{% endif %}
+													<div class="responsive-hide mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+														{% if topicrow.ATTACH_ICON_IMG %}{{ Icon('font', 'paperclip', '', true) }} {% endif %}
+														{{ lang('POST_BY_AUTHOR') }} {{ topicrow.TOPIC_AUTHOR_FULL }} &raquo; {{ topicrow.FIRST_POST_TIME }}
+													</div>
+													<div class="md:hidden mt-1 text-[11px] text-slate-400 dark:text-slate-500">
+														{% if topicrow.ATTACH_ICON_IMG %}{{ Icon('font', 'paperclip', '', true) }} {% endif %}
+														{{ lang('LAST_POST') }} {{ lang('POST_BY_AUTHOR') }} {{ topicrow.LAST_POST_AUTHOR_FULL }} &laquo; <a href="{{ topicrow.U_LAST_POST }}" title="{{ lang('GOTO_LAST_POST') }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ topicrow.LAST_POST_TIME }}</a>
+													</div>
+												</div>
+											</div>
+										</td>
+										<td class="lastpost p-3.5 hidden md:table-cell align-top text-[11px] text-slate-500 dark:text-slate-400 whitespace-nowrap">
+											<dfn class="sr-only">{{ lang('LAST_POST') }} </dfn>{{ lang('POST_BY_AUTHOR') }} {{ topicrow.LAST_POST_AUTHOR_FULL }}
+											<a href="{{ topicrow.U_LAST_POST }}" title="{{ lang('GOTO_LAST_POST') }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">
+												{{ Icon('font', 'arrow-up-right-from-square', VIEW_LATEST_POST, true, 'w-3 h-3 inline-block') }}
+											</a>
+											<br />{{ topicrow.LAST_POST_TIME }}
+										</td>
+										<td class="mark p-3.5 pe-4 text-end align-middle">
+											<input type="checkbox" name="t[{{ topicrow.TOPIC_ID }}]" id="t{{ topicrow.TOPIC_ID }}" class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+
+					<div class="action-bar bar-bottom flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+						<div class="pagination flex flex-wrap items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+							{{ TOTAL_TOPICS }}
+							{% if loops.pagination %}
+								{% include 'pagination.html' %}
+							{% else %}
+								&bull; {{ PAGE_NUMBER }}
+							{% endif %}
+						</div>
+					</div>
+				</section>
+			{% elseif S_TOPIC_NOTIFY %}
+				<section class="space-y-3">
+					<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('WATCHED_TOPICS') }}</h3>
+					<div class="text-center py-12 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 text-sm">
+						<strong>{{ lang('NO_WATCHED_TOPICS') }}</strong>
+					</div>
+				</section>
+			{% endif %}
+
+		</div>
+
+		{% if loops.topicrow or loops.forumrow %}
+			<div class="display-actions flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
+				<div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+					<a href="#" onclick="marklist('ucp', 't', true); marklist('ucp', 'f', true); return false;" class="text-prosilver-600 dark:text-prosilver-400 hover:underline font-semibold">{{ lang('MARK_ALL') }}</a>
+					<span>&bull;</span>
+					<a href="#" onclick="marklist('ucp', 't', false); marklist('ucp', 'f', false); return false;" class="text-prosilver-600 dark:text-prosilver-400 hover:underline font-semibold">{{ lang('UNMARK_ALL') }}</a>
+				</div>
+				<div class="flex flex-wrap items-center justify-end gap-2">
+					<input type="submit" name="unwatch" value="{{ lang('UNWATCH_MARKED') }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+					{{ S_FORM_TOKEN }}
+				</div>
+			</div>
+		{% endif %}
+	</form>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

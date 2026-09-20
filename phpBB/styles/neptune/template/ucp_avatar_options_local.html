@@ -1,0 +1,27 @@
+{% if loops.avatar_local_cats %}
+	<div class="flex flex-wrap items-end gap-2">
+		<label for="category" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
+			<span>{{ lang('AVATAR_CATEGORY') ~ lang('COLON') }}</span>
+			<select name="avatar_local_cat" id="category" class="px-3 py-2 text-sm font-normal rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">
+				{% for avatar_local_cats in loops.avatar_local_cats %}
+					<option value="{{ avatar_local_cats.NAME }}"{% if avatar_local_cats.SELECTED %} selected="selected"{% endif %}>{{ avatar_local_cats.NAME }}</option>
+				{% endfor %}
+			</select>
+		</label>
+		<input type="submit" value="{{ lang('GO') }}" name="avatar_local_go" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+	</div>
+
+	<div id="gallery" class="gallery mt-4 flex flex-wrap gap-3">
+		{% for avatar_local_row in loops.avatar_local_row %}
+			{% for avatar_local_col in avatar_local_row.avatar_local_col %}
+				<label for="av-{{ avatar_local_row.S_ROW_COUNT }}-{{ avatar_local_col.S_ROW_COUNT }}" class="flex flex-col items-center gap-2 p-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-prosilver-400 dark:hover:border-prosilver-600 cursor-pointer transition-colors">
+					<img src="{{ avatar_local_col.AVATAR_IMAGE }}" alt="" class="max-w-full h-auto" />
+					<input type="radio" name="avatar_local_file" id="av-{{ avatar_local_row.S_ROW_COUNT }}-{{ avatar_local_col.S_ROW_COUNT }}"
+						   value="{{ avatar_local_col.AVATAR_FILE }}"{% if avatar_local_col.CHECKED %} checked="checked"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+				</label>
+			{% endfor %}
+		{% endfor %}
+	</div>
+{% else %}
+	<p class="text-sm font-bold text-slate-600 dark:text-slate-400">{{ lang('NO_AVATARS') }}</p>
+{% endif %}

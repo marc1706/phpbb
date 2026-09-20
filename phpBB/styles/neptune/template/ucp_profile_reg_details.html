@@ -1,0 +1,100 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<form id="ucp" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+		<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
+
+		<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+			{% if S_FORCE_PASSWORD %}
+				<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+					{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+					<span>{{ lang('FORCE_PASSWORD_EXPLAIN') }}</span>
+				</div>
+			{% endif %}
+
+			<fieldset>
+				{% if ERROR %}
+					<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+						{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+						<span>{{ ERROR }}</span>
+					</div>
+				{% endif %}
+				{% EVENT ucp_profile_register_details_before %}
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+					<div class="sm:col-span-1">
+						<label {% if S_CHANGE_USERNAME %}for="username" {% endif %}class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('USERNAME') ~ lang('COLON') }}</label>
+						<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('USERNAME_EXPLAIN') }}</span>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						{% if S_CHANGE_USERNAME %}
+							<input type="text" name="username" id="username" value="{{ USERNAME }}" title="{{ lang('USERNAME') }}" class="inputbox w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						{% else %}
+							<strong class="text-sm text-slate-800 dark:text-slate-200">{{ USERNAME }}</strong>
+						{% endif %}
+					</div>
+				</div>
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+					<div class="sm:col-span-1">
+						<label for="email" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('EMAIL_ADDRESS') ~ lang('COLON') }}</label>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						{% if S_CHANGE_EMAIL %}
+							<input type="email" name="email" id="email" maxlength="100" value="{{ EMAIL }}" title="{{ lang('EMAIL_ADDRESS') }}" autocomplete="off" class="inputbox w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						{% else %}
+							<strong class="text-sm text-slate-800 dark:text-slate-200">{{ EMAIL }}</strong>
+						{% endif %}
+					</div>
+				</div>
+				{% if S_CHANGE_PASSWORD %}
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+						<div class="sm:col-span-1">
+							<label for="new_password" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('NEW_PASSWORD') ~ lang('COLON') }}</label>
+							<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('CHANGE_PASSWORD_EXPLAIN') }}</span>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							<input type="password" name="new_password" id="new_password" maxlength="255" value="{{ NEW_PASSWORD }}" title="{{ lang('CHANGE_PASSWORD') }}" autocomplete="off" class="inputbox w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						</div>
+					</div>
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+						<div class="sm:col-span-1">
+							<label for="password_confirm" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('CONFIRM_PASSWORD') ~ lang('COLON') }}</label>
+							<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('CONFIRM_PASSWORD_EXPLAIN') }}</span>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							<input type="password" name="password_confirm" id="password_confirm" maxlength="255" value="{{ PASSWORD_CONFIRM }}" title="{{ lang('CONFIRM_PASSWORD') }}" autocomplete="off" class="inputbox w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						</div>
+					</div>
+				{% endif %}
+				{% EVENT ucp_profile_register_details_after %}
+			</fieldset>
+		</div>
+
+		<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+			<fieldset>
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+					<div class="sm:col-span-1">
+						<label for="cur_password" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('CURRENT_PASSWORD') ~ lang('COLON') }}</label>
+						<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{% if S_CHANGE_PASSWORD %}{{ lang('CURRENT_CHANGE_PASSWORD_EXPLAIN') }}{% else %}{{ lang('CURRENT_PASSWORD_EXPLAIN') }}{% endif %}</span>
+					</div>
+					<div class="sm:col-span-2 space-y-2">
+						<input type="password" name="cur_password" id="cur_password" maxlength="255" value="{{ CUR_PASSWORD }}" title="{{ lang('CURRENT_PASSWORD') }}" autocomplete="off" class="inputbox w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+					</div>
+				</div>
+			</fieldset>
+
+		</div>
+
+		<div class="flex flex-wrap items-center justify-end gap-2 pt-2">
+			{{ S_HIDDEN_FIELDS }}
+			<input type="submit" name="submit" value="{{ lang('SUBMIT') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+			{{ S_FORM_TOKEN }}
+		</div>
+	</form>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

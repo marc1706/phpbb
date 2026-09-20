@@ -1,0 +1,68 @@
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+	{% if not S_AVATARS_ENABLED %}
+		<div class="flex items-start gap-2.5 p-3 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900 text-sm text-amber-700 dark:text-amber-300" role="alert">
+			{{ Icon('font', 'circle-info', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+			<span>{{ lang('AVATAR_FEATURES_DISABLED') }}</span>
+		</div>
+	{% endif %}
+
+	<fieldset>
+		{% if ERROR %}
+			<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+				{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+				<span>{{ ERROR }}</span>
+			</div>
+		{% endif %}
+		<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+			<div class="sm:col-span-1">
+				<label class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('CURRENT_IMAGE') ~ lang('COLON') }}</label>
+				<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('AVATAR_EXPLAIN') }}</span>
+			</div>
+			<div class="sm:col-span-2 space-y-3">
+				<div class="c-avatar-box">{% include 'avatar.html' with {'avatar_data': AVATAR} only %}</div>
+				<label for="avatar_delete" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+					<input type="checkbox" name="avatar_delete" id="avatar_delete" class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+					<span>{{ lang('DELETE_AVATAR') }}</span>
+				</label>
+			</div>
+		</div>
+	</fieldset>
+
+	<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('AVATAR_SELECT') }}</h3>
+
+	<fieldset>
+		<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+			<div class="sm:col-span-1">
+				<label for="avatar_driver" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('AVATAR_TYPE') ~ lang('COLON') }}</label>
+			</div>
+			<div class="sm:col-span-2 space-y-2">
+				<select name="avatar_driver" id="avatar_driver" data-togglable-settings="true" class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">
+					{% for avatar_drivers in loops.avatar_drivers %}
+						<option value="{{ avatar_drivers.DRIVER }}"{% if avatar_drivers.SELECTED %} selected="selected"{% endif %} data-toggle-setting="#avatar_option_{{ avatar_drivers.DRIVER }}">{{ avatar_drivers.L_TITLE }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</fieldset>
+
+	<div id="avatar_options" class="space-y-6">
+		{% for avatar_drivers in loops.avatar_drivers %}
+			<div id="avatar_option_{{ avatar_drivers.DRIVER }}" class="space-y-3">
+				<noscript>
+					<h3 class="avatar_section_header text-sm font-black text-slate-800 dark:text-white">{{ avatar_drivers.L_TITLE }}</h3>
+				</noscript>
+				<p class="text-sm text-slate-600 dark:text-slate-400">{{ avatar_drivers.L_EXPLAIN }}</p>
+
+				<fieldset>
+					{{ avatar_drivers.OUTPUT }}
+				</fieldset>
+			</div>
+		{% endfor %}
+	</div>
+
+	{% if not S_GROUP_MANAGE %}
+		<div class="flex flex-wrap items-center justify-end gap-2 pt-2">
+			<input type="submit" name="submit" value="{{ lang('SUBMIT') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+		</div>
+	{% endif %}
+</div>

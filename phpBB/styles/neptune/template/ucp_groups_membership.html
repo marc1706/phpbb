@@ -1,0 +1,164 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<div class="space-y-6">
+		<div>
+			<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('USERGROUPS') }}</h2>
+		</div>
+
+		{% set SHOW_BUTTONS = 0 %}
+		{% if loops.leader|default([])|filter(group => not group.GROUP_SPECIAL)|length
+			or loops.member|default([])|filter(group => not group.GROUP_SPECIAL)|length
+			or loops.pending|default([])|filter(group => not group.GROUP_SPECIAL)|length
+			or loops.nonmember|default([])|filter(group => group.S_CAN_JOIN)|length %}
+			{% set SHOW_BUTTONS = 1 %}
+		{% endif %}
+
+		<form id="ucp" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+			<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+				<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('GROUPS_EXPLAIN') }}</p>
+
+				{% if loops.leader %}
+					<section class="space-y-0">
+						<div class="flex items-center justify-between gap-4 px-3 py-2 rounded-t-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+							<span>{{ lang('GROUP_LEADER') }}</span>
+							<span class="flex-shrink-0">{{ lang('SELECT') }}</span>
+						</div>
+						<ul class="topiclist cplist two-columns divide-y divide-slate-100 dark:divide-slate-800 border border-t-0 border-slate-200 dark:border-slate-800 rounded-b-lg overflow-hidden">
+							{% for leader in loops.leader %}
+								<li class="row {% if leader.S_ROW_COUNT is odd %}bg1 bg-slate-50/70 dark:bg-slate-800/30{% else %}bg2 bg-white dark:bg-slate-900{% endif %}">
+									<div class="flex items-start justify-between gap-4 p-3 sm:p-4">
+										<div class="list-inner min-w-0 text-sm">
+											{% if S_CHANGE_DEFAULT %}
+												<input title="{{ lang('CHANGE_DEFAULT_GROUP') }}" type="radio" name="default"{% if leader.S_GROUP_DEFAULT %} checked="checked"{% endif %} value="{{ leader.GROUP_ID }}" class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500 me-1.5" />
+											{% endif %}
+											<a href="{{ leader.U_VIEW_GROUP }}" class="forumtitle font-bold text-prosilver-600 dark:text-prosilver-400 hover:underline"{% if leader.GROUP_COLOUR %} style="color:#{{ leader.GROUP_COLOUR }}"{% endif %}>{{ leader.GROUP_NAME }}</a>
+											{% if leader.GROUP_DESC %}<div class="mt-1 text-xs text-slate-600 dark:text-slate-400">{{ leader.GROUP_DESC }}</div>{% endif %}
+											{% if not leader.GROUP_SPECIAL %}<div class="mt-1 text-xs italic text-slate-500 dark:text-slate-400">{{ leader.GROUP_STATUS }}</div>{% endif %}
+										</div>
+										<div class="mark flex-shrink-0 pt-0.5">
+											<input type="radio" name="selected" value="{{ leader.GROUP_ID }}"{% if leader.GROUP_SPECIAL %} disabled="disabled"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500 disabled:opacity-50" />
+										</div>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+					</section>
+				{% endif %}
+
+				{% if loops.member %}
+					<section class="space-y-0">
+						<div class="flex items-center justify-between gap-4 px-3 py-2 rounded-t-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+							<span>{{ lang('GROUP_MEMBER') }}</span>
+							<span class="flex-shrink-0">{{ lang('SELECT') }}</span>
+						</div>
+						<ul class="topiclist cplist two-columns divide-y divide-slate-100 dark:divide-slate-800 border border-t-0 border-slate-200 dark:border-slate-800 rounded-b-lg overflow-hidden">
+							{% for member in loops.member %}
+								<li class="row {% if member.S_ROW_COUNT is odd %}bg1 bg-slate-50/70 dark:bg-slate-800/30{% else %}bg2 bg-white dark:bg-slate-900{% endif %}">
+									<div class="flex items-start justify-between gap-4 p-3 sm:p-4">
+										<div class="list-inner min-w-0 text-sm">
+											{% if S_CHANGE_DEFAULT %}
+												<input title="{{ lang('CHANGE_DEFAULT_GROUP') }}" type="radio" name="default"{% if member.S_GROUP_DEFAULT %} checked="checked"{% endif %} value="{{ member.GROUP_ID }}" class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500 me-1.5" />
+											{% endif %}
+											<a href="{{ member.U_VIEW_GROUP }}" class="forumtitle font-bold text-prosilver-600 dark:text-prosilver-400 hover:underline"{% if member.GROUP_COLOUR %} style="color:#{{ member.GROUP_COLOUR }}"{% endif %}>{{ member.GROUP_NAME }}</a>
+											{% if member.GROUP_DESC %}<div class="mt-1 text-xs text-slate-600 dark:text-slate-400">{{ member.GROUP_DESC }}</div>{% endif %}
+											{% if not member.GROUP_SPECIAL %}<div class="mt-1 text-xs italic text-slate-500 dark:text-slate-400">{{ member.GROUP_STATUS }}</div>{% endif %}
+										</div>
+										<div class="mark flex-shrink-0 pt-0.5">
+											<input type="radio" name="selected" value="{{ member.GROUP_ID }}"{% if member.GROUP_SPECIAL %} disabled="disabled"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500 disabled:opacity-50" />
+										</div>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+					</section>
+				{% endif %}
+			</div>
+
+			{% if loops.pending %}
+				<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6">
+					<section class="space-y-0">
+						<div class="flex items-center justify-between gap-4 px-3 py-2 rounded-t-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+							<span>{{ lang('GROUP_PENDING') }}</span>
+							<span class="flex-shrink-0">{{ lang('SELECT') }}</span>
+						</div>
+						<ul class="topiclist cplist two-columns divide-y divide-slate-100 dark:divide-slate-800 border border-t-0 border-slate-200 dark:border-slate-800 rounded-b-lg overflow-hidden">
+							{% for pending in loops.pending %}
+								<li class="row {% if pending.S_ROW_COUNT is odd %}bg1 bg-slate-50/70 dark:bg-slate-800/30{% else %}bg2 bg-white dark:bg-slate-900{% endif %}">
+									<div class="flex items-start justify-between gap-4 p-3 sm:p-4">
+										<div class="list-inner min-w-0 text-sm">
+											<a href="{{ pending.U_VIEW_GROUP }}" class="forumtitle font-bold text-prosilver-600 dark:text-prosilver-400 hover:underline"{% if pending.GROUP_COLOUR %} style="color:#{{ pending.GROUP_COLOUR }}"{% endif %}>{{ pending.GROUP_NAME }}</a>
+											{% if pending.GROUP_DESC %}<div class="mt-1 text-xs text-slate-600 dark:text-slate-400">{{ pending.GROUP_DESC }}</div>{% endif %}
+											{% if not pending.GROUP_SPECIAL %}<div class="mt-1 text-xs italic text-slate-500 dark:text-slate-400">{{ pending.GROUP_STATUS }}</div>{% endif %}
+										</div>
+										<div class="mark flex-shrink-0 pt-0.5">
+											<input type="radio" name="selected" value="{{ pending.GROUP_ID }}"{% if pending.GROUP_SPECIAL %} disabled="disabled"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500 disabled:opacity-50" />
+										</div>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+					</section>
+				</div>
+			{% endif %}
+
+			{% if loops.nonmember %}
+				<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6">
+					<section class="space-y-0">
+						<div class="flex items-center justify-between gap-4 px-3 py-2 rounded-t-lg bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+							<span>{{ lang('GROUP_NONMEMBER') }}</span>
+							<span class="flex-shrink-0">{{ lang('SELECT') }}</span>
+						</div>
+						<ul class="topiclist cplist two-columns divide-y divide-slate-100 dark:divide-slate-800 border border-t-0 border-slate-200 dark:border-slate-800 rounded-b-lg overflow-hidden">
+							{% for nonmember in loops.nonmember %}
+								<li class="row {% if nonmember.S_ROW_COUNT is odd %}bg1 bg-slate-50/70 dark:bg-slate-800/30{% else %}bg2 bg-white dark:bg-slate-900{% endif %}">
+									<div class="flex items-start justify-between gap-4 p-3 sm:p-4">
+										<div class="list-inner min-w-0 text-sm">
+											<a href="{{ nonmember.U_VIEW_GROUP }}" class="forumtitle font-bold text-prosilver-600 dark:text-prosilver-400 hover:underline"{% if nonmember.GROUP_COLOUR %} style="color:#{{ nonmember.GROUP_COLOUR }}"{% endif %}>{{ nonmember.GROUP_NAME }}</a>
+											{% if nonmember.GROUP_DESC %}<div class="mt-1 text-xs text-slate-600 dark:text-slate-400">{{ nonmember.GROUP_DESC }}</div>{% endif %}
+											{% if not nonmember.GROUP_SPECIAL %}<div class="mt-1 text-xs italic text-slate-500 dark:text-slate-400">{{ nonmember.GROUP_STATUS }}</div>{% endif %}
+										</div>
+										<div class="mark flex-shrink-0 pt-0.5">
+											<input type="radio" name="selected" value="{{ nonmember.GROUP_ID }}"{% if not nonmember.S_CAN_JOIN %} disabled="disabled"{% endif %} class="rounded-full border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500 disabled:opacity-50" />
+										</div>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+					</section>
+				</div>
+			{% endif %}
+
+			{% if S_CHANGE_DEFAULT or SHOW_BUTTONS == 1 %}
+				<fieldset class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pt-2">
+					{% if S_CHANGE_DEFAULT %}
+						<div class="left-box">
+							<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="change_default" value="{{ lang('CHANGE_DEFAULT_GROUP') }}" />
+							{{ S_FORM_TOKEN }}
+						</div>
+					{% endif %}
+
+					{% if SHOW_BUTTONS == 1 %}
+						<div class="right-box flex flex-wrap items-center gap-2 sm:ms-auto">
+							<label for="action" class="text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('SELECT') ~ lang('COLON') }}</label>
+							<select name="action" id="action" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">
+								<option value="join">{{ lang('JOIN_SELECTED') }}</option>
+								<option value="resign">{{ lang('RESIGN_SELECTED') }}</option>
+								<option value="demote">{{ lang('DEMOTE_SELECTED') }}</option>
+							</select>
+							<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="submit" value="{{ lang('SUBMIT') }}" />
+							{{ S_FORM_TOKEN }}
+						</div>
+					{% endif %}
+				</fieldset>
+			{% endif %}
+
+		</form>
+	</div>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

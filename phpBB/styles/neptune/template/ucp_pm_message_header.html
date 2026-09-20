@@ -1,0 +1,80 @@
+{# Fragment: opens the #viewfolder form and the PM panel. Closed by ucp_pm_message_footer.html #}
+<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">
+	{{ lang('TITLE') }}{% if CUR_FOLDER_NAME %}{{ lang('COLON') }} <span class="font-bold text-slate-500 dark:text-slate-400">{{ CUR_FOLDER_NAME }}</span>{% endif %}
+</h2>
+
+<form id="viewfolder" method="post" action="{{ S_PM_ACTION }}" class="mt-4 space-y-4">
+
+<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6">
+	<div class="inner space-y-4">
+	{% if FOLDER_STATUS and FOLDER_MAX_MESSAGES != 0 %}<p class="text-sm text-slate-600 dark:text-slate-400">{{ FOLDER_STATUS }}</p>{% endif %}
+
+	<div class="action-bar bar-top flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+		<div class="flex flex-wrap items-center gap-2">
+			{% if U_POST_REPLY_PM or U_POST_NEW_TOPIC or U_FORWARD_PM %}
+				{% if U_POST_REPLY_PM %}
+					<a title="{{ lang('POST_REPLY_PM') }}" href="{{ U_POST_REPLY_PM }}" class="button inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500">
+						<span>{{ lang('BUTTON_PM_REPLY') }}</span>
+						{{ Icon('font', 'reply', '', true, 'w-4 h-4') }}
+					</a>
+				{% elseif U_POST_NEW_TOPIC %}
+					<a href="{{ U_POST_NEW_TOPIC }}" accesskey="n" title="{{ lang('UCP_PM_COMPOSE') }}" class="button inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500">
+						<span>{{ lang('BUTTON_PM_NEW') }}</span>
+						{{ Icon('font', 'pencil', '', true, 'w-4 h-4') }}
+					</a>
+				{% endif %}
+				{% if U_FORWARD_PM %}
+					<a title="{{ lang('POST_FORWARD_PM') }}" href="{{ U_FORWARD_PM }}" class="button button-secondary inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+						<span>{{ lang('BUTTON_PM_FORWARD') }}</span>
+						{{ Icon('font', 'share', '', true, 'w-4 h-4') }}
+					</a>
+				{% endif %}
+				{% if U_POST_REPLY_PM and S_PM_RECIPIENTS > 1 %}
+					<a title="{{ lang('REPLY_TO_ALL') }}" href="{{ U_POST_REPLY_ALL }}" class="button button-secondary inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+						<span>{{ lang('BUTTON_PM_REPLY_ALL') }}</span>
+						{{ Icon('font', 'pencil', '', true, 'w-4 h-4') }}
+					</a>
+				{% endif %}
+			{% endif %}
+
+			{% if not S_IS_BOT and U_PRINT_PM %}
+				<div class="dropdown-container dropdown-button-control topic-tools relative">
+					<span title="{{ lang('PM_TOOLS') }}" class="button button-secondary dropdown-trigger dropdown-select inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors" role="button" aria-haspopup="true" aria-expanded="false">
+						{{ Icon('font', 'wrench', '', true, 'w-4 h-4') }}
+						<span class="caret">{{ Icon('font', 'caret-down', '', true, 'w-3 h-3') }}</span>
+						<span class="sr-only">{{ lang('PM_TOOLS') }}</span>
+					</span>
+					<div class="dropdown hidden absolute end-0 top-full mt-2 z-50 min-w-[180px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl overflow-hidden">
+						<div class="pointer"><div class="pointer-inner"></div></div>
+						<ul class="dropdown-contents list-none p-1 m-0">
+							{% if U_PRINT_PM %}
+								<li>
+									<a href="{{ U_PRINT_PM }}" title="{{ lang('PRINT_PM') }}" accesskey="p" class="flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+										{{ Icon('font', 'print', lang('PRINT_PM'), false, 'w-4 h-4') }}
+									</a>
+								</li>
+							{% endif %}
+						</ul>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+
+		{% if TOTAL_MESSAGES or S_VIEW_MESSAGE %}
+			<div class="pagination flex flex-wrap items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+				{% if S_VIEW_MESSAGE %}
+					<a class="arrow-{{ S_CONTENT_FLOW_BEGIN }} inline-flex items-center gap-1.5 font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline" href="{{ U_CURRENT_FOLDER }}">
+						{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_BEGIN, lang('RETURN_TO_FOLDER'), false, 'w-3.5 h-3.5') }}
+					</a>
+				{% elseif FOLDER_CUR_MESSAGES != 0 %}
+					{% if U_MARK_ALL %}<a href="{{ U_MARK_ALL }}" class="mark font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('PM_MARK_ALL_READ') }}</a> &bull; {% endif %}
+					<span>{{ TOTAL_MESSAGES }}</span>
+					{% if loops.pagination %}
+						{% include 'pagination.html' %}
+					{% else %}
+						&bull; {{ PAGE_NUMBER }}
+					{% endif %}
+				{% endif %}
+			</div>
+		{% endif %}
+	</div>

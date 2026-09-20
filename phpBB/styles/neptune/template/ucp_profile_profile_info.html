@@ -1,0 +1,81 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<form id="ucp" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+		<div class="flex flex-wrap items-center justify-between gap-3">
+			<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
+			<a href="{{ U_USER_PROFILE }}" title="{{ lang('VIEW_PROFILE') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">
+				{{ Icon('font', 'user', '', true, 'w-4 h-4') }}
+				{{ lang('VIEW_PROFILE') }}
+			</a>
+		</div>
+
+		<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+			<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('PROFILE_INFO_NOTICE') }}</p>
+
+			<fieldset>
+				{% if ERROR %}
+					<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+						{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+						<span>{{ ERROR }}</span>
+					</div>
+				{% endif %}
+				{% EVENT ucp_profile_profile_info_before %}
+				{% if S_BIRTHDAYS_ENABLED %}
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+						<div class="sm:col-span-1">
+							<label for="bday_day" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('BIRTHDAY') ~ lang('COLON') }}{% EVENT ucp_profile_profile_info_birthday_label_append %}</label>
+							<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('BIRTHDAY_EXPLAIN') }}</span>
+						</div>
+						<div class="sm:col-span-2">
+							<div class="flex flex-wrap items-center gap-3">
+								<label for="bday_day" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+									<span>{{ lang('DAY') ~ lang('COLON') }}</span>
+									<select name="bday_day" id="bday_day" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_BIRTHDAY_DAY_OPTIONS }}</select>
+								</label>
+								<label for="bday_month" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+									<span>{{ lang('MONTH') ~ lang('COLON') }}</span>
+									<select name="bday_month" id="bday_month" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_BIRTHDAY_MONTH_OPTIONS }}</select>
+								</label>
+								<label for="bday_year" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+									<span>{{ lang('YEAR') ~ lang('COLON') }}</span>
+									<select name="bday_year" id="bday_year" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_BIRTHDAY_YEAR_OPTIONS }}</select>
+								</label>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+				{% for profile_fields in loops.profile_fields %}
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+						<div class="sm:col-span-1">
+							<label{% if profile_fields.FIELD_ID %} for="{{ profile_fields.FIELD_ID }}"{% endif %} class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ profile_fields.LANG_NAME }}{{ lang('COLON') }}{% if profile_fields.S_REQUIRED %} <span class="text-red-600 dark:text-red-400">*</span>{% endif %}</label>
+							{% if profile_fields.LANG_EXPLAIN %}<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ profile_fields.LANG_EXPLAIN }}</span>{% endif %}
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							{% if profile_fields.ERROR %}
+								<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+									{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+									<span>{{ profile_fields.ERROR }}</span>
+								</div>
+							{% endif %}
+							<div class="text-sm text-slate-800 dark:text-slate-200">{{ profile_fields.FIELD }}</div>
+						</div>
+					</div>
+				{% endfor %}
+				{% EVENT ucp_profile_profile_info_after %}
+			</fieldset>
+
+		</div>
+
+		<div class="flex flex-wrap items-center justify-end gap-2 pt-2">
+			{{ S_HIDDEN_FIELDS }}
+			<input type="submit" name="submit" value="{{ lang('SUBMIT') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+			{{ S_FORM_TOKEN }}
+		</div>
+	</form>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

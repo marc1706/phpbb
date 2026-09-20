@@ -1,0 +1,74 @@
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+	<div class="sm:col-span-1">
+		<label for="avatar_upload_file" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('UPLOAD_AVATAR_FILE') ~ lang('COLON') }}</label>
+	</div>
+	<div class="sm:col-span-2 space-y-2">
+		<input type="hidden" name="MAX_FILE_SIZE" value="{{ AVATAR_UPLOAD_SIZE }}" />
+		<input type="file" name="avatar_upload_file" id="avatar_upload_file" accept="{{ AVATAR_ALLOWED_EXTENSIONS }}" class="inputbox autowidth block w-full text-sm text-slate-700 dark:text-slate-300 file:me-3 file:px-4 file:py-2 file:text-sm file:font-bold file:rounded-lg file:border-0 file:bg-slate-100 dark:file:bg-slate-800 file:text-slate-700 dark:file:text-slate-200 hover:file:bg-slate-200 dark:hover:file:bg-slate-700 file:cursor-pointer transition-colors" />
+	</div>
+</div>
+
+{% INCLUDECSS T_ASSETS_PATH ~ '/css/cropper.min.css' %}
+{% INCLUDEJS T_ASSETS_PATH ~ '/javascript/cropper.min.js' %}
+{% INCLUDEJS T_ASSETS_PATH ~ '/javascript/jquery-cropper.js' %}
+{% INCLUDEJS T_ASSETS_PATH ~ '/javascript/hermite.js' %}
+{% INCLUDEJS T_ASSETS_PATH ~ '/javascript/phpbb-avatars.js' %}
+
+<input type="hidden" id="avatar-cropper-data" name="avatar_cropper_data" value=""
+	data-min-width="{{ AVATAR_MIN_WIDTH }}" data-max-width="{{ AVATAR_MAX_WIDTH }}"
+	data-min-height="{{ AVATAR_MIN_HEIGHT }}" data-max-height="{{ AVATAR_MAX_HEIGHT }}" />
+
+{% apply spaceless %}
+	<div class="avatar-cropper-buttons" id="avatar-cropper-buttons">
+		<div class="button-group inline-flex items-center gap-1 me-2 mt-2">
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('ZOOM_IN') }}" data-cropper-action="zoom,0.1">
+				{{ Icon('font', 'magnifying-glass-plus', '', true) }}
+			</button>
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('ZOOM_OUT') }}" data-cropper-action="zoom,-0.1">
+				{{ Icon('font', 'magnifying-glass-minus', '', true) }}
+			</button>
+		</div>
+
+		<div class="button-group inline-flex items-center gap-1 me-2 mt-2">
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('MOVE_LEFT') }}" data-cropper-action="move,-10,0">
+				{{ Icon('font', 'arrow-left', '', true) }}
+			</button>
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('MOVE_RIGHT') }}" data-cropper-action="move,10,0">
+				{{ Icon('font', 'arrow-right', '', true) }}
+			</button>
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('MOVE_UP') }}" data-cropper-action="move,0,-10">
+				{{ Icon('font', 'arrow-up', '', true) }}
+			</button>
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('MOVE_DOWN') }}" data-cropper-action="move,0,10">
+				{{ Icon('font', 'arrow-down', '', true) }}
+			</button>
+		</div>
+
+		<div class="button-group inline-flex items-center gap-1 me-2 mt-2">
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('ROTATE_LEFT') }}" data-cropper-action="rotate,-90">
+				{{ Icon('font', 'rotate-left', '', true) }}
+			</button>
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('ROTATE_RIGHT') }}" data-cropper-action="rotate,90">
+				{{ Icon('font', 'rotate-right', '', true) }}
+			</button>
+		</div>
+
+		<div class="button-group inline-flex items-center gap-1 me-2 mt-2">
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('FLIP_HORIZONTALLY') }}" data-cropper-action="scaleX">
+				{{ Icon('font', 'arrows-left-right', '', true) }}
+			</button>
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('FLIP_VERTICALLY') }}" data-cropper-action="scaleY">
+				{{ Icon('font', 'arrows-up-down', '', true) }}
+			</button>
+		</div>
+
+		<div class="button-group inline-flex items-center gap-1 mt-2">
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('RESET') }}" data-cropper-action="reset">
+				{{ Icon('font', 'rotate', '', true) }}
+			</button>
+			<button class="button inline-flex items-center justify-center w-9 h-9 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500" type="button" title="{{ lang('CLEAR') }}" data-cropper-action="clear">
+				{{ Icon('font', 'xmark', '', true) }}
+			</button>
+		</div>
+	</div>
+{% endapply %}

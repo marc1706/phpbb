@@ -1,0 +1,104 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	<!-- phpBB Modern prosilver Tailwind: login_body.html -->
+	<div class="max-w-2xl mx-auto py-6 sm:py-10">
+		<form action="{{ S_LOGIN_ACTION }}" method="post" id="login" data-focus="{% if S_ADMIN_AUTH %}{{ PASSWORD_CREDENTIAL }}{% else %}{{ USERNAME_CREDENTIAL }}{% endif %}" class="space-y-6">
+
+			<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4">
+
+				<h2 class="login-title text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{% if LOGIN_EXPLAIN %}{{ LOGIN_EXPLAIN }}{% else %}{{ lang('LOGIN') }}{% endif %}</h2>
+
+				<fieldset class="{% if not S_CONFIRM_CODE %}fields1{% else %}fields2{% endif %}">
+
+					{% if LOGIN_ERROR %}
+						<div class="error flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+							{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+							<span>{{ LOGIN_ERROR }}</span>
+						</div>
+					{% endif %}
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+						<div class="sm:col-span-1">
+							<label for="{{ USERNAME_CREDENTIAL }}" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('USERNAME') ~ lang('COLON') }}</label>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							<input type="text" tabindex="1" name="{{ USERNAME_CREDENTIAL }}" id="{{ USERNAME_CREDENTIAL }}" size="25" value="{{ USERNAME }}" autocomplete="username" class="inputbox autowidth w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+						<div class="sm:col-span-1">
+							<label for="{{ PASSWORD_CREDENTIAL }}" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('PASSWORD') ~ lang('COLON') }}</label>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							<input type="password" tabindex="2" id="{{ PASSWORD_CREDENTIAL }}" name="{{ PASSWORD_CREDENTIAL }}" size="25" autocomplete="current-password" class="inputbox autowidth w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+
+							{% if S_DISPLAY_FULL_LOGIN and (U_SEND_PASSWORD or U_RESEND_ACTIVATION) %}
+								<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+									{% if U_SEND_PASSWORD %}
+										<a href="{{ U_SEND_PASSWORD }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('FORGOT_PASS') }}</a>
+									{% endif %}
+									{% if U_RESEND_ACTIVATION %}
+										<a href="{{ U_RESEND_ACTIVATION }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('RESEND_ACTIVATION') }}</a>
+									{% endif %}
+								</div>
+							{% endif %}
+						</div>
+					</div>
+
+					{% if CAPTCHA_TEMPLATE and S_CONFIRM_CODE %}
+						{% DEFINE CAPTCHA_TAB_INDEX = 3 %}
+						{% include CAPTCHA_TEMPLATE %}
+					{% endif %}
+
+					{% if S_DISPLAY_FULL_LOGIN %}
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+							<div class="sm:col-span-1"></div>
+							<div class="sm:col-span-2 space-y-2">
+								{% if S_AUTOLOGIN_ENABLED %}
+									<label for="autologin" class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+										<input type="checkbox" name="autologin" id="autologin" tabindex="4" checked class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+										<span>{{ lang('LOG_ME_IN') }}</span>
+									</label>
+								{% endif %}
+								<label for="viewonline" class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+									<input type="checkbox" name="viewonline" id="viewonline" tabindex="5" class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+									<span>{{ lang('HIDE_ME') }}</span>
+								</label>
+							</div>
+						</div>
+					{% endif %}
+
+					{{ S_LOGIN_REDIRECT }}
+					{{ S_FORM_TOKEN_LOGIN }}
+
+					<div class="flex flex-wrap items-center justify-end gap-2 pt-4">
+						{{ S_HIDDEN_FIELDS }}<input type="submit" name="login" tabindex="6" value="{{ lang('LOGIN') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+					</div>
+				</fieldset>
+
+				{% if not S_ADMIN_AUTH and PROVIDER_TEMPLATE_FILE %}
+					<div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+						{% include PROVIDER_TEMPLATE_FILE %}
+					</div>
+				{% endif %}
+			</div>
+
+			{% if not S_ADMIN_AUTH and S_REGISTER_ENABLED %}
+				<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-3">
+					<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('REGISTER') }}</h3>
+					<p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{{ lang('LOGIN_INFO') }}</p>
+					<p class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold">
+						<a href="{{ U_TERMS_USE }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('TERMS_USE') }}</a>
+						<span class="text-slate-300 dark:text-slate-700" aria-hidden="true">|</span>
+						<a href="{{ U_PRIVACY }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ lang('PRIVACY') }}</a>
+					</p>
+					<div class="pt-3 border-t border-slate-100 dark:border-slate-800">
+						<a href="{{ U_REGISTER }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900">{{ lang('REGISTER') }}</a>
+					</div>
+				</div>
+			{% endif %}
+		</form>
+	</div>
+{% endblock %}

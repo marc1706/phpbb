@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	<form id="postform" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+		<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ lang('TITLE') }}</h2>
+
+		{% if SIGNATURE_PREVIEW != '' %}
+			<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4">
+				<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('SIGNATURE_PREVIEW') }}</h3>
+				<div class="postbody text-sm text-slate-700 dark:text-slate-300">
+					<div class="signature standalone pt-3 border-t border-slate-200 dark:border-slate-800">{{ SIGNATURE_PREVIEW }}</div>
+				</div>
+			</div>
+		{% endif %}
+
+		<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-6">
+
+			<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('SIGNATURE_EXPLAIN') }}</p>
+
+			{% DEFINE SIG_EDIT = 1 %}
+			{% include 'posting_editor.html' %}
+
+			<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('OPTIONS') }}</h3>
+			<fieldset class="space-y-2">
+				{% EVENT ucp_profile_signature_posting_editor_options_prepend %}
+				{% if S_BBCODE_ALLOWED %}
+					<div>
+						<label for="disable_bbcode" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+							<input type="checkbox" name="disable_bbcode" id="disable_bbcode"{{ S_BBCODE_CHECKED }} class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+							<span>{{ lang('DISABLE_BBCODE') }}</span>
+						</label>
+					</div>
+				{% endif %}
+				{% if S_SMILIES_ALLOWED %}
+					<div>
+						<label for="disable_smilies" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+							<input type="checkbox" name="disable_smilies" id="disable_smilies"{{ S_SMILIES_CHECKED }} class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+							<span>{{ lang('DISABLE_SMILIES') }}</span>
+						</label>
+					</div>
+				{% endif %}
+				{% if S_LINKS_ALLOWED %}
+					<div>
+						<label for="disable_magic_url" class="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer">
+							<input type="checkbox" name="disable_magic_url" id="disable_magic_url"{{ S_MAGIC_URL_CHECKED }} class="rounded border-slate-300 dark:border-slate-700 text-prosilver-600 focus:ring-prosilver-500" />
+							<span>{{ lang('DISABLE_MAGIC_URL') }}</span>
+						</label>
+					</div>
+				{% endif %}
+
+			</fieldset>
+
+		</div>
+
+		<div class="flex flex-wrap items-center justify-end gap-2 pt-2">
+			{{ S_HIDDEN_FIELDS }}
+			<input type="submit" name="preview" value="{{ lang('PREVIEW') }}" class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer transition-colors" />
+			<input type="submit" name="submit" value="{{ lang('SUBMIT') }}" class="button1 button button-form inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+			{{ S_FORM_TOKEN }}
+		</div>
+	</form>
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

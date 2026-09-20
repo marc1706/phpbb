@@ -1,0 +1,269 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	{% include 'ucp_header.html' %}
+
+	{% include 'ucp_pm_message_header.html' %}
+
+	</div>
+</div>
+
+{% if S_DISPLAY_HISTORY and (U_VIEW_PREVIOUS_HISTORY or U_VIEW_NEXT_HISTORY) %}
+	<fieldset class="display-options clearfix flex flex-wrap items-center justify-between gap-2 text-xs font-semibold">
+		{% if U_VIEW_PREVIOUS_HISTORY %}
+			<a href="{{ U_VIEW_PREVIOUS_HISTORY }}" class="left-box arrow-{{ S_CONTENT_FLOW_BEGIN }} inline-flex items-center gap-1.5 text-prosilver-600 dark:text-prosilver-400 hover:underline">
+				{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_BEGIN, lang('VIEW_PREVIOUS_HISTORY'), false, 'w-3.5 h-3.5') }}
+			</a>
+		{% endif %}
+		{% if U_VIEW_NEXT_HISTORY %}
+			<a href="{{ U_VIEW_NEXT_HISTORY }}" class="right-box arrow-{{ S_CONTENT_FLOW_END }} inline-flex items-center gap-1.5 ms-auto text-prosilver-600 dark:text-prosilver-400 hover:underline">
+				{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_END, lang('VIEW_NEXT_HISTORY'), false, 'w-3.5 h-3.5') }}
+			</a>
+		{% endif %}
+	</fieldset>
+{% endif %}
+
+<article id="post-{{ MESSAGE_ID }}" class="post pm has-profile bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800/80 shadow-sm overflow-hidden mt-4">
+	<div class="inner flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-slate-100 dark:divide-slate-800">
+
+		<!-- Author panel -->
+		<aside class="postprofile w-full md:w-56 flex-shrink-0 p-5 bg-slate-50/50 dark:bg-slate-900/30 space-y-4" id="profile{{ MESSAGE_ID }}">
+			<div class="{% if RANK_TITLE or RANK_IMG %}has-profile-rank{% else %}no-profile-rank{% endif %} has-avatar flex flex-row md:flex-col items-center md:items-start gap-3">
+				<div class="avatar-container relative flex-shrink-0">
+					{% EVENT ucp_pm_viewmessage_avatar_before %}
+					{% include 'avatar.html' with {'avatar_data': AUTHOR_AVATAR} only %}
+					{% EVENT ucp_pm_viewmessage_avatar_after %}
+				</div>
+				<div class="min-w-0">
+					<div class="text-sm md:text-base font-bold text-slate-800 dark:text-white break-words">
+						{% apply spaceless %}
+							{% EVENT ucp_pm_viewmessage_author_full_before %}
+							{{ MESSAGE_AUTHOR_FULL }}
+							{% EVENT ucp_pm_viewmessage_author_full_after %}
+							{% if S_ONLINE %} {{ Icon('font', 'circle', lang('ONLINE'), true, 'c-online-icon w-2.5 h-2.5 text-emerald-500') }}{% endif %}
+						{% endapply %}
+					</div>
+
+					{% EVENT ucp_pm_viewmessage_rank_before %}
+					{% if RANK_IMG or RANK_TITLE %}
+						<div class="profile-rank rank-img inline-flex flex-col items-start gap-1 mt-1 text-[10px] font-semibold">
+							{% if RANK_TITLE %}<span class="inline-flex items-center px-2 py-0.5 bg-prosilver-100 dark:bg-prosilver-950/55 text-prosilver-700 dark:text-prosilver-400 rounded-md">{{ RANK_TITLE }}</span>{% endif %}
+							{% if RANK_IMG %}<span>{{ RANK_IMG }}</span>{% endif %}
+						</div>
+					{% endif %}
+					{% EVENT ucp_pm_viewmessage_rank_after %}
+				</div>
+			</div>
+
+			<dl class="w-full border-t border-slate-100 dark:border-slate-800/80 pt-4 space-y-2 text-xs text-slate-500 dark:text-slate-400 m-0">
+				<div class="profile-posts flex items-start justify-between gap-2">
+					<dt class="font-semibold">{{ lang('POSTS') ~ lang('COLON') }}</dt>
+					<dd class="text-end font-mono text-slate-700 dark:text-slate-200 m-0">{% if U_AUTHOR_POSTS != '' %}<a href="{{ U_AUTHOR_POSTS }}" class="text-prosilver-600 dark:text-prosilver-400 hover:underline">{{ AUTHOR_POSTS }}</a>{% else %}{{ AUTHOR_POSTS }}{% endif %}</dd>
+				</div>
+				{% if AUTHOR_JOINED %}
+					<div class="profile-joined flex items-start justify-between gap-2">
+						<dt class="font-semibold">{{ lang('JOINED') ~ lang('COLON') }}</dt>
+						<dd class="text-end text-slate-700 dark:text-slate-200 m-0">{{ AUTHOR_JOINED }}</dd>
+					</div>
+				{% endif %}
+
+				{% EVENT ucp_pm_viewmessage_custom_fields_before %}
+				{% for custom_fields in loops.custom_fields %}
+					{% if not custom_fields.S_PROFILE_CONTACT %}
+						<div class="profile-custom-field profile-{{ custom_fields.PROFILE_FIELD_IDENT }} flex items-start justify-between gap-2">
+							<dt class="font-semibold">{{ custom_fields.PROFILE_FIELD_NAME }}{{ lang('COLON') }}</dt>
+							<dd class="text-end text-slate-700 dark:text-slate-200 m-0 break-words">{{ custom_fields.PROFILE_FIELD_VALUE }}</dd>
+						</div>
+					{% endif %}
+				{% endfor %}
+				{% EVENT ucp_pm_viewmessage_custom_fields_after %}
+
+				{% EVENT ucp_pm_viewmessage_contact_fields_before %}
+				{% if loops.contact %}
+					<div class="profile-contact flex items-center justify-between gap-2">
+						<dt class="font-semibold">{{ lang('CONTACT') ~ lang('COLON') }}</dt>
+						<dd class="m-0">
+							<div class="dropdown-container dropdown-left relative">
+								<a href="#" class="dropdown-trigger inline-flex items-center justify-center w-7 h-7 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-200/70 dark:hover:bg-slate-800 transition-colors" title="{{ CONTACT_USER }}">
+									{{ Icon('font', 'comment-dots', CONTACT_USER, true, 'far w-4 h-4') }}
+								</a>
+								<div class="dropdown hidden absolute end-0 top-full mt-2 z-50 p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl">
+									<div class="pointer"><div class="pointer-inner"></div></div>
+									<div class="dropdown-contents contact-icons flex flex-col gap-1">
+										{% for contact in loops.contact %}
+											{% set REMAINDER = contact.S_ROW_COUNT % 4 %}
+											{% set S_LAST_CELL = ((REMAINDER == 3) or (contact.S_LAST_ROW and contact.S_NUM_ROWS < 4)) %}
+											{% if REMAINDER == 0 %}
+												<div class="flex items-center gap-1">
+											{% endif %}
+												<a href="{% if contact.U_CONTACT %}{{ contact.U_CONTACT }}{% else %}{{ contact.U_PROFILE_AUTHOR }}{% endif %}" title="{{ contact.NAME }}" class="inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors{% if S_LAST_CELL %} last-cell{% endif %}">
+													{% if contact.ID == 'pm' %}
+														{{ Icon('font', 'message', '', true, 'far contact-icon w-4 h-4') }}
+													{% elseif contact.ID == 'email' %}
+														{{ Icon('font', 'at', '', true, 'fas contact-icon w-4 h-4') }}
+													{% elseif contact.ID == 'phpbb_website' %}
+														{{ Icon('font', 'earth-americas', '', true, 'fas contact-icon w-4 h-4') }}
+													{% elseif contact.ID == 'phpbb_facebook' %}
+														{{ Icon('font', 'square-facebook', '', true, 'fab contact-icon c-facebook-icon w-4 h-4') }}
+													{% elseif contact.ID == 'phpbb_twitter' %}
+														{{ Icon('font', 'square-x-twitter', '', true, 'fab contact-icon c-twitter-icon w-4 h-4') }}
+													{% elseif contact.ID == 'phpbb_skype' %}
+														{{ Icon('font', 'skype', '', true, 'fab contact-icon c-skype-icon w-4 h-4') }}
+													{% elseif contact.ID == 'phpbb_youtube' %}
+														{{ Icon('font', 'youtube', '', true, 'fab contact-icon c-youtube-icon w-4 h-4') }}
+													{% else %}
+														{{ Icon('svg', contact.ID, '', true, 'contact-icon w-4 h-4') }}
+													{% endif %}
+													<span class="sr-only">{{ contact.NAME }}</span>
+												</a>
+											{% if REMAINDER == 3 or contact.S_LAST_ROW %}
+												</div>
+											{% endif %}
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</dd>
+					</div>
+				{% endif %}
+				{% EVENT ucp_pm_viewmessage_contact_fields_after %}
+			</dl>
+		</aside>
+
+		<!-- Message column -->
+		<div class="postbody flex-1 min-w-0 p-5 md:p-6 space-y-4">
+			<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+				<h3 class="first text-base sm:text-lg font-black text-slate-800 dark:text-white tracking-tight break-words">{{ SUBJECT }}</h3>
+
+				{% set SHOW_PM_POST_BUTTONS = (U_EDIT or U_DELETE or U_REPORT or U_QUOTE) %}
+				{% EVENT ucp_pm_viewmessage_post_buttons_list_before %}
+				{% if SHOW_PM_POST_BUTTONS %}
+					<ul class="post-buttons flex items-center gap-1 list-none p-0 m-0 flex-shrink-0">
+						{% EVENT ucp_pm_viewmessage_post_buttons_before %}
+						{% if U_EDIT %}
+							<li>
+								<a href="{{ U_EDIT }}" title="{{ lang('POST_EDIT_PM') }}" class="button button-icon-only inline-flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:border-prosilver-500 transition-colors">
+									{{ Icon('font', 'pencil', lang('BUTTON_EDIT'), true, 'w-3.5 h-3.5') }}
+								</a>
+							</li>
+						{% endif %}
+						{% if U_DELETE %}
+							<li>
+								<a href="{{ U_DELETE }}" title="{{ lang('DELETE_MESSAGE') }}" class="button button-icon-only inline-flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:border-red-500 transition-colors">
+									{{ Icon('font', 'xmark', lang('BUTTON_DELETE'), true, 'w-3.5 h-3.5') }}
+								</a>
+							</li>
+						{% endif %}
+						{% if U_REPORT %}
+							<li>
+								<a href="{{ U_REPORT }}" title="{{ lang('REPORT_PM') }}" class="button button-icon-only inline-flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 hover:border-amber-500 transition-colors">
+									{{ Icon('font', 'exclamation', lang('BUTTON_REPORT'), true, 'w-3.5 h-3.5') }}
+								</a>
+							</li>
+						{% endif %}
+						{% if U_QUOTE %}
+							<li>
+								<a href="{{ U_QUOTE }}" title="{{ lang('POST_QUOTE_PM') }}" class="button button-icon-only inline-flex items-center justify-center w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 hover:text-prosilver-600 dark:hover:text-prosilver-400 hover:border-prosilver-500 transition-colors">
+									{{ Icon('font', 'quote-left', lang('BUTTON_QUOTE'), true, 'w-3.5 h-3.5') }}
+								</a>
+							</li>
+						{% endif %}
+						{% EVENT ucp_pm_viewmessage_post_buttons_after %}
+					</ul>
+				{% endif %}
+				{% EVENT ucp_pm_viewmessage_post_buttons_list_after %}
+			</div>
+
+			<p class="author text-xs text-slate-500 dark:text-slate-400 leading-relaxed pb-3 border-b border-slate-100 dark:border-slate-800/60">
+				<strong class="font-semibold text-slate-700 dark:text-slate-300">{{ lang('SENT_AT') ~ lang('COLON') }}</strong> {{ SENT_DATE }}
+				<br /><strong class="font-semibold text-slate-700 dark:text-slate-300">{{ lang('PM_FROM') ~ lang('COLON') }}</strong> {{ MESSAGE_AUTHOR_FULL }}
+				{% if S_TO_RECIPIENT %}<br /><strong class="font-semibold text-slate-700 dark:text-slate-300">{{ lang('TO') ~ lang('COLON') }}</strong> {% for to_recipient in loops.to_recipient %}{% if to_recipient.NAME_FULL %}{{ to_recipient.NAME_FULL }}{% else %}<a href="{{ to_recipient.U_VIEW }}"{% if to_recipient.COLOUR %} style="color:{{ to_recipient.COLOUR }};"{% endif %} class="hover:underline"><strong>{{ to_recipient.NAME }}</strong></a>{% endif %}&nbsp;{% endfor %}{% endif %}
+				{% if S_BCC_RECIPIENT %}<br /><strong class="font-semibold text-slate-700 dark:text-slate-300">{{ lang('BCC') ~ lang('COLON') }}</strong> {% for bcc_recipient in loops.bcc_recipient %}{% if bcc_recipient.NAME_FULL %}{{ bcc_recipient.NAME_FULL }}{% else %}<a href="{{ bcc_recipient.U_VIEW }}"{% if bcc_recipient.COLOUR %} style="color:{{ bcc_recipient.COLOUR }};"{% endif %} class="hover:underline"><strong>{{ bcc_recipient.NAME }}</strong></a>{% endif %}&nbsp;{% endfor %}{% endif %}
+			</p>
+
+			{% EVENT ucp_pm_viewmessage_message_content_before %}
+
+			<div class="content text-sm md:text-base leading-relaxed text-slate-700 dark:text-slate-200 break-words">{{ MESSAGE }}</div>
+
+			{% if S_HAS_ATTACHMENTS %}
+				<dl class="attachbox rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/30 p-4 space-y-2 m-0">
+					<dt class="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400">
+						{{ lang('ATTACHMENTS') }}
+					</dt>
+					{% for attachment in loops.attachment %}
+						<dd class="text-sm text-slate-700 dark:text-slate-300 m-0">{{ attachment.DISPLAY_ATTACHMENT }}</dd>
+					{% endfor %}
+				</dl>
+			{% endif %}
+
+			{% if S_DISPLAY_NOTICE %}
+				<div class="post-notice error flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+					{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+					<span>{{ lang('DOWNLOAD_NOTICE') }}</span>
+				</div>
+			{% endif %}
+
+			{% if EDITED_MESSAGE or EDIT_REASON %}
+				<div class="notice text-xs text-slate-500 dark:text-slate-400 pt-3 border-t border-dashed border-slate-200 dark:border-slate-800">
+					{{ EDITED_MESSAGE }}
+					{% if EDIT_REASON %}<br /><strong class="font-semibold text-slate-600 dark:text-slate-300">{{ lang('REASON') ~ lang('COLON') }}</strong> <em>{{ EDIT_REASON }}</em>{% endif %}
+				</div>
+			{% endif %}
+
+			{% if SIGNATURE %}
+				<div id="sig{{ MESSAGE_ID }}" class="signature mt-6 pt-4 border-t border-dashed border-slate-100 dark:border-slate-800/60 text-xs text-slate-400 dark:text-slate-500 leading-relaxed clear-both">{{ SIGNATURE }}</div>
+			{% endif %}
+
+			<div class="back2top flex justify-end pt-2">
+				<a href="#top" class="top inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors" title="{{ lang('BACK_TO_TOP') }}">
+					{{ Icon('font', 'circle-chevron-up', lang('BACK_TO_TOP'), true, 'w-4 h-4') }}
+				</a>
+			</div>
+		</div>
+
+	</div>
+</article>
+
+{% EVENT ucp_pm_viewmessage_options_before %}
+{% if S_VIEW_MESSAGE %}
+	<fieldset class="display-options flex flex-wrap items-center gap-3 mt-4 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs">
+
+		{% if S_MARK_OPTIONS %}
+			<span class="flex items-center gap-2">
+				<label for="mark_option" class="sr-only">{{ lang('MARK') }}</label>
+				<select name="mark_option" id="mark_option" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_MARK_OPTIONS }}</select>
+				<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="submit_mark" value="{{ lang('GO') }}" />
+			</span>
+		{% endif %}
+
+		{% if U_PREVIOUS_PM %}
+			<a href="{{ U_PREVIOUS_PM }}" class="left-box arrow-{{ S_CONTENT_FLOW_BEGIN }} inline-flex items-center gap-1.5 font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">
+				{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_BEGIN, lang('VIEW_PREVIOUS_PM'), false, 'w-3.5 h-3.5') }}
+			</a>
+		{% endif %}
+		{% if U_NEXT_PM %}
+			<a href="{{ U_NEXT_PM }}" class="right-box arrow-{{ S_CONTENT_FLOW_END }} inline-flex items-center gap-1.5 font-semibold text-prosilver-600 dark:text-prosilver-400 hover:underline">
+				{{ Icon('font', 'angle-' ~ S_CONTENT_FLOW_END, lang('VIEW_NEXT_PM'), false, 'w-3.5 h-3.5') }}
+			</a>
+		{% endif %}
+
+		{% if not S_UNREAD and not S_SPECIAL_FOLDER %}
+			<span class="flex flex-wrap items-center gap-2 ms-auto">
+				<label for="dest_folder" class="text-sm font-semibold text-slate-700 dark:text-slate-300">{% if S_VIEW_MESSAGE %}{{ lang('MOVE_TO_FOLDER') ~ lang('COLON') }} {% else %}{{ lang('MOVE_MARKED_TO_FOLDER') }}{% endif %}</label>
+				<select name="dest_folder" id="dest_folder" class="px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_TO_FOLDER_OPTIONS }}</select>
+				<input class="button1 button button-form-bold inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" type="submit" name="move_pm" value="{{ lang('GO') }}" />
+			</span>
+		{% endif %}
+
+		<input type="hidden" name="marked_msg_id[]" value="{{ MSG_ID }}" />
+		<input type="hidden" name="cur_folder_id" value="{{ CUR_FOLDER_ID }}" />
+		<input type="hidden" name="p" value="{{ MSG_ID }}" />
+	</fieldset>
+{% endif %}
+
+	{% include 'ucp_pm_message_footer.html' %}
+
+	{% if S_DISPLAY_HISTORY %}{% include 'ucp_pm_history.html' %}{% endif %}
+
+	{% include 'ucp_footer.html' %}
+{% endblock %}

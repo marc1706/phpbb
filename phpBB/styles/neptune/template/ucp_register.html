@@ -1,0 +1,162 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	<!-- phpBB Modern prosilver Tailwind: ucp_register.html -->
+	<div class="max-w-3xl mx-auto py-6 sm:py-10 space-y-6">
+
+		<script>
+			/**
+			* Change language
+			*/
+			function change_language(lang_iso)
+			{
+				document.cookie = '{{ COOKIE_NAME }}_lang=' + lang_iso + '; path={{ COOKIE_PATH }}';
+				document.forms['register'].change_lang.value = lang_iso;
+				document.forms['register'].submit.click();
+			}
+		</script>
+
+		{% if PROVIDER_TEMPLATE_FILE %}
+			<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4">
+				<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ SITENAME }} - {{ lang('OAUTH_REGISTRATION') }}</h2>
+
+				{% include PROVIDER_TEMPLATE_FILE %}
+			</div>
+		{% endif %}
+
+		<form id="register" method="post" action="{{ S_UCP_ACTION }}"{{ S_FORM_ENCTYPE }} class="space-y-6">
+
+			<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-4">
+
+				<h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ SITENAME }} - {{ lang('REGISTRATION') }}</h2>
+
+				<fieldset class="fields2">
+					{% if ERROR %}
+						<div class="flex items-start gap-2.5 p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-sm text-red-700 dark:text-red-300" role="alert">
+							{{ Icon('font', 'exclamation-triangle', '', true, 'w-4 h-4 mt-0.5 flex-shrink-0') }}
+							<span>{{ ERROR }}</span>
+						</div>
+					{% endif %}
+					{% if L_REG_COND %}
+						<p class="text-sm font-bold text-slate-800 dark:text-white">{{ L_REG_COND }}</p>
+					{% endif %}
+
+					{% EVENT ucp_register_credentials_before %}
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+						<div class="sm:col-span-1">
+							<label for="username" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('USERNAME') ~ lang('COLON') }}</label>
+							<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('USERNAME_EXPLAIN') }}</span>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							<input type="text" tabindex="1" name="username" id="username" size="25" value="{{ USERNAME }}" title="{{ lang('USERNAME') }}" autocomplete="off" class="inputbox autowidth w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+						<div class="sm:col-span-1">
+							<label for="new_password" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('PASSWORD') ~ lang('COLON') }}</label>
+							<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ lang('PASSWORD_EXPLAIN') }}</span>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							<input type="password" tabindex="2" name="new_password" id="new_password" size="25" value="{{ PASSWORD }}" title="{{ lang('NEW_PASSWORD') }}" autocomplete="off" class="inputbox autowidth w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+						<div class="sm:col-span-1">
+							<label for="password_confirm" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('CONFIRM_PASSWORD') ~ lang('COLON') }}</label>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							<input type="password" tabindex="3" name="password_confirm" id="password_confirm" size="25" value="{{ PASSWORD_CONFIRM }}" title="{{ lang('CONFIRM_PASSWORD') }}" autocomplete="off" class="inputbox autowidth w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+						<div class="sm:col-span-1">
+							<label for="email" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('EMAIL_ADDRESS') ~ lang('COLON') }}</label>
+						</div>
+						<div class="sm:col-span-2 space-y-2">
+							<input type="email" tabindex="4" name="email" id="email" size="25" maxlength="100" value="{{ EMAIL }}" title="{{ lang('EMAIL_ADDRESS') }}" autocomplete="off" class="inputbox autowidth w-full px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:border-prosilver-500 transition-colors" />
+						</div>
+					</div>
+
+					{% EVENT ucp_register_credentials_after %}
+
+					<hr class="my-2 border-slate-200 dark:border-slate-800" />
+
+					{% EVENT ucp_register_options_before %}
+
+					{% if LANG_OPTIONS %}
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+							<div class="sm:col-span-1">
+								<label for="{{ LANG_OPTIONS.id }}" class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ lang('LANGUAGE') ~ lang('COLON') }}</label>
+							</div>
+							<div class="sm:col-span-2 space-y-2">
+								{{ FormsSelect(LANG_OPTIONS | merge({class: 'px-3 py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500'})) }}
+							</div>
+						</div>
+						<script>
+							/**
+							 * Change language on change
+							 */
+							document.querySelector("{{ '#' ~ LANG_OPTIONS.id }}").addEventListener('change', (event) => {
+								change_language(event.target.value);
+								return false;
+							});
+						</script>
+					{% endif %}
+
+					{% include 'timezone_option.html' %}
+
+					{% EVENT ucp_register_profile_fields_before %}
+
+					{% if PROFILE_FIELDS_REQUIRED %}
+						<p class="text-sm font-bold text-slate-800 dark:text-white">{{ lang('ITEMS_REQUIRED') }}</p>
+					{% endif %}
+
+					{% for profile_fields in loops.profile_fields %}
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 py-3 border-b border-slate-100 dark:border-slate-800">
+							<div class="sm:col-span-1">
+								<label{% if profile_fields.FIELD_ID %} for="{{ profile_fields.FIELD_ID }}"{% endif %} class="block text-sm font-semibold text-slate-800 dark:text-slate-200">{{ profile_fields.LANG_NAME }}{{ lang('COLON') }}{% if profile_fields.S_REQUIRED %} *{% endif %}</label>
+								{% if profile_fields.LANG_EXPLAIN %}
+									<span class="block text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ profile_fields.LANG_EXPLAIN }}</span>
+								{% endif %}
+								{% if profile_fields.ERROR %}
+									<span class="error block text-xs text-red-600 dark:text-red-400 mt-0.5" role="alert">{{ profile_fields.ERROR }}</span>
+								{% endif %}
+							</div>
+							<div class="sm:col-span-2 space-y-2">
+								{{ profile_fields.FIELD }}
+							</div>
+						</div>
+					{% endfor %}
+
+					{% EVENT ucp_register_profile_fields_after %}
+				</fieldset>
+			</div>
+
+			{% if CAPTCHA_TEMPLATE %}
+				{% DEFINE CAPTCHA_TAB_INDEX = 8 %}
+				{% include CAPTCHA_TEMPLATE %}
+			{% endif %}
+
+			{% if S_COPPA %}
+				<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6 space-y-2">
+					<h3 class="text-sm font-black text-slate-800 dark:text-white">{{ lang('COPPA_COMPLIANCE') }}</h3>
+					<p class="text-sm text-slate-600 dark:text-slate-400">{{ lang('COPPA_EXPLAIN') }}</p>
+				</div>
+			{% endif %}
+
+			{% EVENT ucp_register_buttons_before %}
+
+			<div class="panel bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 sm:p-6">
+				<div class="flex flex-wrap items-center justify-end gap-2">
+					{{ S_HIDDEN_FIELDS }}
+					<input type="submit" tabindex="9" name="submit" id="submit" value="{{ lang('SUBMIT') }}" class="button1 button button-form default-submit-action inline-flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm cursor-pointer transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900" />
+					{{ S_FORM_TOKEN }}
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

@@ -75,7 +75,7 @@
 <!-- Load Theme Javascript handling interactivity. This has to stay in front of the
 	 scripts queued via INCLUDEJS as it provides the minimal phpbb helpers that core
 	 scripts such as webpush.js expect to find. -->
-<script src="{{ T_THEME_PATH }}/theme.js"></script>
+<script src="{{ T_THEME_PATH }}/theme.js?assets_version={{ T_ASSETS_VERSION }}"></script>
 
 {% if NOTIFICATIONS_WEBPUSH_ENABLE %}
 	<script src="{{ T_ASSETS_PATH }}/javascript/webpush.js?assets_version={{ T_ASSETS_VERSION }}"></script>

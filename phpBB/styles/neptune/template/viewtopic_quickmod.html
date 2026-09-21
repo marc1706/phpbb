@@ -1,0 +1,55 @@
+{# Moderator actions for viewtopic.
+
+   Kept separate from the member-facing tools (viewtopic_topic_tools.html) and given its
+   own amber accent on purpose: "Delete topic" should never be reachable by the same
+   muscle memory as "Bookmark topic". Renders for nobody without moderation permissions,
+   because phpBB only populates the quickmod block for them. #}
+{% if loops.quickmod and not S_IS_BOT %}
+	<div class="relative" data-dropdown id="quickmod-parent">
+		<button type="button" id="quickmod-button" data-dropdown-button
+		        aria-expanded="false" aria-haspopup="true"
+		        title="{{ lang('QUICK_MOD') }}"
+		        class="flex items-center gap-1.5 px-4 py-2.5 rounded-lg border border-amber-600/60 text-amber-700 dark:text-amber-400 bg-white dark:bg-slate-900 hover:bg-amber-50 dark:hover:bg-amber-950/30 text-xs font-bold shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-amber-500">
+			{{ Icon('font', 'gavel', '', true, 'w-4 h-4') }}
+			<span>{{ lang('QUICK_MOD') }}</span>
+			{{ Icon('font', 'caret-down', '', true, 'w-3 h-3') }}
+		</button>
+
+		<div id="quickmod-menu" data-dropdown-menu
+		     class="hidden absolute end-0 mt-2 w-60 rounded-xl bg-white dark:bg-slate-900 border border-amber-600/50 shadow-xl p-1.5 z-50">
+			<ul role="menu" class="quickmod-contents">
+				{% EVENT viewtopic_quickmod_before %}
+
+				{# phpBB emits delete_topic second, between "Lock" and "Move". Rather than follow
+				   that order, the destructive entries are pulled out and rendered last, below a
+				   rule, so the red item is never adjacent to an everyday one. #}
+				{% set destructive = ['delete_topic', 'delete_post', 'delete_shadow_topic'] %}
+				{# phpBB refreshes these eight in place rather than reloading the page. #}
+				{% set ajax_actions = ['lock', 'unlock', 'delete_topic', 'restore_topic', 'make_normal', 'make_sticky', 'make_announce', 'make_global'] %}
+
+				{% for quickmod in loops.quickmod|filter(qm => qm.VALUE not in destructive) %}
+					<li role="none">
+						<a href="{{ quickmod.LINK }}" role="menuitem"{% if quickmod.VALUE in ajax_actions %} data-ajax="true" data-refresh="true"{% endif %}
+						   class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+							{{ quickmod.TITLE }}
+						</a>
+					</li>
+				{% endfor %}
+
+				{% for quickmod in loops.quickmod|filter(qm => qm.VALUE in destructive) %}
+					{% if loop.first %}
+						<li role="none" aria-hidden="true" class="h-px bg-slate-100 dark:bg-slate-800 my-1.5 mx-2"></li>
+					{% endif %}
+					<li role="none">
+						<a href="{{ quickmod.LINK }}" role="menuitem"{% if quickmod.VALUE in ajax_actions %} data-ajax="true" data-refresh="true"{% endif %}
+						   class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors">
+							{{ quickmod.TITLE }}
+						</a>
+					</li>
+				{% endfor %}
+
+				{% EVENT viewtopic_quickmod_after %}
+			</ul>
+		</div>
+	</div>
+{% endif %}

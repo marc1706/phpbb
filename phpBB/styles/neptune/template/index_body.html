@@ -109,7 +109,7 @@
 	{% EVENT index_body_online_list_before %}
 	{% if S_DISPLAY_ONLINE_LIST %}
 		<!-- Active Bottom Session Panel: Who is Online -->
-		<div class="stat-block online-list p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs text-sm text-slate-650 dark:text-slate-350 space-y-3.5 mt-6 transition-colors duration-200">
+		<div class="stat-block online-list p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs text-sm text-slate-600 dark:text-slate-300 space-y-3.5 mt-6 transition-colors duration-200">
 			<div class="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
 				{{ Icon('font', 'users', '', true, 'w-4 h-4 text-sky-500') }}
 				<h4 class="text-sm sm:text-base font-black text-slate-800 dark:text-slate-200">
@@ -156,7 +156,7 @@
 
 	{% EVENT index_body_birthday_block_before %}
 	{% if S_DISPLAY_BIRTHDAY_LIST and loops.birthdays|length %}
-		<div class="stat-block birthday-list p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs text-sm text-slate-650 dark:text-slate-350 space-y-2 mt-4 transition-colors duration-200">
+		<div class="stat-block birthday-list p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs text-sm text-slate-600 dark:text-slate-300 space-y-2 mt-4 transition-colors duration-200">
 			<div class="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
 				{{ Icon('font', 'cake-candles', '', true, 'w-4 h-4 text-pink-500') }}
 				<h4 class="text-sm sm:text-base font-black text-slate-800 dark:text-slate-200">{{ lang('BIRTHDAYS') }}</h4>
@@ -171,7 +171,7 @@
 
 	{% EVENT index_body_stat_blocks_before %}
 	{% if NEWEST_USER %}
-		<div class="stat-block statistics-list p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs text-sm text-slate-650 dark:text-slate-350 space-y-2 mt-4 transition-colors duration-200">
+		<div class="stat-block statistics-list p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs text-sm text-slate-600 dark:text-slate-300 space-y-2 mt-4 transition-colors duration-200">
 			<div class="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-800">
 				{{ Icon('font', 'chart-column', '', true, 'w-4 h-4 text-emerald-500') }}
 				<h4 class="text-sm sm:text-base font-black text-slate-800 dark:text-slate-200">{{ lang('STATISTICS') }}</h4>

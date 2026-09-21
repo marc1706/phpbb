@@ -6,8 +6,32 @@
 	:root {
 		/* phpBB Color Palette with #4688ce base */
 
+		/*
+		 * Brand ramp.
+		 *
+		 * The single source of the style's brand colour. Everything brand-coloured resolves
+		 * through these, either through the `prosilver-*` Tailwind scale or through the
+		 * semantic tokens further down (--primary, --accent, --ring and friends), in both
+		 * the light and the dark theme.
+		 *
+		 * Because the scale is indirected through custom properties, redefining --brand-*
+		 * after this stylesheet re-colours the whole style without a Tailwind rebuild.
+		 * Nothing does that today; these values are what the board renders with.
+		 */
+		--brand-50: 210 66.7% 96.5%;
+		--brand-100: 208.7 65.7% 93.1%;
+		--brand-200: 208.8 68.6% 86.3%;
+		--brand-300: 208.6 71.2% 76.9%;
+		--brand-400: 208.5 70.2% 67.1%;
+		--brand-500: 210.9 58.1% 54.1%;
+		--brand-600: 211.8 56% 45.5%;
+		--brand-700: 212 60% 36%;
+		--brand-800: 213.2 60.3% 27.6%;
+		--brand-900: 213 61% 21%;
+		--brand-950: 214.1 64.9% 11.2%;
+
 		/* Cosmic 2.0 (based on #4688ce -> 211 58% 54%) */
-		--cosmic: 211 58% 54%;
+		--cosmic: var(--brand-500);
 
 		/* Odyssey: 218 20% 39% */
 		--odyssey: 218 20% 39%;
@@ -34,9 +58,9 @@
 		--popover-foreground: 219 20% 20%;
 
 		/* Primary - Cosmic 2.0 (#4688ce base) */
-		--primary: 211 58% 54%;
+		--primary: var(--brand-500);
 		--primary-foreground: 0 0% 100%;
-		--primary-hover: 211 58% 45%;
+		--primary-hover: var(--brand-600);
 
 		/* Secondary - Odyssey based */
 		--secondary: 218 20% 95%;
@@ -48,18 +72,18 @@
 		--muted-foreground: 218 20% 60%;
 
 		/* Accent for highlights */
-		--accent: 211 58% 54%;
+		--accent: var(--brand-500);
 		--accent-foreground: 0 0% 100%;
 
 		/* Topic states - using Cosmic 2.0 (#4688ce) */
-		--topic-unread: 211 58% 54%;
+		--topic-unread: var(--brand-500);
 		--topic-sticky: 38 92% 50%;
 		--topic-locked: 218 20% 40%;
 		--topic-new: 142 71% 45%;
 
 		/* States */
 		--danger: 1 61% 66%;
-		--info: 211 58% 54%;
+		--info: var(--brand-500);
 
 		/* User badges */
 		--badge-admin: 0 84% 60%;
@@ -71,7 +95,7 @@
 
 		--border: 218 20% 88%;
 		--input: 218 20% 88%;
-		--ring: 211 58% 54%;
+		--ring: var(--brand-500);
 
 		--radius: 0.5rem;
 
@@ -89,7 +113,7 @@
 		--sidebar-accent: 240 4.8% 95.9%;
 		--sidebar-accent-foreground: 240 5.9% 10%;
 		--sidebar-border: 220 13% 91%;
-		--sidebar-ring: 211 58% 54%;
+		--sidebar-ring: var(--brand-500);
 
 		--scrollbar-thumb: 0 0% 0% / 0.1;
 	}
@@ -113,9 +137,9 @@
 		--popover-foreground: 0 0% 98%;
 
 		/* Primary - Cosmic 2.0 in dark mode */
-		--primary: 211 58% 45%;
+		--primary: var(--brand-600);
 		--primary-foreground: 211 20% 90%;
-		--primary-hover: 211 58% 54%;
+		--primary-hover: var(--brand-500);
 
 		/* Secondary - Odyssey based */
 		--secondary: 218 20% 24%;
@@ -125,17 +149,17 @@
 		--muted: 218 20% 24%;
 		--muted-foreground: 218 20% 60%;
 
-		--accent: 211 58% 54%;
+		--accent: var(--brand-500);
 		--accent-foreground: 0 0% 100%;
 
-		--topic-unread: 211 58% 54%;
+		--topic-unread: var(--brand-500);
 		--topic-sticky: 38 92% 50%;
 		--topic-locked: 218 20% 50%;
 		--topic-new: 142 71% 45%;
 
 		/* States */
 		--danger: 1 61% 66%;
-		--info: 211 58% 54%;
+		--info: var(--brand-500);
 
 		--badge-admin: 0 84% 60%;
 		--badge-mod: 142 71% 45%;
@@ -146,11 +170,11 @@
 
 		--border: 218 20% 28%;
 		--input: 218 20% 28%;
-		--ring: 211 58% 54%;
+		--ring: var(--brand-500);
 
 		--scrollbar-thumb: 0 0% 0% / 0.5;
 
-		--cosmic: 211 58% 54%;
+		--cosmic: var(--brand-500);
 		--odyssey: 218 20% 39%;
 		--cosmos: 219 20% 20%;
 	}

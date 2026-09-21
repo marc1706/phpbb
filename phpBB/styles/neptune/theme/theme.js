@@ -154,15 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	function registerDropdown(buttonId, menuId, parentId) {
-		const button = document.getElementById(buttonId);
-		const menu = document.getElementById(menuId);
-		const parent = document.getElementById(parentId);
-
-		if (!button || !menu || !parent) {
-			return;
-		}
-
+	function bindDropdown(button, menu, parent) {
 		const entry = { button, menu, parent };
 		dropdowns.push(entry);
 
@@ -190,9 +182,32 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
+	function registerDropdown(buttonId, menuId, parentId) {
+		const button = document.getElementById(buttonId);
+		const menu = document.getElementById(menuId);
+		const parent = document.getElementById(parentId);
+
+		if (button && menu && parent) {
+			bindDropdown(button, menu, parent);
+		}
+	}
+
 	registerDropdown('quick-links-button', 'quick-links-menu', 'quick-links-parent');
 	registerDropdown('user-menu-button', 'user-menu', 'user-menu-parent');
 	registerDropdown('notification-button', 'notification-menu', 'notification-dropdown-parent');
+
+	// Declarative registration, so a template can add a dropdown without editing this file:
+	// mark the wrapper with data-dropdown and its two parts with data-dropdown-button
+	// and data-dropdown-menu. Everything else (click-outside, Escape, one-open-at-a-time)
+	// is shared with the dropdowns registered by id above.
+	document.querySelectorAll('[data-dropdown]').forEach((parent) => {
+		const button = parent.querySelector('[data-dropdown-button]');
+		const menu = parent.querySelector('[data-dropdown-menu]');
+
+		if (button && menu) {
+			bindDropdown(button, menu, parent);
+		}
+	});
 
 	// Single document listener dismisses whichever dropdown the click fell outside of
 	document.addEventListener('click', (event) => {

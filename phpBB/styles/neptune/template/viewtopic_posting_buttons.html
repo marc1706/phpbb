@@ -1,0 +1,21 @@
+{# Shared posting controls for viewtopic (used in the top and bottom action bars) #}
+{% if not S_IS_BOT %}
+	{% if S_DISPLAY_REPLY_INFO and U_POST_REPLY_TOPIC %}
+		<a href="{{ U_POST_REPLY_TOPIC }}" role="button" title="{{ S_IS_LOCKED ? lang('TOPIC_LOCKED') : lang('POST_REPLY') }}" class="flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all {% if S_IS_LOCKED %}bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700{% else %}text-white bg-prosilver-600 hover:bg-prosilver-500{% endif %}">
+			{% if S_IS_LOCKED %}
+				{{ Icon('font', 'lock', '', true, 'w-4 h-4') }}
+				{{ lang('BUTTON_TOPIC_LOCKED') }}
+			{% else %}
+				{{ Icon('font', 'reply', '', true, 'w-4 h-4') }}
+				{{ lang('BUTTON_POST_REPLY') }}
+			{% endif %}
+		</a>
+	{% endif %}
+
+	{% if U_BUMP_TOPIC %}
+		<a href="{{ U_BUMP_TOPIC }}" role="button" title="{{ lang('BUMP_TOPIC') }}" data-ajax="true" class="flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800">
+			{{ Icon('font', 'turn-up', '', true, 'w-4 h-4') }}
+			{{ lang('BUMP_TOPIC') }}
+		</a>
+	{% endif %}
+{% endif %}

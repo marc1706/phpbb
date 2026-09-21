@@ -9,14 +9,20 @@
 		</h1>
 	</div>
 
-	<!-- Top discussion controls -->
-	<div class="flex items-center gap-2">
-		{% if S_POST_REPLY_ALLOWED %}
-			<a href="{{ U_POST_REPLY_TOPIC }}" class="flex items-center gap-1.5 px-4 py-2.5 text-sm font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
-				{{ Icon('font', 'reply', '', true, 'w-4 h-4') }}
-				Post Reply
-			</a>
+	<!-- Top discussion controls: member tools, then moderation, then the primary action -->
+	<div class="flex items-center gap-2 flex-wrap">
+		{% EVENT viewtopic_buttons_top_before %}
+
+		{% include 'viewtopic_topic_tools.html' %}
+
+		{% if loops.quickmod and not S_IS_BOT %}
+			<span class="w-px h-7 bg-slate-200 dark:bg-slate-700 mx-1" aria-hidden="true"></span>
+			{% include 'viewtopic_quickmod.html' %}
 		{% endif %}
+
+		{% include 'viewtopic_posting_buttons.html' %}
+
+		{% EVENT viewtopic_buttons_top_after %}
 	</div>
 </div>
 
@@ -48,7 +54,7 @@
 
 							<!-- Accessible Online Status Badge -->
 							{% if postrow.S_ONLINE %}
-								<span class="absolute -bottom-1 -end-1 w-4 h-4 rounded-full bg-emerald-500 border border-white dark:border-slate-900 flex items-center justify-center shadow" title="Online">
+								<span class="absolute -bottom-1 -end-1 w-4 h-4 rounded-full bg-emerald-500 border border-white dark:border-slate-900 flex items-center justify-center shadow" title="{{ lang('ONLINE') }}">
 								<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
 							</span>
 							{% endif %}
@@ -75,19 +81,19 @@
 					<div class="hidden md:block w-full border-t border-slate-100 dark:border-slate-800/80 pt-4 mt-1 space-y-2 text-xs text-slate-400">
 						{% if postrow.POSTER_POSTS %}
 							<div class="flex items-center justify-between">
-								<span>Posts:</span>
+								<span>{{ lang('POSTS') ~ lang('COLON') }}</span>
 								<strong class="font-mono text-slate-700 dark:text-slate-200">{{ postrow.POSTER_POSTS }}</strong>
 							</div>
 						{% endif %}
 						{% if postrow.POSTER_JOINED %}
 							<div class="flex items-center justify-between">
-								<span>Joined:</span>
+								<span>{{ lang('JOINED') ~ lang('COLON') }}</span>
 								<strong class="text-slate-700 dark:text-slate-200 text-end">{{ postrow.POSTER_JOINED }}</strong>
 							</div>
 						{% endif %}
 						{% if postrow.POSTER_FROM %}
 							<div class="flex items-start justify-between gap-2">
-								<span>Location:</span>
+								<span>{{ lang('LOCATION') ~ lang('COLON') }}</span>
 								<strong class="truncate max-w-[110px] text-slate-700 dark:text-slate-200" title="{{ postrow.POSTER_FROM }}">{{ postrow.POSTER_FROM }}</strong>
 							</div>
 						{% endif %}
@@ -105,26 +111,52 @@
 									#{{ postrow.POST_NUMBER|default(loop.index) }}
 								</a>
 								<span>•</span>
-								<span>Post by <strong class="text-slate-600 dark:text-slate-400">{{ postrow.POST_AUTHOR }}</strong></span>
+								<span>{{ lang('POST_BY_AUTHOR') }} <strong class="text-slate-600 dark:text-slate-400">{{ postrow.POST_AUTHOR }}</strong></span>
 								<span>•</span>
 								<time class="italic">{{ postrow.POST_DATE }}</time>
 							</div>
 
-							<!-- Interaction Actions (Quote, Edit, Delete, Report dropdowns or buttons) -->
-							<div class="flex items-center gap-1">
-								{% if postrow.U_QUOTE %}
-									<a href="{{ postrow.U_QUOTE }}" title="Quote" class="p-1 px-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 flex items-center gap-1 transition-all">
-										{{ Icon('font', 'quote-left', '', true, 'w-3.5 h-3.5') }}
-										<span class="text-[11px] font-bold uppercase tracking-wider hidden sm:inline">Quote</span>
-									</a>
-								{% endif %}
+							<!-- Interaction Actions (Quote, Edit, Delete, Report, Warn, Info) -->
+							{% if not S_IS_BOT %}
+								<div class="flex items-center gap-1 shrink-0">
+									{% if postrow.U_QUOTE %}
+										<a href="{{ postrow.U_QUOTE }}" title="{{ lang('REPLY_WITH_QUOTE') }}" class="inline-flex items-center justify-center h-7 px-2 gap-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-all">
+											{{ Icon('font', 'quote-left', '', true, 'w-3.5 h-3.5') }}
+											<span class="text-[11px] font-bold uppercase tracking-wider hidden sm:inline">{{ lang('BUTTON_QUOTE') }}</span>
+										</a>
+									{% endif %}
 
-								{% if postrow.U_EDIT %}
-									<a href="{{ postrow.U_EDIT }}" title="Edit" class="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-all">
-										{{ Icon('font', 'pencil', '', true, 'w-3.5 h-3.5') }}
-									</a>
-								{% endif %}
-							</div>
+									{% if postrow.U_EDIT %}
+										<a href="{{ postrow.U_EDIT }}" title="{{ lang('EDIT_POST') }}" class="inline-flex items-center justify-center h-7 w-7 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-all">
+											{{ Icon('font', 'pencil', lang('BUTTON_EDIT'), true, 'w-3.5 h-3.5') }}
+										</a>
+									{% endif %}
+
+									{% if postrow.U_DELETE %}
+										<a href="{{ postrow.U_DELETE }}" title="{{ lang('DELETE_POST') }}" class="inline-flex items-center justify-center h-7 w-7 rounded hover:bg-rose-50 dark:hover:bg-rose-950/40 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition-all">
+											{{ Icon('font', 'xmark', lang('BUTTON_DELETE'), true, 'w-3.5 h-3.5') }}
+										</a>
+									{% endif %}
+
+									{% if postrow.U_REPORT %}
+										<a href="{{ postrow.U_REPORT }}" title="{{ lang('REPORT_POST') }}" class="inline-flex items-center justify-center h-7 w-7 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-all">
+											{{ Icon('font', 'exclamation', lang('BUTTON_REPORT'), true, 'w-3.5 h-3.5') }}
+										</a>
+									{% endif %}
+
+									{% if postrow.U_WARN %}
+										<a href="{{ postrow.U_WARN }}" title="{{ lang('WARN_USER') }}" class="inline-flex items-center justify-center h-7 w-7 rounded hover:bg-amber-50 dark:hover:bg-amber-950/40 text-slate-400 hover:text-amber-600 dark:hover:text-amber-400 transition-all">
+											{{ Icon('font', 'triangle-exclamation', lang('BUTTON_WARN'), true, 'w-3.5 h-3.5') }}
+										</a>
+									{% endif %}
+
+									{% if postrow.U_INFO %}
+										<a href="{{ postrow.U_INFO }}" title="{{ lang('INFORMATION') }}" class="inline-flex items-center justify-center h-7 w-7 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-all">
+											{{ Icon('font', 'info', lang('BUTTON_INFORMATION'), true, 'w-3.5 h-3.5') }}
+										</a>
+									{% endif %}
+								</div>
+							{% endif %}
 						</div>
 
 						<!-- Real parsed HTML content body, incorporating customized BBCode wrappers styling -->
@@ -146,19 +178,41 @@
 	{% endfor %}
 </div>
 
-<!-- Lower Board navigation and posting controls -->
-<div class="flex items-center justify-between gap-4 mt-8 flex-wrap">
-	<!-- Pagination system controls block -->
-	<nav aria-label="Topic discussion pagination list" class="flex items-center gap-1">
-		{% if PREVIOUS_PAGE %}<a href="{{ PREVIOUS_PAGE }}" class="p-2 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg flex items-center justify-center">Prev</a>{% endif %}
-		<span class="text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-2 rounded-lg">Page {{ CURRENT_PAGE|default(1) }} of {{ TOTAL_PAGES|default(1) }}</span>
-		{% if NEXT_PAGE %}<a href="{{ NEXT_PAGE }}" class="p-2 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-lg flex items-center justify-center">Next</a>{% endif %}
-	</nav>
+<!-- Bottom posting controls -->
+<div class="flex items-center justify-end gap-2 mt-8 flex-wrap">
+	{% include 'viewtopic_posting_buttons.html' %}
+</div>
 
-	<!-- Quick Navigation Menu -->
-	<a href="{{ U_INDEX }}" class="text-xs font-bold text-slate-400 hover:text-prosilver-600 flex items-center gap-1 transition-all">
-		{{ Icon('font', 'chevron-left', '', true, 'w-4 h-4') }}
-		Return to Board Index
-	</a>
+<!-- Lower Board navigation and posting controls -->
+<div class="flex items-center justify-between gap-4 mt-4 flex-wrap">
+	<!-- Pagination, post count and the sort controls for the post list -->
+	{% if loops.pagination or TOTAL_POSTS %}
+		<div class="flex items-center gap-3 flex-wrap text-xs text-slate-500 dark:text-slate-400">
+			<span class="font-semibold">{{ TOTAL_POSTS }}</span>
+			{% if loops.pagination %}
+				{% include 'pagination.html' %}
+			{% else %}
+				<span class="font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-2 rounded-lg">{{ PAGE_NUMBER }}</span>
+			{% endif %}
+			{% if (S_NUM_POSTS > 1 or loops.pagination) and not S_IS_BOT %}
+				<form method="post" action="{{ S_TOPIC_ACTION }}">
+					{% include 'display_options.html' %}
+				</form>
+			{% endif %}
+		</div>
+	{% endif %}
+
+	<!-- Quick Navigation: back to the forum this topic lives in -->
+	{% if U_VIEW_FORUM %}
+		<a href="{{ U_VIEW_FORUM }}" class="text-xs font-bold text-slate-400 hover:text-prosilver-600 inline-flex items-center gap-1 min-w-0 transition-all">
+			{{ Icon('font', 'chevron-' ~ S_CONTENT_FLOW_BEGIN, '', true, 'w-4 h-4 shrink-0') }}
+			<span class="truncate">{{ lang('RETURN_TO', FORUM_NAME) }}</span>
+		</a>
+	{% else %}
+		<a href="{{ U_INDEX }}" class="text-xs font-bold text-slate-400 hover:text-prosilver-600 inline-flex items-center gap-1 transition-all">
+			{{ Icon('font', 'chevron-' ~ S_CONTENT_FLOW_BEGIN, '', true, 'w-4 h-4 shrink-0') }}
+			<span>{{ lang('RETURN_TO_INDEX') }}</span>
+		</a>
+	{% endif %}
 </div>
 {% endblock %}

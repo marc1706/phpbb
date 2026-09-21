@@ -1,0 +1,86 @@
+{# Member-facing topic tools for viewtopic.
+
+   Subscribe and bookmark stay visible as state toggles, because a toggle hidden in a
+   dropdown cannot show whether it is on. Everything else (email, print, bump) is low
+   frequency and carries no state, so it goes in one overflow menu.
+   Moderator actions are deliberately NOT here — see viewtopic_quickmod.html. #}
+{% if not S_IS_BOT %}
+	{% set has_overflow = U_EMAIL_TOPIC or U_PRINT_TOPIC or U_BUMP_TOPIC %}
+
+	{% if U_WATCH_TOPIC %}
+		<a href="{{ U_WATCH_TOPIC }}" role="button"
+		   class="watch-topic-link inline-flex items-center justify-center h-9 w-9 rounded-lg border shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-prosilver-500 {% if S_WATCHING_TOPIC %}border-prosilver-600 text-prosilver-500 dark:text-prosilver-400 bg-prosilver-50 dark:bg-prosilver-950/40{% else %}border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800{% endif %}"
+		   title="{{ S_WATCH_TOPIC_TITLE }}"
+		   data-ajax="toggle_link"
+		   data-toggle-text="{{ S_WATCH_TOPIC_TOGGLE }}"
+		   data-toggle-url="{{ U_WATCH_TOPIC_TOGGLE }}"
+		   data-update-all=".watch-topic-link">
+			{% if S_WATCHING_TOPIC %}
+				{{ Icon('font', 'bell', S_WATCH_TOPIC_TITLE, true, 'w-4 h-4') }}
+			{% else %}
+				{{ Icon('font', 'bell-slash', S_WATCH_TOPIC_TITLE, true, 'far w-4 h-4') }}
+			{% endif %}
+		</a>
+	{% endif %}
+
+	{% if U_BOOKMARK_TOPIC %}
+		<a href="{{ U_BOOKMARK_TOPIC }}" role="button"
+		   class="bookmark-link inline-flex items-center justify-center h-9 w-9 rounded-lg border shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-prosilver-500 {% if S_BOOKMARKED_TOPIC %}border-prosilver-600 text-prosilver-500 dark:text-prosilver-400 bg-prosilver-50 dark:bg-prosilver-950/40{% else %}border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800{% endif %}"
+		   title="{{ S_BOOKMARK_TOPIC }}"
+		   data-ajax="alt_text"
+		   data-alt-text="{{ S_BOOKMARK_TOGGLE }}"
+		   data-update-all=".bookmark-link">
+			{{ Icon('font', 'bookmark', S_BOOKMARK_TOPIC, true, (S_BOOKMARKED_TOPIC ? '' : 'far ') ~ 'w-4 h-4') }}
+		</a>
+	{% endif %}
+
+	{% if has_overflow %}
+		<div class="relative" data-dropdown id="topic-tools-parent">
+			<button type="button" id="topic-tools-button" data-dropdown-button
+			        aria-expanded="false" aria-haspopup="true"
+			        title="{{ lang('TOPIC_TOOLS') }}" aria-label="{{ lang('TOPIC_TOOLS') }}"
+			        class="inline-flex items-center justify-center h-9 w-9 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-prosilver-500">
+				{{ Icon('font', 'ellipsis', '', true, 'w-4 h-4') }}
+			</button>
+
+			<div id="topic-tools-menu" data-dropdown-menu
+			     class="hidden absolute end-0 mt-2 w-56 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl p-1.5 z-50">
+				<ul role="menu" class="topic-tools-contents">
+					{% EVENT viewtopic_topic_tools_before %}
+
+					{% if U_BUMP_TOPIC %}
+						<li role="none">
+							<a href="{{ U_BUMP_TOPIC }}" role="menuitem" data-ajax="true"
+							   class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+								{{ Icon('font', 'turn-up', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+								{{ lang('BUMP_TOPIC') }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% if U_EMAIL_TOPIC %}
+						<li role="none">
+							<a href="{{ U_EMAIL_TOPIC }}" role="menuitem"
+							   class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+								{{ Icon('font', 'envelope', '', true, 'far w-4 h-4 text-slate-400 flex-shrink-0') }}
+								{{ lang('EMAIL_TOPIC') }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% if U_PRINT_TOPIC %}
+						<li role="none">
+							<a href="{{ U_PRINT_TOPIC }}" role="menuitem" accesskey="p"
+							   class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+								{{ Icon('font', 'print', '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}
+								{{ lang('PRINT_TOPIC') }}
+							</a>
+						</li>
+					{% endif %}
+
+					{% EVENT viewtopic_topic_tools_after %}
+				</ul>
+			</div>
+		</div>
+	{% endif %}
+{% endif %}

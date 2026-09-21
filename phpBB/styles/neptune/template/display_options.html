@@ -1,0 +1,47 @@
+{# Post list sort controls. Lives next to the pagination rather than with the topic
+   tools, because it describes how the post list is displayed, not the topic itself.
+   Must be rendered inside a <form>, which supplies the submit target. #}
+<div class="relative" data-dropdown id="sort-tools-parent">
+	<button type="button" id="sort-tools-button" data-dropdown-button
+	        aria-expanded="false" aria-haspopup="true"
+	        title="{{ lang('SORT_OPTIONS') }}" aria-label="{{ lang('SORT_OPTIONS') }}"
+	        class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-semibold shadow-2xs transition-colors focus:outline-none focus:ring-2 focus:ring-prosilver-500">
+		{{ Icon('font', 'arrow-down-short-wide', '', true, 'w-3.5 h-3.5') }}
+		{{ Icon('font', 'caret-down', '', true, 'w-3 h-3') }}
+	</button>
+
+	<div id="sort-tools-menu" data-dropdown-menu
+	     class="hidden absolute end-0 bottom-full mb-2 w-64 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl p-3 z-50">
+		<fieldset class="display-options space-y-2.5 text-start">
+			{% if S_SORT_OPTIONS %}
+				<label class="block text-xs font-semibold text-slate-600 dark:text-slate-300">
+					<span class="block mb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">{{ lang('SORT_BY') ~ lang('COLON') }}</span>
+					<select name="sk" id="sk" class="w-full px-2 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_SORT_OPTIONS }}</select>
+				</label>
+				<label class="block text-xs font-semibold text-slate-600 dark:text-slate-300">
+					<span class="block mb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">{{ lang('SORT_DIRECTION') ~ lang('COLON') }}</span>
+					<select name="sd" id="sd" class="w-full px-2 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-prosilver-500">{{ S_ORDER_SELECT }}</select>
+				</label>
+				<input type="submit" name="sort" value="{{ lang('SORT') }}"
+				       class="w-full px-2.5 py-1.5 text-xs font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg cursor-pointer transition-colors shadow-2xs" />
+			{% else %}
+				<label class="block text-xs font-semibold text-slate-600 dark:text-slate-300">
+					<span class="block mb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">{{ lang('DISPLAY') ~ lang('COLON') }}</span>
+					{{ S_SELECT_SORT_DAYS }}
+				</label>
+				{% if S_SELECT_SORT_KEY %}
+					<label class="block text-xs font-semibold text-slate-600 dark:text-slate-300">
+						<span class="block mb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">{{ lang('SORT_BY') ~ lang('COLON') }}</span>
+						{{ S_SELECT_SORT_KEY }}
+					</label>
+					<label class="block text-xs font-semibold text-slate-600 dark:text-slate-300">
+						<span class="block mb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">{{ lang('SORT_DIRECTION') ~ lang('COLON') }}</span>
+						{{ S_SELECT_SORT_DIR }}
+					</label>
+				{% endif %}
+				<input type="submit" name="sort" value="{{ lang('GO') }}"
+				       class="w-full px-2.5 py-1.5 text-xs font-bold text-white bg-prosilver-600 hover:bg-prosilver-500 rounded-lg cursor-pointer transition-colors shadow-2xs" />
+			{% endif %}
+		</fieldset>
+	</div>
+</div>

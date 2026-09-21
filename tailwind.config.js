@@ -65,21 +65,30 @@ export default {
 					border: 'hsl(var(--sidebar-border, 220 13% 91%) / <alpha-value>)',
 					ring: 'hsl(var(--sidebar-ring, 217.2 91.2% 59.8%) / <alpha-value>)',
 				},
+				/*
+				 * Brand ramp.
+				 *
+				 * Each step resolves through a CSS custom property, so redefining --brand-*
+				 * after the compiled stylesheet re-colours the style without rebuilding it.
+				 * The values themselves live in styles/neptune/theme/main.css; the fallback
+				 * after the comma repeats them so the style still renders if the properties
+				 * are ever absent.
+				 */
 				prosilver: {
-					50: '#f0f6fc',
-					100: '#e2eef9',
-					200: '#c4ddf4',
-					300: '#9ac6ee',
-					400: '#70aee6',
-					500: '#4688ce',
-					600: '#3370b5',
-					700: '#255893',
-					800: '#1c4271',
-					900: '#153256',
-					950: '#0a1a2f',
+					50: 'hsl(var(--brand-50, 210 66.7% 96.5%) / <alpha-value>)',
+					100: 'hsl(var(--brand-100, 208.7 65.7% 93.1%) / <alpha-value>)',
+					200: 'hsl(var(--brand-200, 208.8 68.6% 86.3%) / <alpha-value>)',
+					300: 'hsl(var(--brand-300, 208.6 71.2% 76.9%) / <alpha-value>)',
+					400: 'hsl(var(--brand-400, 208.5 70.2% 67.1%) / <alpha-value>)',
+					500: 'hsl(var(--brand-500, 210.9 58.1% 54.1%) / <alpha-value>)',
+					600: 'hsl(var(--brand-600, 211.8 56% 45.5%) / <alpha-value>)',
+					700: 'hsl(var(--brand-700, 212 60% 36%) / <alpha-value>)',
+					800: 'hsl(var(--brand-800, 213.2 60.3% 27.6%) / <alpha-value>)',
+					900: 'hsl(var(--brand-900, 213 61% 21%) / <alpha-value>)',
+					950: 'hsl(var(--brand-950, 214.1 64.9% 11.2%) / <alpha-value>)',
 				},
 				cosmic: {
-					DEFAULT: 'hsl(198, 100%, 44%)',
+					DEFAULT: 'hsl(var(--cosmic, 198 100% 44%) / <alpha-value>)',
 					50: 'hsl(199, 100%, 80%)',
 					100: 'hsl(198, 100%, 76%)',
 					200: 'hsl(198, 100%, 68%)',

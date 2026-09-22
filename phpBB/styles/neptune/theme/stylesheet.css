@@ -665,6 +665,22 @@ video {
 		--sidebar-ring: var(--brand-500);
 
 		--scrollbar-thumb: 0 0% 0% / 0.1;
+
+		/*
+		 * Site hero band.
+		 *
+		 * --header-image is the board's masthead: `none` by default, so a fresh install
+		 * requests no image and the band is just the brand gradient. Redefining it
+		 * anywhere after this stylesheet swaps the masthead with no Tailwind rebuild,
+		 * and the .dark block below takes its own value.
+		 *
+		 * --header-scrim keeps SITE_DESCRIPTION legible over an arbitrary photo. The right
+		 * stop is not slack: against the bare gradient, white on brand-500 is 4.3:1 without
+		 * it and 4.8:1 with it, and SITE_DESCRIPTION is small text. Lighten it only against
+		 * a known image; do not set it to `none` while an image is set.
+		 */
+		--header-image: none;
+		--header-scrim: linear-gradient(to right, rgb(2 6 23 / 0.35), rgb(2 6 23 / 0.15));
 	}
 
 	.dark {
@@ -723,6 +739,9 @@ video {
 
 		--scrollbar-thumb: 0 0% 0% / 0.5;
 
+		--header-image: none;
+		--header-scrim: linear-gradient(to right, rgb(2 6 23 / 0.5), rgb(2 6 23 / 0.2));
+
 		--cosmic: var(--brand-500);
 		--odyssey: 218 20% 39%;
 		--cosmos: 219 20% 20%;
@@ -768,6 +787,70 @@ video {
 .forum-watch-link:hover {
   color: hsl(var(--accent-foreground, 0 0% 100%) / 0.8);
 }
+/**
+	* Board logo
+	*
+	* logo.svg carries the "forum software" tagline in its own <g class="logo-tagline">.
+	* Below roughly 32px the tagline renders about three pixels tall and reads as noise,
+	* so the compact lockup used in the utility bar drops it; the hero band keeps it.
+	 */
+.c-logo {
+  display: block;
+}
+.c-logo-compact .logo-tagline {
+  display: none;
+}
+/**
+	* Site hero band
+	*
+	* The band states the board identity below the sticky utility bar. Its image is a single
+	* custom property, so a board swaps its masthead by redefining --header-image (and the
+	* dark-theme value) without a Tailwind rebuild — the successor to prosilver's
+	* `.headerbar { background-image: ... }` override.
+	*
+	* The scrim is not optional: SITE_DESCRIPTION is small text, and an arbitrary photo
+	* cannot be trusted to keep it at 4.5:1. It sits on a negative-z pseudo-element so it
+	* covers the image but stays behind the content.
+	 */
+.c-site-hero {
+  position: relative;
+  isolation: isolate;
+		background-image: var(--header-image), linear-gradient(to right, hsl(var(--brand-700)), hsl(var(--brand-500)));
+		background-position: center;
+		background-size: cover;
+}
+.c-site-hero::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: var(--header-scrim);
+	}
+/**
+	* Brand block hand-off
+	*
+	* With the band on, the bar carries no brand block until the band scrolls away — the
+	* board name is never stated twice at once. theme.js toggles `hero-out` on <body> and
+	* marks the hidden copy inert; everything else is here.
+	 */
+.c-bar-brand-reveal {
+		max-width: 0;
+		opacity: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		margin-inline-start: -0.625rem;
+		transition: max-width 0.26s ease, opacity 0.2s ease, margin-inline-start 0.26s ease;
+	}
+.hero-out .c-bar-brand-reveal {
+		max-width: 20rem;
+		opacity: 1;
+		margin-inline-start: 0;
+	}
+@media (prefers-reduced-motion: reduce) {
+		.c-bar-brand-reveal {
+			transition: none;
+		}
+	}
 /**
 	* Forum footer
 	 */
@@ -2154,9 +2237,6 @@ video {
   --tw-text-opacity: 1;
   color: rgb(148 163 184 / var(--tw-text-opacity, 1));
 }
-.text-slate-400\/80 {
-  color: rgb(148 163 184 / 0.8);
-}
 .text-slate-500 {
   --tw-text-opacity: 1;
   color: rgb(100 116 139 / var(--tw-text-opacity, 1));
@@ -2183,6 +2263,9 @@ video {
 }
 .text-white\/70 {
   color: rgb(255 255 255 / 0.7);
+}
+.text-white\/90 {
+  color: rgb(255 255 255 / 0.9);
 }
 .underline {
   text-decoration-line: underline;
@@ -2239,10 +2322,6 @@ video {
 }
 .shadow-emerald-500\/20 {
   --tw-shadow-color: rgb(16 185 129 / 0.2);
-  --tw-shadow: var(--tw-shadow-colored);
-}
-.shadow-prosilver-500\/20 {
-  --tw-shadow-color: hsl(var(--brand-500, 210.9 58.1% 54.1%) / 0.2);
   --tw-shadow: var(--tw-shadow-colored);
 }
 .shadow-prosilver-600\/10 {
@@ -2813,6 +2892,10 @@ video {
   --tw-ring-color: rgb(255 255 255 / 0.4);
 }
 
+.focus\:ring-white\/80:focus {
+  --tw-ring-color: rgb(255 255 255 / 0.8);
+}
+
 .focus\:ring-offset-0:focus {
   --tw-ring-offset-width: 0px;
 }
@@ -2838,9 +2921,9 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.group:hover .group-hover\:bg-prosilver-500 {
-  --tw-bg-opacity: 1;
-  background-color: hsl(var(--brand-500, 210.9 58.1% 54.1%) / var(--tw-bg-opacity, 1));
+.group:hover .group-hover\:text-prosilver-500 {
+  --tw-text-opacity: 1;
+  color: hsl(var(--brand-500, 210.9 58.1% 54.1%) / var(--tw-text-opacity, 1));
 }
 
 .group:hover .group-hover\:text-prosilver-600 {
@@ -3341,6 +3424,11 @@ video {
   --tw-ring-offset-color: #0f172a;
 }
 
+.group:hover .dark\:group-hover\:text-prosilver-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: hsl(var(--brand-300, 208.6 71.2% 76.9%) / var(--tw-text-opacity, 1));
+}
+
 .group:hover .dark\:group-hover\:text-prosilver-400:is(.dark *) {
   --tw-text-opacity: 1;
   color: hsl(var(--brand-400, 208.5 70.2% 67.1%) / var(--tw-text-opacity, 1));
@@ -3408,6 +3496,14 @@ video {
     height: 2.5rem;
   }
 
+  .sm\:h-14 {
+    height: 3.5rem;
+  }
+
+  .sm\:h-7 {
+    height: 1.75rem;
+  }
+
   .sm\:w-10 {
     width: 2.5rem;
   }
@@ -3473,6 +3569,10 @@ video {
     gap: 1rem;
   }
 
+  .sm\:gap-5 {
+    gap: 1.25rem;
+  }
+
   .sm\:p-4 {
     padding: 1rem;
   }
@@ -3515,6 +3615,11 @@ video {
   .sm\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
+  }
+
+  .sm\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
   }
 
   .sm\:text-base {

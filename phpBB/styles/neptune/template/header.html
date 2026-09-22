@@ -1,3 +1,14 @@
+{#
+	Hero band switch.
+
+	true  - the band below the utility bar carries the board identity, and the bar's brand
+	        block is revealed only once the band has scrolled out of view.
+	false - compact-header-only layout: no band, and the brand block stays in the bar.
+
+	An ACP setting replaces this literal later; see neptune-template-conventions.md.
+#}
+{% set S_SITE_HERO = true %}
+
 <!-- Top Bar Utility Header -->
 <header class="bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800 sticky top-0 z-40 transition-colors">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -121,10 +132,9 @@
 				</div>
 				{% EVENT navbar_header_quick_links_after %}
 
-				<a href="{{ U_INDEX }}" title="{{ lang('INDEX') }}" class="flex items-center gap-2 min-w-0 group focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-md p-1">
-					<div class="w-9 h-9 flex-shrink-0 rounded-lg bg-prosilver-600 hidden sm:flex items-center justify-center text-white shadow-md shadow-prosilver-500/20 group-hover:bg-prosilver-500 transition-colors duration-200">
-						{{ Icon('font', 'comment-dots', '', true, 'w-5 h-5') }}
-					</div>
+				<a href="{{ U_INDEX }}" title="{{ lang('INDEX') }}" class="c-bar-brand{% if S_SITE_HERO %} c-bar-brand-reveal{% endif %} flex items-center gap-2.5 min-w-0 group focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-md p-1">
+					<!-- Board logo. Overridden by a child style shipping its own imgs/svg/logo.svg -->
+					{{ Icon('svg', 'logo', '', true, 'c-logo c-logo-compact h-6 sm:h-7 w-auto flex-shrink-0 text-prosilver-600 dark:text-prosilver-400 group-hover:text-prosilver-500 dark:group-hover:text-prosilver-300 transition-colors', {'aria-hidden': 'true'}) }}
 					<span class="text-lg sm:text-xl font-bold tracking-tight text-slate-800 dark:text-white font-sans truncate group-hover:text-prosilver-600 dark:group-hover:text-prosilver-400 transition-colors">
 						{{ SITENAME }}
 					</span>
@@ -322,6 +332,25 @@
 	</div>
 </header>
 
+<!-- Site Hero Band. Overridable wholesale by a child style; see the S_SITE_HERO note above. -->
+{% block site_hero %}
+	{% if S_SITE_HERO %}
+		<div id="site-hero" class="c-site-hero border-b border-slate-200/60 dark:border-slate-800/60">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+				<a href="{{ U_SITE_HOME|default(U_INDEX) }}" title="{{ U_SITE_HOME ? lang('SITE_HOME') : lang('INDEX') }}" class="inline-flex items-center gap-4 sm:gap-5 max-w-full focus:outline-none focus:ring-2 focus:ring-white/80 rounded-lg">
+					{{ Icon('svg', 'logo', '', true, 'c-logo h-10 sm:h-14 w-auto flex-shrink-0 text-white', {'aria-hidden': 'true'}) }}
+					<span class="min-w-0">
+						<span class="block text-xl sm:text-3xl font-bold tracking-tight text-white truncate">{{ SITENAME }}</span>
+						{% if SITE_DESCRIPTION %}
+							<span class="block mt-1 text-sm sm:text-base text-white/90 truncate">{{ SITE_DESCRIPTION }}</span>
+						{% endif %}
+					</span>
+				</a>
+			</div>
+		</div>
+	{% endif %}
+{% endblock site_hero %}
+
 <!-- Navigational Link / Breadcrumb Landmark -->
 <nav aria-label="Forum Breadcrumb Trait" class="bg-slate-100/50 dark:bg-slate-900/40 border-b border-slate-200/40 dark:border-slate-800/20 py-3.5 transition-colors">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -329,7 +358,7 @@
 			<li class="flex items-center">
 				<a href="{{ U_INDEX }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-colors flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-prosilver-500 rounded-sm">
 					{{ Icon('font', 'home', '', true, 'w-4 h-4') }}
-					Board index
+					{{ lang('INDEX') }}
 				</a>
 			</li>
 			{% for navlink in navlinks %}

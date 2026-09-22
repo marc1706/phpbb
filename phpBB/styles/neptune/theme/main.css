@@ -116,6 +116,22 @@
 		--sidebar-ring: var(--brand-500);
 
 		--scrollbar-thumb: 0 0% 0% / 0.1;
+
+		/*
+		 * Site hero band.
+		 *
+		 * --header-image is the board's masthead: `none` by default, so a fresh install
+		 * requests no image and the band is just the brand gradient. Redefining it
+		 * anywhere after this stylesheet swaps the masthead with no Tailwind rebuild,
+		 * and the .dark block below takes its own value.
+		 *
+		 * --header-scrim keeps SITE_DESCRIPTION legible over an arbitrary photo. The right
+		 * stop is not slack: against the bare gradient, white on brand-500 is 4.3:1 without
+		 * it and 4.8:1 with it, and SITE_DESCRIPTION is small text. Lighten it only against
+		 * a known image; do not set it to `none` while an image is set.
+		 */
+		--header-image: none;
+		--header-scrim: linear-gradient(to right, rgb(2 6 23 / 0.35), rgb(2 6 23 / 0.15));
 	}
 
 	.dark {
@@ -174,6 +190,9 @@
 
 		--scrollbar-thumb: 0 0% 0% / 0.5;
 
+		--header-image: none;
+		--header-scrim: linear-gradient(to right, rgb(2 6 23 / 0.5), rgb(2 6 23 / 0.2));
+
 		--cosmic: var(--brand-500);
 		--odyssey: 218 20% 39%;
 		--cosmos: 219 20% 20%;
@@ -201,6 +220,76 @@
 	 */
 	.forum-watch-link {
 		@apply inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-accent-foreground/80;
+	}
+
+	/**
+	* Board logo
+	*
+	* logo.svg carries the "forum software" tagline in its own <g class="logo-tagline">.
+	* Below roughly 32px the tagline renders about three pixels tall and reads as noise,
+	* so the compact lockup used in the utility bar drops it; the hero band keeps it.
+	 */
+	.c-logo {
+		@apply block;
+	}
+
+	.c-logo-compact .logo-tagline {
+		@apply hidden;
+	}
+
+	/**
+	* Site hero band
+	*
+	* The band states the board identity below the sticky utility bar. Its image is a single
+	* custom property, so a board swaps its masthead by redefining --header-image (and the
+	* dark-theme value) without a Tailwind rebuild — the successor to prosilver's
+	* `.headerbar { background-image: ... }` override.
+	*
+	* The scrim is not optional: SITE_DESCRIPTION is small text, and an arbitrary photo
+	* cannot be trusted to keep it at 4.5:1. It sits on a negative-z pseudo-element so it
+	* covers the image but stays behind the content.
+	 */
+	.c-site-hero {
+		@apply relative isolate;
+		background-image: var(--header-image), linear-gradient(to right, hsl(var(--brand-700)), hsl(var(--brand-500)));
+		background-position: center;
+		background-size: cover;
+	}
+
+	.c-site-hero::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: var(--header-scrim);
+	}
+
+	/**
+	* Brand block hand-off
+	*
+	* With the band on, the bar carries no brand block until the band scrolls away — the
+	* board name is never stated twice at once. theme.js toggles `hero-out` on <body> and
+	* marks the hidden copy inert; everything else is here.
+	 */
+	.c-bar-brand-reveal {
+		max-width: 0;
+		opacity: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		margin-inline-start: -0.625rem;
+		transition: max-width 0.26s ease, opacity 0.2s ease, margin-inline-start 0.26s ease;
+	}
+
+	.hero-out .c-bar-brand-reveal {
+		max-width: 20rem;
+		opacity: 1;
+		margin-inline-start: 0;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.c-bar-brand-reveal {
+			transition: none;
+		}
 	}
 
 	/**

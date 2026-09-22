@@ -261,6 +261,29 @@ document.addEventListener('DOMContentLoaded', () => {
 		syncWebpushBar();
 	}
 
+	// 7. Site hero band -> utility bar hand-off
+	// The band carries the board identity; the bar repeats it only once the band has
+	// scrolled out of view. One class on <body> drives it so the animation stays in CSS.
+	const siteHero = document.getElementById('site-hero');
+	const barBrand = document.querySelector('.c-bar-brand-reveal');
+
+	if (siteHero && barBrand) {
+		const showBarBrand = show => {
+			document.body.classList.toggle('hero-out', show);
+
+			// Both links point at the board index, so keep the hidden copy out of the
+			// tab order and the accessibility tree; otherwise the name is announced twice.
+			barBrand.inert = !show;
+			barBrand.setAttribute('aria-hidden', String(!show));
+		};
+
+		showBarBrand(false);
+
+		new IntersectionObserver(entries => {
+			showBarBrand(!entries[0].isIntersecting);
+		}, { threshold: 0 }).observe(siteHero);
+	}
+
 	// 6. phpBB Accessibility Helper - Keyboard Tab Traps and focus landmarks
 	const focusables = document.querySelectorAll('a[href], button, input, textarea, select');
 	focusables.forEach(elem => {

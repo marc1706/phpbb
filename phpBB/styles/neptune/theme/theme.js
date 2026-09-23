@@ -113,30 +113,66 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-	// 1. Dark Mode Toggle Operations
-	const themeToggleBtn = document.getElementById('theme-toggle');
-	const lightIcon = document.getElementById('theme-toggle-light-icon');
-	const darkIcon = document.getElementById('theme-toggle-dark-icon');
+	// 1. Colour scheme switch, cycling light -> dark -> auto
+	// An explicit choice is stored as 'light' or 'dark'; auto removes the entry, so the
+	// early detection in base.html.twig and the listener below follow the system setting.
+	const themeStorageKey = 'prosilver-theme';
+	const themeSwitch = document.getElementById('theme-switch');
+	const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+	let currentScheme = 'auto';
 
-	function updateIcons() {
-		const isDark = document.documentElement.classList.contains('dark');
-		if (isDark) {
-			lightIcon.classList.remove('hidden');
-			darkIcon.classList.add('hidden');
-		} else {
-			lightIcon.classList.add('hidden');
-			darkIcon.classList.remove('hidden');
+	function getStoredScheme() {
+		try {
+			const stored = localStorage.getItem(themeStorageKey);
+			return stored === 'light' || stored === 'dark' ? stored : 'auto';
+		} catch {
+			return 'auto';
 		}
 	}
 
-	// Initial Sync
-	updateIcons();
+	function applyScheme(scheme) {
+		currentScheme = scheme;
+		const isDark = scheme === 'dark' || (scheme === 'auto' && systemDark.matches);
+		document.documentElement.classList.toggle('dark', isDark);
 
-	if (themeToggleBtn) {
-		themeToggleBtn.addEventListener('click', () => {
-			const containsDark = document.documentElement.classList.toggle('dark');
-			localStorage.setItem('prosilver-theme', containsDark ? 'dark' : 'light');
-			updateIcons();
+		if (themeSwitch) {
+			// Show the icon and label of the active scheme only
+			themeSwitch.querySelectorAll('[data-theme-icon], [data-theme-label]').forEach(element => {
+				const value = element.dataset.themeIcon || element.dataset.themeLabel;
+				element.classList.toggle('hidden', value !== scheme);
+			});
+		}
+	}
+
+	function setScheme(scheme) {
+		try {
+			if (scheme === 'auto') {
+				localStorage.removeItem(themeStorageKey);
+			} else {
+				localStorage.setItem(themeStorageKey, scheme);
+			}
+		} catch {
+			// Storage unavailable: the choice only lasts for this page view
+		}
+		applyScheme(scheme);
+	}
+
+	applyScheme(getStoredScheme());
+
+	// Follow system changes while on auto, and choices made in other tabs
+	systemDark.addEventListener('change', () => applyScheme(currentScheme));
+	window.addEventListener('storage', (event) => {
+		if (event.key === themeStorageKey || event.key === null) {
+			applyScheme(getStoredScheme());
+		}
+	});
+
+	if (themeSwitch) {
+		const schemeCycle = [ 'light', 'dark', 'auto' ];
+
+		themeSwitch.addEventListener('click', () => {
+			const next = schemeCycle[(schemeCycle.indexOf(currentScheme) + 1) % schemeCycle.length];
+			setScheme(next);
 		});
 	}
 

@@ -2,13 +2,13 @@
 <footer class="bg-white dark:bg-slate-900 border-t border-slate-200/80 dark:border-slate-800/80 transition-colors py-10 mt-auto" role="contentinfo">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<!-- Link Utilities Grid -->
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-slate-100 dark:border-slate-800/60">
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-8 border-b border-slate-100 dark:border-slate-800/60">
 			<div>
 				<h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">Navigation</h3>
 				<ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
 					<li><a href="{{ U_FAQ }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all flex items-center gap-1">{{ lang('FAQ') }}</a></li>
 					<li><a href="{{ U_MEMBERLIST }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all flex items-center gap-1">{{ lang('MEMBERLIST') }}</a></li>
-					{% if U_TEAM %}<li><a href="{{ U_TEAM }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all flex items-center gap-1">The Team</a></li>{% endif %}
+					{% if U_TEAM %}<li><a href="{{ U_TEAM }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all flex items-center gap-1">{{ lang('THE_TEAM') }}</a></li>{% endif %}
 				</ul>
 			</div>
 			<div>
@@ -20,16 +20,6 @@
 						<li><a href="{{ U_LOGIN_LOGOUT }}" class="hover:text-prosilver-600 dark:hover:text-prosilver-400 transition-all">{{ lang('LOGIN_LOGOUT') }}</a></li>
 					{% endif %}
 				</ul>
-			</div>
-			<div>
-				<h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">Style Options</h3>
-				<p class="text-xs text-slate-400 dark:text-slate-500 mb-3 leading-relaxed">
-					This style inherits from prosilver, built with modern utility CSS classes using a mobile-first, semantic approach.
-				</p>
-				<div class="text-xs flex items-center gap-1.5 text-slate-400">
-					<span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/20"></span>
-					Accessibility Audited (AA Standard)
-				</div>
 			</div>
 		</div>
 
@@ -45,7 +35,7 @@
 			</div>
 			<div class="flex flex-wrap items-center justify-center sm:justify-end gap-3 md:gap-5">
 				{% if TRANSLATION_INFO %}<span>{{ TRANSLATION_INFO }}</span>{% endif %}
-				{% if S_TIMEZONE %}<span>All times are {{ S_TIMEZONE }}</span>{% endif %}
+				{% if S_TIMEZONE %}<span>{{ S_TIMEZONE }}</span>{% endif %}
 				{% if RUN_METRICS %}<span class="font-mono bg-slate-100 dark:bg-slate-800/80 px-2 py-1 rounded">{{ RUN_METRICS }}</span>{% endif %}
 			</div>
 		</div>

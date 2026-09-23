@@ -155,16 +155,8 @@
 				</div>
 			{% endif %}
 
-			<!-- Topbar actions and Dark Theme Toggle & Mobile Menu Trigger -->
+			<!-- Topbar actions & Mobile Menu Trigger -->
 			<div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-				<!-- Color Mode Switcher -->
-				<button id="theme-toggle" type="button" aria-label="Toggle visual theme" class="p-2 rounded-lg text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 focus:outline-none focus:ring-2 focus:ring-prosilver-500 transition-all">
-					<!-- Sun Icon -->
-					<span id="theme-toggle-light-icon" class="hidden">{{ Icon('font', 'sun', '', true, 'w-5 h-5') }}</span>
-					<!-- Moon Icon -->
-					<span id="theme-toggle-dark-icon" class="hidden">{{ Icon('font', 'moon', '', true, 'w-5 h-5') }}</span>
-				</button>
-
 				<!-- Notifications Trigger Dropdown (Logged In) -->
 				{% if S_REGISTERED_USER and S_NOTIFICATIONS_DISPLAY %}
 					<div class="relative dropdown-container" id="notification-dropdown-parent">
@@ -238,6 +230,24 @@
 								</a>
 							{% endif %}
 							{% EVENT navbar_header_profile_list_after %}
+							<!-- Colour scheme switch: each click cycles light -> dark -> auto (follows the system setting) -->
+							<div class="border-t border-slate-100 dark:border-slate-800 my-1"></div>
+							{% set colour_schemes = [
+								{'value': 'light', 'icon': 'sun', 'label': lang('COLOUR_SCHEME_LIGHT')},
+								{'value': 'dark', 'icon': 'moon', 'label': lang('COLOUR_SCHEME_DARK')},
+								{'value': 'auto', 'icon': 'circle-half-stroke', 'label': lang('COLOUR_SCHEME_AUTO')}
+							] %}
+							<button type="button" id="theme-switch" class="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+								{% for scheme in colour_schemes %}
+									<span data-theme-icon="{{ scheme.value }}" class="hidden">{{ Icon('font', scheme.icon, '', true, 'w-4 h-4 text-slate-400 flex-shrink-0') }}</span>
+								{% endfor %}
+								{{ lang('APPEARANCE') }}
+								<span class="ms-auto text-xs font-medium text-slate-400 dark:text-slate-500" aria-live="polite">
+									{% for scheme in colour_schemes %}
+										<span data-theme-label="{{ scheme.value }}" class="hidden">{{ scheme.label }}</span>
+									{% endfor %}
+								</span>
+							</button>
 							<div class="border-t border-slate-100 dark:border-slate-800 mt-1"></div>
 							<a href="{{ U_LOGIN_LOGOUT }}" title="{{ lang('LOGIN_LOGOUT') }}" accesskey="x" class="flex items-center gap-2 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors">
 								{{ Icon('font', 'power-off', '', true, 'w-4 h-4 flex-shrink-0') }}

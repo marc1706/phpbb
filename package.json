@@ -12,11 +12,11 @@
 		"not samsung 10.1",
 		"not and_uc 12.12",
 		"not op_mini all",
-		"edge >= 18",
-		"ff >= 72",
-		"chrome >= 79",
-		"safari >= 13",
-		"ios >= 12.4"
+		"edge >= 87",
+		"ff >= 78",
+		"chrome >= 87",
+		"safari >= 14.1",
+		"ios >= 14.5"
 	],
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",

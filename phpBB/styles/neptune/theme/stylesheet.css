@@ -738,6 +738,13 @@ video {
 .c-logo {
   display: block;
 }
+.webpush-subscribe.c-logo-compact .logo-tagline {
+		max-height: 0;
+		opacity: 0;
+		padding-top: 0;
+		padding-bottom: 0;
+		overflow: hidden;
+	}
 .c-logo-compact .logo-tagline {
   display: none;
 }
@@ -789,6 +796,31 @@ video {
 	}
 @media (prefers-reduced-motion: reduce) {
 		.c-bar-brand-reveal {
+			transition: none;
+		}
+	}
+/**
+	* Web push subscribe notification bar
+	*
+	* Animated collapse when dismissing the subscription prompt. The max-height and
+	* opacity transition smoothly as the element is hidden via display:none or
+	* visibility:hidden by theme.js.
+	 */
+.webpush-subscribe {
+		max-height: 100px;
+		opacity: 1;
+		transition: max-height 0.3s ease-out, opacity 0.25s ease-out, padding 0.3s ease-out;
+	}
+.webpush-subscribe.hidden,
+	.webpush-subscribe[style*="display: none"] {
+		max-height: 0;
+		opacity: 0;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		overflow: hidden;
+	}
+@media (prefers-reduced-motion: reduce) {
+		.webpush-subscribe {
 			transition: none;
 		}
 	}
@@ -1626,10 +1658,6 @@ video {
   --tw-border-opacity: 1;
   border-top-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
 }
-.bg-\[\#f4f8fc\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(244 248 252 / var(--tw-bg-opacity, 1));
-}
 .bg-amber-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 243 199 / var(--tw-bg-opacity, 1));
@@ -1715,6 +1743,10 @@ video {
 .bg-sky-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(56 189 248 / var(--tw-bg-opacity, 1));
+}
+.bg-sky-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 249 255 / var(--tw-bg-opacity, 1));
 }
 .bg-sky-50\/70 {
   background-color: rgb(240 249 255 / 0.7);
@@ -2173,6 +2205,14 @@ video {
   --tw-text-opacity: 1;
   color: rgb(2 132 199 / var(--tw-text-opacity, 1));
 }
+.text-sky-700 {
+  --tw-text-opacity: 1;
+  color: rgb(3 105 161 / var(--tw-text-opacity, 1));
+}
+.text-sky-900 {
+  --tw-text-opacity: 1;
+  color: rgb(12 74 110 / var(--tw-text-opacity, 1));
+}
 .text-slate-300 {
   --tw-text-opacity: 1;
   color: rgb(203 213 225 / var(--tw-text-opacity, 1));
@@ -2338,6 +2378,9 @@ video {
 .duration-200 {
   transition-duration: 200ms;
 }
+.duration-300 {
+  transition-duration: 300ms;
+}
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -2415,6 +2458,28 @@ video {
 .button-form:focus,
 .button-form-bold:focus {
 	background-image: none;
+}
+
+@media (min-width: 640px) {
+
+	.sm\:hidden.webpush-subscribe {
+		max-height: 0;
+		opacity: 0;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		overflow: hidden;
+	}
+}
+
+@media (min-width: 768px) {
+
+	.md\:hidden.webpush-subscribe {
+		max-height: 0;
+		opacity: 0;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		overflow: hidden;
+	}
 }
 
 .file\:me-3::-webkit-file-upload-button {
@@ -3145,6 +3210,16 @@ video {
 .dark\:text-rose-400:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(251 113 133 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-sky-100:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(224 242 254 / var(--tw-text-opacity, 1));
+}
+
+.dark\:text-sky-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(125 211 252 / var(--tw-text-opacity, 1));
 }
 
 .dark\:text-sky-400:is(.dark *) {

@@ -22,16 +22,16 @@
 			 toggles the "hidden" class on the two buttons, theme.js hides the whole bar as
 			 soon as the subscribe button is hidden. -->
 		{% if NOTIFICATIONS_WEBPUSH_ENABLE and notification_types is not defined %}
-			<div class="webpush-subscribe px-3.5 py-2.5 bg-[#f4f8fc] dark:bg-slate-850 border-b border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-2.5">
+			<div class="webpush-subscribe px-3.5 py-2.5 bg-sky-50 dark:bg-slate-800 border-b border-slate-200/80 dark:border-slate-700 flex items-center justify-between gap-2.5 transition-all duration-300 ease-in-out overflow-hidden" style="max-height: 100px;">
 				<div class="flex items-center gap-2.5 min-w-0">
 					<div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-slate-200/70 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-300/60 dark:border-slate-700">
 						{{ Icon('font', 'bell', '', true, 'w-3.5 h-3.5') }}
 					</div>
 					<div class="min-w-0">
-						<span class="block text-[11px] font-bold text-slate-900 dark:text-slate-100 leading-tight">
+						<span class="block text-[11px] font-bold text-sky-900 dark:text-sky-100 leading-tight">
 							{{ lang('NOTIFY_WEB_PUSH') }}
 						</span>
-						<p class="text-[10px] text-slate-500 dark:text-slate-400 leading-tight truncate mt-0.5">
+						<p class="text-[10px] text-sky-700 dark:text-sky-300 leading-tight truncate mt-0.5">
 							{{ lang('NOTIFY_WEB_PUSH_ENABLE') }}
 						</p>
 					</div>

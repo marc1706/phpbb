@@ -520,6 +520,7 @@ $lang = array_merge($lang, array(
 	'NOTIFY_ADMIN'				=> 'Please notify the board administrator or webmaster.',
 	'NOTIFY_ADMIN_EMAIL'		=> 'Please notify the board administrator or webmaster: <a href="mailto:%1$s">%1$s</a>',
 
+	'NOTIFY_WEB_PUSH'						=> 'Web Push Notifications',
 	'NOTIFY_WEB_PUSH_DENIED'				=> 'You have denied notifications from this site. To subscribe, please allow notifications in your browser settings.',
 	'NOTIFY_WEB_PUSH_DISABLED'				=> 'Web Push not supported',
 	'NOTIFY_WEB_PUSH_ENABLE'				=> 'Enable web push notifications',

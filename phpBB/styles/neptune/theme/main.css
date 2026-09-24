@@ -293,6 +293,34 @@
 	}
 
 	/**
+	* Web push subscribe notification bar
+	*
+	* Animated collapse when dismissing the subscription prompt. The max-height and
+	* opacity transition smoothly as the element is hidden via display:none or
+	* visibility:hidden by theme.js.
+	 */
+	.webpush-subscribe {
+		max-height: 100px;
+		opacity: 1;
+		transition: max-height 0.3s ease-out, opacity 0.25s ease-out, padding 0.3s ease-out;
+	}
+
+	.webpush-subscribe.hidden,
+	.webpush-subscribe[style*="display: none"] {
+		max-height: 0;
+		opacity: 0;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+		overflow: hidden;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.webpush-subscribe {
+			transition: none;
+		}
+	}
+
+	/**
 	* Forum footer
 	 */
 	.c-forum-footer {

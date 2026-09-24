@@ -396,6 +396,7 @@ $lang = array_merge($lang, array(
 	'LOCK_POST'							=> 'Lock post',
 	'LOCK_POST_EXPLAIN'					=> 'Prevent editing',
 	'LOCK_TOPIC'						=> 'Lock topic',
+	'LOGGED_IN_AS'						=> 'You are logged in as:',
 	'LOGIN'								=> 'Login',
 	'LOGIN_CHECK_PM'					=> 'Log in to check your private messages.',
 	'LOGIN_CONFIRMATION'				=> 'Confirmation of login',
